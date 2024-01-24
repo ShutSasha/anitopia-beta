@@ -1,7 +1,7 @@
 function App() {
 	return (
 		<>
-			<div>anitopia</div>
+			<div>hello it's anitopia</div>
 		</>
 	);
 }
