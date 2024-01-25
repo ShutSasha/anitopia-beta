@@ -1,0 +1,17 @@
+@mixin font-face($font-family, $font-weight: normal, $font-style: normal) {
+	@font-face {
+		font-family: $font-family;
+		src:
+
+		//! НЕ ВОРКАЕТ
+			// url("../fonts/baloo-regular-webfont.woff2") format("woff2"),
+			// url("../fonts/baloo-regular-webfont.woff") format("woff");
+
+		//! ВОРКАЕТ
+			url("./baloo-regular-webfont.woff2") format("woff2"),
+			url("./baloo-regular-webfont.woff") format("woff");
+
+		font-weight: #{$font-weight};
+		font-style: #{$font-style};
+	}
+}
