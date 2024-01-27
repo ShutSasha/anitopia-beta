@@ -12,6 +12,7 @@ router.post(
 			"password",
 			"Пароль должен быть больше 8 и меньше 20 символов"
 		).isLength({ min: 8, max: 20 }),
+		check("email","Неправильный формат электронной почты").isEmail()
 	],
 	authController.registration
 );
