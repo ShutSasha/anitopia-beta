@@ -1,14 +1,18 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 const express = require("express");
-const sequelize = require("./db");
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(express.json());
+
 const start = async () => {
 	try {
-		await sequelize.authenticate(); // тут устанавливается подключение к бд
-		await sequelize.sync(); // будет сверять бд с схемой данных
+		await mongoose.connect(
+			`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.b0tz7ut.mongodb.net/`
+		);
+
 		//запуск серва
 		app.listen(PORT, () => {
 			console.log(`server started on PORT ${PORT}`);
