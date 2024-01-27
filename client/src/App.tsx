@@ -1,9 +1,7 @@
-function App() {
-	return (
-		<>
-			<div>hello it's anitopia</div>
-		</>
-	);
-}
+import { FC } from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./pages/router";
 
-export default App;
+export const App: FC = () => {
+	return <RouterProvider router={router} />;
+};

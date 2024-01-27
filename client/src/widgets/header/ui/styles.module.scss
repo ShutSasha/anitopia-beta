@@ -1,0 +1,12 @@
+.header {
+	border-bottom: 5px solid #f66;
+	background-color: #343a40;
+}
+
+.container_header {
+	max-width: var(--container-width);
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

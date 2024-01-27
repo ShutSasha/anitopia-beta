@@ -1,0 +1,21 @@
+.container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.img{
+  margin-bottom: 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.text{
+  margin-bottom:40px;
+  font-size: 24px;
+  font-family: "Baloo";
+  font-weight: 500;
+  color: #343a40;
+}
+
