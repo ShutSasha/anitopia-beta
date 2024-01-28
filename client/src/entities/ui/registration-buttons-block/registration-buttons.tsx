@@ -6,8 +6,8 @@ import styles from "./styles.module.scss";
 export const RegistrationButtons: FC = () => {
 	return (
 		<div className={styles.buttons}>
-			<ButtonLogIn></ButtonLogIn>
-			<ButtonSignUp></ButtonSignUp>
+			<ButtonLogIn />
+			<ButtonSignUp />
 		</div>
 	);
 };

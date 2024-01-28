@@ -8,22 +8,22 @@ export const NavList: FC = () => {
 			<ul className={styles.nav_list}>
 				<li>
 					<Link className={styles.nav_list_item} to="/anime">
-						Anime
+						Аниме
 					</Link>
 				</li>
 				<li>
 					<Link className={styles.nav_list_item} to="/manga">
-						Manga
+						Манга
 					</Link>
 				</li>
 				<li>
 					<Link className={styles.nav_list_item} to="/top-100">
-						Top-100
+						Топ-100
 					</Link>
 				</li>
 				<li>
 					<Link className={styles.nav_list_item} to="/random-anime">
-						Random anime
+						Случайное аниме
 					</Link>
 				</li>
 			</ul>

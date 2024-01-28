@@ -8,8 +8,8 @@ export const Header: FC = () => {
 		<>
 			<div className={styles.header}>
 				<div className={styles.container_header}>
-					<Navbar></Navbar>
-					<RegistrationButtons></RegistrationButtons>
+					<Navbar />
+					<RegistrationButtons />
 				</div>
 			</div>
 		</>
