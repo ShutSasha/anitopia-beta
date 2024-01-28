@@ -3,6 +3,7 @@ const router = new Router();
 const authController = require("../controllers/authController");
 const { check } = require("express-validator");
 const roleMiddleware = require("../middleware/roleMiddleware");
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.post(
 	"/registration",
@@ -17,6 +18,9 @@ router.post(
 	authController.registration
 );
 router.post("/login", authController.login);
-router.get("/users", roleMiddleware(["ADMIN"]), authController.getUsers);
+router.get("/users", authMiddleware,authController.getUsers);
+router.post("/logout", authController.logout);
+router.get("/activate/:link", authController.activate);
+router.get("/refresh", authController.refresh);
 
 module.exports = router;

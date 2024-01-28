@@ -8,7 +8,9 @@ const User = new Schema({
 	lastName: { type: String, required: false },
 	country: { type: String, required: false },
 	age: { type: Number, required: false },
+	activationLink: { type: String },
+	isActivated: { type: Boolean, default: false },
 	roles: [{ type: String, ref: "Role" }],
 });
 
-module.exports = model("User", User);
+module.exports = model('User', User);
