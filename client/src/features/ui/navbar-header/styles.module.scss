@@ -1,8 +1,21 @@
 .logo {
+	display: block;
 	margin-right: 40px;
 }
 
 .navbar {
 	display: flex;
 	align-items: center;
+}
+
+@media screen and (max-width: 1440px) {
+	.navbar {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.logo {
+		display: none;
+	}
 }

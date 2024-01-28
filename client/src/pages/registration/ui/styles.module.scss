@@ -2,7 +2,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 93vh;
+	height: 100%;
+	background-image: url("../assets/background.gif");
+	background-repeat: no-repeat;
+	background-size: cover;
 
 	h2 {
 		text-align: center;
@@ -13,7 +16,6 @@
 }
 
 .registration_wrapper {
-	background-image: url("../assets/background.gif");
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;
@@ -153,6 +155,10 @@ form {
 }
 
 @media screen and (max-width: 768px) {
+	.container {
+		background-image: url("../assets/background-phone.gif");
+	}
+
 	.wrapper {
 		padding: 40px 50px 40px 50px;
 		margin: 0 10px;

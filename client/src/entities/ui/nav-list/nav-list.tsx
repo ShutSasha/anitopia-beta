@@ -6,26 +6,21 @@ export const NavList: FC = () => {
 	return (
 		<>
 			<ul className={styles.nav_list}>
-				<li>
-					<Link className={styles.nav_list_item} to="/anime">
-						Аниме
-					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/manga">
-						Манга
-					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/top-100">
-						Топ-100
-					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/random-anime">
-						Случайное аниме
-					</Link>
-				</li>
+				<Link className={styles.nav_list_item} to="/">
+					<li>Главная</li>
+				</Link>
+				<Link className={styles.nav_list_item} to="/anime">
+					<li>Аниме</li>
+				</Link>
+				<Link className={styles.nav_list_item} to="/manga">
+					<li>Манга</li>
+				</Link>
+				<Link className={styles.nav_list_item} to="/top-100">
+					<li>Топ-100</li>
+				</Link>
+				<Link className={styles.nav_list_item} to="/random-anime">
+					<li>Случайное аниме</li>
+				</Link>
 			</ul>
 		</>
 	);

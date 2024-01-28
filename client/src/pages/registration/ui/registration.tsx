@@ -6,24 +6,35 @@ import passwordImg from "../assets/lock-closed.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
+import { Toast } from "../../../shared";
 export const Registration = () => {
-	const onCreate = (formData: any) => {
-		//example
-		axios
-			.put("link", formData)
-			.then((res) => console.log("user created", res.data))
-			.catch((err) => console.error(err));
-	};
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
-	// it's warn for user, incorrect password
 	const [repeatPassword, setRepeatPassword] = useState("");
+	const [showToast, setShowToast] = useState(false);
+
+	const handleButtonClick = () => {
+		setShowToast(true);
+		setTimeout(() => setShowToast(false), 4000);
+	};
+
+	const onCreate = (formData: any) => {
+		//example
+		// axios
+		// 	.put("link", formData)
+		// 	.then((res) => console.log("user created", res.data))
+		// 	.catch((err) => console.error(err));
+	};
 
 	const handleSubmit = (event: any) => {
 		event.preventDefault();
+
+		if (repeatPassword !== password) {
+			handleButtonClick();
+			console.log(showToast);
+			return;
+		}
 
 		const formData = {
 			username: username,
@@ -37,7 +48,16 @@ export const Registration = () => {
 
 	return (
 		<div className={styles.registration_wrapper}>
-			<Header />
+			{showToast && (
+				<Toast
+					message="Пароли не совпадают!"
+					duration={4000}
+					onClose={() => setShowToast(false)}
+				/>
+			)}
+			<div className={styles.header}>
+				<Header />
+			</div>
 			<div className={styles.container}>
 				<div className={styles.wrapper}>
 					<div className={styles.form_box}>
