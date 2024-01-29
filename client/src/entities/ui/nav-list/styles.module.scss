@@ -22,6 +22,7 @@
 	color: #fff;
 	font-size: 20px;
 	font-weight: 700;
+	flex-grow: 1;
 }
 
 @media screen and (max-width: 1440px) {
@@ -47,9 +48,59 @@
 	}
 }
 
+.burger_btn {
+	z-index: 3;
+	width: 30px;
+	height: 30px;
+	margin-left: 20px;
+	position: relative;
+	cursor: pointer;
+	display: none;
+}
+
+.burger_btn::before {
+	content: " ";
+	position: absolute;
+	top: 0;
+	width: 30px;
+	height: 2px;
+	background-color: #fff;
+}
+
+.burger_btn::after {
+	content: " ";
+	position: absolute;
+	bottom: 0;
+	width: 30px;
+	height: 2px;
+	background-color: #fff;
+}
+
+.burger_btn span {
+	content: " ";
+	position: absolute;
+	top: 14px;
+	width: 30px;
+	height: 2px;
+	background-color: #fff;
+}
+
 @media screen and (max-width: 1240px) {
 	.nav_list_item li {
 		font-size: 16px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.burger_btn {
+		display: block;
+		z-index: 50;
+		margin-top: 17px;
+		margin: 17px 0 17px 17px;
+	}
+
+	.nav_list {
+		display: none;
 	}
 }
 
