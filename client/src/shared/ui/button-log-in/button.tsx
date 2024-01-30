@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 export const ButtonLogIn: FC = () => {
 	return (
 		<>
-			<button className={styles.button}>Log in</button>
+			<button className={styles.button}>ВХОД</button>
 		</>
 	);
 };

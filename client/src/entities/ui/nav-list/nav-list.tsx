@@ -1,32 +1,37 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
+import { Menu } from "./menu";
+import { items } from "./consts/nav-names";
 
 export const NavList: FC = () => {
+	const [menuActive, setMenuActive] = useState(false);
+
 	return (
 		<>
+			<div
+				className={styles.burger_btn}
+				onClick={() => setMenuActive(!menuActive)}
+			>
+				<span />
+			</div>
 			<ul className={styles.nav_list}>
-				<li>
-					<Link className={styles.nav_list_item} to="/anime">
-						Anime
+				{items.map((item, index) => (
+					<Link
+						key={index}
+						className={styles.nav_list_item}
+						to={item.href}
+					>
+						<li>{item.value}</li>
 					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/manga">
-						Manga
-					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/top-100">
-						Top-100
-					</Link>
-				</li>
-				<li>
-					<Link className={styles.nav_list_item} to="/random-anime">
-						Random anime
-					</Link>
-				</li>
+				))}
 			</ul>
+			<Menu
+				active={menuActive}
+				setActive={setMenuActive}
+				header={"Anitopia"}
+				items={items}
+			/>
 		</>
 	);
 };
