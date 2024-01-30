@@ -2,16 +2,11 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { Menu } from "./menu";
+import { items } from "./consts/nav-names";
+
 export const NavList: FC = () => {
 	const [menuActive, setMenuActive] = useState(false);
 
-	const items = [
-		{ value: "Главная", href: "/" },
-		{ value: "Аниме", href: "/anime" },
-		{ value: "Манга", href: "/manga" },
-		{ value: "Топ-100", href: "/top-100" },
-		{ value: "Случайное аниме", href: "/random-anime" },
-	];
 	return (
 		<>
 			<div
@@ -21,21 +16,15 @@ export const NavList: FC = () => {
 				<span />
 			</div>
 			<ul className={styles.nav_list}>
-				<Link className={styles.nav_list_item} to="/">
-					<li>Главная</li>
-				</Link>
-				<Link className={styles.nav_list_item} to="/anime">
-					<li>Аниме</li>
-				</Link>
-				<Link className={styles.nav_list_item} to="/manga">
-					<li>Манга</li>
-				</Link>
-				<Link className={styles.nav_list_item} to="/top-100">
-					<li>Топ-100</li>
-				</Link>
-				<Link className={styles.nav_list_item} to="/random-anime">
-					<li>Случайное аниме</li>
-				</Link>
+				{items.map((item, index) => (
+					<Link
+						key={index}
+						className={styles.nav_list_item}
+						to={item.href}
+					>
+						<li>{item.value}</li>
+					</Link>
+				))}
 			</ul>
 			<Menu
 				active={menuActive}

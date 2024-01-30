@@ -1,3 +1,4 @@
+export { InputAuth } from "./ui/input-auth/input-auth";
 export { Toast } from "./ui/custom-toast/toast";
 export { ButtonSignUp } from "./ui/button-sign-up/button";
 export { ButtonLogIn } from "./ui/button-log-in/button";

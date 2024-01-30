@@ -36,8 +36,8 @@ export const Menu: React.FC<ToastProps> = ({
 					<Link to="/">{header}</Link>
 				</div>
 				<ul className={styles.menu_list}>
-					{items.map((item: any) => (
-						<Link className={styles.item_link} to={item.href}>
+					{items.map((item: any, index: number) => (
+						<Link key={index} className={styles.item_link} to={item.href}>
 							<li>{item.value}</li>
 						</Link>
 					))}
