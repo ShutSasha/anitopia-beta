@@ -3,17 +3,8 @@ const Role = require("../models/Role");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult, cookie } = require("express-validator");
-const { secret } = require("../config");
 const userService = require("../services/UserService");
 const ApiError = require("../errors/apiError");
-
-const ImageKit = require("imagekit");
-
-const imagekit = new ImageKit({
-	publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
-	privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
-	urlEndpoint: process.env.IMAGE_KIT_URL_ENDPOINT,
-});
 
 class authController {
 	async registration(req, res, next) {
@@ -101,6 +92,7 @@ class authController {
 			next(e);
 		}
 	}
+
 }
 
 module.exports = new authController();

@@ -1,25 +1,22 @@
-module.exports = class ApiError extends Error{
-    status;
-    errors;
+module.exports = class ApiError extends Error {
+	status;
+	errors;
 
-    constructor(status,message,errors = []) {
-        super(message);
-        this.status = status;
-        this.errors = errors;
-    }
+	constructor(status, message, errors = []) {
+		super(message);
+		this.status = status;
+		this.errors = errors;
+	}
 
-    static UnauthorizedError(){
-        return new ApiError(401,"Пользователь не авторизован");
-    }
+	static UnauthorizedError(message) {
+		return new ApiError(401, message);
+	}
 
-    static BadRequest(message,error = []){
-        return new ApiError(400,message,error);
+	static BadRequest(message, error = []) {
+		return new ApiError(400, message, error);
+	}
 
-    }
-
-    static Forbidden(){
-        return new ApiError(403,"Недостаточно прав доступа");
-
-    }
-
-}
+	static Forbidden() {
+		return new ApiError(403, "Недостаточно прав доступа");
+	}
+};

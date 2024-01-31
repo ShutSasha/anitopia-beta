@@ -3,7 +3,6 @@ const router = new Router();
 const authController = require("../controllers/authController");
 const { check } = require("express-validator");
 const roleMiddleware = require("../middleware/roleMiddleware");
-const authMiddleware = require("../middleware/authMiddleware");
 
 router.post(
 	"/registration",

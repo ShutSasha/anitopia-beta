@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { secret } = require("../config");
 const ApiError = require("../errors/apiError")
 
 module.exports = function (roles) {

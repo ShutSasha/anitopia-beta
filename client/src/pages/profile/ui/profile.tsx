@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Header } from "../../../widgets/header";
@@ -6,10 +6,36 @@ import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
+import axios from "axios";
 
 export const Profile: FC = observer(() => {
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
+
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files && event.target.files.length > 0) {
+			setSelectedFile(event.target.files[0]);
+		} else {
+			setSelectedFile(null);
+		}
+	};
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		if (selectedFile == null) {
+			return;
+		}
+		const formData = new FormData();
+		formData.append("avatar", selectedFile);
+
+		axios
+			.post(`http://localhost:5000/api/profile/upload-avatar`, formData)
+			.then((res) => console.log(res))
+			.catch((err) => console.error(err));
+	};
+
 	if (store.isLoading) {
 		return <div>Загрузка...</div>;
 	}
@@ -31,6 +57,23 @@ export const Profile: FC = observer(() => {
 					</div>
 					<div className={styles.profile_wrapper}>
 						<h2>Hello {store.user.username}</h2>
+						<form onSubmit={handleSubmit}>
+							<label htmlFor="imageUpload">
+								Выберите изображение для загрузки:
+							</label>
+							<input
+								type="file"
+								id="imageUpload"
+								name="imageUpload"
+								accept="image/*"
+								onChange={handleFileChange}
+							/>
+							<input
+								style={{ cursor: "pointer" }}
+								type="submit"
+								value="Загрузить"
+							/>
+						</form>
 					</div>
 				</div>
 			</div>

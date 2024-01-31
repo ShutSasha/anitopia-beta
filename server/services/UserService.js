@@ -19,7 +19,7 @@ class UserService {
 			);
 		}
 
-		const hashPassword = await bcrypt.hashSync(password, process.env.SALT);
+		const hashPassword = await bcrypt.hashSync(password, 7);
 		const userRole = await Role.findOne({ value: "USER" });
 		const activationLink = uuid.v4();
 
@@ -30,6 +30,8 @@ class UserService {
 			lastName: null,
 			country: null,
 			age: null,
+			avatarLink:
+				"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/user.jpg",
 			password: hashPassword,
 			activationLink,
 			isActivated: false,

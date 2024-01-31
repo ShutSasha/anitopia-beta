@@ -1,12 +1,11 @@
 import { FC, useContext } from "react";
-// import { Context } from "../../../main";
+import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import user_img_default from "./assets/profile-img-default.jpg";
 import styles from "./styles.module.scss";
 
 export const User: FC = observer(() => {
-	// const { store } = useContext(Context);
+	const { store } = useContext(Context);
 
 	return (
 		<>
@@ -14,7 +13,7 @@ export const User: FC = observer(() => {
 				<Link title="Профиль" to="/profile">
 					<img
 						className={styles.profile_img}
-						src={user_img_default}
+						src={store.user.avatarLink}
 						alt="Profile"
 					/>
 				</Link>
