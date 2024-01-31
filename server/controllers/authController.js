@@ -7,6 +7,14 @@ const {secret} = require("../config");
 const userService = require("../services/UserService");
 const ApiError = require('../errors/apiError');
 
+var ImageKit = require("imagekit");
+
+var imagekit = new ImageKit({
+    publicKey : process.env.IMAGE_KIT_PUBLIC_KEY,
+    privateKey : process.env.IMAGE_KIT_PRIVATE_KEY,
+    urlEndpoint : process.env.IMAGE_KIT_URL_ENDPOINT
+});
+
 class authController {
     async registration(req, res, next) {
         try {
