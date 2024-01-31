@@ -13,12 +13,16 @@ router.post(
 			"password",
 			"Пароль должен быть больше 8 и меньше 20 символов"
 		).isLength({ min: 8, max: 20 }),
-		check("email","Неправильный формат электронной почты").isEmail()
+		check("email", "Неправильный формат электронной почты").isEmail(),
 	],
 	authController.registration
 );
 router.post("/login", authController.login);
-router.get("/users", roleMiddleware(['ADMIN']),authController.getUsers);
+router.get(
+	"/users",
+	roleMiddleware(["ADMIN", "USER"]),
+	authController.getUsers
+);
 router.post("/logout", authController.logout);
 router.get("/activate/:link", authController.activate);
 router.get("/refresh", authController.refresh);
