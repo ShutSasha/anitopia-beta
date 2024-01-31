@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { secret } = require("../config");
+const ApiError = require("../errors/apiError")
 
 module.exports = function (roles) {
 	return function (req, res, next) {
@@ -11,9 +12,9 @@ module.exports = function (roles) {
 			const token = req.headers.authorization.split(" ")[1];
 
 			if (!token) {
-				return res
-					.status(401)
-					.json({ message: "Пользователь не авторизован 1" });
+				return next(
+					ApiError.UnauthorizedError("Пользователь не авторизирован")
+				);
 			}
 			const { roles: userRoles } = jwt.verify(
 				token,
@@ -29,14 +30,16 @@ module.exports = function (roles) {
 			});
 
 			if (!hasRole) {
-				return res.status(403).json({ message: "У вас нет доступа" });
+				return next(
+					ApiError.Forbidden("У пользователя недостаточно прав")
+				);
 			}
 			next();
 		} catch (e) {
 			console.log(e);
-			return res
-				.status(401)
-				.json({ message: "Пользователь не авторизован 2" });
+			return next(
+				ApiError.UnauthorizedError("Пользователь не авторизирован")
+			);
 		}
 	};
 };
