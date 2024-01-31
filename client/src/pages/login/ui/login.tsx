@@ -7,16 +7,21 @@ import { AuthContext } from "../context/AuthContext";
 import { getInputsData } from "../consts/input-data";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 
 export const Login: FC = observer(() => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 	const { store } = useContext(Context);
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 		console.log({ username, password });
-		store.login(username, password);
+		store
+			.login(username, password)
+			.then(() => console.log("success"))
+			.catch((err) => console.error(err));
 	};
 
 	const inputsData = getInputsData(setUsername, setPassword);

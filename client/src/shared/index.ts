@@ -1,3 +1,5 @@
+export { User } from "./ui/user-icon/user.tsx";
+export { Logout } from "./ui/logout/logout";
 export { InputAuth } from "./ui/input-auth/input-auth";
 export { Toast } from "./ui/custom-toast/toast";
 export { ButtonSignUp } from "./ui/button-sign-up/button";
