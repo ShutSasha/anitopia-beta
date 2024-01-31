@@ -7,35 +7,48 @@ import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
 import axios from "axios";
+import $api from "../../../app/http";
 
 export const Profile: FC = observer(() => {
-	const [image, setImage] = useState<File | null>(null);
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
+	const [img, setImage] = useState<File | null>(null);
 
-	// const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-	// 	if (event.target.files && event.target.files.length > 0) {
-	// 		setSelectedFile(event.target.files[0]);
-	// 	} else {
-	// 		setSelectedFile(null);
-	// 	}
-	// };
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		if (image == null) {
-			return;
+	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files && event.target.files.length > 0) {
+			const selectedImage = event.target.files[0];
+			setImage(selectedImage);
 		}
-		console.log(image);
-		const formData = new FormData();
-		// formData.append("img", selectedFile);
-		formData.append("img", image);
-		console.log(formData);
+	};
 
-		axios
-			.post(`http://localhost:5000/api/profile/upload-avatar`, formData)
-			.then((res) => console.log(res))
-			.catch((err) => console.error(err));
+	const handleFormSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+
+		if (img) {
+			// Создаем объект FormData и добавляем файл
+			const formData = new FormData();
+			formData.append("img", img);
+
+			try {
+				// Отправляем POST-запрос с использованием fetch или другой библиотеки
+				const response = await fetch(
+					`http://localhost:5000/api/profile/uploadAvatar`,
+					{
+						method: "POST",
+						body: formData,
+					}
+				);
+
+				// Обрабатываем ответ
+				if (response.ok) {
+					console.log("Картинка успешно загружена");
+				} else {
+					console.error("Ошибка при загрузке картинки");
+				}
+			} catch (error) {
+				console.error("Произошла ошибка", error);
+			}
+		}
 	};
 
 	if (store.isLoading) {
@@ -59,21 +72,18 @@ export const Profile: FC = observer(() => {
 					</div>
 					<div className={styles.profile_wrapper}>
 						<h2>Hello {store.user.username}</h2>
-						<form onSubmit={handleSubmit}>
+						<form onSubmit={handleFormSubmit}>
 							<label htmlFor="imageUpload">
 								Выберите изображение для загрузки:
 							</label>
 							<input
+								name="img"
 								type="file"
-								onChange={(e) => {
-									const selectedFile = e.target.files?.[0];
-									if (selectedFile) {
-										setImage(selectedFile);
-									}
-								}}
+								accept="image/*"
+								onChange={handleImageChange}
 							/>
 							<input
-								style={{cursor: "pointer"}}
+								style={{ cursor: "pointer" }}
 								type="submit"
 								value="Загрузить"
 							/>
