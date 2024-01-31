@@ -1,6 +1,6 @@
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 // import axios from "axios";
 import { Toast } from "../../../shared";
@@ -17,6 +17,11 @@ export const Registration = observer(() => {
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const [showToast, setShowToast] = useState(false);
 	const { store } = useContext(Context);
+	const navigate = useNavigate();
+
+	if (store.isLoading) {
+		return <div>Загрузка...</div>;
+	}
 
 	const handleButtonClick = () => {
 		setShowToast(true);
@@ -32,7 +37,14 @@ export const Registration = observer(() => {
 			return;
 		}
 
-		store.registration(username, password, email);
+		store
+			.registration(username, password, email)
+			.then((isLoggedIn) => {
+				if (isLoggedIn) {
+					navigate("/");
+				}
+			})
+			.catch((err) => console.error(err));
 	};
 
 	const inputsData = getInputsData(

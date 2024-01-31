@@ -9,7 +9,7 @@ const tokenService = require("./TokenService");
 const UserDto = require("../dtos/user-dto");
 const ApiError = require("../errors/apiError");
 const jwt = require("jsonwebtoken");
-const imageService = require('/ImageService');
+const imageService = require("./ImageService");
 
 class UserService {
 	async registration(username, email, password) {
