@@ -53,4 +53,5 @@ const start = async () => {
 	}
 };
 
+module.exports = imagekit;
 start();
