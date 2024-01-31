@@ -13,11 +13,9 @@ export const Profile: FC = observer(() => {
 		return <div>Загрузка...</div>;
 	}
 
-	useEffect(() => {
-		if (!store.isAuth) {
-			navigate("/login");
-		}
-	}, [store.isAuth]);
+	if (!store.isAuth) {
+		navigate("/login");
+	}
 
 	if (store.isAuth) {
 		return (
