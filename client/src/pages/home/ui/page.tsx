@@ -30,19 +30,25 @@ export const HomePage: FC = observer(() => {
 					<div className="someBlock">
 						<h2>
 							{!store.isAuth ? (
-								<div>aboba</div>
+								<div>
+									aboba
+									<button onClick={getUsers}>get users</button>
+								</div>
 							) : (
 								<div>
 									Вы вошли как {store.user.username}
 									<button onClick={() => store.logout()}>
 										logout
 									</button>
+									{store.user.isActivated
+										? "Красава"
+										: "бро, пліз, активуй акк"}
 									<div>
 										<button onClick={getUsers}>get users</button>
-										{users.map((user) => (
-											<div key={user.id}>{user.username}</div>
-										))}
 									</div>
+									{users.map((user) => (
+										<div key={user.id}>{user.username}</div>
+									))}
 								</div>
 							)}
 						</h2>

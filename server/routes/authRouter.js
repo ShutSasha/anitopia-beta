@@ -18,11 +18,7 @@ router.post(
 	authController.registration
 );
 router.post("/login", authController.login);
-router.get(
-	"/users",
-	roleMiddleware(["ADMIN", "USER"]),
-	authController.getUsers
-);
+router.get("/users", roleMiddleware(["ADMIN"]), authController.getUsers);
 router.post("/logout", authController.logout);
 router.get("/activate/:link", authController.activate);
 router.get("/refresh", authController.refresh);

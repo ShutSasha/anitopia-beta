@@ -12,7 +12,7 @@ module.exports = function (roles) {
 
 			if (!token) {
 				return res
-					.status(403)
+					.status(401)
 					.json({ message: "Пользователь не авторизован 1" });
 			}
 			const { roles: userRoles } = jwt.verify(
@@ -35,7 +35,7 @@ module.exports = function (roles) {
 		} catch (e) {
 			console.log(e);
 			return res
-				.status(403)
+				.status(401)
 				.json({ message: "Пользователь не авторизован 2" });
 		}
 	};

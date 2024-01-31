@@ -19,7 +19,7 @@ class UserService {
 			);
 		}
 
-		const hashPassword = await bcrypt.hashSync(password, 7);
+		const hashPassword = await bcrypt.hashSync(password, process.env.SALT);
 		const userRole = await Role.findOne({ value: "USER" });
 		const activationLink = uuid.v4();
 
