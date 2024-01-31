@@ -11,7 +11,7 @@ export const User: FC = observer(() => {
 	return (
 		<>
 			<div>
-				<Link to="/profile">
+				<Link title="Профиль" to="/profile">
 					<img
 						className={styles.profile_img}
 						src={user_img_default}

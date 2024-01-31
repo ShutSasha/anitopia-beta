@@ -5,6 +5,7 @@ import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
+import { NotFoundPage } from "../../not-found";
 
 export const Profile: FC = observer(() => {
 	const { store } = useContext(Context);
@@ -15,6 +16,7 @@ export const Profile: FC = observer(() => {
 
 	if (!store.isAuth) {
 		navigate("/login");
+		return <NotFoundPage />;
 	}
 
 	if (store.isAuth) {

@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 export const Logout: FC = observer(() => {
 	const { store } = useContext(Context);
 	return (
-		<div>
+		<div title="Выход">
 			<button className={styles.btn} onClick={() => store.logout()}></button>
 		</div>
 	);
