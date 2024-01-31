@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 export const HomePage: FC = observer(() => {
 	const { store } = useContext(Context);
 
-	console.log(store.user.username);
+	console.log(store.user);
 
 	return (
 		<>
