@@ -33,9 +33,11 @@ export default class Store {
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);
+			return true;
 		} catch (error: any) {
 			//! передивитись
 			console.error(error.response.data.message);
+			return false;
 		}
 	}
 

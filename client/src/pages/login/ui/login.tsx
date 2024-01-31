@@ -20,7 +20,11 @@ export const Login: FC = observer(() => {
 		console.log({ username, password });
 		store
 			.login(username, password)
-			.then(() => console.log("success"))
+			.then((isLoggedIn) => {
+				if (isLoggedIn) {
+					navigate("/");
+				}
+			})
 			.catch((err) => console.error(err));
 	};
 

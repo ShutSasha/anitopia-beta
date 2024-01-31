@@ -1,0 +1,20 @@
+.container {
+	max-width: var(--container-width);
+	margin: 0 auto;
+}
+
+.header {
+	margin-bottom: 20px;
+}
+
+.profile_img {
+	margin-bottom: 20px;
+}
+
+.profile_wrapper {
+	background-color: #404040;
+	height: 40vh;
+	h2 {
+		color: #fff;
+	}
+}

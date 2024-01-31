@@ -6,6 +6,7 @@ import { NotFoundPage } from "./not-found";
 import { HomePage } from "./home";
 import { Registration } from "./registration";
 import { Login } from "./login";
+import { Profile } from "./profile";
 
 export const router = createBrowserRouter(
 	[
@@ -20,6 +21,10 @@ export const router = createBrowserRouter(
 		{
 			path: routes.LOGIN,
 			element: <Login />,
+		},
+		{
+			path: routes.PROFILE,
+			element: <Profile />,
 		},
 		{
 			path: "*",
