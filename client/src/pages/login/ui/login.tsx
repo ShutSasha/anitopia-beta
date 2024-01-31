@@ -1,19 +1,22 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import { InputAuth } from "../../../shared";
 import { AuthContext } from "../context/AuthContext";
 import { getInputsData } from "../consts/input-data";
+import { Context } from "../../../main";
+import { observer } from "mobx-react-lite";
 
-export const Login: FC = () => {
+export const Login: FC = observer(() => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const { store } = useContext(Context);
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 		console.log({ username, password });
-		return;
+		store.login(username, password);
 	};
 
 	const inputsData = getInputsData(setUsername, setPassword);
@@ -50,4 +53,4 @@ export const Login: FC = () => {
 			</div>
 		</AuthContext.Provider>
 	);
-};
+});

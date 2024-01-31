@@ -1,31 +1,26 @@
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 // import axios from "axios";
 import { Toast } from "../../../shared";
 import { InputAuth } from "../../../shared";
 import { AuthContext } from "../context/AuthContenx";
 import { getInputsData } from "../consts/input-data";
+import { Context } from "../../../main";
+import { observer } from "mobx-react-lite";
 
-export const Registration = () => {
+export const Registration = observer(() => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const [showToast, setShowToast] = useState(false);
+	const { store } = useContext(Context);
 
 	const handleButtonClick = () => {
 		setShowToast(true);
 		setTimeout(() => setShowToast(false), 4000);
-	};
-
-	const onCreate = (formData: any) => {
-		//example
-		// axios
-		// 	.put("link", formData)
-		// 	.then((res) => console.log("user created", res.data))
-		// 	.catch((err) => console.error(err));
 	};
 
 	const handleSubmit = (event: any) => {
@@ -37,14 +32,7 @@ export const Registration = () => {
 			return;
 		}
 
-		const formData = {
-			username: username,
-			email: email,
-			password: password,
-		};
-		console.log(formData);
-
-		onCreate(formData);
+		store.registration(username, password, email);
 	};
 
 	const inputsData = getInputsData(
@@ -110,4 +98,4 @@ export const Registration = () => {
 			</div>
 		</AuthContext.Provider>
 	);
-};
+});
