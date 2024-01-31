@@ -9,26 +9,28 @@ import { NotFoundPage } from "../../not-found";
 import axios from "axios";
 
 export const Profile: FC = observer(() => {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [image, setImage] = useState<File | null>(null);
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files && event.target.files.length > 0) {
-			setSelectedFile(event.target.files[0]);
-		} else {
-			setSelectedFile(null);
-		}
-	};
+	// const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 	if (event.target.files && event.target.files.length > 0) {
+	// 		setSelectedFile(event.target.files[0]);
+	// 	} else {
+	// 		setSelectedFile(null);
+	// 	}
+	// };
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
-		if (selectedFile == null) {
+		if (image == null) {
 			return;
 		}
+		console.log(image);
 		const formData = new FormData();
-		formData.append("avatar", selectedFile);
+		// formData.append("img", selectedFile);
+		formData.append("img", image);
+		console.log(formData);
 
 		axios
 			.post(`http://localhost:5000/api/profile/upload-avatar`, formData)
@@ -63,13 +65,15 @@ export const Profile: FC = observer(() => {
 							</label>
 							<input
 								type="file"
-								id="imageUpload"
-								name="imageUpload"
-								accept="image/*"
-								onChange={handleFileChange}
+								onChange={(e) => {
+									const selectedFile = e.target.files?.[0];
+									if (selectedFile) {
+										setImage(selectedFile);
+									}
+								}}
 							/>
 							<input
-								style={{ cursor: "pointer" }}
+								style={{cursor: "pointer"}}
 								type="submit"
 								value="Загрузить"
 							/>

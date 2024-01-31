@@ -6,8 +6,14 @@ const multer = require("multer");
 
 class profileController {
 	async uploadAvatarUser(req, res, next) {
-		const response = req.files;
-		return res.json(response);
+		try{
+
+			const response = req.files;
+			return res.json(response);
+			
+		}catch (e) {
+			console.log(e);
+		}
 	}
 }
 
