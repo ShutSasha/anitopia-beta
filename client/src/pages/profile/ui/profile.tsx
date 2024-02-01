@@ -6,7 +6,6 @@ import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
-import axios from "axios";
 import $api from "../../../app/http";
 
 export const Profile: FC = observer(() => {
@@ -21,33 +20,16 @@ export const Profile: FC = observer(() => {
 		}
 	};
 
-	const handleFormSubmit = async (event: React.FormEvent) => {
+	const handleFormSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-
 		if (img) {
-			// Создаем объект FormData и добавляем файл
 			const formData = new FormData();
 			formData.append("img", img);
 
-			try {
-				// Отправляем POST-запрос с использованием fetch или другой библиотеки
-				const response = await fetch(
-					`http://localhost:5000/api/profile/uploadAvatar`,
-					{
-						method: "POST",
-						body: formData,
-					}
-				);
-
-				// Обрабатываем ответ
-				if (response.ok) {
-					console.log("Картинка успешно загружена");
-				} else {
-					console.error("Ошибка при загрузке картинки");
-				}
-			} catch (error) {
-				console.error("Произошла ошибка", error);
-			}
+			$api
+				.post(`/profile/uploadAvatar`, formData)
+				.then(() => console.log("Картинка успешно загружена"))
+				.catch((err) => console.error(err));
 		}
 	};
 

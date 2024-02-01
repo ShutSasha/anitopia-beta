@@ -14,7 +14,7 @@ export const HomePage: FC = observer(() => {
 			const response = await UserService.fetchUsers();
 			setusers(response.data);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 

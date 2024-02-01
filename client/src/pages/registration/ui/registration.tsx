@@ -33,7 +33,6 @@ export const Registration = observer(() => {
 
 		if (repeatPassword !== password) {
 			handleButtonClick();
-			console.log(showToast);
 			return;
 		}
 

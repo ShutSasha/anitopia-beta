@@ -29,7 +29,7 @@ export default class Store {
 	async login(username: string, password: string) {
 		try {
 			const response = await AuthService.login(username, password);
-			console.log(response);
+
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);
@@ -48,14 +48,14 @@ export default class Store {
 				password,
 				email
 			);
-			console.log(response);
+
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);
 			return true;
 		} catch (error) {
 			//! передивитись
-			console.log(error);
+			console.error(error);
 			return false;
 		}
 	}
@@ -68,7 +68,7 @@ export default class Store {
 			this.setUser({} as IUser);
 		} catch (error) {
 			//! передивитись
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -79,7 +79,6 @@ export default class Store {
 				`${API_URL}/auth/refresh`,
 				{ withCredentials: true }
 			);
-			console.log(response);
 			localStorage.setItem("token", response.data.accessToken);
 			this.setAuth(true);
 			this.setUser(response.data.user);

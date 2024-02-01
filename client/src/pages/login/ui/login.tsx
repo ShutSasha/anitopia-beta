@@ -17,7 +17,7 @@ export const Login: FC = observer(() => {
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log({ username, password });
+
 		store
 			.login(username, password)
 			.then((isLoggedIn) => {
