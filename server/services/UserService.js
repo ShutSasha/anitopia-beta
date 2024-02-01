@@ -10,6 +10,14 @@ const UserDto = require("../dtos/user-dto");
 const ApiError = require("../errors/apiError");
 const jwt = require("jsonwebtoken");
 const imageService = require("./ImageService");
+const fs = require("fs");
+const ImageKit = require("imagekit");
+
+var imagekit = new ImageKit({
+	publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
+	privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
+	urlEndpoint: process.env.IMAGE_KIT_URL_ENDPOINT,
+});
 
 class UserService {
 	async registration(username, email, password) {
@@ -109,6 +117,38 @@ class UserService {
 		const users = UserModel.find();
 		return users;
 	}
+
+	async changeUserIcon(file,username){
+		const user = await UserModel.findOne({username});
+
+		if(!user){
+			throw ApiError.BadRequest("Пользователь с таким именем не найден")
+		}
+
+		var fileName = uuid.v4() + "jpg";
+		const fileStream = fs.createReadStream(file);
+		await imagekit.upload({
+			file : fileStream, //required
+			fileName : fileName,   //required
+			folder: 'user_icons',
+			extensions: [
+				{
+					name: "google-auto-tagging",
+					maxTags: 5,
+					minConfidence: 95
+				}
+			]
+		}, async (error, result) => {
+			if(error)
+				console.log(error);
+			else{
+				console.log(result);
+				user.avatarLink = result.url;
+				user.save();
+			}});
+
+	}
+
 }
 
 module.exports = new UserService();

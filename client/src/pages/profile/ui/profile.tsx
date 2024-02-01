@@ -25,6 +25,7 @@ export const Profile: FC = observer(() => {
 		if (img) {
 			const formData = new FormData();
 			formData.append("img", img);
+			formData.append("username", store.user.username);
 
 			$api
 				.post(`/profile/uploadAvatar`, formData)
