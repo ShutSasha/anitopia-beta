@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Header } from "../../../widgets/header";
@@ -9,6 +9,7 @@ import { NotFoundPage } from "../../not-found";
 import $api from "../../../app/http";
 
 export const Profile: FC = observer(() => {
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
 	const [img, setImage] = useState<File | null>(null);
@@ -17,11 +18,12 @@ export const Profile: FC = observer(() => {
 		if (event.target.files && event.target.files.length > 0) {
 			const selectedImage = event.target.files[0];
 			setImage(selectedImage);
+			//! null?? what
+			console.log(img);
 		}
 	};
 
-	const handleFormSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
+	useEffect(() => {
 		if (img) {
 			const formData = new FormData();
 			formData.append("img", img);
@@ -32,7 +34,25 @@ export const Profile: FC = observer(() => {
 				.then(() => console.log("Картинка успешно загружена"))
 				.catch((err) => console.error(err));
 		}
+	}, [img]);
+
+	const handleClick = () => {
+		fileInputRef.current?.click();
 	};
+
+	// const handleFormSubmit = (event: React.FormEvent) => {
+	// 	event.preventDefault();
+	// 	if (img) {
+	// 		const formData = new FormData();
+	// 		formData.append("img", img);
+	// 		formData.append("username", store.user.username);
+
+	// 		$api
+	// 			.post(`/profile/uploadAvatar`, formData)
+	// 			.then(() => console.log("Картинка успешно загружена"))
+	// 			.catch((err) => console.error(err));
+	// 	}
+	// };
 
 	if (store.isLoading) {
 		return <div>Загрузка...</div>;
@@ -42,24 +62,6 @@ export const Profile: FC = observer(() => {
 		navigate("/login");
 		return <NotFoundPage />;
 	}
-
-	// const handleClick = () => {
-	// 	const input = document.createElement("input");
-	// 	input.type = "file";
-	// 	input.accept = "image/*";
-
-	// 	input.addEventListener("change", (event: any) => {
-	// 		if (event && event.target) {
-	// 			const file = event.target.files[0];
-	// 			$api
-	// 				.post(`/profile/uploadAvatar`, file)
-	// 				.then(() => console.log("Картинка успешно загружена"))
-	// 				.catch((err) => console.error(err));
-	// 		}
-	// 	});
-
-	// 	input.click();
-	// };
 
 	if (store.isAuth) {
 		return (
@@ -75,7 +77,7 @@ export const Profile: FC = observer(() => {
 						<div className={styles.main_user_info}>
 							<div
 								className={styles.imageContainer}
-								// onClick={handleClick}
+								onClick={handleClick}
 							>
 								<img
 									className={styles.profile_avatar_img}
@@ -83,11 +85,19 @@ export const Profile: FC = observer(() => {
 									alt="Avatar"
 								/>
 								<span className={styles.uploadText}>Загрузить</span>
+								<input
+									ref={fileInputRef}
+									name="img"
+									type="file"
+									accept="image/*"
+									onChange={handleImageChange}
+									style={{ display: "none" }}
+								/>
 							</div>
 							<h2>{store.user.username}</h2>
 						</div>
 
-						<form onSubmit={handleFormSubmit}>
+						{/* <form onSubmit={handleFormSubmit}>
 							<label htmlFor="imageUpload">
 								Выберите изображение для загрузки:
 							</label>
@@ -102,7 +112,7 @@ export const Profile: FC = observer(() => {
 								type="submit"
 								value="Загрузить"
 							/>
-						</form>
+						</form> */}
 					</div>
 				</div>
 			</div>

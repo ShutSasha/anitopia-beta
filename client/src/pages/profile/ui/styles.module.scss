@@ -31,3 +31,26 @@
 	border-radius: 50%;
 	margin-right: 20px;
 }
+
+.imageContainer {
+	position: relative;
+	display: inline-block;
+}
+
+.imageContainer:hover {
+	background-color: rgba(0, 0, 0, 0.5); /* Притемнение фона */
+}
+
+.uploadText {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 20px;
+	display: none;
+}
+
+.imageContainer:hover .uploadText {
+	display: block;
+}
