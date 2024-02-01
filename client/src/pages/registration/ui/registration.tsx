@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 // import axios from "axios";
-import { Toast } from "../../../shared";
+import { Loader, Toast } from "../../../shared";
 import { InputAuth } from "../../../shared";
 import { AuthContext } from "../context/AuthContenx";
 import { getInputsData } from "../consts/input-data";
@@ -20,7 +20,7 @@ export const Registration = observer(() => {
 	const navigate = useNavigate();
 
 	if (store.isLoading) {
-		return <div>Загрузка...</div>;
+		return <Loader />;
 	}
 
 	const handleButtonClick = () => {

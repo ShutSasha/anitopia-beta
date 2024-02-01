@@ -17,17 +17,13 @@ class profileController {
 			return res.json(result);
 		} catch (e) {
 			console.error(e);
-			next(e); // Передайте ошибку в обработчик ошибок Express
+			next(e);
 		}
 	}
 
 	async uploadStatus(req, res, next) {
 		try {
 			const { username } = req.params;
-			// setTimeout(async () =>{
-			// 	const userStatus = await userService.getStatus(username);
-			// 	return res.json({status: userStatus});
-			// },5000);
 			const userStatus = await userService.getStatus(username);
 			return res.json({ status: userStatus });
 		} catch (e) {

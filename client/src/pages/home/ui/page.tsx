@@ -5,6 +5,7 @@ import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { IUser } from "../../../app/models/IUser";
 import UserService from "../../../app/services/UserService";
+import { Loader } from "../../../shared";
 
 export const HomePage: FC = observer(() => {
 	const { store } = useContext(Context);
@@ -19,7 +20,7 @@ export const HomePage: FC = observer(() => {
 	}
 
 	if (store.isLoading) {
-		return <div>Загрузка...</div>;
+		return <Loader />;
 	}
 
 	return (

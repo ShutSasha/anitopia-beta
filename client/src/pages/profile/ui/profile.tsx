@@ -121,14 +121,54 @@ export const Profile: FC = observer(() => {
 							<ul className={styles.user_data_list}>
 								<li className={styles.user_data_item}>
 									Дата регистрации:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
 								</li>
-								<li className={styles.user_data_item}>Имя:</li>
-								<li className={styles.user_data_item}>Фамилия:</li>
+								<li className={styles.user_data_item}>
+									Имя:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
+								</li>
+								<li className={styles.user_data_item}>
+									Фамилия:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
+								</li>
 							</ul>
 							<ul className={styles.user_data_list}>
-								<li className={styles.user_data_item}>Страна:</li>
-								<li className={styles.user_data_item}>Пол:</li>
-								<li className={styles.user_data_item}>Возраст:</li>
+								<li className={styles.user_data_item}>
+									Страна:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
+								</li>
+								<li className={styles.user_data_item}>
+									Пол:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
+								</li>
+								<li className={styles.user_data_item}>
+									Возраст:
+									{!store.user.username ? (
+										<div>Аниме</div>
+									) : (
+										<span> Не указано</span>
+									)}
+								</li>
 							</ul>
 						</div>
 					</div>

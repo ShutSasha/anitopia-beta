@@ -36,8 +36,6 @@ var imageURL = imagekit.url({
 	],
 });
 
-console.log(imageURL);
-
 const start = async () => {
 	try {
 		await mongoose.connect(

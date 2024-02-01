@@ -154,7 +154,6 @@ class UserService {
 						const oldFilelink = user.avatarLink;
 						await imageService.deleteImage(oldFilelink);
 					}
-
 					user.avatarLink = result.url;
 					user.uploadStatus = false;
 					user.save();

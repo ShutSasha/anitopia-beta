@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from "react";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { useState } from "react";
-import { InputAuth } from "../../../shared";
+import { InputAuth, Loader } from "../../../shared";
 import { AuthContext } from "../context/AuthContext";
 import { getInputsData } from "../consts/input-data";
 import { Context } from "../../../main";
@@ -29,7 +29,7 @@ export const Login: FC = observer(() => {
 	};
 
 	if (store.isLoading) {
-		<div>Загрузка...</div>;
+		return <Loader />;
 	}
 
 	if (store.isAuth) {
