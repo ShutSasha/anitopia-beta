@@ -1,3 +1,4 @@
+export { Loader } from './ui/loader/loader';
 export { User } from "./ui/user-icon/user.tsx";
 export { Logout } from "./ui/logout/logout";
 export { InputAuth } from "./ui/input-auth/input-auth";

@@ -119,11 +119,11 @@ class UserService {
 		return users;
 	}
 
-	async changeUserIcon(file,username){
-		const user = await UserModel.findOne({username});
+	async changeUserIcon(file, username) {
+		const user = await UserModel.findOne({ username });
 
-		if(!user){
-			throw ApiError.BadRequest("Пользователь с таким именем не найден")
+		if (!user) {
+			throw ApiError.BadRequest("Пользователь с таким именем не найден");
 		}
 
 		user.uploadStatus = true;
@@ -131,38 +131,42 @@ class UserService {
 
 		var fileName = uuid.v4() + "jpg";
 		const fileStream = fs.createReadStream(file);
-		await imagekit.upload({
-			file : fileStream, //required
-			fileName : fileName,   //required
-			folder: 'user_icons',
-			extensions: [
-				{
-					name: "google-auto-tagging",
-					maxTags: 5,
-					minConfidence: 95
-				}
-			]
-		}, async (error, result) => {
-			if(error)
-				console.log(error);
-			else{
-				if (user.avatarLink && user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE) {
-					const oldFilelink = user.avatarLink
-					await imageService.deleteImage(oldFilelink);
-				}
-				console.log(result);
-				user.avatarLink = result.url;
-				user.uploadStatus = false;
-				user.save();
-			}});
+		await imagekit.upload(
+			{
+				file: fileStream, //required
+				fileName: fileName, //required
+				folder: "user_icons",
+				extensions: [
+					{
+						name: "google-auto-tagging",
+						maxTags: 5,
+						minConfidence: 95,
+					},
+				],
+			},
+			async (error, result) => {
+				if (error) console.log(error);
+				else {
+					if (
+						user.avatarLink &&
+						user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE
+					) {
+						const oldFilelink = user.avatarLink;
+						await imageService.deleteImage(oldFilelink);
+					}
 
+					user.avatarLink = result.url;
+					user.uploadStatus = false;
+					user.save();
+				}
+			}
+		);
 	}
 
-	async getStatus(username){
-		const user = await UserModel.findOne({username});
+	async getStatus(username) {
+		const user = await UserModel.findOne({ username });
 		return user.uploadStatus;
 	}
-
 }
 
 module.exports = new UserService();

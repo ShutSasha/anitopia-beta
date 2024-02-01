@@ -1,0 +1,15 @@
+.container_loader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	background-color: paleturquoise;
+}
+
+.loader {
+	height: 300px;
+	width: 256px;
+	background: url("./assets/loader.gif");
+	background-repeat: no-repeat;
+}

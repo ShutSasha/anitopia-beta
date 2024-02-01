@@ -7,6 +7,7 @@ import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
 import $api from "../../../app/http";
+import { Loader } from "../../../shared";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -24,20 +25,52 @@ export const Profile: FC = observer(() => {
 	};
 
 	useEffect(() => {
+		let intervalId: any;
+
+		const checkUploadStatus = async () => {
+			try {
+				const response = await $api.get(
+					`/profile/uploadStatus/${store.user.username}`
+				);
+				const status = response.data.status;
+				console.log(status);
+				if (status === false) {
+					console.log("Image upload completed");
+					clearInterval(intervalId);
+
+					window.addEventListener("unload", function () {
+						store.isLoading = false;
+					});
+					window.location.reload();
+				} else if (!status) {
+					console.error("Image upload failed");
+					clearInterval(intervalId);
+					store.isLoading = false;
+				}
+			} catch (error) {
+				console.error("Error checking upload status", error);
+			}
+		};
+
 		if (img) {
-			// store.isLoading = true;
+			store.isLoading = true;
 			const formData = new FormData();
 			formData.append("img", img);
 			formData.append("username", store.user.username);
 
 			$api
-				.post(`/profile/uploadAvatar`, formData)
+				.post("/profile/uploadAvatar", formData)
 				.then(() => {
-					// store.isLoading = false;
-					// window.location.reload();
+					console.log("Загрузка изображения началась");
+					intervalId = setInterval(checkUploadStatus, 1000);
 				})
-				.catch((err) => console.error(err));
+				.catch((err) => {
+					console.error("Error uploading image", err);
+					store.isLoading = false;
+				});
 		}
+
+		return () => clearInterval(intervalId);
 	}, [img]);
 
 	const handleClick = () => {
@@ -45,7 +78,7 @@ export const Profile: FC = observer(() => {
 	};
 
 	if (store.isLoading) {
-		return <div>Загрузка...</div>;
+		return <Loader />;
 	}
 
 	if (!store.isAuth) {
