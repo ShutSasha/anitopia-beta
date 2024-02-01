@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { useState } from "react";
@@ -27,6 +27,14 @@ export const Login: FC = observer(() => {
 			})
 			.catch((err) => console.error(err));
 	};
+
+	if (store.isLoading) {
+		<div>Загрузка...</div>;
+	}
+
+	if (store.isAuth) {
+		navigate("/");
+	}
 
 	const inputsData = getInputsData(setUsername, setPassword);
 	return (
