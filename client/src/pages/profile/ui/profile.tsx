@@ -25,13 +25,17 @@ export const Profile: FC = observer(() => {
 
 	useEffect(() => {
 		if (img) {
+			// store.isLoading = true;
 			const formData = new FormData();
 			formData.append("img", img);
 			formData.append("username", store.user.username);
 
 			$api
 				.post(`/profile/uploadAvatar`, formData)
-				.then(() => console.log("Картинка успешно загружена"))
+				.then(() => {
+					// store.isLoading = false;
+					// window.location.reload();
+				})
 				.catch((err) => console.error(err));
 		}
 	}, [img]);
@@ -39,20 +43,6 @@ export const Profile: FC = observer(() => {
 	const handleClick = () => {
 		fileInputRef.current?.click();
 	};
-
-	// const handleFormSubmit = (event: React.FormEvent) => {
-	// 	event.preventDefault();
-	// 	if (img) {
-	// 		const formData = new FormData();
-	// 		formData.append("img", img);
-	// 		formData.append("username", store.user.username);
-
-	// 		$api
-	// 			.post(`/profile/uploadAvatar`, formData)
-	// 			.then(() => console.log("Картинка успешно загружена"))
-	// 			.catch((err) => console.error(err));
-	// 	}
-	// };
 
 	if (store.isLoading) {
 		return <div>Загрузка...</div>;
@@ -66,13 +56,9 @@ export const Profile: FC = observer(() => {
 	if (store.isAuth) {
 		return (
 			<div>
-				<div className={styles.header}>
-					<Header />
-				</div>
+				<Header />
 				<div className={styles.container}>
-					<div className={styles.profile_bg_img}>
-						<ProfileBgImg />
-					</div>
+					<ProfileBgImg />
 					<div className={styles.profile_wrapper}>
 						<div className={styles.main_user_info}>
 							<div
@@ -94,25 +80,26 @@ export const Profile: FC = observer(() => {
 									style={{ display: "none" }}
 								/>
 							</div>
-							<h2>{store.user.username}</h2>
+							<h2 className={styles.title_username}>
+								{store.user.username}
+							</h2>
 						</div>
-
-						{/* <form onSubmit={handleFormSubmit}>
-							<label htmlFor="imageUpload">
-								Выберите изображение для загрузки:
-							</label>
-							<input
-								name="img"
-								type="file"
-								accept="image/*"
-								onChange={handleImageChange}
-							/>
-							<input
-								style={{ cursor: "pointer" }}
-								type="submit"
-								value="Загрузить"
-							/>
-						</form> */}
+						{/*  */}
+						{/*  */}
+						<div className={styles.contaienr_user_data}>
+							<ul>
+								<li>Дата регистрации:</li>
+								<li>Имя:</li>
+								<li>Фамилия:</li>
+							</ul>
+							<ul>
+								<li>Страна:</li>
+								<li>Пол:</li>
+								<li>Возраст:</li>
+							</ul>
+						</div>
+						{/*  */}
+						{/*  */}
 					</div>
 				</div>
 			</div>
