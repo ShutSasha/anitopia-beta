@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext } from "react";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { useState } from "react";
