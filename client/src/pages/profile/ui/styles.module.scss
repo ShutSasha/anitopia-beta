@@ -7,14 +7,27 @@
 	margin-bottom: 20px;
 }
 
-.profile_img {
-	margin-bottom: 20px;
-}
-
 .profile_wrapper {
+	padding: 20px 10px;
 	background-color: #404040;
 	height: 40vh;
 	h2 {
 		color: #fff;
 	}
+}
+
+.main_user_info {
+	display: flex;
+	align-items: center;
+}
+
+.profile_bg_img {
+	margin-bottom: 20px;
+}
+
+.profile_avatar_img {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	margin-right: 20px;
 }

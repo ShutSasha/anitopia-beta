@@ -42,6 +42,24 @@ export const Profile: FC = observer(() => {
 		return <NotFoundPage />;
 	}
 
+	// const handleClick = () => {
+	// 	const input = document.createElement("input");
+	// 	input.type = "file";
+	// 	input.accept = "image/*";
+
+	// 	input.addEventListener("change", (event: any) => {
+	// 		if (event && event.target) {
+	// 			const file = event.target.files[0];
+	// 			$api
+	// 				.post(`/profile/uploadAvatar`, file)
+	// 				.then(() => console.log("Картинка успешно загружена"))
+	// 				.catch((err) => console.error(err));
+	// 		}
+	// 	});
+
+	// 	input.click();
+	// };
+
 	if (store.isAuth) {
 		return (
 			<div>
@@ -49,11 +67,25 @@ export const Profile: FC = observer(() => {
 					<Header />
 				</div>
 				<div className={styles.container}>
-					<div className={styles.profile_img}>
+					<div className={styles.profile_bg_img}>
 						<ProfileBgImg />
 					</div>
 					<div className={styles.profile_wrapper}>
-						<h2>Hello {store.user.username}</h2>
+						<div className={styles.main_user_info}>
+							<div
+								className={styles.imageContainer}
+								// onClick={handleClick}
+							>
+								<img
+									className={styles.profile_avatar_img}
+									src={store.user.avatarLink}
+									alt="Avatar"
+								/>
+								<span className={styles.uploadText}>Загрузить</span>
+							</div>
+							<h2>{store.user.username}</h2>
+						</div>
+
 						<form onSubmit={handleFormSubmit}>
 							<label htmlFor="imageUpload">
 								Выберите изображение для загрузки:
