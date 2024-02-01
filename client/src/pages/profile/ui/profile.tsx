@@ -117,22 +117,20 @@ export const Profile: FC = observer(() => {
 								{store.user.username}
 							</h2>
 						</div>
-						{/*  */}
-						{/*  */}
 						<div className={styles.contaienr_user_data}>
-							<ul>
-								<li>Дата регистрации:</li>
-								<li>Имя:</li>
-								<li>Фамилия:</li>
+							<ul className={styles.user_data_list}>
+								<li className={styles.user_data_item}>
+									Дата регистрации:
+								</li>
+								<li className={styles.user_data_item}>Имя:</li>
+								<li className={styles.user_data_item}>Фамилия:</li>
 							</ul>
-							<ul>
-								<li>Страна:</li>
-								<li>Пол:</li>
-								<li>Возраст:</li>
+							<ul className={styles.user_data_list}>
+								<li className={styles.user_data_item}>Страна:</li>
+								<li className={styles.user_data_item}>Пол:</li>
+								<li className={styles.user_data_item}>Возраст:</li>
 							</ul>
 						</div>
-						{/*  */}
-						{/*  */}
 					</div>
 				</div>
 			</div>
