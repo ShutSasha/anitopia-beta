@@ -10,5 +10,6 @@ router.post(
 	upload.single("img"),
 	profileController.uploadAvatarUser
 );
+router.get("/uploadStatus",profileController.uploadStatus);
 
 module.exports = router;

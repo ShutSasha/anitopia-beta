@@ -43,6 +43,7 @@ class UserService {
 			avatarLink:
 				"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/user.jpg",
 			password: hashPassword,
+			uploadStatus: false,
 			activationLink,
 			isActivated: false,
 			roles: [userRole.value],
@@ -125,6 +126,9 @@ class UserService {
 			throw ApiError.BadRequest("Пользователь с таким именем не найден")
 		}
 
+		user.uploadStatus = true;
+		user.save();
+
 		var fileName = uuid.v4() + "jpg";
 		const fileStream = fs.createReadStream(file);
 		await imagekit.upload({
@@ -142,11 +146,21 @@ class UserService {
 			if(error)
 				console.log(error);
 			else{
+				if (user.avatarLink && user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE) {
+					const oldFilelink = user.avatarLink
+					await imageService.deleteImage(oldFilelink);
+				}
 				console.log(result);
 				user.avatarLink = result.url;
+				user.uploadStatus = false;
 				user.save();
 			}});
 
+	}
+
+	async getStatus(username){
+		const user = await UserModel.findOne({username});
+		return user.uploadStatus;
 	}
 
 }
