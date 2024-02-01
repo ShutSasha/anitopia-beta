@@ -3,10 +3,6 @@
 	margin: 0 auto;
 }
 
-.header {
-	margin-bottom: 20px;
-}
-
 .profile_wrapper {
 	padding: 20px 10px;
 	background-color: #404040;
@@ -19,26 +15,29 @@
 .main_user_info {
 	display: flex;
 	align-items: center;
-}
-
-.profile_bg_img {
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 
 .profile_avatar_img {
 	height: 150px;
 	width: 150px;
 	border-radius: 50%;
-	margin-right: 20px;
+	transition: background-color 0.3s ease;
+	transition: filter 0.4s ease;
 }
 
 .imageContainer {
 	position: relative;
 	display: inline-block;
+	margin-right: 25px;
 }
 
 .imageContainer:hover {
-	background-color: rgba(0, 0, 0, 0.5); /* Притемнение фона */
+	cursor: pointer;
+}
+
+.imageContainer:hover .profile_avatar_img {
+	filter: brightness(0.4);
 }
 
 .uploadText {
@@ -53,4 +52,9 @@
 
 .imageContainer:hover .uploadText {
 	display: block;
+}
+
+.title_username {
+	font-size: 36px;
+	font-weight: 700;
 }
