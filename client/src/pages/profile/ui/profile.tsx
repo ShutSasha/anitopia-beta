@@ -3,12 +3,13 @@ import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
-import { MainUserInfo, ProfileBgImg } from "../../../features";
+import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
 import { Loader } from "../../../shared";
 import { uploadImage } from "../api/uploadImage";
 import { checkUploadStatus } from "../helpers/checkUploadStatus";
+import { MainUserInfo } from "../../../widgets/main-user-info";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);

@@ -40,6 +40,7 @@ class UserService {
 			lastName: null,
 			country: null,
 			age: null,
+			sex: null,
 			avatarLink:
 				"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/user.jpg",
 			password: hashPassword,
@@ -168,12 +169,12 @@ class UserService {
 		return user.uploadStatus;
 	}
 
-	async editProfile(username, updatedFields){
-		const user = await UserModel.findOne({username});
-		if(!user){
+	async editProfile(username, updatedFields) {
+		const user = await UserModel.findOne({ username });
+		if (!user) {
 			throw new ApiError.BadRequest("Пользователь не найден");
 		}
-		Object.assign(user,updatedFields);
+		Object.assign(user, updatedFields);
 		await user.save();
 		return user;
 	}

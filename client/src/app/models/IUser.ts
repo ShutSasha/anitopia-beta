@@ -4,5 +4,9 @@ export interface IUser {
 	id: string;
 	avatarLink: string;
 	registrationDate: Date;
-
+	firstName: string | null;
+	lastName: string | null;
+	country: string | null;
+	sex: string | null;
+	age: number | null;
 }

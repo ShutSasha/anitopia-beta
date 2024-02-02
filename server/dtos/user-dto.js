@@ -4,7 +4,12 @@ module.exports = class UserDto {
 	isActivated;
 	roles;
 	avatarLink;
-	registrationDate
+	registrationDate;
+	firstName;
+	lastName;
+	country;
+	sex;
+	age;
 
 	constructor(model) {
 		this.username = model.username;
@@ -13,6 +18,10 @@ module.exports = class UserDto {
 		this.roles = model.roles;
 		this.avatarLink = model.avatarLink;
 		this.registrationDate = model.registrationDate;
+		this.firstName = model.firstName;
+		this.lastName = model.lastName;
+		this.country = model.country;
+		this.sex = model.sex;
+		this.age = model.age;
 	}
-
 };

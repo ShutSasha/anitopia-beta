@@ -1,4 +1,4 @@
-.main_user_info {
+.avatar_and_username {
 	display: flex;
 	align-items: center;
 	margin-bottom: 50px;
@@ -43,22 +43,4 @@
 .title_username {
 	font-size: 36px;
 	font-weight: 700;
-}
-
-.container_user_data {
-	display: flex;
-	gap: 20px;
-}
-
-.user_data_list {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-.user_data_list {
-	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-	color: #fff;
-	font-size: 24px;
-	font-weight: 400;
 }

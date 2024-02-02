@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App.tsx";
 import "./app/styles/main.scss";
