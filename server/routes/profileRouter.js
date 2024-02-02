@@ -11,5 +11,5 @@ router.post(
 	profileController.uploadAvatarUser
 );
 router.get("/uploadStatus/:username",profileController.uploadStatus);
-
+router.put("/editProfile/:username", profileController.editUser);
 module.exports = router;
