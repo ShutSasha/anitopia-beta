@@ -10,12 +10,16 @@ import { Loader } from "../../../shared";
 import { uploadImage } from "../api/uploadImage";
 import { checkUploadStatus } from "../helpers/checkUploadStatus";
 import { MainUserInfo } from "../../../widgets/main-user-info";
+import { Modal } from "../../../widgets/Modal";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
 	const [img, setImage] = useState<File | null>(null);
+
+	const[modalActive,setModalActive] = useState<boolean>(false);
+
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -74,6 +78,11 @@ export const Profile: FC = observer(() => {
 						/>
 					</div>
 				</div>
+				<button onClick={() => setModalActive(true)}>Test modal</button>
+				<Modal active={modalActive} setActive={setModalActive}>
+					<p>asfsdfsdf</p>
+					<p>dsfsdfsdfsdfsdfsdfsf</p>
+				</Modal>
 			</div>
 		);
 	}
