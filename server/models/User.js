@@ -15,6 +15,7 @@ const User = new Schema({
 			"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/default-user-icon.jpg",
 	},
 	uploadStatus: {type: Boolean, required: false},
+	registrationDate: {type: Date, required: true},
 	activationLink: { type: String },
 	isActivated: { type: Boolean, default: false },
 	roles: [{ type: String, ref: "Role" }],

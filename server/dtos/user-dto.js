@@ -4,6 +4,7 @@ module.exports = class UserDto {
 	isActivated;
 	roles;
 	avatarLink;
+	registrationDate
 
 	constructor(model) {
 		this.username = model.username;
@@ -11,5 +12,7 @@ module.exports = class UserDto {
 		this.isActivated = model.isActivated;
 		this.roles = model.roles;
 		this.avatarLink = model.avatarLink;
+		this.registrationDate = model.registrationDate;
 	}
+
 };

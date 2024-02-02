@@ -43,6 +43,7 @@ class UserService {
 			avatarLink:
 				"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/user.jpg",
 			password: hashPassword,
+			registrationDate: Date.now(),
 			uploadStatus: false,
 			activationLink,
 			isActivated: false,

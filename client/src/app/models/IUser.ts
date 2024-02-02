@@ -3,4 +3,6 @@ export interface IUser {
 	isActivated: boolean;
 	id: string;
 	avatarLink: string;
+	registrationDate: Date;
+
 }

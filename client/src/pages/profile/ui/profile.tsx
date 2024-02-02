@@ -24,6 +24,7 @@ export const Profile: FC = observer(() => {
 		}
 	};
 
+
 	useEffect(() => {
 		let intervalId: any;
 
@@ -51,6 +52,7 @@ export const Profile: FC = observer(() => {
 				console.error("Error checking upload status", error);
 			}
 		};
+
 
 		if (img) {
 			store.isLoading = true;
@@ -121,8 +123,8 @@ export const Profile: FC = observer(() => {
 							<ul className={styles.user_data_list}>
 								<li className={styles.user_data_item}>
 									Дата регистрации:
-									{!store.user.username ? (
-										<div>Аниме</div>
+									{store.user.registrationDate ? (
+										<div>{store.user.registrationDate}</div>
 									) : (
 										<span> Не указано</span>
 									)}
