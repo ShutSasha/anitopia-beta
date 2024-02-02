@@ -1,0 +1,64 @@
+.main_user_info {
+	display: flex;
+	align-items: center;
+	margin-bottom: 50px;
+}
+
+.profile_avatar_img {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	transition: background-color 0.3s ease;
+	transition: filter 0.4s ease;
+}
+
+.imageContainer {
+	position: relative;
+	display: inline-block;
+	margin-right: 25px;
+}
+
+.imageContainer:hover {
+	cursor: pointer;
+}
+
+.imageContainer:hover .profile_avatar_img {
+	filter: brightness(0.4);
+}
+
+.uploadText {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 20px;
+	display: none;
+}
+
+.imageContainer:hover .uploadText {
+	display: block;
+}
+
+.title_username {
+	font-size: 36px;
+	font-weight: 700;
+}
+
+.container_user_data {
+	display: flex;
+	gap: 20px;
+}
+
+.user_data_list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.user_data_list {
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	color: #fff;
+	font-size: 24px;
+	font-weight: 400;
+}

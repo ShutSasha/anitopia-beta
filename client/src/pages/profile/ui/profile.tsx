@@ -3,12 +3,12 @@ import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
-import { ProfileBgImg } from "../../../features";
+import { MainUserInfo, ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
-import $api from "../../../app/http";
 import { Loader } from "../../../shared";
-import { format } from "date-fns";
+import { uploadImage } from "../api/uploadImage";
+import { checkUploadStatus } from "../helpers/checkUploadStatus";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -20,55 +20,27 @@ export const Profile: FC = observer(() => {
 		if (event.target.files && event.target.files.length > 0) {
 			const selectedImage = event.target.files[0];
 			setImage(selectedImage);
-			//! null?? what
-			console.log(img);
 		}
 	};
 
 	useEffect(() => {
 		let intervalId: any;
 
-		const checkUploadStatus = async () => {
-			try {
-				const response = await $api.get(
-					`/profile/uploadStatus/${store.user.username}`
-				);
-				const status = response.data.status;
-				console.log(status);
-				if (status === false) {
-					console.log("Image upload completed");
-					clearInterval(intervalId);
-
-					window.addEventListener("unload", function () {
-						store.isLoading = false;
-					});
-					window.location.reload();
-				} else if (!status) {
-					console.error("Image upload failed");
-					clearInterval(intervalId);
-					store.isLoading = false;
-				}
-			} catch (error) {
-				console.error("Error checking upload status", error);
-			}
-		};
-
 		if (img) {
 			store.isLoading = true;
-			const formData = new FormData();
-			formData.append("img", img);
-			formData.append("username", store.user.username);
 
-			$api
-				.post("/profile/uploadAvatar", formData)
-				.then(() => {
-					console.log("Загрузка изображения началась");
-					intervalId = setInterval(checkUploadStatus, 1000);
-				})
-				.catch((err) => {
-					console.error("Error uploading image", err);
-					store.isLoading = false;
-				});
+			try {
+				intervalId = uploadImage(img, store.user.username, () =>
+					checkUploadStatus(
+						store.user.username,
+						intervalId,
+						store.isLoading
+					)
+				);
+			} catch (error) {
+				clearInterval(intervalId);
+				store.isLoading = false;
+			}
 		}
 
 		return () => clearInterval(intervalId);
@@ -94,89 +66,11 @@ export const Profile: FC = observer(() => {
 				<div className={styles.container}>
 					<ProfileBgImg />
 					<div className={styles.profile_wrapper}>
-						<div className={styles.main_user_info}>
-							<div
-								className={styles.imageContainer}
-								onClick={handleClick}
-							>
-								<img
-									className={styles.profile_avatar_img}
-									src={store.user.avatarLink}
-									alt="Avatar"
-								/>
-								<span className={styles.uploadText}>Загрузить</span>
-								<input
-									ref={fileInputRef}
-									name="img"
-									type="file"
-									accept="image/*"
-									onChange={handleImageChange}
-									style={{ display: "none" }}
-								/>
-							</div>
-							<h2 className={styles.title_username}>
-								{store.user.username}
-							</h2>
-						</div>
-						<div className={styles.contaienr_user_data}>
-							<ul className={styles.user_data_list}>
-								<li className={styles.user_data_item}>
-									Дата регистрации:
-									{store.user.registrationDate ? (
-										<div>
-											{format(
-												store.user.registrationDate,
-												"dd-MM-yyyy"
-											)}
-										</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-								<li className={styles.user_data_item}>
-									Имя:
-									{!store.user.username ? (
-										<div>Аниме</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-								<li className={styles.user_data_item}>
-									Фамилия:
-									{!store.user.username ? (
-										<div>Аниме</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-							</ul>
-							<ul className={styles.user_data_list}>
-								<li className={styles.user_data_item}>
-									Страна:
-									{!store.user.username ? (
-										<div>Аниме</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-								<li className={styles.user_data_item}>
-									Пол:
-									{!store.user.username ? (
-										<div>Аниме</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-								<li className={styles.user_data_item}>
-									Возраст:
-									{!store.user.username ? (
-										<div>Аниме</div>
-									) : (
-										<span> Не указано</span>
-									)}
-								</li>
-							</ul>
-						</div>
+						<MainUserInfo
+							handleClick={handleClick}
+							fileInputRef={fileInputRef}
+							handleImageChange={handleImageChange}
+						/>
 					</div>
 				</div>
 			</div>
