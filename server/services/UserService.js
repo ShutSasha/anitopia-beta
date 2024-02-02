@@ -168,11 +168,14 @@ class UserService {
 		return user.uploadStatus;
 	}
 
-	async editProfile(username, updatedFields){
-		const user = await UserModel.findOne({username});
+	async editProfile(userId, updatedFields){
+		const user = await UserModel.findById(userId);
+		console.log(user);
+
 		if(!user){
-			throw new ApiError.BadRequest("Пользователь не найден");
+			throw new ApiError.BadRequest();
 		}
+
 		Object.assign(user,updatedFields);
 		await user.save();
 		return user;
