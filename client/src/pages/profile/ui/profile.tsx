@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
 import $api from "../../../app/http";
 import { Loader } from "../../../shared";
+import { format } from "date-fns";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -23,7 +24,6 @@ export const Profile: FC = observer(() => {
 			console.log(img);
 		}
 	};
-
 
 	useEffect(() => {
 		let intervalId: any;
@@ -52,7 +52,6 @@ export const Profile: FC = observer(() => {
 				console.error("Error checking upload status", error);
 			}
 		};
-
 
 		if (img) {
 			store.isLoading = true;
@@ -124,7 +123,12 @@ export const Profile: FC = observer(() => {
 								<li className={styles.user_data_item}>
 									Дата регистрации:
 									{store.user.registrationDate ? (
-										<div>{store.user.registrationDate}</div>
+										<div>
+											{format(
+												store.user.registrationDate,
+												"dd-MM-yyyy"
+											)}
+										</div>
 									) : (
 										<span> Не указано</span>
 									)}
