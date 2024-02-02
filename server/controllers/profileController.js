@@ -33,8 +33,7 @@ class profileController {
 
 	async editUser(req,res,next){
 		try{
-			const { username } = req.params;
-
+			const userId = req.params.id;
 			let updateFields = {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -42,8 +41,7 @@ class profileController {
 				sex: req.body.sex,
 				age: req.body.age
 			};
-			console.log(111)
-			const updatedUserData = await userService.editProfile(username,updateFields);
+			const updatedUserData = await userService.editProfile(userId,updateFields);
 			return res.json(updatedUserData);
 		}catch (e){
 			next(e);
