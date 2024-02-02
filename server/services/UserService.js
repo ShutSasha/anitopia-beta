@@ -167,6 +167,16 @@ class UserService {
 		const user = await UserModel.findOne({ username });
 		return user.uploadStatus;
 	}
+
+	async editProfile(username, updatedFields){
+		const user = await UserModel.findOne({username});
+		if(!user){
+			throw new ApiError.BadRequest("Пользователь не найден");
+		}
+		Object.assign(user,updatedFields);
+		await user.save();
+		return user;
+	}
 }
 
 module.exports = new UserService();

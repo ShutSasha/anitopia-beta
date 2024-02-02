@@ -27,7 +27,26 @@ class profileController {
 			const userStatus = await userService.getStatus(username);
 			return res.json({ status: userStatus });
 		} catch (e) {
-			console.log(e);
+			next(e)
+		}
+	}
+
+	async editUser(req,res,next){
+		try{
+			const { username } = req.params;
+
+			let updateFields = {
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				country: req.body.country,
+				sex: req.body.sex,
+				age: req.body.age
+			};
+			console.log(111)
+			const updatedUserData = await userService.editProfile(username,updateFields);
+			return res.json(updatedUserData);
+		}catch (e){
+			next(e);
 		}
 	}
 }
