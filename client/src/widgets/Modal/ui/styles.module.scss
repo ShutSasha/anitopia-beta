@@ -19,9 +19,8 @@
 }
 
 .modal_content {
-	padding: 20px;
 	border-radius: 12px;
-	background-color: white;
+	background-color: #fff;
 	transform: scale(0.5);
 	transition: 0.4s all;
 	width: 50vw;
@@ -29,4 +28,36 @@
 
 .modal_content_active {
 	transform: scale(1);
+}
+
+.modal_header{
+	height: 50px;
+	width: 100%;
+	border-radius: 12px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	background-color: #FF6666;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.header_text{
+		font-size: 24px;
+		font-family: "Franklin Gothic Heavy", sans-serif;
+		color: #fff;
+
+	}
+}
+
+.container{
+	padding: 15px 10px;
+}
+
+@media screen and (max-width: 450px) {
+
+	.modal_content{
+		width: 85vw;
+
+	}
+	
 }

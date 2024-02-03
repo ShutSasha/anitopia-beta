@@ -74,6 +74,7 @@ export const Registration = observer(() => {
 							<form onSubmit={handleSubmit}>
 								{inputsData.map((item, index) => (
 									<InputAuth
+										labelColor={"white"}
 										key={index}
 										img={item.img}
 										setValue={item.setValue}

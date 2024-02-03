@@ -25,3 +25,27 @@
 	outline: none;
 	background-repeat: no-repeat;
 }
+
+.modal_wrapper{
+	padding: 10px;
+}
+
+.modal_container{
+	display: flex;
+	justify-content: space-evenly;
+	gap: 40px;
+	margin-bottom: 40px;
+}
+
+.modal_container_input{
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.btn_container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 40px;
+}

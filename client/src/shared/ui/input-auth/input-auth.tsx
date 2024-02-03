@@ -2,11 +2,13 @@ import { FC } from "react";
 import styles from "./styles.module.scss";
 
 interface InputAuthProps {
-	img: any;
+	img: any | null;
 	setValue: (item: any) => void;
 	htmlFor: string;
 	type: string;
 	textLabel: string;
+	labelColor: string;
+	value?: any
 }
 
 export const InputAuth: FC<InputAuthProps> = ({
@@ -15,6 +17,8 @@ export const InputAuth: FC<InputAuthProps> = ({
 	htmlFor,
 	type,
 	textLabel,
+	labelColor,
+	value
 }) => {
 	return (
 		<>
@@ -26,9 +30,10 @@ export const InputAuth: FC<InputAuthProps> = ({
 					onChange={(e) => setValue(e.target.value)}
 					id={htmlFor}
 					type={type}
+					value={value}
 					required
 				/>
-				<label htmlFor={htmlFor}>{textLabel}</label>
+				<label htmlFor={htmlFor} style={{color: labelColor}}>{textLabel}</label>
 			</div>
 		</>
 	);
