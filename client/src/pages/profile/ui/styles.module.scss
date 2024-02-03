@@ -4,10 +4,24 @@
 }
 
 .profile_wrapper {
+	position: relative;
 	padding: 20px 10px;
 	background-color: #404040;
 	height: 40vh;
 	h2 {
 		color: #fff;
 	}
+}
+
+.edit_btn {
+	top: 0;
+	right: 0;
+	position: absolute;
+	background: transparent;
+	background-image: url("../../../assets/edit_modify_icon-black.png");
+	height: 75px;
+	width: 75px;
+	border: none;
+	outline: none;
+	background-repeat: no-repeat;
 }

@@ -18,8 +18,7 @@ export const Profile: FC = observer(() => {
 	const navigate = useNavigate();
 	const [img, setImage] = useState<File | null>(null);
 
-	const[modalActive,setModalActive] = useState<boolean>(false);
-
+	const [modalActive, setModalActive] = useState<boolean>(false);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -76,6 +75,10 @@ export const Profile: FC = observer(() => {
 							fileInputRef={fileInputRef}
 							handleImageChange={handleImageChange}
 						/>
+						<button
+							onClick={() => setModalActive(true)}
+							className={styles.edit_btn}
+						></button>
 					</div>
 				</div>
 				<button onClick={() => setModalActive(true)}>Test modal</button>
