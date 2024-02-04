@@ -1,4 +1,5 @@
 {
   "tabWidth": 3,
-  "prettier.useTabs": true
+  "useTabs": true,
+  "prettier.singleAttributePerLine": true
 }
