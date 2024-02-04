@@ -133,7 +133,7 @@ class UserService {
 
 		var fileName = uuid.v4() + "jpg";
 		const fileStream = fs.createReadStream(file);
-		await imagekit.upload(
+		imagekit.upload(
 			{
 				file: fileStream, //required
 				fileName: fileName, //required
