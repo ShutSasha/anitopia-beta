@@ -3,21 +3,11 @@ import styles_h from "./styles.module.scss";
 import { Header } from "../../../widgets/header";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
-import { IUser } from "../../../app/models/IUser";
-import UserService from "../../../app/services/UserService";
 import { Loader } from "../../../shared";
 
 export const HomePage: FC = observer(() => {
 	const { store } = useContext(Context);
-	const [users, setusers] = useState<IUser[]>([]);
-	async function getUsers() {
-		try {
-			const response = await UserService.fetchUsers();
-			setusers(response.data);
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	const [searchText, setSearchText] = useState<string>("");
 
 	if (store.isLoading) {
 		return <Loader />;
@@ -28,31 +18,22 @@ export const HomePage: FC = observer(() => {
 			<Header />
 			<div className={styles_h.wrapper}>
 				<div className={styles_h.container}>
-					<div className="someBlock">
-						<h2>
-							{!store.isAuth ? (
-								<div>
-									aboba
-									<button onClick={getUsers}>get users</button>
-								</div>
-							) : (
-								<div>
-									Вы вошли как {store.user.username}
-									<button onClick={() => store.logout()}>
-										logout
-									</button>
-									{store.user.isActivated
-										? "Красава"
-										: "бро, пліз, активуй акк"}
-									<div>
-										<button onClick={getUsers}>get users</button>
-									</div>
-									{users.map((user) => (
-										<div key={user.id}>{user.username}</div>
-									))}
-								</div>
-							)}
-						</h2>
+					<div className={styles_h.search_filter_line}>
+						<div className={styles_h.search}>
+							<input
+								className={styles_h.search_input}
+								placeholder="НАЙТИ АНИМЕ ПО НАЗВАНИЮ"
+								value={searchText}
+								onChange={(e) => setSearchText(e.target.value)}
+								type="text"
+							/>
+						</div>
+						<div className={styles_h.filter}>
+							<button className={styles_h.filter_btn}>
+								<span className={styles_h.filter_icon}></span>
+								РАСКРЫТЬ ФИЛЬТР
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
