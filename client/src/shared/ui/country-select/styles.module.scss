@@ -1,0 +1,28 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+}
+
+.loading-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 3em;
+}
+
+.grid-container {
+  display: grid;
+  justify-content: center;
+  margin-top: 14px;
+  margin-right: 10px;
+  margin-left: 10px;
+  gap: 10px;
+}
+
+.select-container {
+  width: 96px;
+  height: 50px;
+  font-size: 1em;
+  border-radius: 0.5em;
+}

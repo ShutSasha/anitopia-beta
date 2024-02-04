@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
-import { DefaultButton, InputAuth, Loader } from "../../../shared";
+import { CountrySelect, DefaultButton, InputAuth, Loader } from "../../../shared";
 import { uploadImage } from "../api/uploadImage";
 import { checkUploadStatus } from "../helpers/checkUploadStatus";
 import { MainUserInfo } from "../../../widgets/main-user-info";
@@ -88,7 +88,8 @@ export const Profile: FC = observer(() => {
 						></button>
 					</div>
 				</div>
-				<button onClick={() => setModalActive(true)}>Test modal</button>
+				<CountrySelect/>
+
 				<Modal active={modalActive} setActive={setModalActive} headerText={"Редактирование профиля"}>
 					<>
 						<div className={styles.modal_wrapper}>
