@@ -88,7 +88,6 @@ export const Profile: FC = observer(() => {
 						></button>
 					</div>
 				</div>
-				<CountrySelect/>
 
 				<Modal active={modalActive} setActive={setModalActive} headerText={"Редактирование профиля"}>
 					<>
@@ -119,9 +118,9 @@ export const Profile: FC = observer(() => {
 								</div>
 							</div>
 
-							<InputAuth
-								labelColor={"black"} img={null} setValue={setCountry} htmlFor={"Пол"}
-								type={"text"} textLabel={"Страна"} />
+							<CountrySelect>
+
+							</CountrySelect>
 							<div className={styles.btn_container}>
 								<DefaultButton
 									text={"Редактировать"}
