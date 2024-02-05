@@ -1,0 +1,45 @@
+@keyframes slideInFromRight {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+.toast {
+	position: fixed;
+	top: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #333;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 700;
+	height: 78px;
+	width: 176px;
+	// padding: 8px 36px 28px 36px;
+	border-radius: 8px;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+	background-image: url("./assets/angry-g.gif");
+	background-size: cover;
+	background-position: top;
+	background-repeat: no-repeat;
+	z-index: 2;
+	animation: slideInFromRight 0.3s ease-in-out;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	p {
+		text-align: center;
+	}
+}
+
+.toast.show {
+	opacity: 1;
+}
+
+.toast.hide {
+	display: none;
+}

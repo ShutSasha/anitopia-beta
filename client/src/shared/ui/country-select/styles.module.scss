@@ -1,0 +1,19 @@
+
+.grid-container {
+  display: grid;
+  justify-content: center;
+  margin-top: 14px;
+  margin-right: 10px;
+  margin-left: 10px;
+  gap: 10px;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.select-container {
+  background-color: black;
+  width: 96px;
+  height: 500px;
+  font-size: 1em;
+  border-radius: 0.5em;
+}

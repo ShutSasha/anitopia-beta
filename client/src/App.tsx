@@ -1,9 +1,16 @@
-function App() {
-	return (
-		<>
-			<div>hello it's anitopia</div>
-		</>
-	);
-}
+import { FC, useContext, useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./pages/router";
+import { Context } from "./main";
 
-export default App;
+export const App: FC = () => {
+	const { store } = useContext(Context);
+
+	useEffect(() => {
+		if (localStorage.getItem("token")) {
+			store.checkAuth();
+		}
+	}, []);
+
+	return <RouterProvider router={router} />;
+};

@@ -1,0 +1,27 @@
+.header {
+	border-bottom: 5px solid #f66;
+	background-color: #343a40;
+	padding: 0 10px;
+}
+
+.container_header {
+	position: relative;
+	padding-right: 315px;
+	max-width: var(--container-width);
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px) {
+	.header {
+		padding: 0;
+		padding-right: 10px;
+	}
+
+	.container_header {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

@@ -1,0 +1,11 @@
+@import "./config/setup.scss";
+@import "./config/variables.scss";
+@import "./config/mixins.scss";
+@import "./config/fonts.scss";
+
+body {
+	font-family: var(--font-family), sans-serif;
+	font-weight: var(--body-font-weight);
+	font-size: var(--body-font-size);
+	line-height: var(--body-line-height);
+}

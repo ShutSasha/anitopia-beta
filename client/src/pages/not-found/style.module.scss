@@ -1,0 +1,22 @@
+.container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.img {
+	position: fixed;
+	max-width: 600px;
+	width: 100%;
+	bottom: 0;
+}
+
+.text {
+	text-align: center;
+	margin-bottom: 40px;
+	font-size: 54px;
+	font-family: "Franklin Gothic Heavy", sans-serif;
+	font-weight: 500;
+	color: #343a40;
+	line-height: 60px;
+}
