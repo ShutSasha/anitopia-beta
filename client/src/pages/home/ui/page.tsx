@@ -4,18 +4,27 @@ import { Header } from "../../../widgets/header";
 import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Loader } from "../../../shared";
+import background1 from "../../../assets/slider-1.jpg";
+import background2 from "../../../assets/slider-2.jpg";
+import background3 from "../../../assets/slider-3.jpg";
+import background4 from "../../../assets/slider-4.jpg";
+import background5 from "../../../assets/slider-5.jpg";
+import background6 from "../../../assets/slider-6.jpg";
 
 export const HomePage: FC = observer(() => {
 	const { store } = useContext(Context);
 	const [searchText, setSearchText] = useState<string>("");
 
 	const anime_season = [
-		{ text: "TEXT", color: "#D9D9D9" },
-		{ text: "TEXT", color: "#FBBFBF" },
-		{ text: "TEXT", color: "#FFA3A3" },
-		{ text: "TEXT", color: "#FF8989" },
-		{ text: "TEXT", color: "#FF7A7A" },
-		{ text: "TEXT", color: "#FF6B6B" },
+		{ text: "Поднятие уровня в одиночку", color: background1 },
+		{ text: "Магия и мускулы 2", color: background2 },
+		{ text: "Добро пожаловать в класс превосходства 3", color: background3 },
+		{ text: "Опасность в моём сердце 2", color: background4 },
+		{
+			text: "Злодейка девяносто девятого уровня: «Я босс, но не король демонов»",
+			color: background5,
+		},
+		{ text: "Нежеланно бессмертный авантюрист", color: background6 },
 	];
 
 	if (store.isLoading) {
@@ -54,10 +63,13 @@ export const HomePage: FC = observer(() => {
 							{anime_season.map((card, index) => (
 								<div className={styles_h.card} key={index}>
 									<div
-										style={{ backgroundColor: card.color }}
+										style={{ backgroundImage: `url(${card.color})` }}
 										className={styles_h.card_background}
 									></div>
-									<div className={styles_h.card_text_block}>
+									<div
+										title={card.text}
+										className={styles_h.card_text_block}
+									>
 										{card.text}
 									</div>
 								</div>
