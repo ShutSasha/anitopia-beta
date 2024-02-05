@@ -2,12 +2,7 @@ import { observer } from "mobx-react-lite";
 import { FC, useContext } from "react";
 import styles from "./styles.module.scss";
 import { Context } from "../../../main";
-
-interface MainUserInfoProps {
-	handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-	fileInputRef: React.RefObject<HTMLInputElement>;
-	handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { MainUserInfoProps } from "../../../widgets/main-user-info";
 
 export const AvatarUsernameProfile: FC<MainUserInfoProps> = observer(
 	({ handleClick, fileInputRef, handleImageChange }) => {
