@@ -9,3 +9,4 @@ export { Logo } from "./ui/logo/logo";
 export { ButtonReturn } from "./ui/button-return-main/button.tsx";
 export { DefaultButton } from "./ui/button/defaultButton.tsx";
 export { CountrySelect } from "./ui/country-select/CountrySelect.tsx";
+export { Select } from "./ui/select/default-select.tsx";

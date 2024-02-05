@@ -5,9 +5,10 @@ interface ButtonProps{
     padding:string;
     color:string;
     backgroundColor:string;
+    onClick: () => Promise<void>;
 }
 
-export const DefaultButton: FC<ButtonProps> = ({text,padding,color,backgroundColor}) => {
+export const DefaultButton: FC<ButtonProps> = ({text,padding,color,backgroundColor,onClick}) => {
 
     const buttonStyles: CSSProperties = {
         padding: padding || "10px",
@@ -17,7 +18,7 @@ export const DefaultButton: FC<ButtonProps> = ({text,padding,color,backgroundCol
 
     return (
         <>
-         <button className={styles.default_btn} style={buttonStyles}>
+         <button className={styles.default_btn} style={buttonStyles} onClick={onClick}>
              {text}
          </button>
         </>

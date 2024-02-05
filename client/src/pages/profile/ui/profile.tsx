@@ -6,11 +6,13 @@ import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
-import { CountrySelect, DefaultButton, InputAuth, Loader } from "../../../shared";
+import { CountrySelect, DefaultButton, InputAuth, Loader, Select } from "../../../shared";
 import { uploadImage } from "../api/uploadImage";
 import { checkUploadStatus } from "../helpers/checkUploadStatus";
 import { MainUserInfo } from "../../../widgets/main-user-info";
 import { Modal } from "../../../widgets/Modal";
+import axios from "axios";
+import { IUser } from "../../../app/models/IUser.ts";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -20,12 +22,12 @@ export const Profile: FC = observer(() => {
 	const [modalActive, setModalActive] = useState<boolean>(false);
 
 	//! ПОФИКСИТЬ, ПРОВЕРИТЬ, ИСПРАВИТЬ. ЕБАЛ ВАШ ТАЙП СКРИПТ РАКЕТА ПУШКА АХАХАХ
-	console.log(store.user.age);
-	const [lastName, setLastName] = useState<string | null>("");
+	const [lastName, setLastName] = useState<string>(store.user.lastName || '');
 	const [firstName, setFirstName] = useState<string | null>("");
 	const [age, setAge] = useState<number | null>(null);
 	const [sex, setSex] = useState<string | null>("");
 	const [country, setCountry] = useState<string | null>("");
+
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
@@ -57,6 +59,30 @@ export const Profile: FC = observer(() => {
 		return () => clearInterval(intervalId);
 	}, [img]);
 
+
+	const handleEditProfile = async () => {
+		const profileData = {
+			firstName: firstName,
+			lastName: lastName,
+			age: age,
+			sex: sex,
+			country: country
+		};
+
+		console.log(profileData);
+
+		try {
+			const response = await axios.put(`http://localhost:5000/api/profile/editProfile/${store.user.id}`, profileData);
+			if (response.status == 200) {
+				console.log("Изменение произошло успешно!");
+				console.log(response.data);
+			}
+		} catch (e) {
+			console.error(e);
+		}
+
+
+	};
 	const handleClick = () => {
 		fileInputRef.current?.click();
 	};
@@ -97,11 +123,15 @@ export const Profile: FC = observer(() => {
 									<InputAuth
 										labelColor={"black"} img={null} setValue={setFirstName}
 										htmlFor={"firstName"} type={"text"}
-										textLabel={"Имя"} />
+										textLabel={"Имя"}
+
+									/>
 									<InputAuth
 										labelColor={"black"} img={null} setValue={setLastName}
 										htmlFor={"lastName"} type={"text"}
-										textLabel={"Фамилия"} />
+										textLabel={"Фамилия"}
+										value={lastName}
+									/>
 								</div>
 								<div className={styles.modal_container_input}>
 									<InputAuth
@@ -112,21 +142,19 @@ export const Profile: FC = observer(() => {
 										value={age}
 										textLabel={"Возраст"}
 									/>
-									<InputAuth
-										labelColor={"black"} img={null} setValue={setSex} htmlFor={"Пол"}
-										type={"text"} textLabel={"Пол"} />
+									<Select options={["М", "Ж"]} onSelect={(selectedOption) => setSex(selectedOption)} />
 								</div>
 							</div>
-
-							<CountrySelect>
-
-							</CountrySelect>
+							<div className={styles.select_container}>
+								<CountrySelect />
+							</div>
 							<div className={styles.btn_container}>
 								<DefaultButton
 									text={"Редактировать"}
 									padding={"10px"}
 									color={"white"}
 									backgroundColor={"#ff6666"}
+									onClick={handleEditProfile}
 								/>
 							</div>
 						</div>
