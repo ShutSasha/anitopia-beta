@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import styles from "./styles.module.scss";
 import { format } from "date-fns";
 import { Context } from "../../../main";
-import { observer, useObserver } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 
 export const UserPersonalInfo: FC = observer(() => {
 	const { store } = useContext(Context);
@@ -22,7 +22,7 @@ export const UserPersonalInfo: FC = observer(() => {
 			<ul className={styles.user_data_list}>
 				{renderUserDataItem(
 					format(store.user.registrationDate, "dd-MM-yyyy") ||
-					"Не указано",
+						"Не указано",
 					"Дата регистрации: "
 				)}
 				{renderUserDataItem(store.user.firstName, "Имя: ")}

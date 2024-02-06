@@ -8,7 +8,7 @@ interface InputAuthProps {
 	type: string;
 	textLabel: string;
 	labelColor: string;
-	value?:any;
+	value: any;
 }
 
 export const InputAuth: FC<InputAuthProps> = ({
@@ -18,7 +18,7 @@ export const InputAuth: FC<InputAuthProps> = ({
 	type,
 	textLabel,
 	labelColor,
-	value
+	value,
 }) => {
 	return (
 		<>
@@ -33,7 +33,9 @@ export const InputAuth: FC<InputAuthProps> = ({
 					value={value}
 					required
 				/>
-				<label htmlFor={htmlFor} style={{color: labelColor}}>{textLabel}</label>
+				<label htmlFor={htmlFor} style={{ color: labelColor }}>
+					{textLabel}
+				</label>
 			</div>
 		</>
 	);

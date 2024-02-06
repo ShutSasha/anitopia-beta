@@ -6,7 +6,13 @@ import styles from "./styles.module.scss";
 import { ProfileBgImg } from "../../../features";
 import { useNavigate } from "react-router-dom";
 import { NotFoundPage } from "../../not-found";
-import { CountrySelect, DefaultButton, InputAuth, Loader, Select } from "../../../shared";
+import {
+	CountrySelect,
+	DefaultButton,
+	InputAuth,
+	Loader,
+	Select,
+} from "../../../shared";
 import { uploadImage } from "../api/uploadImage";
 import { checkUploadStatus } from "../helpers/checkUploadStatus";
 import { MainUserInfo } from "../../../widgets/main-user-info";
@@ -19,18 +25,20 @@ export const Profile: FC = observer(() => {
 	const navigate = useNavigate();
 	const [img, setImage] = useState<File | null>(null);
 	const [modalActive, setModalActive] = useState<boolean>(false);
-
-	//! ПОФИКСИТЬ, ПРОВЕРИТЬ, ИСПРАВИТЬ. ЕБАЛ ВАШ ТАЙП СКРИПТ РАКЕТА ПУШКА АХАХАХ
-
-		const [lastName, setLastName] = useState<string|null>(store.user.lastName);
-		const [firstName, setFirstName] = useState<string | null>("");
-		const [age, setAge] = useState<number | null>(null);
-		const [sex, setSex] = useState<string | null>("");
-		const [country, setCountry] = useState<string | null>("");
+	const [lastName, setLastName] = useState<string | null>(store.user.lastName);
+	const [firstName, setFirstName] = useState<string | null>("");
+	const [age, setAge] = useState<number | null>(null);
+	const [sex, setSex] = useState<string | null>("");
+	const [country, setCountry] = useState<string | null>("");
 
 	useEffect(() => {
-		setLastName(store.user.firstName)
+		setLastName(store.user.firstName);
+		setFirstName(store.user.firstName);
+		setAge(store.user.age);
+		setSex(store.user.sex);
+		setCountry(store.user.country);
 	}, [store.user]);
+
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
 			const selectedImage = event.target.files[0];
@@ -61,29 +69,28 @@ export const Profile: FC = observer(() => {
 		return () => clearInterval(intervalId);
 	}, [img]);
 
-
 	const handleEditProfile = async () => {
+		setModalActive(false);
 		const profileData = {
 			firstName: firstName,
 			lastName: lastName,
 			age: age,
 			sex: sex,
-			country: country
+			country: country,
 		};
 
-		console.log(profileData);
-
 		try {
-			const response = await axios.put(`http://localhost:5000/api/profile/editProfile/${store.user.id}`, profileData);
+			const response = await axios.put(
+				`http://localhost:5000/api/profile/editProfile/${store.user.id}`,
+				profileData
+			);
 			if (response.status == 200) {
+				store.updateUserPersonalInfo(response.data);
 				console.log("Изменение произошло успешно!");
-				console.log(response.data);
 			}
 		} catch (e) {
 			console.error(e);
 		}
-
-
 	};
 	const handleClick = () => {
 		fileInputRef.current?.click();
@@ -117,20 +124,30 @@ export const Profile: FC = observer(() => {
 					</div>
 				</div>
 
-				<Modal active={modalActive} setActive={setModalActive} headerText={"Редактирование профиля"}>
+				<Modal
+					active={modalActive}
+					setActive={setModalActive}
+					headerText={"Редактирование профиля"}
+				>
 					<>
 						<div className={styles.modal_wrapper}>
 							<div className={styles.modal_container}>
 								<div className={styles.modal_container_input}>
 									<InputAuth
-										labelColor={"black"} img={null} setValue={setFirstName}
-										htmlFor={"firstName"} type={"text"}
+										labelColor={"black"}
+										img={null}
+										setValue={setFirstName}
+										htmlFor={"firstName"}
+										type={"text"}
 										textLabel={"Имя"}
-
+										value={firstName}
 									/>
 									<InputAuth
-										labelColor={"black"} img={null} setValue={setLastName}
-										htmlFor={"lastName"} type={"text"}
+										labelColor={"black"}
+										img={null}
+										setValue={setLastName}
+										htmlFor={"lastName"}
+										type={"text"}
 										textLabel={"Фамилия"}
 										value={lastName}
 									/>
@@ -138,13 +155,19 @@ export const Profile: FC = observer(() => {
 								<div className={styles.modal_container_input}>
 									<InputAuth
 										labelColor={"black"}
-										img={null} setValue={setAge}
+										img={null}
+										setValue={setAge}
 										htmlFor={"age"}
 										type={"number"}
 										value={age}
 										textLabel={"Возраст"}
 									/>
-									<Select options={["М", "Ж"]} onSelect={(selectedOption) => setSex(selectedOption)} />
+									<Select
+										options={["М", "Ж"]}
+										onSelect={(selectedOption) =>
+											setSex(selectedOption)
+										}
+									/>
 								</div>
 							</div>
 							<div className={styles.select_container}>

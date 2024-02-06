@@ -14,6 +14,22 @@ export default class Store {
 		makeAutoObservable(this);
 	}
 
+	updateUserLastName(newLastName: string) {
+		this.user.lastName = newLastName;
+		// this.user = {
+		//   ...this.user,
+		//   lastName: newLastName,
+		// };
+	}
+
+	updateUserPersonalInfo(userData: any) {
+		this.user.firstName = userData.firstName;
+		this.user.lastName = userData.lastName;
+		this.user.age = userData.age;
+		this.user.sex = userData.sex;
+		this.user.country = userData.country;
+	}
+
 	setAuth(bool: boolean) {
 		this.isAuth = bool;
 	}
