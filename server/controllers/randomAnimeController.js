@@ -1,19 +1,15 @@
 const ApiError = require("../errors/apiError");
 const axios = require("axios");
-
+const anime_serials = require("../anime-serial.json");
 class randomAnimeController {
 	async getRandomAnime(req, res, next) {
 		try {
-			const response = await axios.get(
-				`https://kodikapi.com/list?token=${process.env.KODIK_TOKEN}&types=anime-serial`
-			);
-			const data = response.data;
 
-			const { results } = data;
+			const data = anime_serials;
 
-			const randomIndex = Math.floor(Math.random() * results.length);
+			const randomIndex = Math.floor(Math.random() * data.length);
 
-			const randomAnime = results[randomIndex];
+			const randomAnime = data[randomIndex];
 
 			return res.json(randomAnime);
 		} catch (e) {
