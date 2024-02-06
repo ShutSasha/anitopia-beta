@@ -1,0 +1,11 @@
+.wrapper {
+	background-color: #e2e2e2;
+	background-size: cover;
+	background-attachment: fixed;
+	height: 100vh;
+}
+
+.container {
+	max-width: var(--container-width);
+	margin: 0 auto;
+}
