@@ -18,7 +18,7 @@ export const RandomAnime: FC = () => {
 				console.log(res.data);
 				setLinkAnime(res.data.link);
 				setTitleAnime(res.data.title);
-				setScreenshotsAnime(res.data.screenshots);
+				setScreenshotsAnime(res.data.material_data.screenshots);
 			})
 			.catch((err) => console.error(err));
 	};

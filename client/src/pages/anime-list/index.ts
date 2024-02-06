@@ -1,0 +1,1 @@
+export { AnimeList } from "./ui/anime-list.tsx";

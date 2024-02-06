@@ -22,9 +22,9 @@ export const HomePage: FC = observer(() => {
 		{ text: "Опасность в моём сердце 2", color: background4 },
 		{
 			text: "Злодейка девяносто девятого уровня: «Я босс, но не король демонов»",
-			color: background5,
+			color: background5
 		},
-		{ text: "Нежеланно бессмертный авантюрист", color: background6 },
+		{ text: "Нежеланно бессмертный авантюрист", color: background6 }
 	];
 
 	if (store.isLoading) {

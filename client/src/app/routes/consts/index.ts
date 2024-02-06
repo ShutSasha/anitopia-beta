@@ -3,5 +3,6 @@ export const routes = {
 	REGISTRATION: "/registration",
 	LOGIN: "/login",
 	PROFILE: "/profile",
-	RANDOM_ANIME: "/random-anime"
+	RANDOM_ANIME: "/random-anime",
+	ANIME_LIST: "/anime-list"
 };
