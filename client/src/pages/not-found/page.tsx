@@ -15,11 +15,11 @@ export const NotFoundPage: FC = observer(() => {
 
 	return (
 		<div className={styles.container}>
-			<img src={notFoundImg} className={styles.img} alt="404 not found" />
 			<p className={styles.text}>Ошибка 404. Вы скорее всего, перешли не на ту страничку</p>
 			<Link to="/">
 				<ButtonReturn />
 			</Link>
+			<img src={notFoundImg} className={styles.img} alt="404 not found" />
 		</div>
 	);
 });

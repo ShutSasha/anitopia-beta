@@ -12,7 +12,6 @@ import { checkUploadStatus } from "../helpers/checkUploadStatus";
 import { MainUserInfo } from "../../../widgets/main-user-info";
 import { Modal } from "../../../widgets/Modal";
 import axios from "axios";
-import { IUser } from "../../../app/models/IUser.ts";
 
 export const Profile: FC = observer(() => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -22,13 +21,16 @@ export const Profile: FC = observer(() => {
 	const [modalActive, setModalActive] = useState<boolean>(false);
 
 	//! ПОФИКСИТЬ, ПРОВЕРИТЬ, ИСПРАВИТЬ. ЕБАЛ ВАШ ТАЙП СКРИПТ РАКЕТА ПУШКА АХАХАХ
-	const [lastName, setLastName] = useState<string>(store.user.lastName || '');
-	const [firstName, setFirstName] = useState<string | null>("");
-	const [age, setAge] = useState<number | null>(null);
-	const [sex, setSex] = useState<string | null>("");
-	const [country, setCountry] = useState<string | null>("");
 
+		const [lastName, setLastName] = useState<string|null>(store.user.lastName);
+		const [firstName, setFirstName] = useState<string | null>("");
+		const [age, setAge] = useState<number | null>(null);
+		const [sex, setSex] = useState<string | null>("");
+		const [country, setCountry] = useState<string | null>("");
 
+	useEffect(() => {
+		setLastName(store.user.firstName)
+	}, [store.user]);
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files.length > 0) {
 			const selectedImage = event.target.files[0];
