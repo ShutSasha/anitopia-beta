@@ -14,13 +14,6 @@ export default class Store {
 		makeAutoObservable(this);
 	}
 
-	updateUserLastName(newLastName: string) {
-		this.user.lastName = newLastName;
-		// this.user = {
-		//   ...this.user,
-		//   lastName: newLastName,
-		// };
-	}
 
 	updateUserPersonalInfo(userData: any) {
 		this.user.firstName = userData.firstName;

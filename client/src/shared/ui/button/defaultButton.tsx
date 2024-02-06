@@ -5,6 +5,7 @@ interface ButtonProps {
 	padding?: string;
 	color?: string;
 	backgroundColor?: string;
+	disabled?: boolean;
 	onClick: () => void;
 }
 
@@ -15,11 +16,12 @@ export const DefaultButton: FC<ButtonProps> = ({
 	padding,
 	color,
 	backgroundColor,
+	disabled = false,
 	onClick,
 }) => {
 	const buttonStyles: CSSProperties = {
 		padding: padding || "10px",
-		background: backgroundColor || "#ff6666",
+		background: disabled ? "gray" : backgroundColor || "#ff6666",
 		color: color || "white",
 	};
 
@@ -29,6 +31,7 @@ export const DefaultButton: FC<ButtonProps> = ({
 				className={styles.default_btn}
 				style={buttonStyles}
 				onClick={onClick}
+				disabled={disabled}
 			>
 				{text}
 			</button>
