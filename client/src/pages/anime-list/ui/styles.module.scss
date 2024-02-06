@@ -1,0 +1,15 @@
+.wrapper {
+  background-color: #e2e2e2;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.title{
+  font-family: "Franklin Gothic Heavy",sans-serif;
+  margin: 20px 10px;
+  font-size: 36px;
+}
