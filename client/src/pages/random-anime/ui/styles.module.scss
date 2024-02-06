@@ -8,4 +8,35 @@
 .container {
 	max-width: var(--container-width);
 	margin: 0 auto;
+	padding-top: 25px;
+}
+
+.container_random_btn {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+
+.title_anime {
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	font-size: 24px;
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.player_container {
+	display: flex;
+	justify-content: center;
+}
+
+.screens_anime_title {
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	font-size: 24px;
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.anime_screensots {
+	display: flex;
+	gap: 20px;
 }

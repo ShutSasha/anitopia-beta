@@ -1,26 +1,37 @@
-import {FC,CSSProperties} from "react";
-import styles from "./styles.module.scss"
-interface ButtonProps{
-    text:string;
-    padding:string;
-    color:string;
-    backgroundColor:string;
-    onClick: () => Promise<void>;
+import { FC, CSSProperties } from "react";
+import styles from "./styles.module.scss";
+interface ButtonProps {
+	text: string;
+	padding?: string;
+	color?: string;
+	backgroundColor?: string;
+	onClick: () => void;
 }
 
-export const DefaultButton: FC<ButtonProps> = ({text,padding,color,backgroundColor,onClick}) => {
+//() => Promise<void> |
 
-    const buttonStyles: CSSProperties = {
-        padding: padding || "10px",
-        background: backgroundColor || "#ff6666",
-        color: color || "white"
-    }
+export const DefaultButton: FC<ButtonProps> = ({
+	text,
+	padding,
+	color,
+	backgroundColor,
+	onClick,
+}) => {
+	const buttonStyles: CSSProperties = {
+		padding: padding || "10px",
+		background: backgroundColor || "#ff6666",
+		color: color || "white",
+	};
 
-    return (
-        <>
-         <button className={styles.default_btn} style={buttonStyles} onClick={onClick}>
-             {text}
-         </button>
-        </>
-    );
+	return (
+		<>
+			<button
+				className={styles.default_btn}
+				style={buttonStyles}
+				onClick={onClick}
+			>
+				{text}
+			</button>
+		</>
+	);
 };
