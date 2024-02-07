@@ -1,11 +1,22 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { Menu } from "./menu";
 import { items } from "./consts/nav-names";
+import { handleClickRandomAnime } from "../../../pages/random-anime/api/fetchDataAnime";
+import { Context } from "../../../main";
 
 export const NavList: FC = () => {
 	const [menuActive, setMenuActive] = useState(false);
+	const { store } = useContext(Context);
+
+	const handleRandomAnimeClick = () => {
+		handleClickRandomAnime(
+			store.setRandomAnime,
+			store.setRatingForRandomAnime,
+			store.setLoading
+		);
+	};
 
 	return (
 		<>
@@ -21,6 +32,12 @@ export const NavList: FC = () => {
 						key={index}
 						className={styles.nav_list_item}
 						to={item.href}
+						onClick={
+							item.click
+								? (event: React.MouseEvent<HTMLAnchorElement>) =>
+										handleRandomAnimeClick()
+								: undefined
+						}
 					>
 						<li>{item.value}</li>
 					</Link>

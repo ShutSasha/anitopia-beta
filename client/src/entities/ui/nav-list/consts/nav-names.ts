@@ -3,5 +3,5 @@ export const items = [
 	{ value: "Аниме", href: "/anime-list" },
 	{ value: "Манга", href: "/manga" },
 	{ value: "Топ-100", href: "/top-100" },
-	{ value: "Случайное аниме", href: "/random-anime" },
+	{ value: "Случайное аниме", href: "/random-anime", click: true },
 ];
