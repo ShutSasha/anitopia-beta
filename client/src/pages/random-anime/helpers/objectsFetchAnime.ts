@@ -17,7 +17,6 @@ export const objDefaultState = {
 };
 
 export const objSetAnimeState = (res: any) => {
-	console.log(1);
 	return {
 		title: res.data.title,
 		link: res.data.link,

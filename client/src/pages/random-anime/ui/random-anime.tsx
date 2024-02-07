@@ -17,8 +17,8 @@ export interface Rating {
 
 export const RandomAnime: FC = observer(() => {
 	const { store } = useContext(Context);
-	const anime = store.animeRandomData;
-	const ratings = store.ratingForRandomAnime;
+	const anime = store.randomAnime.animeRandomData;
+	const ratings = store.randomAnime.ratingForRandomAnime;
 
 	if (store.isLoading) {
 		return <Loader />;

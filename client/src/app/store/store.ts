@@ -4,29 +4,18 @@ import { makeAutoObservable } from "mobx";
 import AuthService from "../services/AuthService";
 import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
-import { objDefaultState } from "../../pages/random-anime/helpers/objectsFetchAnime";
-import { Rating } from "../../pages/random-anime/ui/random-anime";
+import RandomAnime from "./RandomAnime";
 
 export default class Store {
 	user = {} as IUser;
 	isAuth = false;
 	isLoading = false;
-	animeRandomData = objDefaultState;
-	ratingForRandomAnime = [] as Rating[];
+	randomAnime: RandomAnime;
 
 	constructor() {
 		makeAutoObservable(this);
 		this.setLoading = this.setLoading.bind(this);
-		this.setRandomAnime = this.setRandomAnime.bind(this);
-		this.setRatingForRandomAnime = this.setRatingForRandomAnime.bind(this);
-	}
-
-	setRandomAnime(animeData: any) {
-		this.animeRandomData = animeData;
-	}
-
-	setRatingForRandomAnime(ratingData: any) {
-		this.ratingForRandomAnime = ratingData;
+		this.randomAnime = new RandomAnime();
 	}
 
 	updateUserPersonalInfo(userData: any) {
