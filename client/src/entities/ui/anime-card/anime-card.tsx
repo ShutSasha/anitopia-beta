@@ -22,8 +22,9 @@ interface AnimeCardProps {
 
 export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 
+
 	if (loading) {
-		return <Skeleton />;
+		return <h1>ЗАГРУЗКА</h1>
 	}
 
 	return (

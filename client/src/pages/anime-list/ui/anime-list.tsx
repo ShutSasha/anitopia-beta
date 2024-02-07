@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { Header } from "../../../widgets/header";
 import { Context } from "../../../main.tsx";
-import { DefaultButton, Loader, Pagination } from "../../../shared";
+import { Loader, Pagination } from "../../../shared";
 import styles from "./styles.module.scss";
 import axios from "axios";
 import { AnimeCard } from "../../../entities";
@@ -32,8 +32,8 @@ export const AnimeList: FC = observer(() => {
 
 			await axios.get("http://localhost:5000/api/anime-list")
 				.then(res => {
-					setLoading(true);
-					const formattedAnimeData = res.data.map((anime:any) => ({
+					setLoading(true)
+					const formattedAnimeData = res.data.map((anime: any) => ({
 						title: anime.title,
 						material_data: {
 							description: anime.material_data.description,
@@ -53,10 +53,14 @@ export const AnimeList: FC = observer(() => {
 	}, []);
 
 	const lastAnimesIndex = currentPage * animesPerPage;
-	const  firstAnimesindex = lastAnimesIndex - animesPerPage;
-	const  currentAnimes = animeData.slice(firstAnimesindex,lastAnimesIndex)
+	const firstAnimesindex = lastAnimesIndex - animesPerPage;
+	const currentAnimes = animeData.slice(firstAnimesindex, lastAnimesIndex);
 
-	const paginate = (pageNumber:number) => setCurrentPage(pageNumber);
+	const paginate = (pageNumber: number) =>{
+		setLoading(true)
+		setCurrentPage(pageNumber);
+		setLoading(false);
+	}
 
 	if (store.isLoading) {
 		<Loader />;
@@ -69,8 +73,8 @@ export const AnimeList: FC = observer(() => {
 				<div className={styles.container}>
 					<h1 className={styles.title}>Список Аниме</h1>
 					<ul>
-						<AnimeCard animes={currentAnimes} loading={loading}/>
-						<Pagination animesPerPage={animesPerPage} totalAnimes={animeData.length} paginate={paginate}/>
+						<AnimeCard animes={currentAnimes} loading={loading} />
+						<Pagination animesPerPage={animesPerPage} totalAnimes={animeData.length} paginate={paginate} />
 					</ul>
 				</div>
 			</div>

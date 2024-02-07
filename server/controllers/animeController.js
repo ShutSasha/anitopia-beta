@@ -7,8 +7,7 @@ class AnimeController {
 
 		try {
 			const data = animeSerials;
-			const result = await AnimeService.getRandomAnime(animeSerials);
-
+			const result = await AnimeService.getRandomAnime(data);
 			return res.json(result);
 		} catch (e) {
 			next(e);
