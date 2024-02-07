@@ -24,7 +24,7 @@ export const AnimeList: FC = observer(() => {
 	const [animeData, setAnimeData] = useState<Anime[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [animesPerPage] = useState<number>(2);
+	const [animesPerPage] = useState<number>(5);
 
 
 	useEffect(() => {

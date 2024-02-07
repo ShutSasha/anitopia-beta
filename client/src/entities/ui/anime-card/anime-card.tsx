@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./styles.module.scss";
-import { Skeleton } from "../../../shared";
+
 
 
 interface MaterialData {
