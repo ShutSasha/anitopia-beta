@@ -1,6 +1,8 @@
 .animeCard {
   display: flex;
   border: 1px solid #ff6666;
+  height: 250px;
+  width: 1000px;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -14,18 +16,16 @@
   width: 100%;
   object-fit: contain;
   margin-right: 10px;
-  cursor: pointer;
 }
 
 .content {
   margin: 0 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   font-family: "Franklin Gothic Medium", sans-serif;
 
   h3 {
-    margin: 0;
+    margin-top: 10px;
     font-size: 20px;
   }
 
@@ -52,13 +52,13 @@
   }
 
   .anime__description::after {
-    content: ""; /* Добавляем пустой элемент для троеточия */
+    content: "";
     position: absolute;
-    bottom: 0; /* Размещаем внизу */
-    right: 0; /* Размещаем справа */
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%); /* Градиентный фон для плавного перехода */
-    width: 50px; /* Ширина элемента */
-    height: 1rem; /* Высота элемента (можно настраивать) */
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
+    width: 50px;
+    height: 1rem;
   }
 
 
@@ -67,6 +67,7 @@
   }
 
   span {
+    bottom: 0;
     font-size: 0.8rem;
     color: #777;
   }

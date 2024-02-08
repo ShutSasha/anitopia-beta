@@ -9,22 +9,22 @@ interface IPaginationProps {
 
 export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, paginate }) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const maxPagesToShow =  5;
+	const maxPagesToShow = 5;
 	const totalPages = Math.ceil(totalAnimes / animesPerPage);
 
-	let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow /  2));
-	let endPage = Math.min(totalPages, currentPage + Math.floor(maxPagesToShow /  2));
+	let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+	let endPage = Math.min(totalPages, currentPage + Math.floor(maxPagesToShow / 2));
 
-	if (endPage - startPage +  1 < maxPagesToShow) {
-		if (startPage ===  1) {
+	if (endPage - startPage + 1 < maxPagesToShow) {
+		if (startPage === 1) {
 			endPage = Math.min(totalPages, maxPagesToShow);
 		} else if (endPage === totalPages) {
-			startPage = Math.max(1, totalPages - maxPagesToShow +  1);
+			startPage = Math.max(1, totalPages - maxPagesToShow + 1);
 		}
 	}
 
 	function range(start: number, end: number): number[] {
-		const length = end - start +  1;
+		const length = end - start + 1;
 		return Array.from({ length }, (_, idx) => idx + start);
 	}
 
@@ -48,16 +48,16 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 	return (
 		<>
 			<ul className={styles.pagination__container}>
-				{currentPage !==  1 && (
+				{currentPage !== 1 && (
 					<li>
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
-							paginate(currentPage -  1);
-							setCurrentPage(currentPage -  1);
+							paginate(currentPage - 1);
+							setCurrentPage(currentPage - 1);
 						}}>Предыдущая</a>
 					</li>
 				)}
-				{startPage >  1 && (
+				{startPage > 1 && (
 					<li>
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
@@ -66,11 +66,12 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 						}}>1</a>
 					</li>
 				)}
-				{startPage >  2 && <li className={styles.border}><span className={styles.border__span}>...</span></li>}
+				{startPage > 2 && <li className={styles.border}><span className={styles.border__span}>...</span></li>}
 				{
 					pages
 				}
-				{endPage < totalPages && <li className={styles.border}><span className={styles.border__span}>...</span></li>}
+				{endPage < totalPages &&
+					<li className={styles.border}><span className={styles.border__span}>...</span></li>}
 				{endPage < totalPages && (
 					<li>
 						<a href="#" className={styles.page__element} onClick={(e) => {
@@ -86,8 +87,8 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 					<li>
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
-							paginate(currentPage +  1);
-							setCurrentPage(currentPage +  1);
+							paginate(currentPage + 1);
+							setCurrentPage(currentPage + 1);
 						}}>Следующая</a>
 					</li>
 				)}
