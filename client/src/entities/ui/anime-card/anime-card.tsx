@@ -10,6 +10,7 @@ interface MaterialData {
 }
 
 interface Anime {
+	id: string;
 	title: string;
 	material_data: MaterialData;
 	year: number;
@@ -30,7 +31,7 @@ export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 				const image = new Image();
 				image.src = animes[i].material_data.poster_url || "";
 				await new Promise((resolve) => {
-					image.onload = resolve
+					image.onload = resolve;
 				});
 				setImagesLoaded((prevLoaded) => {
 					const newLoaded = [...prevLoaded];
@@ -42,9 +43,9 @@ export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 		loadImages();
 	}, [imagesLoaded]);
 
-	if (loading || !imagesLoaded.every((loaded) => loaded)) {
-		return <Loader/>
-	}
+	// if (loading) {
+	// 	return <Loader />;
+	// }
 
 	return (
 		<>
@@ -53,10 +54,10 @@ export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 				const genresString = anime.material_data.genres ? anime.material_data.genres.join(", ") : "";
 
 				return (
-					<div key={index} className={styles.animeCard}>
+					<div key={anime.id} className={styles.animeCard}>
 						{imagesLoaded[index] ? (
 							<Skeleton />
-						) :(
+						) : (
 							<img className={styles.image} src={anime.material_data.poster_url} alt={anime.title} />
 						)
 						}

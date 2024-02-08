@@ -8,7 +8,7 @@ import { AnimeCard } from "../../../entities";
 import { observer } from "mobx-react-lite";
 
 interface MaterialData {
-	description: string;
+	description?: string;
 	poster_url: string;
 	genres: Array<string>;
 }
@@ -17,6 +17,7 @@ interface Anime {
 	title: string;
 	material_data: MaterialData;
 	year: number;
+	id: string;
 }
 
 export const AnimeList: FC = observer(() => {
@@ -25,9 +26,11 @@ export const AnimeList: FC = observer(() => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [animesPerPage] = useState<number>(10);
+
 	useEffect(() => {
 		const getAnimeList = async () => {
-			setLoading(true);
+			store.setLoading(true);
+			console.log(store.isLoading);
 			try {
 				const response = await axios.get(`http://localhost:5000/api/anime-list`, {
 					params: {
@@ -37,6 +40,7 @@ export const AnimeList: FC = observer(() => {
 				});
 				const formattedAnimeData = response.data.map((anime: any) => ({
 					title: anime.title,
+					id: anime.id,
 					material_data: {
 						description: anime.material_data.description,
 						poster_url: anime.material_data.poster_url,
@@ -49,7 +53,8 @@ export const AnimeList: FC = observer(() => {
 			} catch (e) {
 				console.error(e);
 			} finally {
-				setLoading(false);
+				store.setLoading(false);
+				console.log(store.isLoading);
 			}
 		};
 		getAnimeList();
@@ -58,13 +63,15 @@ export const AnimeList: FC = observer(() => {
 	const lastAnimesIndex = currentPage * animesPerPage;
 	const firstAnimesindex = lastAnimesIndex - animesPerPage;
 	const currentAnimes = animeData.slice(firstAnimesindex, lastAnimesIndex);
+
 	const paginate = (pageNumber: number) => {
-		setLoading(true);
+		store.setLoading(true);
+		//setLoading(true);
 		setCurrentPage(pageNumber);
-		setLoading(false);
+		store.setLoading(false);
 	};
 
-	if (store.isLoading) {
+	if (store.isLoading || loading) {
 		<Loader />;
 	}
 
