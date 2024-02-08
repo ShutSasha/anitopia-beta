@@ -42,7 +42,7 @@ class UserService {
 			age: null,
 			sex: null,
 			avatarLink:
-				"https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/user.jpg",
+				process.env.IMAFE_KIT_DEFAULT_IMAGE,
 			password: hashPassword,
 			registrationDate: Date.now(),
 			uploadStatus: false,
