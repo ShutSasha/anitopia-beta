@@ -7,7 +7,7 @@
 	position: relative;
 	padding: 20px 10px;
 	background-color: #404040;
-	height: 40vh;
+
 	h2 {
 		color: #fff;
 	}
@@ -26,34 +26,33 @@
 	background-repeat: no-repeat;
 }
 
-.modal_wrapper{
+.modal_wrapper {
 	padding: 10px;
 }
 
-.modal_container{
+.modal_container {
 	display: flex;
 	justify-content: space-evenly;
 	gap: 40px;
 	margin-bottom: 40px;
 }
 
-.modal_container_input{
+.modal_container_input {
 	display: flex;
 	flex-direction: column;
 	gap: 40px;
 }
 
-.btn_container{
+.btn_container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	margin-top: 40px;
 }
 
-.select_container{
+.select_container {
 	display: flex;
 	outline: none;
 	justify-content: center;
 	align-items: center;
-
 }

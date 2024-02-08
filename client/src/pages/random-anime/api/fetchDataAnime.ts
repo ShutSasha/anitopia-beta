@@ -25,14 +25,6 @@ export const fetchAnimeData = async (
 	}
 };
 
-// export const handleClickRandomAnime = (
-// 	setAnime: any,
-// 	setRatings: any,
-// 	setLoading: any
-// ) => {
-// 	fetchAnimeData(setAnime, setRatings, setLoading);
-// };
-
 export const handleClickRandomAnime = (
 	setAnime: React.Dispatch<React.SetStateAction<any>>,
 	setRatings: React.Dispatch<React.SetStateAction<any>>,

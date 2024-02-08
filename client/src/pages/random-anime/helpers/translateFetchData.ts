@@ -6,3 +6,16 @@ export const translateStatus = (statusAnime: string) => {
 
 	return statuses[statusAnime] || statusAnime;
 };
+
+export const AiredEpisodesValidation = (
+	lastEpisode: number,
+	episodesAired: number,
+	totalEpisodes: number,
+	statusAnime: string
+): number => {
+	return statusAnime === "released"
+		? totalEpisodes
+		: episodesAired > lastEpisode
+		? episodesAired
+		: lastEpisode;
+};

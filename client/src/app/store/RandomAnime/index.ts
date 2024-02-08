@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import { objDefaultState } from "../../../pages/random-anime/helpers/objectsFetchAnime";
 import { Rating } from "../../../pages/random-anime/ui/random-anime";
+import { IAnime } from "../../models/IAnime";
 
 export default class RandomAnime {
-	animeRandomData = objDefaultState;
+	animeRandomData = {} as IAnime;
 	ratingForRandomAnime = [] as Rating[];
 
 	constructor() {

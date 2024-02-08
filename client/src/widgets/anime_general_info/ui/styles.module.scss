@@ -56,12 +56,34 @@
 	.anime_info_item {
 		display: flex;
 		line-height: 24px;
+		margin-bottom: 5px;
 
 		p,
 		span {
 			flex: 1;
 			font-family: "Franklin Gothic Medium", "Arial Narrow", sans-serif;
 			font-weight: normal;
+		}
+		.anime_genres_container {
+			flex: 1;
+		}
+
+		.anime_genres_list {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.anime_genre {
+			background-color: #343a40;
+			font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+			border-radius: 8px;
+			color: #fff;
+			padding: 3px 5px;
+			margin-right: 10px;
+			margin-bottom: 5px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		.minimal_age {

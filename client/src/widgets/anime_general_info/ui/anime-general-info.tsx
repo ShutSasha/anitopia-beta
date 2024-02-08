@@ -15,6 +15,8 @@ interface AnimeGeneralInfoProps {
 		totalEpisodes: number | null;
 		minimalAge: number | null;
 		description: string | null;
+		genres: string[];
+		year: number;
 	};
 	ratings: Rating[] | undefined;
 }
@@ -100,6 +102,25 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
 												: "Нет"}
 										</div>
 									</span>
+								</li>
+								<li className={styles.anime_info_item}>
+									<p>Жанры:</p>
+									<div className={styles.anime_genres_container}>
+										<ul className={styles.anime_genres_list}>
+											{anime.genres
+												? anime.genres.map((item, index) => (
+														<li
+															className={styles.anime_genre}
+															key={index}
+														>{`${item} `}</li>
+												  ))
+												: "Не установлены"}
+										</ul>
+									</div>
+								</li>
+								<li className={styles.anime_info_item}>
+									<p>Год выпуска:</p>
+									<span>{anime.year}</span>
 								</li>
 							</ul>
 						</div>
