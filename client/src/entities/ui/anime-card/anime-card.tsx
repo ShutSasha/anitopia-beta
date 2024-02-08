@@ -1,29 +1,18 @@
 import { FC, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { Loader, Skeleton } from "../../../shared";
-
-
-interface MaterialData {
-	description: string;
-	poster_url: string;
-	genres: Array<string>;
-}
-
-interface Anime {
-	id: string;
-	title: string;
-	material_data: MaterialData;
-	year: number;
-}
+import { observer } from "mobx-react-lite";
+import { Anime, MaterialData } from "../../../pages/anime-list/ui/anime-list";
 
 interface AnimeCardProps {
 	animes: Anime[];
-	loading: boolean;
 }
 
-export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
+export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
 	const [isCardLoading, setIsCardLoading] = useState<boolean>(false);
-	const [imagesLoaded, setImagesLoaded] = useState<Array<boolean>>(new Array(animes.length).fill(false));
+	const [imagesLoaded, setImagesLoaded] = useState<Array<boolean>>(
+		new Array(animes.length).fill(false)
+	);
 
 	useEffect(() => {
 		const loadImages = async () => {
@@ -43,28 +32,35 @@ export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 		loadImages();
 	}, [imagesLoaded]);
 
-	// if (loading) {
-	// 	return <Loader />;
-	// }
-
 	return (
 		<>
 			{animes.map((anime: Anime, index: number) => {
-				const updatedTitle = anime.title.includes("ТВ") ? anime.title.replace("ТВ-", "Сезон ") : anime.title;
-				const genresString = anime.material_data.genres ? anime.material_data.genres.join(", ") : "";
+				const updatedTitle = anime.title.includes("ТВ")
+					? anime.title.replace("ТВ-", "Сезон ")
+					: anime.title;
+				const genresString = anime.material_data.genres
+					? anime.material_data.genres.join(", ")
+					: "";
 
 				return (
 					<div key={anime.id} className={styles.animeCard}>
 						{imagesLoaded[index] ? (
 							<Skeleton />
 						) : (
-							<img className={styles.image} src={anime.material_data.poster_url} alt={anime.title} />
-						)
-						}
+							<img
+								className={styles.image}
+								src={anime.material_data.poster_url}
+								alt={anime.title}
+							/>
+						)}
 						<div className={styles.content}>
 							<h3>{updatedTitle}</h3>
 							<p className={styles.anime__genres}>{genresString}</p>
-							<p className={styles.anime__description}>{anime.material_data.description}</p>
+							<p className={styles.anime__description}>
+								{anime.material_data.description
+									? anime.material_data.description
+									: "Нет"}
+							</p>
 							<span>{anime.year}</span>
 						</div>
 					</div>
@@ -72,6 +68,4 @@ export const AnimeCard: FC<AnimeCardProps> = ({ animes, loading }) => {
 			})}
 		</>
 	);
-
-
-};
+});

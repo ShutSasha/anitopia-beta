@@ -1,10 +1,11 @@
-
 class AnimeService {
-
-	async  getAnimeSubset(data, startIndex, count) {
-		console.log(data.slice(startIndex, startIndex + count));
-		return data.slice(startIndex, startIndex + count);
+	async getAnimeSubset(data, startIndex, count) {
+		// console.log(
+		// 	data.slice(Number(startIndex), Number(startIndex) + Number(count))
+		// 		.length
+		// );
+		return data.slice(Number(startIndex), Number(startIndex) + Number(count));
 	}
 }
 
-module.exports = new AnimeService()
+module.exports = new AnimeService();
