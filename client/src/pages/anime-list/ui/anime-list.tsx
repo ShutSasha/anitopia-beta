@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import axios from "axios";
 import { AnimeCard } from "../../../entities";
 import { observer } from "mobx-react-lite";
+import { formattedAnimeData } from "../helpers/formattedAnimeData.ts";
 
 export interface MaterialData {
 	description: string | undefined;
@@ -36,19 +37,8 @@ export const AnimeList: FC = observer(() => {
 				);
 				console.log(response);
 				//! fix map with description - undefind
-				const formattedAnimeData = response.data.map((anime: any) => ({
-					title: anime.title,
-					id: anime.id,
-					material_data: {
-						description: anime.material_data.description
-							? anime.material_data.description
-							: "Нет",
-						poster_url: anime.material_data.poster_url,
-						genres: anime.material_data.anime_genres,
-					},
-					year: anime.year,
-				}));
-				setAnimeData(formattedAnimeData);
+				const gettedData = formattedAnimeData(response);
+				setAnimeData(gettedData);
 			} catch (e) {
 				console.error(e);
 			} finally {
@@ -58,9 +48,11 @@ export const AnimeList: FC = observer(() => {
 		getAnimeList();
 	}, [currentPage]);
 
-	const lastAnimesIndex = currentPage * animesPerPage;
-	const firstAnimesindex = lastAnimesIndex - animesPerPage;
-	const currentAnimes = animeData.slice(firstAnimesindex, lastAnimesIndex);
+	// const lastAnimesIndex = currentPage * animesPerPage;
+	// const firstAnimesindex = lastAnimesIndex - animesPerPage;
+	// const currentAnimes = animeData.slice(firstAnimesindex, lastAnimesIndex);
+
+	// console.log(currentAnimes);
 
 	const paginate = (pageNumber: number) => {
 		store.setLoading(true);
@@ -79,10 +71,10 @@ export const AnimeList: FC = observer(() => {
 				<div className={styles.container}>
 					<h1 className={styles.title}>Список Аниме</h1>
 					<ul className={styles.cards__container}>
-						<AnimeCard animes={currentAnimes} />
+						<AnimeCard animes={animeData} />
 						<Pagination
 							animesPerPage={animesPerPage}
-							totalAnimes={animeData.length}
+							totalAnimes={2000}
 							paginate={paginate}
 						/>
 					</ul>
