@@ -14,7 +14,8 @@ export const NavList: FC = () => {
 		handleClickRandomAnime(
 			store.randomAnime.setRandomAnime,
 			store.randomAnime.setRatingForRandomAnime,
-			store.setLoading
+			store.setLoading,
+			null
 		);
 	};
 

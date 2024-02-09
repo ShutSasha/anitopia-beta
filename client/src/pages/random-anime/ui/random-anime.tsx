@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Context } from "../../../main";
 import { Loader } from "../../../shared";
 import { Header } from "../../../widgets/header";
@@ -7,6 +7,10 @@ import { observer } from "mobx-react-lite";
 import { AnimeGeneralInfo } from "../../../widgets/anime_general_info";
 import { PlayerBlock } from "../../../widgets/Player-block/ui/player-block";
 import { AnimeScreenshots } from "../../../entities/ui/anime-screenshots/anime-screenshots";
+import { useParams } from "react-router-dom";
+import { IAnime } from "../../../app/models/IAnime";
+import axios from "axios";
+import { handleClickRandomAnime } from "../api/fetchDataAnime";
 
 export interface Rating {
 	rating: number;
@@ -17,8 +21,24 @@ export interface Rating {
 
 export const RandomAnime: FC = observer(() => {
 	const { store } = useContext(Context);
-	const anime = store.randomAnime.animeRandomData;
-	const ratings = store.randomAnime.ratingForRandomAnime;
+	let { id } = useParams();
+
+	let anime = store.randomAnime.animeRandomData;
+	let ratings = store.randomAnime.ratingForRandomAnime;
+
+	// let anime;
+	// let ratings;
+
+	useEffect(() => {
+		if (id) {
+			handleClickRandomAnime(
+				store.randomAnime.setRandomAnime,
+				store.randomAnime.setRatingForRandomAnime,
+				store.setLoading,
+				id
+			);
+		}
+	}, []);
 
 	if (store.isLoading) {
 		return <Loader />;
@@ -27,21 +47,23 @@ export const RandomAnime: FC = observer(() => {
 	return (
 		<>
 			<Header />
-			<div className={styles.wrapper}>
-				<div className={styles.container}>
-					{anime.link && (
-						<>
-							<AnimeGeneralInfo anime={anime} ratings={ratings} />
-							<div className={styles.player_container}>
-								<PlayerBlock link={anime.link} />
-							</div>
-							{anime.screenshots && (
-								<AnimeScreenshots screenshots={anime.screenshots} />
-							)}
-						</>
-					)}
+			{anime && (
+				<div className={styles.wrapper}>
+					<div className={styles.container}>
+						{anime.link && (
+							<>
+								<AnimeGeneralInfo anime={anime} ratings={ratings} />
+								<div className={styles.player_container}>
+									<PlayerBlock link={anime.link} />
+								</div>
+								{anime.screenshots && (
+									<AnimeScreenshots screenshots={anime.screenshots} />
+								)}
+							</>
+						)}
+					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 });

@@ -4,5 +4,6 @@ export const routes = {
 	LOGIN: "/login",
 	PROFILE: "/profile",
 	RANDOM_ANIME: "/random-anime",
-	ANIME_LIST: "/anime-list"
+	ANIME_LIST: "/anime-list",
+	ANIME_PAGE: "/anime/:id",
 };

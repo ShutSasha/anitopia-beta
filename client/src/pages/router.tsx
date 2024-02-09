@@ -33,6 +33,10 @@ export const router = createBrowserRouter(
 			element: <RandomAnime />
 		},
 		{
+			path: routes.ANIME_PAGE,
+			element: <RandomAnime />
+		},
+		{
 			path: "*",
 			element: <NotFoundPage />
 		},

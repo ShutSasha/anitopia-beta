@@ -1,10 +1,18 @@
 class AnimeService {
 	async getAnimeSubset(data, startIndex, count) {
-		// console.log(
-		// 	data.slice(Number(startIndex), Number(startIndex) + Number(count))
-		// 		.length
-		// );
 		return data.slice(Number(startIndex), Number(startIndex) + Number(count));
+	}
+
+	async removeDuplicates(array, key) {
+		const filterArray = await Promise.all(
+			array.map(async (obj, index, self) => {
+				return index === self.findIndex((t) => t[key] === obj[key]);
+			})
+		);
+
+		const finalArray = array.filter((_, index) => filterArray[index]);
+
+		return finalArray;
 	}
 }
 

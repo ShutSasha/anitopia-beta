@@ -33,7 +33,7 @@ export const AnimeList: FC = observer(() => {
 
 			try {
 				const response = await axios.get(
-					`http://localhost:5000/api/anime-list?page=${currentPage}&limit=${animesPerPage}`
+					`http://localhost:5000/api/anime/list-anime?page=${currentPage}&limit=${animesPerPage}`
 				);
 				console.log(response);
 				//! fix map with description - undefind
