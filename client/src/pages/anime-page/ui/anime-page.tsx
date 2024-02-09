@@ -8,6 +8,12 @@ import { AnimeGeneralInfo } from "../../../widgets/anime_general_info";
 import { PlayerBlock } from "../../../widgets/Player-block/ui/player-block";
 import { AnimeScreenshots } from "../../../entities/ui/anime-screenshots/anime-screenshots";
 import { IAnime } from "../../../app/models/IAnime";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import {
+	arraySetRatings,
+	objSetAnimeState,
+} from "../../random-anime/helpers/objectsFetchAnime";
 
 export interface Rating {
 	rating: number;
@@ -20,16 +26,27 @@ export const AnimePage: FC = observer(() => {
 	const { store } = useContext(Context);
 	const [anime, setAnime] = useState<IAnime>();
 	const [ratings, setRatings] = useState<Rating[]>();
-	console.log(store.isLoading);
+	const { id } = useParams();
+	console.log(id);
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			setAnime(store.anime.animeData);
-			setRatings(store.anime.ratingForAnime);
-			store.setLoading(false);
-		}, 1000);
-
-		return () => clearTimeout(timer);
+		const getAnime = async () => {
+			try {
+				store.setLoading(true);
+				const res = await axios.get(
+					`http://localhost:5000/api/anime/${id}`
+				);
+				const animeData = objSetAnimeState(res);
+				const ratingData = arraySetRatings(res);
+				setAnime(animeData);
+				setRatings(ratingData);
+			} catch (error) {
+				console.error(error);
+			} finally {
+				store.setLoading(false);
+			}
+		};
+		getAnime();
 	}, []);
 
 	if (store.isLoading || !anime) {

@@ -5,21 +5,22 @@ import { Context } from "../../../main";
 import { observer } from "mobx-react-lite";
 import { Loader } from "../../../shared";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { handleClickRandomAnime } from "../../random-anime/api/fetchDataAnime";
+import { Link } from "react-router-dom";
+import "react-multi-carousel/lib/styles.css";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css"; // Default theme
 
 export const HomePage: FC = observer(() => {
 	const { store } = useContext(Context);
 	const [searchText, setSearchText] = useState<string>("");
 	const [animeSeasonData, setAnimeSeasonData] = useState([]);
-	// const navigate = useNavigate();
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const res = await axios.get(
 					"http://localhost:5000/api/anime/season-anime"
 				);
-				console.log(res.data);
 				setAnimeSeasonData(res.data);
 			} catch (err) {
 				console.error(err);
@@ -27,16 +28,6 @@ export const HomePage: FC = observer(() => {
 		};
 		fetchData();
 	}, []);
-
-	const clickAtAnime = (id: string) => {
-		handleClickRandomAnime(
-			store.anime.setAnime,
-			store.anime.setRatingsAnime,
-			store.setLoading,
-			id
-		);
-		// navigate(`anime/${id}`);
-	};
 
 	if (store.isLoading) {
 		return <Loader />;
@@ -70,31 +61,40 @@ export const HomePage: FC = observer(() => {
 								Аниме зимнего сезона
 							</h2>
 						</div>
-						<div className={styles_h.slider_anime_season}>
-							{animeSeasonData &&
-								animeSeasonData
-									.slice(0, 6)
-									.map((card: any, index: number) => (
-										<Link
-											to={`anime/${card.id}`}
-											className={styles_h.card}
-											key={index}
-											onClick={() => clickAtAnime(card.id)}
-										>
-											<div
-												style={{
-													backgroundImage: `url(${card.material_data.poster_url})`,
-												}}
-												className={styles_h.card_background}
-											></div>
-											<div
-												title={card.title}
-												className={styles_h.card_text_block}
-											>
-												{card.title}
-											</div>
-										</Link>
-									))}
+						<div>
+							<Splide
+								options={{
+									type: "loop",
+									perMove: 2,
+									perPage: 6,
+									pagination: false,
+								}}
+							>
+								{animeSeasonData &&
+									animeSeasonData
+										.slice(0, 12)
+										.map((card: any, index: number) => (
+											<SplideSlide key={index}>
+												<Link
+													to={`anime/${card.id}`}
+													className={styles_h.card}
+												>
+													<div
+														style={{
+															backgroundImage: `url(${card.material_data.poster_url})`,
+														}}
+														className={styles_h.card_background}
+													></div>
+												</Link>
+												<div
+													title={card.title}
+													className={styles_h.card_text_block}
+												>
+													{card.title}
+												</div>
+											</SplideSlide>
+										))}
+							</Splide>
 						</div>
 					</div>
 				</div>
