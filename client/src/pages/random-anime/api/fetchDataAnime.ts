@@ -28,9 +28,7 @@ export const fetchAnimeData = async (
 	} catch (error) {
 		console.error(error);
 	} finally {
-		setTimeout(() => {
-			setLoading(false);
-		}, 500);
+		setLoading(false);
 	}
 };
 
