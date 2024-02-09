@@ -28,15 +28,19 @@ export const AnimeList: FC = observer(() => {
 	const [loadedPages, setLoadedPages] = useState<Record<string, boolean>>({});
 	const [animesPerPage] = useState<number>(10);
 
-
 	useEffect(() => {
 		const fetchAnimeList = async () => {
 			store.setLoading(true);
 			try {
-				const response = await axios.get(`http://localhost:5000/api/anime/list-anime?page=${currentPage}&limit=${animesPerPage}`);
+				const response = await axios.get(
+					`http://localhost:5000/api/anime/list-anime?page=${currentPage}&limit=${animesPerPage}`
+				);
 				const gettedData = formattedAnimeData(response);
 				setAnimeData(gettedData);
-				setLoadedPages((prev) => ({ ...prev, [`page-${currentPage}`]: true }));
+				setLoadedPages((prev) => ({
+					...prev,
+					[`page-${currentPage}`]: true,
+				}));
 			} catch (e) {
 				console.error(e);
 			} finally {
@@ -63,8 +67,13 @@ export const AnimeList: FC = observer(() => {
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
 					<h1 className={styles.title}>Список Аниме</h1>
-					<SearchInput/>
+					<SearchInput />
 					<ul className={styles.cards__container}>
+						<Pagination
+							animesPerPage={animesPerPage}
+							totalAnimes={18000}
+							paginate={paginate}
+						/>
 						<AnimeCard animes={animeData} />
 						<Pagination
 							animesPerPage={animesPerPage}
