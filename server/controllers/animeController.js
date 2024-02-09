@@ -5,11 +5,12 @@ class AnimeController {
 	async getAnimeList(req, res, next) {
 		try {
 			const data = animeSerials;
-		//	const uniqueData = AnimeService.removeDuplicates(data,["title"]);
+		  	const uniqueData = await AnimeService.removeDuplicates(data,"title")
+			//const sortedData = AnimeService.sortByRating(uniqueData);
 			const startIndex = req.query.page * req.query.limit || 0;
 			const count = req.query.limit || 10;
 			const result = await AnimeService.getAnimeSubset(
-				data,
+				uniqueData,
 				startIndex,
 				count
 			);

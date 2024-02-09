@@ -12,10 +12,19 @@ class AnimeService {
 				return index === self.findIndex((t) => t[key] === obj[key]);
 			})
 		);
-
-		const finalArray = array.filter((_, index) => filterArray[index]);
+		const finalArray = await array.filter((_, index) => filterArray[index]);
 
 		return finalArray;
+	}
+
+	sortByRating(data){
+
+		data.sort((a,b) =>{
+			if(a.material_data.shikimori_rating && b.material_data.shikimori_rating){
+				return a.material_data.shikimori_rating - b.material_data.shikimori_rating;
+			}
+		});
+		return dataList
 	}
 }
 
