@@ -12,3 +12,4 @@ export { CountrySelect } from "./ui/country-select/CountrySelect.tsx";
 export { Select } from "./ui/select/default-select.tsx";
 export { Skeleton } from "./ui/skeleton/skeleton.tsx";
 export { Pagination } from "./ui/pagination/pagination.tsx";
+export { SearchInput } from "./ui/search-input/searchInput.tsx";

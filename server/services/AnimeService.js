@@ -1,6 +1,9 @@
 class AnimeService {
 	async getAnimeSubset(data, startIndex, count) {
-		return data.slice(Number(startIndex), Number(startIndex) + Number(count));
+
+		const resultData = data.slice(Number(startIndex), Number(startIndex) + Number(count));
+		console.log(resultData);
+		return resultData
 	}
 
 	async removeDuplicates(array, key) {
