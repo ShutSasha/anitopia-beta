@@ -39,7 +39,7 @@ export const AnimeList: FC = observer(() => {
 				setAnimeData(gettedData);
 				setLoadedPages((prev) => ({
 					...prev,
-					[`page-${currentPage}`]: true,
+					[`page-${currentPage}`]: true
 				}));
 			} catch (e) {
 				console.error(e);
@@ -57,9 +57,11 @@ export const AnimeList: FC = observer(() => {
 		setCurrentPage(pageNumber);
 	};
 	console.log(animeData);
-	//if (store.isLoading) {
-	//	return <Loader />;
-	//}
+	// if (store.isLoading) {
+	// 	return <Loader />;
+	// }
+
+	//!FIX PAGINATION
 
 	return (
 		<>
@@ -69,17 +71,21 @@ export const AnimeList: FC = observer(() => {
 					<h1 className={styles.title}>Список Аниме</h1>
 					<SearchInput />
 					<ul className={styles.cards__container}>
-						<Pagination
-							animesPerPage={animesPerPage}
-							totalAnimes={18000}
-							paginate={paginate}
-						/>
+
+						{/*<Pagination*/}
+						{/*	animesPerPage={animesPerPage}*/}
+						{/*	totalAnimes={18000}*/}
+						{/*	paginate={paginate}*/}
+						{/*/>*/}
 						<AnimeCard animes={animeData} />
-						<Pagination
-							animesPerPage={animesPerPage}
-							totalAnimes={18000}
-							paginate={paginate}
-						/>
+						{!store.isLoading &&
+							<Pagination
+								animesPerPage={animesPerPage}
+								totalAnimes={18000}
+								paginate={paginate}
+							/>
+						}
+
 					</ul>
 				</div>
 			</div>

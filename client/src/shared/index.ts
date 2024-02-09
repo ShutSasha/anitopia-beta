@@ -13,3 +13,4 @@ export { Select } from "./ui/select/default-select.tsx";
 export { Skeleton } from "./ui/skeleton/skeleton.tsx";
 export { Pagination } from "./ui/pagination/pagination.tsx";
 export { SearchInput } from "./ui/search-input/searchInput.tsx";
+export { ImageWithFallback } from "./ui/image-with-fallback/imageWithFallBack.tsx";

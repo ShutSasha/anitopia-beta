@@ -6,16 +6,15 @@
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
-  transition: transform 0.3s ease;
+  transition: box-shadow  1s ease, background-color  1s ease, border-color  1s ease;
   background-color: white;
+  cursor: pointer;
 }
 
-.image {
-  max-width: 150px;
-  max-height: 280px;
-  width: 100%;
-  object-fit: contain;
-  margin-right: 10px;
+.animeCard:hover {
+  box-shadow:  0  4px  8px rgba(0,  0,  0,  0.1);
+  background-color: #f8f8f8;
+  border-color: #ddd;
 }
 
 .content {
@@ -25,20 +24,16 @@
   font-family: "Franklin Gothic Medium", sans-serif;
 
   h3 {
+    color:black;
     margin-top: 10px;
     font-size: 20px;
+    transition: color 0.5s ease;
+    cursor: pointer;
   }
 
-  /*  .anime__description {
-      margin: 0.5rem 0;
-      font-size: 12px;
-      color: #333;
-      max-height: 200px;
-      max-width: 200px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }*/
+  h3:hover {
+    color: #ff6666;
+  }
 
   .anime__description {
     margin: 0.5rem 0;
@@ -63,6 +58,7 @@
 
 
   .anime__genres {
+    color: black;
     margin: 10px 0;
   }
 
