@@ -13,14 +13,14 @@ export const fetchAnimeData = async (
 ) => {
 	setLoading(true);
 	try {
-		const res = await axios.get(API_URL_RANDOM_ANIME);
-		console.log(res.data);
-
-		setAnime(objSetAnimeState(res));
-		setRatings(arraySetRatings(res));
-
 		if (id) {
-			const res = await axios.get(`http://localhost:5000/api/anime/anime/${id}`);
+			const res = await axios.get(`http://localhost:5000/api/anime/${id}`);
+			console.log(res.data);
+			setAnime(objSetAnimeState(res));
+			setRatings(arraySetRatings(res));
+		} else {
+			const res = await axios.get(API_URL_RANDOM_ANIME);
+			console.log(res.data);
 
 			setAnime(objSetAnimeState(res));
 			setRatings(arraySetRatings(res));

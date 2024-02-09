@@ -10,19 +10,20 @@ interface Screenshots {
 export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
 	const [isLoadingScreenshots, setIsLoadingScreenshots] = useState(false);
 	const { store } = useContext(Context);
-	store.randomAnime.animeRandomData;
 
 	useEffect(() => {
 		setIsLoadingScreenshots(true);
 		const image = new Image();
-		image.src =
-			store.randomAnime.animeRandomData.screenshots[
-				screenshots.length - 1
-			] || "";
+
+		const srcImg =
+			store.anime.animeData.screenshots[screenshots.length - 1] || "";
+
+		image.src = srcImg;
+
 		image.onload = () => {
 			setIsLoadingScreenshots(false);
 		};
-	}, [store.randomAnime.animeRandomData.screenshots]);
+	}, [store.anime.animeData.screenshots]);
 
 	return (
 		<>

@@ -53,12 +53,9 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
 						<ul className={styles.anime_ratings_list}>
 							{ratings !== undefined &&
 								ratings.map((rating, index) => (
-									<>
+									<div key={index}>
 										{rating.rating && (
-											<li
-												key={index}
-												className={styles.anime_rating_item}
-											>
+											<li className={styles.anime_rating_item}>
 												<img
 													style={{
 														width: rating.width,
@@ -70,7 +67,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
 												{rating.rating}
 											</li>
 										)}
-									</>
+									</div>
 								))}
 						</ul>
 						<hr />

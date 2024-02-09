@@ -5,17 +5,20 @@ import AuthService from "../services/AuthService";
 import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
 import RandomAnime from "./RandomAnime";
+import AnimePage from "./AnimePage";
 
 export default class Store {
 	user = {} as IUser;
 	isAuth = false;
 	isLoading = false;
 	randomAnime: RandomAnime;
+	anime: AnimePage;
 
 	constructor() {
 		makeAutoObservable(this);
 		this.setLoading = this.setLoading.bind(this);
 		this.randomAnime = new RandomAnime();
+		this.anime = new AnimePage();
 	}
 
 	updateUserPersonalInfo(userData: any) {

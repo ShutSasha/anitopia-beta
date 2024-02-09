@@ -7,8 +7,7 @@ import { observer } from "mobx-react-lite";
 import { AnimeGeneralInfo } from "../../../widgets/anime_general_info";
 import { PlayerBlock } from "../../../widgets/Player-block/ui/player-block";
 import { AnimeScreenshots } from "../../../entities/ui/anime-screenshots/anime-screenshots";
-import { useParams } from "react-router-dom";
-import { handleClickRandomAnime } from "../api/fetchDataAnime";
+import { IAnime } from "../../../app/models/IAnime";
 
 export interface Rating {
 	rating: number;
@@ -17,26 +16,23 @@ export interface Rating {
 	width: string;
 }
 
-export const RandomAnime: FC = observer(() => {
+export const AnimePage: FC = observer(() => {
 	const { store } = useContext(Context);
-	let { id } = useParams();
-
-	let anime = store.anime.animeData;
-	let ratings = store.anime.ratingForAnime;
+	const [anime, setAnime] = useState<IAnime>();
+	const [ratings, setRatings] = useState<Rating[]>();
+	console.log(store.isLoading);
 
 	useEffect(() => {
-		if (id) {
-			handleClickRandomAnime(
-				store.randomAnime.setRandomAnime,
-				store.randomAnime.setRatingForRandomAnime,
-				store.setLoading,
-				id
-			);
-		}
-	}, []);
-	console.log(anime);
+		const timer = setTimeout(() => {
+			setAnime(store.anime.animeData);
+			setRatings(store.anime.ratingForAnime);
+			store.setLoading(false);
+		}, 1000);
 
-	if (store.isLoading) {
+		return () => clearTimeout(timer);
+	}, []);
+
+	if (store.isLoading || !anime) {
 		return <Loader />;
 	}
 

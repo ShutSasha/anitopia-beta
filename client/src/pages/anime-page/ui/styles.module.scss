@@ -1,0 +1,23 @@
+.wrapper {
+	background-color: #e2e2e2;
+}
+
+.container {
+	max-width: var(--container-width);
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 25px 20px;
+	min-height: 100vh;
+}
+
+.container_random_btn {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+
+.player_container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 25px;
+}

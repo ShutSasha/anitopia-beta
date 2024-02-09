@@ -51,7 +51,7 @@ class AnimeController {
 			const { id } = req.params;
 			const animeData = animeSerials;
 			const anime = animeData.find((item) => item.id === id);
-			console.log(id);
+
 			return res.json(anime);
 		} catch (error) {}
 	}
