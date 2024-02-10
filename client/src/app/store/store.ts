@@ -11,12 +11,16 @@ export default class Store {
 	user = {} as IUser;
 	isAuth = false;
 	isLoading = false;
+	isError = false;
+	messageError = "";
 	randomAnime: RandomAnime;
 	anime: AnimePage;
 
 	constructor() {
 		makeAutoObservable(this);
 		this.setLoading = this.setLoading.bind(this);
+		this.setError = this.setError.bind(this);
+		this.setIsError = this.setIsError.bind(this);
 		this.randomAnime = new RandomAnime();
 		this.anime = new AnimePage();
 	}
@@ -43,6 +47,14 @@ export default class Store {
 
 	setLoading(bool: boolean) {
 		this.isLoading = bool;
+	}
+
+	setError(message: string) {
+		this.messageError = message;
+	}
+
+	setIsError(bool: boolean) {
+		this.isError = bool;
 	}
 
 	async login(username: string, password: string) {
@@ -72,9 +84,14 @@ export default class Store {
 			this.setAuth(true);
 			this.setUser(response.data.user);
 			return true;
-		} catch (error) {
+		} catch (error: any) {
 			//! передивитись
 			console.error(error);
+			const err = error.response.data.errors[0]?.msg
+				? error.response.data.errors[0].msg
+				: error.response.data.message;
+
+			this.setError(err);
 			return false;
 		}
 	}
@@ -85,9 +102,9 @@ export default class Store {
 			localStorage.removeItem("token");
 			this.setAuth(false);
 			this.setUser({} as IUser);
-		} catch (error) {
+		} catch (error: any) {
 			//! передивитись
-			console.error(error);
+			console.error(error.response.data.errors[0].msg);
 		}
 	}
 

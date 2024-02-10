@@ -2,7 +2,6 @@ import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-// import axios from "axios";
 import { Loader, Toast } from "../../../shared";
 import { InputAuth } from "../../../shared";
 import { AuthContext } from "../context/AuthContenx";
@@ -24,8 +23,11 @@ export const Registration = observer(() => {
 	}
 
 	const handleButtonClick = () => {
+		store.setError("Пароли не совпадают!");
 		setShowToast(true);
-		setTimeout(() => setShowToast(false), 4000);
+		store.setIsError(false);
+		setTimeout(() => setShowToast(false), 15000);
+		setTimeout(() => store.setIsError(false), 15000);
 	};
 
 	const handleSubmit = (event: any) => {
@@ -41,6 +43,11 @@ export const Registration = observer(() => {
 			.then((isLoggedIn) => {
 				if (isLoggedIn) {
 					navigate("/");
+				} else {
+					setShowToast(true);
+					store.setIsError(true);
+					setTimeout(() => setShowToast(false), 15000);
+					setTimeout(() => store.setIsError(false), 15000);
 				}
 			})
 			.catch((err) => console.error(err));
@@ -52,18 +59,20 @@ export const Registration = observer(() => {
 		setPassword,
 		setRepeatPassword
 	);
+
 	return (
 		<AuthContext.Provider
 			value={{ setUsername, setEmail, setPassword, setRepeatPassword }}
 		>
+			{showToast && (
+				<Toast
+					message={store.messageError}
+					duration={15000}
+					isError={store.isError}
+					onClose={() => setShowToast(false)}
+				/>
+			)}
 			<div className={styles.registration_wrapper}>
-				{showToast && (
-					<Toast
-						message="Пароли не совпадают!"
-						duration={4000}
-						onClose={() => setShowToast(false)}
-					/>
-				)}
 				<div className={styles.header}>
 					<Header />
 				</div>

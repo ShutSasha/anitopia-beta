@@ -8,7 +8,7 @@ interface InputAuthProps {
 	type: string;
 	textLabel: string;
 	labelColor: string;
-	value: any;
+	value?: any;
 }
 
 export const InputAuth: FC<InputAuthProps> = ({
