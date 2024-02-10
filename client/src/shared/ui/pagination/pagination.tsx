@@ -1,14 +1,15 @@
 import { FC, useState } from "react";
 import styles from "./styles.module.scss";
+import { observer } from "mobx-react-lite";
 
 interface IPaginationProps {
 	animesPerPage: number;
 	totalAnimes: number;
 	paginate: (pageNumber: number) => void;
+	currentPage: number;
 }
 
-export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, paginate }) => {
-	const [currentPage, setCurrentPage] = useState<number>(1);
+export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, totalAnimes, paginate, currentPage }) => {
 	const maxPagesToShow = 5;
 	const totalPages = Math.ceil(totalAnimes / animesPerPage);
 
@@ -27,6 +28,7 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 		const length = end - start + 1;
 		return Array.from({ length }, (_, idx) => idx + start);
 	}
+
 
 	const pages = range(startPage, endPage).map((number) => {
 		return (
@@ -77,7 +79,7 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
 							paginate(totalPages);
-							setCurrentPage(totalPages);
+							//setCurrentPage(totalPages);
 						}}>
 							{totalPages}
 						</a>
@@ -95,5 +97,5 @@ export const Pagination: FC<IPaginationProps> = ({ animesPerPage, totalAnimes, p
 			</ul>
 		</>
 	);
-};
+});
 

@@ -50,13 +50,12 @@ export const AnimeList: FC = observer(() => {
 		fetchAnimeList();
 	}, [currentPage]);
 
-	console.log(currentPage);
 
 	const paginate = (pageNumber: number) => {
-		setAnimeData([]);
 		setCurrentPage(pageNumber);
+		setAnimeData([]);
 	};
-	console.log(animeData);
+
 	// if (store.isLoading) {
 	// 	return <Loader />;
 	// }
@@ -83,6 +82,7 @@ export const AnimeList: FC = observer(() => {
 								animesPerPage={animesPerPage}
 								totalAnimes={18000}
 								paginate={paginate}
+								currentPage={currentPage}
 							/>
 						}
 
