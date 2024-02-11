@@ -42,13 +42,13 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
 				console.log(5555);
 				return (
 					<Link
-						to={location.pathname.replace('/anime-list', '/anime/') + anime.id}
+						to={location.pathname.replace("/anime-list", "/anime/") + anime.id}
 						key={anime.id}
 						className={styles.animeCard}
 					>
 
 						{!imagesLoaded[index] ? (
-							<Skeleton/>
+							<Skeleton />
 						) : (
 							<ImageWithFallback
 								primarySrc={anime.material_data.poster_url}

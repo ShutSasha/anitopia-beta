@@ -1,9 +1,11 @@
+const { logger } = require("sequelize/lib/utils/logger");
+
 class AnimeService {
 	async getAnimeSubset(data, startIndex, count) {
 
 		const resultData = data.slice(Number(startIndex), Number(startIndex) + Number(count));
 		console.log(resultData);
-		return resultData
+		return resultData;
 	}
 
 	removeDuplicates(array, key) {
@@ -17,16 +19,24 @@ class AnimeService {
 		});
 	}
 
+	sortByRating(data) {
+		data.sort((a, b) => {
+			const ratingA = a?.material_data?.shikimori_rating ?? 0;
+			const ratingB = b?.material_data?.shikimori_rating ?? 0;
 
-	sortByRating(data){
-		data.sort((a,b) =>{
-			if(a.material_data.shikimori_rating && b.material_data.shikimori_rating){
-				return a.material_data.shikimori_rating - b.material_data.shikimori_rating;
-			}
+			return ratingB - ratingA;
 		});
-		return data
+
+		return data;
 	}
 
+	findAnime(data, searchText) {
+		const lowerCaseSearchText = searchText.toLowerCase();
+		const searchedData = data.filter(anime => {
+			return anime?.title.toLowerCase().includes(lowerCaseSearchText);
+		})
+		return searchedData;
+	}
 
 }
 

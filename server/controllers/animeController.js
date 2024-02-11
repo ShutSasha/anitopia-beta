@@ -1,16 +1,19 @@
 const animeSerials = require("../anime-serial.json");
 const AnimeService = require("../services/AnimeService");
 const { format } = require("date-fns");
+const { ca } = require("date-fns/locale/ca");
+const { resetWatchers } = require("nodemon/lib/monitor/watch");
+
 class AnimeController {
 	async getAnimeList(req, res, next) {
 		try {
 			const data = animeSerials;
-		   const uniqueData = await AnimeService.removeDuplicates(data,"title")
-			//const sortedData = AnimeService.sortByRating(uniqueData);
+			const uniqueData = await AnimeService.removeDuplicates(data, "title");
+			const sortedData = AnimeService.sortByRating(uniqueData);
 			const startIndex = req.query.page * req.query.limit || 0;
 			const count = req.query.limit || 10;
 			const result = await AnimeService.getAnimeSubset(
-				uniqueData,
+				sortedData,
 				startIndex,
 				count
 			);
@@ -44,7 +47,8 @@ class AnimeController {
 			});
 
 			return res.json(seasonAnime);
-		} catch (error) {}
+		} catch (error) {
+		}
 	}
 
 	async getAnime(req, res, next) {
@@ -54,7 +58,21 @@ class AnimeController {
 			const anime = animeData.find((item) => item.id === id);
 
 			return res.json(anime);
-		} catch (error) {}
+		} catch (error) {
+		}
+	}
+
+	async searchAnime(req, res, next) {
+		try {
+			const { title } = req.params;
+			const data = animeSerials;
+			const searchedAnime = await AnimeService.findAnime(data, title);
+			const uniqueData = await AnimeService.removeDuplicates(searchedAnime);
+			console.log(searchedAnime.length);
+			return res.json(uniqueData);
+		} catch (e) {
+			next(e);
+		}
 	}
 }
 
