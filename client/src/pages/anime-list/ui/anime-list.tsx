@@ -12,6 +12,7 @@ export interface MaterialData {
 	description: string | undefined;
 	poster_url: string;
 	genres: Array<string>;
+	shikimori_rating: number | undefined;
 }
 
 export interface Anime {
@@ -56,11 +57,10 @@ export const AnimeList: FC = observer(() => {
 		setAnimeData([]);
 	};
 
-	// if (store.isLoading) {
-	// 	return <Loader />;
-	// }
+	if (store.isLoading) {
+		return <Loader />;
+	}
 
-	//!FIX PAGINATION
 
 	return (
 		<>
@@ -70,12 +70,6 @@ export const AnimeList: FC = observer(() => {
 					<h1 className={styles.title}>Список Аниме</h1>
 					<SearchInput />
 					<ul className={styles.cards__container}>
-
-						{/*<Pagination*/}
-						{/*	animesPerPage={animesPerPage}*/}
-						{/*	totalAnimes={18000}*/}
-						{/*	paginate={paginate}*/}
-						{/*/>*/}
 						<AnimeCard animes={animeData} />
 						{!store.isLoading &&
 							<Pagination
@@ -85,7 +79,6 @@ export const AnimeList: FC = observer(() => {
 								currentPage={currentPage}
 							/>
 						}
-
 					</ul>
 				</div>
 			</div>

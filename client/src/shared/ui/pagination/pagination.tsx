@@ -38,7 +38,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
 					onClick={(e) => {
 						e.preventDefault();
 						paginate(number);
-						setCurrentPage(number);
+						//setCurrentPage(number);
 					}}
 				>
 					{number}
@@ -55,7 +55,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
 							paginate(currentPage - 1);
-							setCurrentPage(currentPage - 1);
+							//setCurrentPage(currentPage - 1);
 						}}>Предыдущая</a>
 					</li>
 				)}
@@ -64,7 +64,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
 							paginate(1);
-							setCurrentPage(1);
+							//setCurrentPage(1);
 						}}>1</a>
 					</li>
 				)}
@@ -90,7 +90,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
 						<a href="#" className={styles.page__element} onClick={(e) => {
 							e.preventDefault();
 							paginate(currentPage + 1);
-							setCurrentPage(currentPage + 1);
+							//setCurrentPage(currentPage + 1);
 						}}>Следующая</a>
 					</li>
 				)}
