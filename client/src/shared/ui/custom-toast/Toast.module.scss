@@ -7,6 +7,15 @@
 	}
 }
 
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .toast {
 	position: fixed;
 	bottom: 20px;
@@ -16,10 +25,7 @@
 	font-size: 18px;
 	font-weight: 700;
 	width: 300px;
-	// border-radius: 8px;
-	opacity: 0;
 	z-index: 1000;
-	animation: slideInFromBottom 0.5s ease-in-out forwards;
 	p {
 		text-align: center;
 	}
@@ -31,8 +37,6 @@
 	text-align: center;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	// border-bottom: 2px solid #ff6666;
-	border-bottom: 2px solid #9954d8;
 
 	.exclamation_mark {
 		font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -51,7 +55,9 @@
 }
 
 .toast.show {
-	opacity: 1;
+	animation:
+		slideInFromBottom 0.3s ease-in-out forwards,
+		fadeIn 0.45s ease-in-out;
 }
 
 .toast.hide {

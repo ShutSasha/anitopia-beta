@@ -67,6 +67,11 @@ export default class Store {
 			return true;
 		} catch (error: any) {
 			//! передивитись
+
+			const err = error.response.data.errors[0]?.msg
+				? error.response.data.errors[0].msg
+				: error.response.data.message;
+			this.setError(err);
 			console.error(error.response.data.message);
 			return false;
 		}

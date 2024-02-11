@@ -18,16 +18,17 @@ export const Registration = observer(() => {
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
 
-	if (store.isLoading) {
-		return <Loader />;
-	}
+	const inputsData = getInputsData(
+		setUsername,
+		setEmail,
+		setPassword,
+		setRepeatPassword
+	);
 
 	const handleButtonClick = () => {
 		store.setError("Пароли не совпадают!");
 		setShowToast(true);
-		store.setIsError(false);
-		setTimeout(() => setShowToast(false), 15000);
-		setTimeout(() => store.setIsError(false), 15000);
+		store.setIsError(true);
 	};
 
 	const handleSubmit = (event: any) => {
@@ -46,19 +47,14 @@ export const Registration = observer(() => {
 				} else {
 					setShowToast(true);
 					store.setIsError(true);
-					setTimeout(() => setShowToast(false), 15000);
-					setTimeout(() => store.setIsError(false), 15000);
 				}
 			})
 			.catch((err) => console.error(err));
 	};
 
-	const inputsData = getInputsData(
-		setUsername,
-		setEmail,
-		setPassword,
-		setRepeatPassword
-	);
+	if (store.isLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<AuthContext.Provider
@@ -67,8 +63,9 @@ export const Registration = observer(() => {
 			{showToast && (
 				<Toast
 					message={store.messageError}
-					duration={15000}
+					duration={4000}
 					isError={store.isError}
+					clearIsError={() => store.setIsError(false)}
 					onClose={() => setShowToast(false)}
 				/>
 			)}

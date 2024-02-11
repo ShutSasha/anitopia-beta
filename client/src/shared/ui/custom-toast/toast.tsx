@@ -5,19 +5,22 @@ interface ToastProps {
 	duration?: number;
 	isError?: boolean;
 	onClose: () => void;
+	clearIsError: () => void;
 }
 
 export const Toast: React.FC<ToastProps> = ({
 	message,
 	duration = 3000,
-	isError,
+	isError = false,
 	onClose,
+	clearIsError
 }) => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setIsVisible(false);
+			clearIsError()
 			onClose();
 		}, duration);
 
