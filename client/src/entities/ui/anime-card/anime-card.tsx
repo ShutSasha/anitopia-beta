@@ -20,7 +20,7 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
 			const img = new Image();
 			img.src = anime.material_data.poster_url;
 			img.onload = () => {
-				setImagesLoaded(prevState => {
+				setImagesLoaded((prevState) => {
 					const newState = [...prevState];
 					newState[index] = true;
 					return newState;
@@ -28,7 +28,6 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
 			};
 		});
 	}, [animes]);
-
 
 	return (
 		<>
@@ -42,13 +41,17 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
 				console.log(5555);
 				return (
 					<Link
-						to={location.pathname.replace("/anime-list", "/anime/") + anime.id}
+						to={
+							location.pathname.replace("/anime-list", "/anime/") +
+							anime.id
+						}
 						key={anime.id}
 						className={styles.animeCard}
 					>
-
 						{!imagesLoaded[index] ? (
-							<Skeleton />
+							<div className={styles.skeleton}>
+								<Skeleton />
+							</div>
 						) : (
 							<ImageWithFallback
 								primarySrc={anime.material_data.poster_url}

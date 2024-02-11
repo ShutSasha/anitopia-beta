@@ -2,13 +2,17 @@ import { FC, useState } from "react";
 import styles from "./styles.module.scss";
 
 interface ImageProps {
-	primarySrc: string,
-	secondarySrc: string,
-	altText: string
+	primarySrc: string;
+	secondarySrc: string;
+	altText: string;
 }
 
-
-export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, altText, ...otherProps }) => {
+export const ImageWithFallback: FC<ImageProps> = ({
+	primarySrc,
+	secondarySrc,
+	altText,
+	...otherProps
+}) => {
 	const [currentSrc, setCurrentSrc] = useState<string>(primarySrc);
 
 	const handleError = () => {

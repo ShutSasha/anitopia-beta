@@ -1,22 +1,22 @@
 .wrapper {
-  background-color: #e2e2e2;
+	background-color: #e2e2e2;
 }
 
 .container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  min-height: 100vh;
+	max-width: var(--container-width);
+	margin: 0 auto;
+	min-height: 100vh;
+	padding: 0 20px;
 }
 
-.title{
-  font-family: "Franklin Gothic Heavy",sans-serif;
-  padding: 20px 10px;
-  font-size: 36px;
+.title {
+	font-family: "Franklin Gothic Heavy", sans-serif;
+	padding: 20px 10px;
+	font-size: 36px;
 }
 
-.cards__container{
-  display: grid;
-  justify-content: center;
-  margin-top: 20px;
+.cards__container {
+	display: grid;
+	justify-content: center;
+	margin-top: 20px;
 }
-
