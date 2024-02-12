@@ -68,8 +68,8 @@ class AnimeController {
 			const data = animeSerials;
 			const searchedAnime = await AnimeService.findAnime(data, title);
 			const uniqueData = await AnimeService.removeDuplicates(searchedAnime);
-			console.log(searchedAnime.length);
-			return res.json(uniqueData);
+			console.log("Длинна списка: " + searchedAnime.length);
+			return res.json(searchedAnime);
 		} catch (e) {
 			next(e);
 		}

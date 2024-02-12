@@ -28,6 +28,7 @@ export const AnimeList: FC = observer(() => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [loadedPages, setLoadedPages] = useState<Record<string, boolean>>({});
 	const [animesPerPage] = useState<number>(10);
+	const [totalAnimeLength, setTotalAnimeLength] = useState<number>(0);
 
 	useEffect(() => {
 		const fetchAnimeList = async () => {
@@ -51,6 +52,28 @@ export const AnimeList: FC = observer(() => {
 		fetchAnimeList();
 	}, [currentPage]);
 
+	const searchAnime = async (searchParam: string) => {
+		console.log(searchParam);
+		try {
+			const response = await axios.get(
+				`http://localhost:5000/api/anime/search/${searchParam}`
+			);
+			const gettedData = formattedAnimeData(response);
+			console.log(gettedData);
+			setAnimeData(gettedData);
+			setLoadedPages((prev) => ({
+				...prev,
+				[`page-${currentPage}`]: true
+			}));
+
+			setTotalAnimeLength(gettedData.length);
+
+		} catch (e) {
+			console.error(e);
+		} finally {
+			store.setLoading(false);
+		}
+	};
 
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
@@ -68,13 +91,13 @@ export const AnimeList: FC = observer(() => {
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
 					<h1 className={styles.title}>Список Аниме</h1>
-					<SearchInput />
+					<SearchInput onClickEvent={searchAnime} />
 					<ul className={styles.cards__container}>
 						<AnimeCard animes={animeData} />
 						{!store.isLoading &&
 							<Pagination
 								animesPerPage={animesPerPage}
-								totalAnimes={18000}
+								totalAnimes={totalAnimeLength || 18000}
 								paginate={paginate}
 								currentPage={currentPage}
 							/>
