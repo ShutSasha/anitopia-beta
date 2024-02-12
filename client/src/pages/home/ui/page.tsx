@@ -15,6 +15,10 @@ export const HomePage: FC = observer(() => {
 	const [searchText, setSearchText] = useState<string>("");
 	const [animeSeasonData, setAnimeSeasonData] = useState([]);
 
+	const headers = {
+		Authorization: `Bearer ${localStorage.getItem(`token`)}`,
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -28,6 +32,13 @@ export const HomePage: FC = observer(() => {
 		};
 		fetchData();
 	}, []);
+
+	const getUsersClick = async () => {
+		const response = await axios.get("http://localhost:5000/api/auth/users", {
+			headers,
+		});
+		console.log(response);
+	};
 
 	if (store.isLoading) {
 		return <Loader />;
@@ -96,6 +107,8 @@ export const HomePage: FC = observer(() => {
 										))}
 							</Splide>
 						</div>
+						{store.isAuth && <div>-_----_----_-----_---</div>}
+						<button onClick={() => getUsersClick()}>get users</button>
 					</div>
 				</div>
 			</div>

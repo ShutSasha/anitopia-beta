@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const ApiError = require("../errors/apiError")
+const ApiError = require("../errors/apiError");
 
 module.exports = function (roles) {
 	return function (req, res, next) {
@@ -29,9 +29,7 @@ module.exports = function (roles) {
 			});
 
 			if (!hasRole) {
-				return next(
-					ApiError.Forbidden("У пользователя недостаточно прав")
-				);
+				return next(ApiError.Forbidden("У пользователя недостаточно прав"));
 			}
 			next();
 		} catch (e) {

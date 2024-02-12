@@ -92,7 +92,6 @@ class authController {
 			next(e);
 		}
 	}
-
 }
 
 module.exports = new authController();
