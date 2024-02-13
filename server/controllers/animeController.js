@@ -9,7 +9,14 @@ class AnimeController {
 		try {
 			const data = animeSerials;
 			const uniqueData = await AnimeService.removeDuplicates(data, "title");
-			const sortedData = AnimeService.sortByRating(uniqueData);
+			let sortedData = AnimeService.sortByRating(uniqueData);
+			const query = req.query.search
+			console.log(query);
+
+			if(query){
+				sortedData = await AnimeService.findAnime(sortedData,query);
+			}
+
 			const startIndex = req.query.page * req.query.limit || 0;
 			const count = req.query.limit || 10;
 			const result = await AnimeService.getAnimeSubset(
@@ -17,7 +24,10 @@ class AnimeController {
 				startIndex,
 				count
 			);
-			return res.json(result);
+			return res.json({
+				data: result,
+				length: sortedData.length
+			});
 		} catch (e) {
 			next(e);
 		}
