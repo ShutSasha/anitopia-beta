@@ -1,3 +1,4 @@
+export { ErrorBoundary } from "./ui/ErrorBoundary/index";
 export { Loader } from "./ui/loader/loader";
 export { User } from "./ui/user-icon/user.tsx";
 export { Logout } from "./ui/logout/logout";

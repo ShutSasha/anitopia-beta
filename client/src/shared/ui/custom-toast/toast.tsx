@@ -13,14 +13,14 @@ export const Toast: React.FC<ToastProps> = ({
 	duration = 3000,
 	isError = false,
 	onClose,
-	clearIsError
+	clearIsError,
 }) => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setIsVisible(false);
-			clearIsError()
+			clearIsError();
 			onClose();
 		}, duration);
 
