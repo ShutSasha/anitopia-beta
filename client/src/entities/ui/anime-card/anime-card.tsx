@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { ImageWithFallback, Skeleton } from '../../../shared'
 import { observer } from 'mobx-react-lite'
@@ -16,17 +16,29 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
    )
 
    useEffect(() => {
-      animes.forEach((anime, index) => {
-         const img = new Image()
-         img.src = anime.material_data.poster_url
-         img.onload = () => {
+      const loadImagesInBatches = async () => {
+         for (let i = 0; i < animes.length; i += 5) {
+            const currentBatch = animes.slice(i, i + 5)
+            const loadImages = currentBatch.map((anime, index) => {
+               return new Promise<number>((resolve) => {
+                  const img = new Image()
+                  img.src = anime.material_data.poster_url
+                  img.onload = () => resolve(i + index)
+               })
+            })
+
+            const loadedIndices = await Promise.all(loadImages)
             setImagesLoaded((prevState) => {
                const newState = [...prevState]
-               newState[index] = true
+               loadedIndices.forEach((index) => {
+                  newState[index] = true
+               })
                return newState
             })
          }
-      })
+      }
+
+      loadImagesInBatches()
    }, [])
 
    return (
