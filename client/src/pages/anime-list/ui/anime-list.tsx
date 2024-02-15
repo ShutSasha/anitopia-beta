@@ -7,18 +7,19 @@ import axios from 'axios'
 import { AnimeCard } from '../../../entities'
 import { observer } from 'mobx-react-lite'
 import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
+import NoAnimePhoto from '../assets/Anime-Girl-Sad-Free-PNG.png'
 
 export interface MaterialData {
    description: string | undefined
-   poster_url: string
-   genres: Array<string>
+   poster_url: string | undefined
+   genres: Array<string> | undefined
    shikimori_rating: number | undefined
 }
 
 export interface Anime {
    id: string
    title: string
-   material_data: MaterialData
+   material_data: MaterialData | undefined
    year: number
 }
 
@@ -40,6 +41,7 @@ export const AnimeList: FC = observer(() => {
             const gettedData = formattedAnimeData(response.data)
             setAnimeData(gettedData)
             setTotalAnimeLength(response.data.length)
+            console.log(response.data)
          } catch (e) {
             console.error(e)
          } finally {
@@ -50,8 +52,11 @@ export const AnimeList: FC = observer(() => {
    }, [currentPage, searchTerm])
 
    const paginate = (pageNumber: number) => {
-      setCurrentPage(pageNumber)
+      if (animeData === undefined) {
+         console.log('Хуйня какая-то')
+      }
       setAnimeData([])
+      setCurrentPage(pageNumber)
       setSearchTerm(searchTerm ? searchTerm : '')
    }
 
@@ -71,10 +76,12 @@ export const AnimeList: FC = observer(() => {
                   }}
                />
                <ul className={styles.cards__container}>
-                  {animeData.length != 0 ? (
+                  {animeData.length && animeData.length != 0 ? (
                      <AnimeCard animes={animeData} />
                   ) : (
-                     <h1>НЕТ АНИМЕ</h1>
+                     <div className={styles.no_anime}>
+                        <img src={NoAnimePhoto} />
+                     </div>
                   )}
                   {!store.isLoading && (
                      <Pagination

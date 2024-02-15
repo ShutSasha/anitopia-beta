@@ -12,10 +12,10 @@ class AnimeController {
          const uniqueData = await AnimeService.removeDuplicates(data, 'title')
          let sortedData = AnimeService.sortByRating(uniqueData)
          const query = req.query.search
-         console.log(query)
 
          if (query) {
             sortedData = await AnimeService.findAnime(sortedData, query)
+            sortedData = AnimeService.sortByRating(sortedData)
          }
 
          const startIndex = req.query.page * req.query.limit || 0
@@ -25,6 +25,7 @@ class AnimeController {
             startIndex,
             count,
          )
+
          return res.json({
             data: result,
             length: sortedData.length,
