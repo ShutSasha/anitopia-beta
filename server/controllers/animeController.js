@@ -34,6 +34,18 @@ class AnimeController {
       }
    }
 
+   async getTopAnime(req, res, next) {
+      try {
+         const data = animeSerials
+         const uniqueData = await AnimeService.removeDuplicates(data, 'title')
+         let sortedData = AnimeService.sortByRating(uniqueData)
+
+         return res.json(sortedData.slice(0, 100))
+      } catch (error) {
+         next(error)
+      }
+   }
+
    async getAnimeSeason(req, res, next) {
       try {
          // const date = new Date();
