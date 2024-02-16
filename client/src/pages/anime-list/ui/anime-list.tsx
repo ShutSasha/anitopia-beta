@@ -41,6 +41,7 @@ export const AnimeList: FC = observer(() => {
             const gettedData = formattedAnimeData(response.data)
             setAnimeData(gettedData)
             setTotalAnimeLength(response.data.length)
+            setCurrentPage(1)
             console.log(response.data)
          } catch (e) {
             console.error(e)
@@ -52,9 +53,6 @@ export const AnimeList: FC = observer(() => {
    }, [currentPage, searchTerm])
 
    const paginate = (pageNumber: number) => {
-      if (animeData === undefined) {
-         console.log('Хуйня какая-то')
-      }
       setAnimeData([])
       setCurrentPage(pageNumber)
       setSearchTerm(searchTerm ? searchTerm : '')
@@ -75,23 +73,30 @@ export const AnimeList: FC = observer(() => {
                      setSearchTerm(searchParam)
                   }}
                />
-               <ul className={styles.cards__container}>
-                  {animeData.length && animeData.length != 0 ? (
+               {animeData.length && animeData.length != 0 ? (
+                  <ul className={styles.cards__container}>
                      <AnimeCard animes={animeData} />
-                  ) : (
-                     <div className={styles.no_anime}>
-                        <img src={NoAnimePhoto} />
-                     </div>
-                  )}
-                  {!store.isLoading && (
-                     <Pagination
-                        animesPerPage={animesPerPage}
-                        totalAnimes={totalAnimeLength}
-                        paginate={paginate}
-                        currentPage={currentPage}
+                     {!store.isLoading && (
+                        <Pagination
+                           animesPerPage={animesPerPage}
+                           totalAnimes={totalAnimeLength}
+                           paginate={paginate}
+                           currentPage={currentPage}
+                        />
+                     )}
+                  </ul>
+               ) : (
+                  <div className={styles.no_anime_container}>
+                     <img
+                        src={NoAnimePhoto}
+                        className={styles.no_anime_photo}
                      />
-                  )}
-               </ul>
+                     <p className={styles.no_anime_text}>
+                        По запросу "{searchTerm}" ничего не найдено. Попробуйте
+                        изменить запрос
+                     </p>
+                  </div>
+               )}
             </div>
          </div>
       </>
