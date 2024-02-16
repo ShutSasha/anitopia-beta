@@ -55,29 +55,31 @@ class AnimeController {
 
    async getAnimeSeason(req, res, next) {
       try {
-         // const date = new Date();
-         //const formattedDate = format(date, "yyyy-MM-dd");
+         const animeWithDate = []
+         const currentDate = new Date()
+         const currentYear = currentDate.getFullYear()
+         console.log(currentYear)
 
-         const animeData = animeSerials
-         const sliceData = animeData.slice(0, 100)
-         const filterData = await AnimeService.removeDuplicates(
-            sliceData,
-            'title',
+         await Promise.all(
+            animeSerials.map(async (item) => {
+               if (
+                  item.material_data &&
+                  item.material_data.aired_at &&
+                  item.material_data.shikimori_rating >= 7.5 &&
+                  Number(item.material_data.aired_at.split('-')[0]) ===
+                     Number(currentYear)
+               ) {
+                  animeWithDate.push(item)
+               }
+            }),
          )
 
-         const animeWithDate = filterData.filter(
-            (item) => item.material_data.premiere_world != undefined,
-         )
+         console.log(animeWithDate.length)
 
-         const seasonAnime = animeWithDate.filter((item) => {
-            const premiereYear = Number(
-               item.material_data.premiere_world.split('-')[0],
-            )
-            return premiereYear === 2023
-         })
-
-         return res.json(seasonAnime)
-      } catch (error) {}
+         return res.json(animeWithDate)
+      } catch (error) {
+         next(error)
+      }
    }
 
    async getAnime(req, res, next) {

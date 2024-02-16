@@ -25,6 +25,7 @@ export const HomePage: FC = observer(() => {
             const res = await axios.get(
                'http://localhost:5000/api/anime/season-anime',
             )
+            console.log(res.data)
             setAnimeSeasonData(res.data)
          } catch (err) {
             console.error(err)
@@ -82,29 +83,27 @@ export const HomePage: FC = observer(() => {
                         }}
                      >
                         {animeSeasonData &&
-                           animeSeasonData
-                              .slice(0, 12)
-                              .map((card: any, index: number) => (
-                                 <SplideSlide key={index}>
-                                    <Link
-                                       to={`anime/${card.id}`}
-                                       className={styles_h.card}
-                                    >
-                                       <div
-                                          style={{
-                                             backgroundImage: `url(${card.material_data.poster_url})`,
-                                          }}
-                                          className={styles_h.card_background}
-                                       ></div>
-                                    </Link>
+                           animeSeasonData.map((card: any, index: number) => (
+                              <SplideSlide key={index}>
+                                 <Link
+                                    to={`anime/${card.id}`}
+                                    className={styles_h.card}
+                                 >
                                     <div
-                                       title={card.title}
-                                       className={styles_h.card_text_block}
-                                    >
-                                       {card.title}
-                                    </div>
-                                 </SplideSlide>
-                              ))}
+                                       style={{
+                                          backgroundImage: `url(${card.material_data.poster_url})`,
+                                       }}
+                                       className={styles_h.card_background}
+                                    ></div>
+                                 </Link>
+                                 <div
+                                    title={card.title}
+                                    className={styles_h.card_text_block}
+                                 >
+                                    {card.title}
+                                 </div>
+                              </SplideSlide>
+                           ))}
                      </Splide>
                   </div>
                   {store.isAuth && <div>-_----_----_-----_---</div>}
