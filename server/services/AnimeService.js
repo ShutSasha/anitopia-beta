@@ -2,10 +2,9 @@ const { logger } = require('sequelize/lib/utils/logger')
 
 class AnimeService {
    async getAnimeSubset(data, startIndex, count) {
-      const resultData = data.slice(
-         Number(startIndex),
-         Number(startIndex) + Number(count),
-      )
+      console.log(startIndex, count)
+      const resultData = data.slice(startIndex, startIndex + count)
+      console.log('Result:', resultData)
       return resultData
    }
 
@@ -32,9 +31,9 @@ class AnimeService {
    }
 
    findAnime(data, searchText) {
-      const lowerCaseSearchText = searchText.toLowerCase()
+      const lowerCaseSearchText = searchText.trim().toLowerCase()
       const searchedData = data.filter((anime) => {
-         return anime?.title.toLowerCase().includes(lowerCaseSearchText)
+         return anime?.title.toLowerCase().trim().includes(lowerCaseSearchText)
       })
       return searchedData
    }

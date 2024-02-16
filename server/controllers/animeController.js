@@ -1,5 +1,5 @@
 const { default: axios } = require('axios')
-const animeSerials = require('../anime-serial.json')
+const animeSerials = require('../animeFilterData.json')
 const AnimeService = require('../services/AnimeService')
 const { format } = require('date-fns')
 const { ca } = require('date-fns/locale/ca')
@@ -11,21 +11,25 @@ class AnimeController {
    async getAnimeList(req, res, next) {
       try {
          const data = animeSerials
-         const uniqueData = await AnimeService.removeDuplicates(data, 'title')
-         let sortedData = AnimeService.sortByRating(uniqueData)
+         let sortedData = AnimeService.sortByRating(data)
          const query = req.query.search
 
          if (query) {
-            sortedData = await AnimeService.findAnime(sortedData, query)
+            sortedData = await AnimeService.findAnime(data, query)
             sortedData = AnimeService.sortByRating(sortedData)
          }
 
-         const startIndex = req.query.page * req.query.limit || 0
+         let startIndex = 0
+
+         if (sortedData.length >= 10) {
+            startIndex = req.query.page * req.query.limit || 0
+         }
+
          const count = req.query.limit || 10
          const result = await AnimeService.getAnimeSubset(
             sortedData,
-            startIndex,
-            count,
+            Number(startIndex),
+            Number(count),
          )
 
          return res.json({
