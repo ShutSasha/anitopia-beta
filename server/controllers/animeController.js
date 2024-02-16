@@ -4,6 +4,8 @@ const AnimeService = require('../services/AnimeService')
 const { format } = require('date-fns')
 const { ca } = require('date-fns/locale/ca')
 const { resetWatchers } = require('nodemon/lib/monitor/watch')
+const fs = require('fs')
+const path = require('path')
 
 class AnimeController {
    async getAnimeList(req, res, next) {
@@ -97,9 +99,21 @@ class AnimeController {
                ? `https://kodikapi.com/list?token=${process.env.KODIK_TOKEN}&types=anime-serial&limit=100&with_material_data=true&next=${response.data.next_page}`
                : null
 
-            if (nextUrl === null || newArray.length === 200) {
+            if (nextUrl === null || newArray.length === 300) {
                break
             }
+         }
+
+         if (!newArray.length === 300) {
+            const uniqueData = await AnimeService.removeDuplicates(
+               newArray,
+               'title',
+            )
+
+            const serverDirectory = path.join(__dirname, '../')
+
+            const filePath = path.join(serverDirectory, 'animeFilterData.json')
+            fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
          }
 
          return res.json(newArray.length)
@@ -111,6 +125,7 @@ class AnimeController {
       }
    }
 
+   // is not used
    async searchAnime(req, res, next) {
       try {
          const { title } = req.params
