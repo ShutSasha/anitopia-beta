@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { ImageWithFallback, Skeleton } from '../../../shared'
 import { observer } from 'mobx-react-lite'
@@ -22,7 +22,7 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
             const loadImages = currentBatch.map((anime, index) => {
                return new Promise<number>((resolve) => {
                   const img = new Image()
-                  img.src = anime.material_data.poster_url
+                  img.src = anime.material_data?.poster_url || ''
                   img.onload = () => resolve(i + index)
                })
             })
@@ -47,7 +47,7 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
             const updatedTitle = anime.title.includes('ТВ')
                ? anime.title.replace('ТВ-', 'Сезон ')
                : anime.title
-            const genresString = anime.material_data.genres
+            const genresString = anime.material_data?.genres
                ? anime.material_data.genres.join(', ')
                : ''
             console.log(5555)
@@ -68,7 +68,7 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
                      </div>
                   ) : (
                      <ImageWithFallback
-                        primarySrc={anime.material_data.poster_url}
+                        primarySrc={anime.material_data?.poster_url}
                         secondarySrc={NotLoadedImage}
                         altText={anime.title}
                      />
@@ -77,7 +77,7 @@ export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
                      <h3>{updatedTitle}</h3>
                      <p className={styles.anime__genres}>{genresString}</p>
                      <p className={styles.anime__description}>
-                        {anime.material_data.description
+                        {anime.material_data?.description
                            ? anime.material_data.description
                            : 'Нет'}
                      </p>

@@ -2,3 +2,10 @@
    max-width: var(--container-width);
    margin: 0 auto;
 }
+
+.wrapper {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+}
