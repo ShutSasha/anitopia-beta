@@ -72,9 +72,13 @@ export const AnimeList: FC = observer(() => {
                      setSearchTerm(searchParam)
                   }}
                />
-               {animeData.length && animeData.length != 0 ? (
+               {animeData.length && animeData.length != 0 && animeData ? (
                   <ul className={styles.cards__container}>
-                     <AnimeCard animes={animeData} />
+                     {animeData.map((item, index) => (
+                        <li key={index}>
+                           <AnimeCard {...item} />
+                        </li>
+                     ))}
                      {!store.isLoading && (
                         <Pagination
                            animesPerPage={animesPerPage}

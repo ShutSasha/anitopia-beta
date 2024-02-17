@@ -38,8 +38,12 @@ export const TopAnime: FC = () => {
          <div className={styles.container}>
             <div className={styles.wrapper}>
                <div>Top-100 page</div>
-               {animeData.length != 0 ? (
-                  <AnimeCard animes={animeData} />
+               {animeData.length && animeData.length != 0 && animeData ? (
+                  animeData.map((item, index) => (
+                     <div key={index}>
+                        <AnimeCard {...item} />
+                     </div>
+                  ))
                ) : (
                   <h1>НЕТ АНИМЕ</h1>
                )}

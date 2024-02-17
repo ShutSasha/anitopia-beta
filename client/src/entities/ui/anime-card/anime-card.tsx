@@ -6,86 +6,56 @@ import { Anime } from '../../../pages/anime-list/ui/anime-list'
 import NotLoadedImage from './assets/6e1420ed-dd20-4ba6-bc4d-965a6d6e9718.png'
 import { Link } from 'react-router-dom'
 
-interface AnimeCardProps {
-   animes: Anime[]
-}
+export const AnimeCard: FC<Anime> = observer(
+   ({ id, title, material_data, year }) => {
+      const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
-export const AnimeCard: FC<AnimeCardProps> = observer(({ animes }) => {
-   const [imagesLoaded, setImagesLoaded] = useState<Array<boolean>>(
-      new Array(animes.length).fill(false),
-   )
-
-   useEffect(() => {
-      const loadImagesInBatches = async () => {
-         for (let i = 0; i < animes.length; i += 5) {
-            const currentBatch = animes.slice(i, i + 5)
-            const loadImages = currentBatch.map((anime, index) => {
-               return new Promise<number>((resolve) => {
-                  const img = new Image()
-                  img.src = anime.material_data?.poster_url || ''
-                  img.onload = () => resolve(i + index)
-               })
-            })
-
-            const loadedIndices = await Promise.all(loadImages)
-            setImagesLoaded((prevState) => {
-               const newState = [...prevState]
-               loadedIndices.forEach((index) => {
-                  newState[index] = true
-               })
-               return newState
-            })
+      useEffect(() => {
+         setIsLoadingImage(true)
+         const image = new Image()
+         image.src = material_data?.poster_url || ''
+         image.onload = () => {
+            setIsLoadingImage(false)
          }
-      }
+      }, [material_data?.poster_url])
 
-      loadImagesInBatches()
-   }, [])
-
-   return (
-      <>
-         {animes.map((anime: Anime, index: number) => {
-            const updatedTitle = anime.title.includes('ТВ')
-               ? anime.title.replace('ТВ-', 'Сезон ')
-               : anime.title
-            const genresString = anime.material_data?.genres
-               ? anime.material_data.genres.join(', ')
-               : ''
-            console.log(5555)
-            return (
-               <Link
-                  to={
-                     location.pathname.replace(
-                        window.location.pathname,
-                        '/anime/',
-                     ) + anime.id
-                  }
-                  key={anime.id}
-                  className={styles.animeCard}
-               >
-                  {!imagesLoaded[index] ? (
-                     <div className={styles.skeleton}>
-                        <Skeleton />
-                     </div>
-                  ) : (
-                     <ImageWithFallback
-                        primarySrc={anime.material_data?.poster_url}
-                        secondarySrc={NotLoadedImage}
-                        altText={anime.title}
-                     />
-                  )}
-                  <div className={styles.content}>
-                     <h3>{updatedTitle}</h3>
-                     <p className={styles.anime__genres}>{genresString}</p>
-                     <p className={styles.anime__description}>
-                        {anime.material_data?.description
-                           ? anime.material_data.description
-                           : 'Нет'}
-                     </p>
-                     <span>{anime.year}</span>
+      return (
+         <>
+            <Link
+               to={
+                  location.pathname.replace(
+                     window.location.pathname,
+                     '/anime/',
+                  ) + id
+               }
+               className={styles.animeCard}
+            >
+               {isLoadingImage ? (
+                  <div className={styles.skeleton}>
+                     <Skeleton />
                   </div>
-               </Link>
-            )
-         })}
-      </>
-   )
-})
+               ) : (
+                  <ImageWithFallback
+                     primarySrc={material_data?.poster_url}
+                     secondarySrc={NotLoadedImage}
+                     altText={title}
+                  />
+               )}
+               <div className={styles.content}>
+                  <h3>{title}</h3>
+                  <p className={styles.anime__genres}>
+                     Жанры:&nbsp;
+                     {material_data?.genres?.join(', ')}
+                  </p>
+                  <p className={styles.anime__description}>
+                     {material_data?.description
+                        ? material_data.description
+                        : 'Нет'}
+                  </p>
+                  <span>{year}</span>
+               </div>
+            </Link>
+         </>
+      )
+   },
+)
