@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { SkeletonPoster } from './Skeleton'
 import { ImageZoomer } from '../../../shared'
@@ -8,7 +8,8 @@ interface Screenshots {
 }
 
 export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
-   const [isLoadingScreenshots, setIsLoadingScreenshots] = useState(false)
+   const [isLoadingScreenshots, setIsLoadingScreenshots] =
+      useState<boolean>(false)
 
    useEffect(() => {
       setIsLoadingScreenshots(true)
@@ -32,7 +33,7 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
                   {isLoadingScreenshots ? (
                      <SkeletonPoster />
                   ) : (
-                     <ImageZoomer imagePath={screen}>
+                     <ImageZoomer>
                         <img src={screen} alt='' />
                      </ImageZoomer>
                   )}

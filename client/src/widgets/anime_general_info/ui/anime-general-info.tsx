@@ -45,7 +45,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
                   {isLoadingImage ? (
                      <SkeletonPoster />
                   ) : (
-                     <ImageZoomer imagePath={anime.posterURL}>
+                     <ImageZoomer>
                         <img src={anime.posterURL} alt='poster_anime' />
                      </ImageZoomer>
                   )}
