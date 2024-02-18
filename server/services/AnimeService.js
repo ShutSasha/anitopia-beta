@@ -1,10 +1,8 @@
 const { logger } = require('sequelize/lib/utils/logger')
 
 class AnimeService {
-   async getAnimeSubset(data, startIndex, count) {
-      console.log(startIndex, count)
+   getAnimeSubset(data, startIndex, count) {
       const resultData = data.slice(startIndex, startIndex + count)
-      console.log('Result:', resultData)
       return resultData
    }
 
@@ -36,6 +34,42 @@ class AnimeService {
          return anime?.title.toLowerCase().trim().includes(lowerCaseSearchText)
       })
       return searchedData
+   }
+
+   replaceSpecificNames(title) {
+      const specificNames = [
+         { '[ТВ]': '' },
+         { '[ТВ-1]': '' },
+         { '[ТВ-2]': ' 2' },
+         { '[ТВ-3]': ' 3' },
+         { '[ТВ-4]': ' 4' },
+         { '[ТВ-5]': ' 5' },
+         { '[ТВ-6]': ' 6' },
+         { '[ТВ-7]': ' 7' },
+         { '[ТВ-8]': ' 8' },
+         { '[ТВ-9]': ' 9' },
+         { '[ТВ-10]': ' 10' },
+         { '[ТВ-11]': ' 11' },
+         { '[ТВ-12]': ' 12' },
+         { '[ТВ-13]': ' 13' },
+         { '[ТВ-14]': ' 14' },
+         { '[ТВ, часть 1]': 'сезон 1, часть 1' },
+         { '[ТВ-1, часть 1]': 'сезон 1, часть 1' },
+         { '[ТВ-1, часть 2]': 'сезон 1, часть 2' },
+         { '[ТВ-2, часть 1]': 'сезон 2, часть 1' },
+         { '[ТВ-2, часть 2]': 'сезон 2, часть 2' },
+         { '[ТВ-3, часть 1]': 'сезон 3, часть 1' },
+         { '[ТВ-3, часть 2]': 'сезон 3, часть 2' },
+         { '[ТВ-3, часть 3]': 'сезон 3, часть 3' },
+      ]
+
+      let replacedTitle = title
+      specificNames.forEach((specificName) => {
+         const nameToReplace = Object.keys(specificName)[0]
+         const replacement = specificName[nameToReplace]
+         replacedTitle = replacedTitle.replace(nameToReplace, replacement)
+      })
+      return replacedTitle
    }
 }
 

@@ -26,7 +26,7 @@ class AnimeController {
          }
 
          const count = req.query.limit || 10
-         const result = await AnimeService.getAnimeSubset(
+         const result = AnimeService.getAnimeSubset(
             sortedData,
             Number(startIndex),
             Number(count),
@@ -110,17 +110,19 @@ class AnimeController {
             }
          }
 
-         if (!newArray.length === 300) {
-            const uniqueData = await AnimeService.removeDuplicates(
-               newArray,
-               'title',
-            )
+         // const uniqueData = await AnimeService.removeDuplicates(
+         //    newArray,
+         //    'title',
+         // )
 
-            const serverDirectory = path.join(__dirname, '../')
+         // uniqueData.forEach((anime) => {
+         //    anime.title = AnimeService.replaceSpecificNames(anime.title)
+         // })
 
-            const filePath = path.join(serverDirectory, 'animeFilterData.json')
-            fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
-         }
+         // const serverDirectory = path.join(__dirname, '../')
+
+         // const filePath = path.join(serverDirectory, 'animeFilterData.json')
+         // fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
 
          return res.json(newArray.length)
       } catch (error) {
@@ -131,7 +133,7 @@ class AnimeController {
       }
    }
 
-   // is not used
+   //? is not used
    async searchAnime(req, res, next) {
       try {
          const { title } = req.params
