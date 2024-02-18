@@ -32,7 +32,7 @@ export const AnimeCard: FC<Anime> = observer(
             >
                {isLoadingImage ? (
                   <div className={styles.skeleton}>
-                     <Skeleton />
+                     <Skeleton width={150} height={250} />
                   </div>
                ) : (
                   <ImageWithFallback

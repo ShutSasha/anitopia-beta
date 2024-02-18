@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { Rating } from '../../../pages/random-anime/ui/random-anime'
-import { SkeletonPoster } from './Skeletons'
-import { ImageZoomer } from '../../../shared'
+import { ImageZoomer, Skeleton } from '../../../shared'
 
 interface AnimeGeneralInfoProps {
    anime: {
@@ -43,7 +42,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
             <div className={styles.anime_general_info_container}>
                <div className={styles.anime_poster}>
                   {isLoadingImage ? (
-                     <SkeletonPoster />
+                     <Skeleton width={250} height={350} />
                   ) : (
                      <ImageZoomer>
                         <img src={anime.posterURL} alt='poster_anime' />

@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { SkeletonPoster } from './Skeleton'
-import { ImageZoomer } from '../../../shared'
+import { ImageZoomer, Skeleton } from '../../../shared'
 
 interface Screenshots {
    screenshots: string[]
@@ -31,7 +30,7 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
             {screenshots.map((screen, index) => (
                <div key={index}>
                   {isLoadingScreenshots ? (
-                     <SkeletonPoster />
+                     <Skeleton width={640} height={360} />
                   ) : (
                      <ImageZoomer>
                         <img src={screen} alt='' />

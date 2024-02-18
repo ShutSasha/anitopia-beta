@@ -1,120 +1,93 @@
 .wrapper {
-	background-color: #e2e2e2;
-	// background-image: url("../assets/main-background.jpg");
-	background-size: cover;
-	// background-repeat: no-repeat;
-	background-attachment: fixed;
-	// background-position: center;
-	height: 100vh;
+   background-color: #e2e2e2;
+   // background-image: url("../assets/main-background.jpg");
+   background-size: cover;
+   // background-repeat: no-repeat;
+   background-attachment: fixed;
+   // background-position: center;
+   height: 100vh;
 }
 
 .container {
-	max-width: var(--container-width);
-	margin: 0 auto;
+   max-width: var(--container-width);
+   margin: 0 auto;
 }
 
 .search_filter_line {
-	background-color: #343a40;
-	display: grid;
-	gap: 40px;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(1, 1fr);
-	padding: 30px 40px;
-	border-bottom: 4px solid #ff6666;
-	border-right: 4px solid #ff6666;
-	border-left: 4px solid #ff6666;
+   background-color: #343a40;
+   display: grid;
+   gap: 40px;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(1, 1fr);
+   padding: 30px 40px;
+   border-bottom: 4px solid #ff6666;
+   border-right: 4px solid #ff6666;
+   border-left: 4px solid #ff6666;
 
-	.search {
-		grid-column: 1 / 3;
+   .search {
+      grid-column: 1 / 3;
 
-		.search_input {
-			width: 100%;
-			height: 40px;
-			border-radius: 15px;
-			padding: 0 auto;
-			line-height: 35px;
-			outline: none;
-			font-size: 20px;
-			padding-left: 20px;
-			font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-		}
+      .search_input {
+         width: 100%;
+         height: 40px;
+         border-radius: 15px;
+         padding: 0 auto;
+         line-height: 35px;
+         outline: none;
+         font-size: 20px;
+         padding-left: 20px;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
 
-		.search_input::placeholder {
-			text-align: center;
-			font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-			font-size: 20px;
-			color: #cccccc;
-		}
-	}
+      .search_input::placeholder {
+         text-align: center;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         font-size: 20px;
+         color: #cccccc;
+      }
+   }
 
-	.filter {
-		grid-column: 3;
+   .filter {
+      grid-column: 3;
 
-		.filter_btn {
-			border-radius: 15px;
-			position: relative;
-			font-size: 20px;
-			line-height: 35px;
-			background-color: #fff;
-			width: 100%;
-			height: 100%;
-			font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      .filter_btn {
+         border-radius: 15px;
+         position: relative;
+         font-size: 20px;
+         line-height: 35px;
+         background-color: #fff;
+         width: 100%;
+         height: 100%;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 
-			.filter_icon {
-				position: absolute;
-				left: 15px;
-				top: 5px;
-				display: inline-block;
-				height: 25px;
-				width: 25px;
-				background-image: url("../../../assets/filter-icon.png");
-				background-repeat: no-repeat;
-				background-size: cover;
-			}
-		}
-	}
+         .filter_icon {
+            position: absolute;
+            left: 15px;
+            top: 5px;
+            display: inline-block;
+            height: 25px;
+            width: 25px;
+            background-image: url("../../../assets/filter-icon.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+      }
+   }
 }
 
 .anime_season_block {
-	background-color: #343a40;
-	padding: 9px 0;
+   background-color: #343a40;
+   padding: 9px 0;
 
-	.anime_season_title {
-		font-size: 24px;
-		font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-		color: #fff;
-		text-align: center;
-	}
+   .anime_season_title {
+      font-size: 24px;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+   }
 }
 
 .slider_anime_season {
-	display: flex;
-	width: 100%;
-}
-
-.card {
-	flex: 1;
-	width: 100%;
-}
-
-.card_background {
-	background-size: cover;
-	background-repeat: no-repeat;
-	max-width: 220px;
-	width: 100%;
-	height: 300px;
-}
-
-.card_text_block {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: 100%;
-	max-width: 220px;
-	background-color: #000;
-	color: #fff;
-	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-	font-size: 16px;
-	padding: 12px 5px;
-	text-align: center;
+   display: flex;
+   width: 100%;
 }

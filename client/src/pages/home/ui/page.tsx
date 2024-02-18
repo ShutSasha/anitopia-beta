@@ -3,12 +3,12 @@ import styles_h from './styles.module.scss'
 import { Header } from '../../../widgets/header'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
-import { Loader } from '../../../shared'
+import { Loader, Skeleton } from '../../../shared'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import 'react-multi-carousel/lib/styles.css'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css' // Default theme
+import { PosterSeasonCard } from '../../../entities'
 
 export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
@@ -74,37 +74,33 @@ export const HomePage: FC = observer(() => {
                      </h2>
                   </div>
                   <div>
-                     <Splide
-                        options={{
-                           type: 'loop',
-                           perMove: 2,
-                           perPage: 6,
-                           pagination: false,
-                        }}
-                     >
-                        {animeSeasonData &&
-                           animeSeasonData.map((card: any, index: number) => (
-                              <SplideSlide key={index}>
-                                 <Link
-                                    to={`anime/${card.id}`}
-                                    className={styles_h.card}
-                                 >
-                                    <div
-                                       style={{
-                                          backgroundImage: `url(${card.material_data.poster_url})`,
-                                       }}
-                                       className={styles_h.card_background}
-                                    ></div>
-                                 </Link>
-                                 <div
-                                    title={card.title}
-                                    className={styles_h.card_text_block}
-                                 >
-                                    {card.title}
-                                 </div>
-                              </SplideSlide>
-                           ))}
-                     </Splide>
+                     {animeSeasonData.length > 0 ? (
+                        <Splide
+                           options={{
+                              type: 'loop',
+                              perMove: 2,
+                              perPage: 6,
+                              pagination: false,
+                           }}
+                        >
+                           {animeSeasonData &&
+                              animeSeasonData.map(
+                                 (card: any, index: number) => (
+                                    <SplideSlide key={index}>
+                                       <PosterSeasonCard
+                                          id={card.id}
+                                          title={card.title}
+                                          poster_url={
+                                             card.material_data.poster_url
+                                          }
+                                       />
+                                    </SplideSlide>
+                                 ),
+                              )}
+                        </Splide>
+                     ) : (
+                        <Skeleton width={1320} height={344} />
+                     )}
                   </div>
                   {store.isAuth && <div>-_----_----_-----_---</div>}
                   <button onClick={() => getUsersClick()}>get users</button>
