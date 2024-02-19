@@ -1,32 +1,50 @@
-import { ReactNode, useState, useEffect, FC, useContext } from 'react';
-import { Toast } from '../..';
-import { Context } from '../../../main';
+import { ReactNode, useState, useEffect, FC, useContext } from 'react'
+import { Toast } from '../..'
+import { Context } from '../../../main'
+import axios, { AxiosError } from 'axios'
+import { observer } from 'mobx-react-lite'
 
-export const ErrorBoundary: FC<{ children: ReactNode }> = ({ children }) => {
-  const { store } = useContext(Context);
-  const [error, setError] = useState<Error | null>(null);
-  const [, setShowToast] = useState<boolean>();
+interface ApiResponse {
+   message: string
+}
 
-  useEffect(() => {
-    const errorHandler = (event: ErrorEvent) => {
-      setError(event.error);
-    };
-    window.addEventListener('error', errorHandler);
-    return () => {
-      window.removeEventListener('error', errorHandler);
-    };
-  }, []);
+export const ErrorBoundary: FC<{ children: ReactNode }> = observer(
+   ({ children }) => {
+      const { store } = useContext(Context)
+      const [error, setError] = useState<string | null>(null)
 
-  return (
-    <div>
-      {children}
-      {error && (
-        <Toast
-          clearIsError={() => store.setIsError(false)}
-          onClose={() => setShowToast(false)}
-          message={error.message}
-        />
-      )}
-    </div>
-  );
-};
+      useEffect(() => {
+         const axiosInterceptor = axios.interceptors.response.use(
+            undefined,
+            (error: AxiosError<ApiResponse>) => {
+               const errorMessage =
+                  error.response?.data?.message || 'An error occurred'
+               setError(errorMessage)
+               return Promise.reject(error)
+            },
+         )
+
+         return () => {
+            axios.interceptors.response.eject(axiosInterceptor)
+         }
+      }, [])
+
+      const clearError = () => {
+         setError(null)
+         store.setIsError(false)
+      }
+
+      return (
+         <div>
+            {children}
+            {error && (
+               <Toast
+                  clearIsError={clearError}
+                  onClose={clearError}
+                  message={error}
+               />
+            )}
+         </div>
+      )
+   },
+)
