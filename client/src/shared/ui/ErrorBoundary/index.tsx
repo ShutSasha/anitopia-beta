@@ -19,6 +19,7 @@ export const ErrorBoundary: FC<{ children: ReactNode }> = observer(
             (error: AxiosError<ApiResponse>) => {
                const errorMessage =
                   error.response?.data?.message || 'An error occurred'
+               store.setIsError(true)
                setError(errorMessage)
                return Promise.reject(error)
             },
@@ -39,6 +40,7 @@ export const ErrorBoundary: FC<{ children: ReactNode }> = observer(
             {children}
             {error && (
                <Toast
+                  isError={store.isError}
                   clearIsError={clearError}
                   onClose={clearError}
                   message={error}

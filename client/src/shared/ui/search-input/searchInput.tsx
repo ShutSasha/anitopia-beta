@@ -15,7 +15,7 @@ export const SearchInput: FC<ISearchInputProps> = ({ onClickEvent }) => {
 
    return (
       <>
-         <form onSubmit={handleSubmit}>
+         <form className={styles.form} onSubmit={handleSubmit}>
             <input
                type='text'
                className={styles.input}

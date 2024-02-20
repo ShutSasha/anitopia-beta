@@ -29,7 +29,7 @@ export const AnimeList: FC = observer(() => {
    const [currentPage, setCurrentPage] = useState<number>(1)
    const [animesPerPage] = useState<number>(10)
    const [totalAnimeLength, setTotalAnimeLength] = useState<number>(0)
-   const [searchTerm, setSearchTerm] = useState('')
+   const [searchTerm, setSearchTerm] = useState<string>('')
 
    useEffect(() => {
       const fetchAnimeList = async () => {
