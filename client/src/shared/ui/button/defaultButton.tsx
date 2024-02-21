@@ -1,40 +1,38 @@
-import { FC, CSSProperties } from "react";
-import styles from "./styles.module.scss";
+import { FC, CSSProperties } from 'react'
+import styles from './styles.module.scss'
 interface ButtonProps {
-	text: string;
-	padding?: string;
-	color?: string;
-	backgroundColor?: string;
-	disabled?: boolean;
-	onClick: () => void;
+   text: string
+   padding?: string
+   color?: string
+   backgroundColor?: string
+   disabled?: boolean
+   onClick: () => void
 }
 
-//() => Promise<void> |
-
 export const DefaultButton: FC<ButtonProps> = ({
-	text,
-	padding,
-	color,
-	backgroundColor,
-	disabled = false,
-	onClick,
+   text,
+   padding,
+   color,
+   backgroundColor,
+   disabled = false,
+   onClick,
 }) => {
-	const buttonStyles: CSSProperties = {
-		padding: padding || "10px",
-		background: disabled ? "gray" : backgroundColor || "#ff6666",
-		color: color || "white",
-	};
+   const buttonStyles: CSSProperties = {
+      padding: padding || '10px',
+      background: disabled ? 'gray' : backgroundColor || '#ff6666',
+      color: color || 'white',
+   }
 
-	return (
-		<>
-			<button
-				className={styles.default_btn}
-				style={buttonStyles}
-				onClick={onClick}
-				disabled={disabled}
-			>
-				{text}
-			</button>
-		</>
-	);
-};
+   return (
+      <>
+         <button
+            className={styles.default_btn}
+            style={buttonStyles}
+            onClick={onClick}
+            disabled={disabled}
+         >
+            {text}
+         </button>
+      </>
+   )
+}
