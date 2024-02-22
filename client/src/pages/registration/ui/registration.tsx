@@ -97,7 +97,7 @@ export const Registration = observer(() => {
                                  Я согласен с
                                  <Link
                                     className={styles.user_agreement_span}
-                                    to='/terms-of-use'
+                                    to='/users-policy'
                                  >
                                     пользовательським соглашением
                                  </Link>

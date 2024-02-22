@@ -54,7 +54,7 @@ export const Pagination: FC<IPaginationProps> = observer(
       return (
          <>
             <ul className={styles.pagination__container}>
-               {currentPage !== 1 && (
+               {currentPage !== 1 && totalPages > 10 && (
                   <li>
                      <a
                         href='#'
@@ -110,7 +110,7 @@ export const Pagination: FC<IPaginationProps> = observer(
                      </a>
                   </li>
                )}
-               {currentPage !== totalPages && (
+               {currentPage !== totalPages && totalAnimes > 10 && (
                   <li>
                      <a
                         href='#'

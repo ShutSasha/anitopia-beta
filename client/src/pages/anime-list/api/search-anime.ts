@@ -1,3 +1,3 @@
-export const searchAnime = async (earchParam:string) =>{
-
-}
+// export const searchAnime = async (earchParam:string) =>{
+//
+// }

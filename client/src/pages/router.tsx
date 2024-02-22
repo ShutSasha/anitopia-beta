@@ -11,6 +11,7 @@ import { RandomAnime } from './random-anime'
 import { AnimeList } from './anime-list'
 import { AnimePage } from './anime-page'
 import { TopAnime } from './top-anime'
+import { UserPolicy } from './user-policy/ui/userPolicy.tsx'
 
 export const router = createBrowserRouter(
    [
@@ -45,6 +46,10 @@ export const router = createBrowserRouter(
       {
          path: routes.TOP_ANIME,
          element: <TopAnime />,
+      },
+      {
+         path: routes.USER_POLICY,
+         element: <UserPolicy />,
       },
       {
          path: '*',
