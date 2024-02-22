@@ -3,17 +3,20 @@ import styles_h from './styles.module.scss'
 import { Header } from '../../../widgets/header'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
-import { Loader, Skeleton } from '../../../shared'
+import { Loader } from '../../../shared'
 import axios from 'axios'
-import 'react-multi-carousel/lib/styles.css'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
-import '@splidejs/react-splide/css' // Default theme
-import { PosterSeasonCard } from '../../../entities'
+import { Splider } from '../../../widgets/splider'
+
+export interface AnimeSeason {
+   id: string
+   title: string
+   poster_url: string
+}
 
 export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
    const [searchText, setSearchText] = useState<string>('')
-   const [animeSeasonData, setAnimeSeasonData] = useState([])
+   const [animeSeasonData, setAnimeSeasonData] = useState<AnimeSeason[]>([])
 
    const headers = {
       Authorization: `Bearer ${localStorage.getItem(`token`)}`,
@@ -22,10 +25,9 @@ export const HomePage: FC = observer(() => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const res = await axios.get(
+            const res = await axios.get<AnimeSeason[]>(
                'http://localhost:5000/api/anime/season-anime',
             )
-            console.log(res.data)
             setAnimeSeasonData(res.data)
          } catch (err) {
             console.error(err)
@@ -38,7 +40,6 @@ export const HomePage: FC = observer(() => {
       const response = await axios.get('http://localhost:5000/api/auth/users', {
          headers,
       })
-      console.log(response)
    }
 
    if (store.isLoading) {
@@ -73,37 +74,9 @@ export const HomePage: FC = observer(() => {
                         Аниме зимнего сезона
                      </h2>
                   </div>
-                  <div>
-                     {animeSeasonData.length > 0 ? (
-                        <Splide
-                           options={{
-                              type: 'loop',
-                              perMove: 2,
-                              perPage: 6,
-                              pagination: false,
-                           }}
-                        >
-                           {animeSeasonData &&
-                              animeSeasonData.map(
-                                 (card: any, index: number) => (
-                                    <SplideSlide key={index}>
-                                       <PosterSeasonCard
-                                          id={card.id}
-                                          title={card.title}
-                                          poster_url={
-                                             card.material_data.poster_url
-                                          }
-                                       />
-                                    </SplideSlide>
-                                 ),
-                              )}
-                        </Splide>
-                     ) : (
-                        <Skeleton width={1320} height={344} />
-                     )}
-                  </div>
+                  <Splider animeSeasonData={animeSeasonData} />
                   {store.isAuth && <div>-_----_----_-----_---</div>}
-                  <button onClick={() => getUsersClick()}>get users</button>
+                  <button onClick={getUsersClick}>get users</button>
                </div>
             </div>
          </div>

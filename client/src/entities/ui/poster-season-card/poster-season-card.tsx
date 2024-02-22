@@ -29,7 +29,7 @@ export const PosterSeasonCard: FC<Card> = ({ id, poster_url, title }) => {
             </div>
          ) : (
             <Link to={`anime/${id}`} className={styles.card}>
-               <img src={poster_url} className={styles.card_background} />{' '}
+               <img src={poster_url} className={styles.card_background} />
             </Link>
          )}
 
