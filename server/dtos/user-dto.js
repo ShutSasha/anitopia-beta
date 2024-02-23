@@ -3,6 +3,7 @@ module.exports = class UserDto {
 	id;
 	isActivated;
 	roles;
+   animeRatings;
 	avatarLink;
 	registrationDate;
 	firstName;
@@ -16,6 +17,7 @@ module.exports = class UserDto {
 		this.id = model._id;
 		this.isActivated = model.isActivated;
 		this.roles = model.roles;
+      this.animeRatings = model.animeRatings
 		this.avatarLink = model.avatarLink;
 		this.registrationDate = model.registrationDate;
 		this.firstName = model.firstName;

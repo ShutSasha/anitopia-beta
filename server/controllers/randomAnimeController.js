@@ -1,6 +1,6 @@
 const ApiError = require("../errors/apiError");
 const axios = require("axios");
-const anime_serials = require("../anime-serial.json");
+const anime_serials = require("../animeFilterData.json");
 class randomAnimeController {
 	async getRandomAnime(req, res, next) {
 		try {

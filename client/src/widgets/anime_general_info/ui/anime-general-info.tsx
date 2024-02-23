@@ -1,7 +1,13 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { Rating } from '../../../pages/random-anime/ui/random-anime'
 import { ImageZoomer, Skeleton } from '../../../shared'
+import { AnimeRatingList } from '../../../entities'
+import { Modal } from '../../Modal'
+import { RATE_STAR_LIST } from '../helpers/rate-star-list'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import { Context } from '../../../main'
 
 interface AnimeGeneralInfoProps {
    anime: {
@@ -25,8 +31,10 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
    anime,
    ratings,
 }) => {
+   const {store} = useContext(Context)
+   const { id } = useParams()
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
-
+   const [modalActive, setModalActive] = useState<boolean>(false)
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
@@ -35,6 +43,20 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
          setIsLoadingImage(false)
       }
    }, [anime.posterURL])
+
+   const headers = {
+      Authorization: `Bearer ${localStorage.getItem(`token`)}`,
+   }
+
+   const rateAnimeClick = async (rate: number) => {
+      const response = await axios.post(
+         'http://localhost:5000/api/rate-anime',
+         { rate: rate, anime_id: id, user_id: store.user.id },
+         { headers },
+      )
+      console.log(response)
+      setModalActive(false)
+   }
 
    return (
       <>
@@ -45,33 +67,20 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
                      <Skeleton width={250} height={350} />
                   ) : (
                      <ImageZoomer>
-                        <img src={anime.posterURL} alt='poster_anime' />
+                        <div className={styles.anime_poster_container}>
+                           <img src={anime.posterURL} alt='poster_anime' />
+                           <div
+                              className={styles.rate_star}
+                              onClick={() => setModalActive(true)}
+                           />
+                        </div>
                      </ImageZoomer>
                   )}
                </div>
                <div className={styles.anime_info_box}>
                   <h2 className={styles.title_anime}>{anime.title}</h2>
                   <hr />
-                  <ul className={styles.anime_ratings_list}>
-                     {ratings !== undefined &&
-                        ratings.map((rating, index) => (
-                           <div key={index}>
-                              {rating.rating && (
-                                 <li className={styles.anime_rating_item}>
-                                    <img
-                                       style={{
-                                          width: rating.width,
-                                          height: rating.height,
-                                       }}
-                                       src={rating.logo}
-                                       alt=''
-                                    />
-                                    {rating.rating}
-                                 </li>
-                              )}
-                           </div>
-                        ))}
-                  </ul>
+                  <AnimeRatingList ratings={ratings} />
                   <hr />
                   <div className={styles.anime_info}>
                      <ul className={styles.anime_info_list}>
@@ -129,6 +138,22 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
                Описание: {anime.description ? anime.description : 'Нет'}
             </div>
          </div>
+         <Modal
+            active={modalActive}
+            setActive={setModalActive}
+            headerText={'Оцените аниме'}
+         >
+            <ul className={styles.rate_star_list}>
+               {RATE_STAR_LIST.map((item) => (
+                  <li
+                     className={styles.rate_star_item}
+                     onClick={() => rateAnimeClick(item.rate)}
+                  >
+                     {item.rate}
+                  </li>
+               ))}
+            </ul>
+         </Modal>
       </>
    )
 }

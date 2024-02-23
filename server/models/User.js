@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const AnimeRating = require('./AnimeRating')
 
 const User = new Schema({
    username: { type: String, unique: true, required: true },
@@ -20,7 +21,7 @@ const User = new Schema({
    activationLink: { type: String },
    isActivated: { type: Boolean, default: false },
    roles: [{ type: String, ref: 'Role' }],
-   animeRatings: [{ type: Schema.Types.ObjectId, ref: 'AnimeRating' }],
+   animeRatings: [Schema.Types.Mixed],
 })
 
 module.exports = model('User', User)
