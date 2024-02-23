@@ -27,7 +27,6 @@ export const AnimePage: FC = observer(() => {
 	const [anime, setAnime] = useState<IAnime>();
 	const [ratings, setRatings] = useState<Rating[]>();
 	const { id } = useParams();
-	console.log(id);
 
 	useEffect(() => {
 		const getAnime = async () => {
