@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
 import axios from 'axios'
 import { Splider } from '../../../widgets/splider'
+import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
 
 export interface AnimeSeason {
    id: string
@@ -16,28 +17,14 @@ export interface AnimeSeason {
 export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
    const [searchText, setSearchText] = useState<string>('')
-   const [animeSeasonData, setAnimeSeasonData] = useState<AnimeSeason[]>([])
+   const animeSeasonData = useFetchAnimeSeasin()
 
    const headers = {
       Authorization: `Bearer ${localStorage.getItem(`token`)}`,
    }
 
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const res = await axios.get<AnimeSeason[]>(
-               'http://localhost:5000/api/anime/season-anime',
-            )
-            setAnimeSeasonData(res.data)
-         } catch (err) {
-            console.error(err)
-         }
-      }
-      fetchData()
-   }, [])
-
-   const getUsersClick = async () => {
-      const response = await axios.get('http://localhost:5000/api/auth/users', {
+   const getUsersClick = () => {
+      axios.get('http://localhost:5000/api/auth/users', {
          headers,
       })
    }
