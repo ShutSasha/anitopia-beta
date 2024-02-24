@@ -1,28 +1,38 @@
-import { FC, ChangeEvent, useState } from "react";
-import styles from './styles.module.scss';
-interface SelectProps {
-	options: string[];
-	onSelect: (selectedOption: string) => void;
+import { FC, ChangeEvent, useState } from 'react'
+import styles from './styles.module.scss'
+import { valueOf } from '@typescript-eslint/eslint-plugin'
+interface ISelectProps {
+   options: string[]
+   onSelect: (selectedOption: string) => void
+   defaultValue?: any
 }
 
-export const Select: FC<SelectProps> = ({ options, onSelect }) => {
-	const [selectedOption, setSelectedOption] = useState<string>('Не указано');
+export const Select: FC<ISelectProps> = ({
+   options,
+   onSelect,
+   defaultValue,
+}) => {
+   const [selectedOption, setSelectedOption] = useState<string>('Не указано')
 
-	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		setSelectedOption(event.target.value);
-		onSelect(event.target.value);
-	};
+   const optionDefaultValue = defaultValue ? 'Не указано' : defaultValue
+   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+      setSelectedOption(event.target.value)
+      onSelect(event.target.value)
+   }
+   console.log(optionDefaultValue)
 
-	return (
-		<select className={styles.select} value={selectedOption} onChange={handleChange}>
-			<option value={'Не указано'}>Не указано</option>
-			{options.map((option, index) => (
-				<option key={index} value={option}>
-					{option}
-				</option>
-			))}
-		</select>
-	);
-};
-
-export default Select;
+   return (
+      <select
+         className={styles.select}
+         value={selectedOption}
+         onChange={handleChange}
+      >
+         <option value={optionDefaultValue}>{defaultValue}</option>
+         {options.map((option, index) => (
+            <option key={index} value={option}>
+               {option}
+            </option>
+         ))}
+      </select>
+   )
+}

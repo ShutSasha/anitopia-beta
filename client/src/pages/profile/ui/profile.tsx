@@ -6,18 +6,13 @@ import styles from './styles.module.scss'
 import { ProfileBgImg } from '../../../features'
 import { useNavigate } from 'react-router-dom'
 import { NotFoundPage } from '../../not-found'
-import {
-   CountrySelect,
-   DefaultButton,
-   InputAuth,
-   Loader,
-   Select,
-} from '../../../shared'
+import { DefaultButton, InputAuth, Loader, Select } from '../../../shared'
 import { uploadImage } from '../api/uploadImage'
 import { checkUploadStatus } from '../helpers/checkUploadStatus'
 import { MainUserInfo } from '../../../widgets/main-user-info'
 import { Modal } from '../../../widgets/Modal'
 import axios from 'axios'
+import { fetchCountries } from '../api/fetch-countries.ts'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -30,8 +25,24 @@ export const Profile: FC = observer(() => {
    const [age, setAge] = useState<number | null>(null)
    const [sex, setSex] = useState<string | null>('')
    const [country, setCountry] = useState<string | null>('')
+   const [countryData, setCountryData] = useState<string[]>([])
+
    useEffect(() => {
-      setLastName(store.user.firstName)
+      const fetchCountryData = async () => {
+         try {
+            const countries = await fetchCountries()
+            setCountryData(countries)
+            console.log(countries)
+         } catch (error) {
+            console.error('Ошибка при получении данных о странах:', error)
+         }
+      }
+
+      fetchCountryData()
+   }, [])
+
+   useEffect(() => {
+      setLastName(store.user.lastName)
       setFirstName(store.user.firstName)
       setAge(store.user.age)
       setSex(store.user.sex)
@@ -163,6 +174,7 @@ export const Profile: FC = observer(() => {
                            />
                            <Select
                               options={['М', 'Ж']}
+                              defaultValue={sex}
                               onSelect={(selectedOption) =>
                                  setSex(selectedOption)
                               }
@@ -170,7 +182,13 @@ export const Profile: FC = observer(() => {
                         </div>
                      </div>
                      <div className={styles.select_container}>
-                        <CountrySelect />
+                        <Select
+                           options={countryData}
+                           defaultValue={country}
+                           onSelect={(selectedOption) =>
+                              setCountry(selectedOption)
+                           }
+                        />
                      </div>
                      <div className={styles.btn_container}>
                         <DefaultButton
