@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken')
 const ApiError = require('../errors/apiError')
 const tokenService = require('../services/TokenService')
 module.exports = function (req, res, next) {

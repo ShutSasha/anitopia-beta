@@ -1,7 +1,6 @@
 const anime_serials = require('../anime-serial.json')
 const AnimeRating = require('../models/AnimeRating')
 const User = require('../models/User')
-const Token = require('../models/Token')
 
 class rateAnimeController {
    async makeRateAnime(req, res, next) {

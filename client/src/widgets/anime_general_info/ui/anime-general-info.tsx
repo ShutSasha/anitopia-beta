@@ -35,6 +35,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
    const { id } = useParams()
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
    const [modalActive, setModalActive] = useState<boolean>(false)
+   
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
