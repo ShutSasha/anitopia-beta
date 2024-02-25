@@ -1,5 +1,5 @@
 import eye_icon from '../assets/eye-icon.png'
-import rate_star from '../assets/rate-star.svg'
+import rate_star from '../assets/rate-star.png'
 
 interface AnimeCollectionItemType {
    type: string

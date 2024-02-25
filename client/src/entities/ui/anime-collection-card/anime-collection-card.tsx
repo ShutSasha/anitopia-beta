@@ -1,7 +1,10 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Collection } from '../../../features/ui/anime-collection-inner/anime-collection-inner'
 import styles from './styles.module.scss'
+import user_rate_star from './assets/user-rate-star.png'
+import default_star from './assets/default-star.svg'
+import axios from 'axios'
 
 export const AnimeCollectionCard: FC<Collection> = ({
    rating,
@@ -9,6 +12,19 @@ export const AnimeCollectionCard: FC<Collection> = ({
    poster_url,
    title,
 }) => {
+   const [generalAnimeRating, setGeneralAnimeRating] = useState()
+
+   useEffect(() => {
+      const fetchAnimeRating = async () => {
+         const response = await axios.get(
+            `http://localhost:5000/api/anime/${animeId}`,
+         )
+         setGeneralAnimeRating(response.data.material_data.shikimori_rating)
+      }
+
+      fetchAnimeRating()
+   }, [])
+
    return (
       <>
          <Link
@@ -24,13 +40,23 @@ export const AnimeCollectionCard: FC<Collection> = ({
                </div>
                <div className={styles.ratings}>
                   {rating && (
-                     <div className={styles.user_rating}>
-                        Оценено на {rating}
+                     <div title='Мой рейтинг' className={styles.user_rating}>
+                        <img
+                           className={styles.user_rate_star}
+                           src={user_rate_star}
+                           alt=''
+                        />
+                        <p>{rating}</p>
                      </div>
                   )}
-                  <div className={styles.general_rating}>
-                     Оценка пользователей 99
-                  </div>
+                  {generalAnimeRating && (
+                     <div title='Рейтинг аниме' className={styles.anime_rating}>
+                        <img src={default_star} alt='' />
+                        <p className={styles.anime_rating_text}>
+                           {generalAnimeRating}
+                        </p>
+                     </div>
+                  )}
                </div>
             </div>
          </Link>
