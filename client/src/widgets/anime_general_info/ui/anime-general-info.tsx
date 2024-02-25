@@ -8,6 +8,7 @@ import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Context } from '../../../main'
+import $api from '../../../app/http'
 
 interface AnimeGeneralInfoProps {
    anime: {
@@ -50,8 +51,8 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
    }
 
    const rateAnimeClick = async (rate: number) => {
-      const response = await axios.post(
-         'http://localhost:5000/api/rate-anime',
+      const response = await $api.post(
+         'rate-anime',
          { rate: rate, anime_id: id, user_id: store.user.id },
          { headers },
       )
