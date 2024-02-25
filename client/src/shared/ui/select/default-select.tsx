@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useState } from 'react'
 import styles from './styles.module.scss'
-import { valueOf } from '@typescript-eslint/eslint-plugin'
+
 interface ISelectProps {
    options: string[]
    onSelect: (selectedOption: string) => void
@@ -19,7 +19,6 @@ export const Select: FC<ISelectProps> = ({
       setSelectedOption(event.target.value)
       onSelect(event.target.value)
    }
-   console.log(optionDefaultValue)
 
    return (
       <select

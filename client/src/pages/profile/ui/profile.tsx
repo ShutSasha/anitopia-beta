@@ -13,6 +13,7 @@ import { MainUserInfo } from '../../../widgets/main-user-info'
 import { Modal } from '../../../widgets/Modal'
 import axios from 'axios'
 import { fetchCountries } from '../api/fetch-countries.ts'
+import { AnimeCollection } from '../../../widgets/anime-collection/index.ts'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -32,7 +33,6 @@ export const Profile: FC = observer(() => {
          try {
             const countries = await fetchCountries()
             setCountryData(countries)
-            console.log(countries)
          } catch (error) {
             console.error('Ошибка при получении данных о странах:', error)
          }
@@ -132,6 +132,7 @@ export const Profile: FC = observer(() => {
                      className={styles.edit_btn}
                   ></button>
                </div>
+               <AnimeCollection />
             </div>
 
             <Modal

@@ -1,58 +1,59 @@
 .container {
-	max-width: var(--container-width);
-	margin: 0 auto;
+   max-width: var(--container-width);
+   margin: 0 auto;
 }
 
 .profile_wrapper {
-	position: relative;
-	padding: 20px 10px;
-	background-color: #404040;
+   position: relative;
+   padding: 20px 10px;
+   margin-bottom: 20px;
+   background-color: #404040;
 
-	h2 {
-		color: #fff;
-	}
+   h2 {
+      color: #fff;
+   }
 }
 
 .edit_btn {
-	top: 0;
-	right: 0;
-	position: absolute;
-	background: transparent;
-	background-image: url("../../../assets/edit_modify_icon-black.png");
-	height: 75px;
-	width: 75px;
-	border: none;
-	outline: none;
-	background-repeat: no-repeat;
+   top: 0;
+   right: 0;
+   position: absolute;
+   background: transparent;
+   background-image: url("../../../assets/edit_modify_icon-black.png");
+   height: 75px;
+   width: 75px;
+   border: none;
+   outline: none;
+   background-repeat: no-repeat;
 }
 
 .modal_wrapper {
-	padding: 10px;
+   padding: 10px;
 }
 
 .modal_container {
-	display: flex;
-	justify-content: space-evenly;
-	gap: 40px;
-	margin-bottom: 40px;
+   display: flex;
+   justify-content: space-evenly;
+   gap: 40px;
+   margin-bottom: 40px;
 }
 
 .modal_container_input {
-	display: flex;
-	flex-direction: column;
-	gap: 40px;
+   display: flex;
+   flex-direction: column;
+   gap: 40px;
 }
 
 .btn_container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 40px;
 }
 
 .select_container {
-	display: flex;
-	outline: none;
-	justify-content: center;
-	align-items: center;
+   display: flex;
+   outline: none;
+   justify-content: center;
+   align-items: center;
 }

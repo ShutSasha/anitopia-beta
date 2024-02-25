@@ -6,6 +6,7 @@ import axios from 'axios'
 import { AuthResponse } from '../models/response/AuthResponse'
 import RandomAnime from './RandomAnime'
 import AnimePage from './AnimePage'
+import UserAnimeCollection from './UserAnimeCollection'
 
 export default class Store {
    user = {} as IUser
@@ -15,6 +16,7 @@ export default class Store {
    messageError = ''
    randomAnime: RandomAnime
    anime: AnimePage
+   userAnimeCollection: UserAnimeCollection
 
    constructor() {
       makeAutoObservable(this)
@@ -23,6 +25,7 @@ export default class Store {
       this.setIsError = this.setIsError.bind(this)
       this.randomAnime = new RandomAnime()
       this.anime = new AnimePage()
+      this.userAnimeCollection = new UserAnimeCollection()
    }
 
    updateUserPersonalInfo(userData: any) {

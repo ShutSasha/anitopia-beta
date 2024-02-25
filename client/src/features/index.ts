@@ -1,4 +1,6 @@
-export { UserPersonalInfo } from "./ui/user-personal-info/user-personal-info";
-export { AvatarUsernameProfile } from "./ui/avatar-username-profile/avatar-username-profile";
-export { ProfileBgImg } from "./ui/profile-bg-img/profile-bg-img";
-export { Navbar } from "./ui/navbar-header/navbar";
+export { AnimeCollectionInner } from './ui/anime-collection-inner/anime-collection-inner'
+export { AnimeCollectionHeader } from './ui/anime-collection-header/anime-collection-header'
+export { UserPersonalInfo } from './ui/user-personal-info/user-personal-info'
+export { AvatarUsernameProfile } from './ui/avatar-username-profile/avatar-username-profile'
+export { ProfileBgImg } from './ui/profile-bg-img/profile-bg-img'
+export { Navbar } from './ui/navbar-header/navbar'
