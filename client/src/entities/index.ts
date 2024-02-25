@@ -1,3 +1,4 @@
+export { AnimeCollectionCard } from './ui/anime-collection-card/anime-collection-card';
 export { CollectionHeaderItem } from './ui/collection-header-item/collection-header-item'
 export { PosterSeasonCard } from './ui/poster-season-card/poster-season-card'
 export { ProfileLogout } from './ui/header-profile-logout/profile-logout'

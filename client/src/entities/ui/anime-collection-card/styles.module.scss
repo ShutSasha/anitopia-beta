@@ -1,0 +1,33 @@
+.card {
+   display: flex;
+   justify-content: space-between;
+
+   .card_poster_title {
+      display: flex;
+      align-items: center;
+
+      .poster {
+         height: 75px;
+         width: 50px;
+         margin-right: 15px;
+      }
+
+      .title {
+         color: #000;
+      }
+   }
+
+   .ratings {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .user_rating {
+         margin-right: 10px;
+      }
+   }
+}
+
+.card:hover {
+   background-color: rgba($color: #404040, $alpha: 0.1);
+}

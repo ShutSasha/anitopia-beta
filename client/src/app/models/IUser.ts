@@ -15,4 +15,6 @@ export interface IUser {
 interface AnimeRatings {
    rating: number
    animeId: string
+   poster_url: string
+   title: string
 }
