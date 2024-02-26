@@ -58,7 +58,6 @@ class AnimeController {
          const animeWithDate = []
          const currentDate = new Date()
          const currentYear = currentDate.getFullYear()
-         console.log(currentYear)
 
          await Promise.all(
             animeSerials.map(async (item) => {
@@ -77,8 +76,6 @@ class AnimeController {
                }
             }),
          )
-
-         console.log(animeWithDate.length)
 
          return res.json(animeWithDate)
       } catch (error) {
@@ -144,7 +141,6 @@ class AnimeController {
          const data = animeSerials
          const searchedAnime = await AnimeService.findAnime(data, title)
          const uniqueData = await AnimeService.removeDuplicates(searchedAnime)
-         console.log('Длинна списка: ' + searchedAnime.length)
          return res.json(searchedAnime)
       } catch (e) {
          next(e)
