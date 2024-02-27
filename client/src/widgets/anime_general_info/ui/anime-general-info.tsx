@@ -6,7 +6,6 @@ import { AnimeRatingList } from '../../../entities'
 import { Modal } from '../../Modal'
 import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { Context } from '../../../main'
 import $api from '../../../app/http'
 
@@ -32,11 +31,11 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
    anime,
    ratings,
 }) => {
-   const {store} = useContext(Context)
+   const { store } = useContext(Context)
    const { id } = useParams()
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
    const [modalActive, setModalActive] = useState<boolean>(false)
-   
+
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
@@ -52,7 +51,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
 
    const rateAnimeClick = async (rate: number) => {
       const response = await $api.post(
-         'rate-anime',
+         '/rate-anime',
          { rate: rate, anime_id: id, user_id: store.user.id },
          { headers },
       )
@@ -146,8 +145,9 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
             headerText={'Оцените аниме'}
          >
             <ul className={styles.rate_star_list}>
-               {RATE_STAR_LIST.map((item) => (
+               {RATE_STAR_LIST.map((item, index) => (
                   <li
+                     key={index}
                      className={styles.rate_star_item}
                      onClick={() => rateAnimeClick(item.rate)}
                   >

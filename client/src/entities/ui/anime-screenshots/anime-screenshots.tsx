@@ -12,8 +12,9 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
 
    useEffect(() => {
       setIsLoadingScreenshots(true)
+
       const image = new Image()
-      console.log('screens', screenshots)
+
       const srcImg = screenshots[screenshots.length - 1] || ''
 
       image.src = srcImg
@@ -30,7 +31,7 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
             {screenshots.map((screen, index) => (
                <div key={index}>
                   {isLoadingScreenshots ? (
-                     <Skeleton width={640} height={360} />
+                     <Skeleton width={256} height={144} />
                   ) : (
                      <ImageZoomer>
                         <img src={screen} alt='' />

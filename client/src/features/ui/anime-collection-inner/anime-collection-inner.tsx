@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import { FC, useContext, useEffect, useState } from 'react'
 import { Context } from '../../../main'
-import axios from 'axios'
 import { AnimeCollectionCard } from '../../../entities'
+import $api from '../../../app/http'
 
 export interface Collection {
    rating?: number
@@ -24,8 +24,8 @@ export const AnimeCollectionInner: FC = observer(() => {
          try {
             let response
             if (store.userAnimeCollection.collectionType === 'rate') {
-               response = await axios.get<Collection[]>(
-                  `http://localhost:5000/api/rate-anime/${store.user.id}`,
+               response = await $api.get<Collection[]>(
+                  `/rate-anime/${store.user.id}`,
                   { headers },
                )
                console.log(response)

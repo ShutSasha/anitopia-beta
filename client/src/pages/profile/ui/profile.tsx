@@ -14,6 +14,7 @@ import { Modal } from '../../../widgets/Modal'
 import axios from 'axios'
 import { fetchCountries } from '../api/fetch-countries.ts'
 import { AnimeCollection } from '../../../widgets/anime-collection/index.ts'
+import $api from '../../../app/http/index.ts'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -90,13 +91,12 @@ export const Profile: FC = observer(() => {
       }
 
       try {
-         const response = await axios.put(
-            `http://localhost:5000/api/profile/editProfile/${store.user.id}`,
+         const response = await $api.put(
+            `/profile/editProfile/${store.user.id}`,
             profileData,
          )
          if (response.status == 200) {
             store.updateUserPersonalInfo(response.data)
-            console.log('Изменение произошло успешно!')
          }
       } catch (e) {
          console.error(e)
