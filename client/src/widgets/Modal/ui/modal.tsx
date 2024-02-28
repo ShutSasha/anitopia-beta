@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import styles from './styles.module.scss'
 
 interface ModalProps {
@@ -6,6 +6,8 @@ interface ModalProps {
    setActive: (value: boolean) => void
    children: ReactNode
    headerText: string
+   modalWidth?: string
+   containerPadding?: string
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -13,6 +15,8 @@ export const Modal: FC<ModalProps> = ({
    setActive,
    children,
    headerText,
+   modalWidth = '50vw',
+   containerPadding = '15px 10px',
 }) => {
    const modalActive = active
       ? `${styles.modal} ${styles.modal_active}`
@@ -24,13 +28,14 @@ export const Modal: FC<ModalProps> = ({
    return (
       <div className={modalActive} onClick={() => setActive(false)}>
          <div
+            style={{ width: modalWidth }}
             className={contentModalActive}
             onClick={(e) => e.stopPropagation()}
          >
             <div className={styles.modal_header}>
                <p className={styles.header_text}>{headerText}</p>
             </div>
-            <div className={styles.container}>{children}</div>
+            <div style={{ padding: containerPadding }}>{children}</div>
          </div>
       </div>
    )

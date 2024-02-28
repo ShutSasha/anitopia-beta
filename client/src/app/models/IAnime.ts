@@ -1,4 +1,5 @@
 export interface IAnime {
+   id: string
    link: string
    posterURL: string
    title: string

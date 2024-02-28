@@ -32,21 +32,48 @@
 .rate_star_list {
    display: flex;
    justify-content: center;
-   align-content: center;
    flex-direction: column;
 
    .rate_star_item {
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 5px 0;
+      justify-content: space-between;
+      padding: 8px 10px;
       transition: background-color 0.2s ease-in;
-      cursor: pointer;
       border-radius: 5px;
+      border-bottom: 1px solid #e2e2e2;
+
+      .rate_icon_text {
+         display: flex;
+         cursor: pointer;
+         align-items: center;
+
+         .rate_star_icon {
+            height: 32px;
+            width: 32px;
+            margin-right: 5px;
+            background-size: cover;
+            background-repeat: no-repeat;
+         }
+
+         .rate_text {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+         }
+      }
+
+      .icon_trash {
+         cursor: pointer;
+         height: 32px;
+         width: 32px;
+      }
+   }
+
+   .rate_star_item:last-child {
+      border-bottom: none;
    }
 
    .rate_star_item:hover {
-      background-color: #b9b9b9;
+      background-color: rgba($color: #b9b9b9, $alpha: 0.2);
    }
 }
 

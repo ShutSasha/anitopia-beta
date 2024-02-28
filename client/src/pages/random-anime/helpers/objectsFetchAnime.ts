@@ -13,6 +13,7 @@ const defineAnimeKind = (animeKind: any) => {
 
 export const objSetAnimeState = (res: any) => {
    return {
+      id: res.data.id,
       title: replaceSpecificNames(res.data.title),
       link: res.data.link,
       airedEpisodes: AiredEpisodesValidation(

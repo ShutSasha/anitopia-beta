@@ -15,10 +15,6 @@ export const AnimeCollectionInner: FC = observer(() => {
    const { store } = useContext(Context)
    const [collection, setCollection] = useState<any[] | undefined>([])
 
-   const headers = {
-      Authorization: `Bearer ${localStorage.getItem(`token`)}`,
-   }
-
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -26,7 +22,6 @@ export const AnimeCollectionInner: FC = observer(() => {
             if (store.userAnimeCollection.collectionType === 'rate') {
                response = await $api.get<Collection[]>(
                   `/rate-anime/${store.user.id}`,
-                  { headers },
                )
                console.log(response)
             } else if (
