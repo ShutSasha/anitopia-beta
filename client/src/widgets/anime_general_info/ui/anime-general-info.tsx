@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useCallback, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { Rating } from '../../../pages/random-anime/ui/random-anime'
 import { ImageZoomer, Skeleton } from '../../../shared'
@@ -26,36 +26,42 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(
       const [modalActive, setModalActive] = useState<boolean>(false)
       const [ratedAnime, setRatedAnime] = useState<any | undefined>()
 
-      const rateAnimeClick = async (rate: number) => {
-         await $api.post('/rate-anime', {
-            rate: rate,
-            anime_id: id || anime.id,
-            user_id: store.user.id,
-         })
-
-         setModalActive(false)
+      const fetchData = async () => {
+         try {
+            const response = await $api.get<Collection[]>(
+               `/rate-anime/${store.user.id}`,
+            )
+            const rated_anime = response.data.filter(
+               (item) => item.animeId === id || item.animeId === anime.id,
+            )
+            if (!rated_anime[0]) {
+               setRatedAnime(false)
+            }
+            setRatedAnime(rated_anime[0])
+         } catch (error) {
+            console.error(error)
+         }
       }
 
+      const rateAnimeClick = useCallback(
+         async (rate: number) => {
+            await $api.post('/rate-anime', {
+               rate: rate,
+               anime_id: id || anime.id,
+               user_id: store.user.id,
+            })
+            fetchData()
+
+            setModalActive(false)
+         },
+         [id, anime.id, store.user.id],
+      )
+
       useEffect(() => {
-         const fetchData = async () => {
-            try {
-               const response = await $api.get<Collection[]>(
-                  `/rate-anime/${store.user.id}`,
-               )
-               const rated_anime = response.data.filter(
-                  (item) => item.animeId === id || item.animeId === anime.id,
-               )
-               if (!rated_anime[0]) {
-                  setRatedAnime(false)
-               }
-               setRatedAnime(rated_anime[0])
-            } catch (error) {
-               console.error(error)
-            }
-         }
          if (store.isAuth) {
             fetchData()
          }
+         console.log(store.isAuth)
       }, [store.isAuth, rateAnimeClick])
 
       useEffect(() => {
