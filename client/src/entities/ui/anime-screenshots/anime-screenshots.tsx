@@ -3,26 +3,31 @@ import styles from './styles.module.scss'
 import { ImageZoomer, Skeleton } from '../../../shared'
 
 interface Screenshots {
-   screenshots: string[]
+   screenshots: string[] | undefined
 }
 
 export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
-   const [isLoadingScreenshots, setIsLoadingScreenshots] =
-      useState<boolean>(false)
+   const [isLoading, setLoading] = useState<boolean>(false)
 
    useEffect(() => {
-      setIsLoadingScreenshots(true)
+      if (screenshots) {
+         setLoading(true)
 
-      const image = new Image()
+         const image = new Image()
 
-      const srcImg = screenshots[screenshots.length - 1] || ''
+         const srcImg = screenshots[screenshots.length - 1] || ''
 
-      image.src = srcImg
+         image.src = srcImg
 
-      image.onload = () => {
-         setIsLoadingScreenshots(false)
+         image.onload = () => {
+            setLoading(false)
+         }
       }
    }, [screenshots])
+
+   if (!screenshots) {
+      return <div>Скриншотов не завезли</div>
+   }
 
    return (
       <>
@@ -30,7 +35,7 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
          <div className={styles.anime_screensots}>
             {screenshots.map((screen, index) => (
                <div key={index}>
-                  {isLoadingScreenshots ? (
+                  {isLoading ? (
                      <Skeleton width={256} height={144} />
                   ) : (
                      <ImageZoomer>

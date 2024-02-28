@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext } from 'react'
 import { Context } from '../../../main'
 import { Loader } from '../../../shared'
 import { Header } from '../../../widgets/header'
@@ -7,13 +7,7 @@ import { observer } from 'mobx-react-lite'
 import { AnimeGeneralInfo } from '../../../widgets/anime_general_info'
 import { PlayerBlock } from '../../../widgets/Player-block/ui/player-block'
 import { AnimeScreenshots } from '../../../entities/ui/anime-screenshots/anime-screenshots'
-import { IAnime } from '../../../app/models/IAnime'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import {
-   arraySetRatings,
-   objSetAnimeState,
-} from '../../random-anime/helpers/objectsFetchAnime'
+import { useAnime } from '../helpers/useAnime'
 
 export interface Rating {
    rating: number
@@ -24,28 +18,7 @@ export interface Rating {
 
 export const AnimePage: FC = observer(() => {
    const { store } = useContext(Context)
-   const [anime, setAnime] = useState<IAnime>()
-   const [ratings, setRatings] = useState<Rating[]>()
-   const { id } = useParams()
-
-   useEffect(() => {
-      const getAnime = async () => {
-         try {
-            store.setLoading(true)
-            const res = await axios.get(`http://localhost:5000/api/anime/${id}`)
-            const animeData = objSetAnimeState(res)
-            const ratingData = arraySetRatings(res)
-            console.log(res.data)
-            setAnime(animeData)
-            setRatings(ratingData)
-         } catch (error) {
-            console.error(error)
-         } finally {
-            store.setLoading(false)
-         }
-      }
-      getAnime()
-   }, [])
+   const { anime, ratings } = useAnime()
 
    if (store.isLoading || !anime) {
       return <Loader />
@@ -54,21 +27,13 @@ export const AnimePage: FC = observer(() => {
    return (
       <>
          <Header />
-         {anime && (
-            <div className={styles.wrapper}>
-               <div className={styles.container}>
-                  {anime.link && (
-                     <>
-                        <AnimeGeneralInfo anime={anime} ratings={ratings} />
-                        <PlayerBlock link={anime.link} />
-                        {anime.screenshots && (
-                           <AnimeScreenshots screenshots={anime.screenshots} />
-                        )}
-                     </>
-                  )}
-               </div>
+         <div className={styles.wrapper}>
+            <div className={styles.container}>
+               <AnimeGeneralInfo anime={anime} ratings={ratings} />
+               <PlayerBlock link={anime.link} />
+               <AnimeScreenshots screenshots={anime.screenshots} />
             </div>
-         )}
+         </div>
       </>
    )
 })

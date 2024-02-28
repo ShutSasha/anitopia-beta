@@ -1,12 +1,12 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import styles_h from './styles.module.scss'
 import { Header } from '../../../widgets/header'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
-import axios from 'axios'
 import { Splider } from '../../../widgets/splider'
 import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
+import $api from '../../../app/http'
 
 export interface AnimeSeason {
    id: string
@@ -24,7 +24,7 @@ export const HomePage: FC = observer(() => {
    }
 
    const getUsersClick = () => {
-      axios.get('http://localhost:5000/api/auth/users', {
+      $api.get('/auth/users', {
          headers,
       })
    }

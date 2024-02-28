@@ -4,6 +4,13 @@ import imdbLogo from '../../../assets/imdb_logo.png'
 import kinopoiskLogo from '../../../assets/kinopoisk_logopng.png'
 import { replaceSpecificNames } from './replaceSpecificNames'
 
+const defineAnimeKind = (animeKind: any) => {
+   if (animeKind === 'tv') {
+      return 'ТВ Сериал'
+   }
+   return 'Спэшл'
+}
+
 export const objSetAnimeState = (res: any) => {
    return {
       title: replaceSpecificNames(res.data.title),
@@ -16,12 +23,7 @@ export const objSetAnimeState = (res: any) => {
       ),
       posterURL: res.data.material_data.poster_url,
       screenshots: res.data.screenshots || res.data.material_data.screenshots,
-      type:
-         res.data.material_data.anime_kind === 'tv'
-            ? 'ТВ Сериал'
-            : res.data.material_data.anime_kind === 'tv_special'
-              ? 'Спэшл'
-              : res.data.material_data.anime_kind,
+      type: defineAnimeKind(res.data.material_data.anime_kind),
       status: translateStatus(res.data.material_data.anime_status),
       totalEpisodes: res.data.material_data.episodes_total,
       minimalAge: res.data.material_data.minimal_age,

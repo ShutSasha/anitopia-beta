@@ -8,22 +8,10 @@ import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
 import { Context } from '../../../main'
 import $api from '../../../app/http'
+import { IAnime } from '../../../app/models/IAnime'
 
 interface AnimeGeneralInfoProps {
-   anime: {
-      link: string
-      posterURL: string | undefined
-      title: string
-      screenshots: string[]
-      type: string
-      status: string
-      airedEpisodes: number | null
-      totalEpisodes: number | null
-      minimalAge: number | null
-      description: string | null
-      genres: string[]
-      year: number
-   }
+   anime: IAnime
    ratings: Rating[] | undefined
 }
 
@@ -45,17 +33,13 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = ({
       }
    }, [anime.posterURL])
 
-   const headers = {
-      Authorization: `Bearer ${localStorage.getItem(`token`)}`,
-   }
-
    const rateAnimeClick = async (rate: number) => {
-      const response = await $api.post(
-         '/rate-anime',
-         { rate: rate, anime_id: id, user_id: store.user.id },
-         { headers },
-      )
-      console.log(response)
+      await $api.post('/rate-anime', {
+         rate: rate,
+         anime_id: id,
+         user_id: store.user.id,
+      })
+
       setModalActive(false)
    }
 
