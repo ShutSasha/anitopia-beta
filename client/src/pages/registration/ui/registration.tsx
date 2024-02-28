@@ -9,6 +9,7 @@ import { getInputsData } from '../consts/input-data'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import googleIcon from '../assets/google-icon.png'
+import axios from 'axios'
 export const Registration = observer(() => {
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
@@ -29,6 +30,15 @@ export const Registration = observer(() => {
       store.setError('Пароли не совпадают!')
       setShowToast(true)
       store.setIsError(true)
+   }
+
+   const googleAuthButtonClick = async () => {
+      try {
+         const res = await axios.get('http://localhost:5000/api/auth/google')
+         window.location.href = res.data.url
+      } catch (error) {
+         console.error('Ошибка при аутентификации через Google:', error)
+      }
    }
 
    const handleSubmit = (event: any) => {
@@ -109,14 +119,19 @@ export const Registration = observer(() => {
                            value='Зарегистрироваться'
                            className={styles.registration_btn}
                         ></input>
-                        <button className={styles.google_auth_btn}>
+                     </form>
+                     <a href={'http://localhost:5000/api/auth/google'}>
+                        <button
+                           className={styles.google_auth_btn}
+                           onClick={googleAuthButtonClick}
+                        >
                            <img
                               className={styles.google_img}
                               src={googleIcon}
                               alt='Google-icon'
                            />
                         </button>
-                     </form>
+                     </a>
                   </div>
                </div>
             </div>

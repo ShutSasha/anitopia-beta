@@ -1,7 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-
 import { routes } from '../app/routes/consts'
-
 import { NotFoundPage } from './not-found'
 import { HomePage } from './home'
 import { Registration } from './registration'
@@ -11,7 +9,7 @@ import { RandomAnime } from './random-anime'
 import { AnimeList } from './anime-list'
 import { AnimePage } from './anime-page'
 import { TopAnime } from './top-anime'
-import { UserPolicy } from './user-policy/ui/userPolicy.tsx'
+import { UserPolicy } from './user-policy'
 
 export const router = createBrowserRouter(
    [
