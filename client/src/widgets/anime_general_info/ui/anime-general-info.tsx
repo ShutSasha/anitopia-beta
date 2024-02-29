@@ -57,6 +57,18 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(
          [id, anime.id, store.user.id],
       )
 
+      const removeAnimeClick = async () => {
+         await $api.delete('/rate-anime', {
+            data: {
+               anime_id: id || anime.id,
+               user_id: store.user.id,
+            },
+         })
+         fetchData()
+
+         setModalActive(false)
+      }
+
       useEffect(() => {
          if (store.isAuth) {
             fetchData()
@@ -180,9 +192,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(
                            ratedAnime &&
                            ratedAnime.rating === item.rate && (
                               <img
-                                 onClick={() => {
-                                    console.log(1)
-                                 }}
+                                 onClick={removeAnimeClick}
                                  className={styles.icon_trash}
                                  src={icon_trash}
                               ></img>

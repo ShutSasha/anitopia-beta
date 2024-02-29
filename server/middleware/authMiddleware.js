@@ -7,7 +7,6 @@ module.exports = function (req, res, next) {
 
    try {
       const authorizationHeader = req.headers.authorization
-      console.log(req)
       if (!authorizationHeader) {
          return next(
             ApiError.UnauthorizedError('Пользователь не авторизирован1'),

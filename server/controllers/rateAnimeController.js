@@ -56,6 +56,24 @@ class rateAnimeController {
          next(e)
       }
    }
+
+   async removeAnimeRate(req, res, next) {
+      try {
+         const { anime_id, user_id } = req.body
+
+         const user = await User.findById(user_id)
+
+         user.animeRatings = user.animeRatings.filter(
+            (item) => item.animeId !== anime_id,
+         )
+
+         await user.save()
+
+         return res.json({ message: 'success' })
+      } catch (error) {
+         next(error)
+      }
+   }
 }
 
 module.exports = new rateAnimeController()
