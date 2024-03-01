@@ -8,6 +8,7 @@ import { AnimeGeneralInfo } from '../../../widgets/anime_general_info'
 import { PlayerBlock } from '../../../widgets/Player-block/ui/player-block'
 import { AnimeScreenshots } from '../../../entities/ui/anime-screenshots/anime-screenshots'
 import { useAnime } from '../helpers/useAnime'
+import { AnimeComments } from '../../../widgets/anime-comments'
 
 export interface Rating {
    rating: number
@@ -32,6 +33,7 @@ export const AnimePage: FC = observer(() => {
                <AnimeGeneralInfo anime={anime} ratings={ratings} />
                <PlayerBlock link={anime.link} />
                <AnimeScreenshots screenshots={anime.screenshots} />
+               <AnimeComments/>
             </div>
          </div>
       </>
