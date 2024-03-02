@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { AnimeCommentForm, AnimeHeaderComments } from '../../../features'
+import { AnimeHeaderComments, AnimeCommentForm } from '@features'
 
 export const AnimeComments: FC = () => {
    return (
