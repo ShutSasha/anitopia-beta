@@ -1,58 +1,53 @@
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-	border: 0;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   border: 0;
 }
 
-//?
-// input,
-// button,
-// select,
-// textarea {
-// 	display: block;
-// 	background-color: transparent;
-// 	font: inherit;
-// }
-//
-// input {
-// 	width: 100%;
-// }
+input,
+button,
+select,
+textarea {
+   display: block;
+   background-color: transparent;
+   font: inherit;
+}
+
+input {
+   width: 100%;
+}
 
 button {
-	cursor: pointer;
-	// font-family: "Baloo";
-	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-	// font-family: "Courier New", Courier, monospace;
-	// font-family: "Times New Roman", Times, sans-serif;
+   cursor: pointer;
+   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-//? textarea {
-// 	resize: none;
-// }
+textarea {
+   resize: none;
+}
 
 ul,
 ol {
-	list-style-type: none;
+   list-style-type: none;
 }
 
 img {
-	width: 100%;
-	max-width: 100%;
+   max-width: 100%;
+   width: 100%;
 }
 
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6 {
-// 	font: inherit;
-// }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   font: inherit;
+}
 
 a {
-	//? color: inherit;
-	text-decoration: none;
+   text-decoration: none;
 }
