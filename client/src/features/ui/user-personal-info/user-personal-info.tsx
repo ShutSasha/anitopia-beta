@@ -2,9 +2,11 @@ import { FC, useContext } from "react";
 import styles from "./styles.module.scss";
 import { format } from "date-fns";
 import { Context } from "../../../main";
+import { observer } from "mobx-react-lite";
 
-export const UserPersonalInfo: FC = () => {
+export const UserPersonalInfo: FC = observer(() => {
 	const { store } = useContext(Context);
+
 	const renderUserDataItem = (
 		dataUser: React.ReactNode | string,
 		label: string
@@ -33,4 +35,4 @@ export const UserPersonalInfo: FC = () => {
 			</ul>
 		</div>
 	);
-};
+});

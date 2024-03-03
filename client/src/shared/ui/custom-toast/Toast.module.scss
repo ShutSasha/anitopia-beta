@@ -1,43 +1,63 @@
-@keyframes slideInFromRight {
+@keyframes slideInFromBottom {
 	0% {
-		transform: translateX(100%);
+		transform: translateY(100%);
 	}
 	100% {
-		transform: translateX(-50%);
+		transform: translateY(0%);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }
 
 .toast {
 	position: fixed;
-	top: 100px;
-	left: 50%;
-	transform: translateX(-50%);
-	background-color: #333;
+	bottom: 20px;
+	right: 20px;
+	background-color: rgba(0, 0, 0, 0.6);
 	color: #fff;
 	font-size: 18px;
 	font-weight: 700;
-	height: 78px;
-	width: 176px;
-	// padding: 8px 36px 28px 36px;
-	border-radius: 8px;
-	opacity: 0;
-	transition: opacity 0.3s ease-in-out;
-	background-image: url("./assets/angry-g.gif");
-	background-size: cover;
-	background-position: top;
-	background-repeat: no-repeat;
-	z-index: 2;
-	animation: slideInFromRight 0.3s ease-in-out;
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-end;
+	width: 300px;
+	z-index: 1000;
 	p {
 		text-align: center;
 	}
 }
 
+.caption {
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	font-weight: 400;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+	.exclamation_mark {
+		font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+		font-weight: 700;
+		font-size: 18px;
+		margin-right: 5px;
+		color: #ff6666;
+	}
+}
+
+.message {
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	padding: 10px 0;
+	font-size: 18px;
+	font-weight: 300px;
+}
+
 .toast.show {
-	opacity: 1;
+	animation:
+		slideInFromBottom 0.3s ease-in-out forwards,
+		fadeIn 0.45s ease-in-out;
 }
 
 .toast.hide {

@@ -1,138 +1,208 @@
-import { FC, useContext, useEffect, useRef, useState } from "react";
-import { Context } from "../../../main";
-import { observer } from "mobx-react-lite";
-import { Header } from "../../../widgets/header";
-import styles from "./styles.module.scss";
-import { ProfileBgImg } from "../../../features";
-import { useNavigate } from "react-router-dom";
-import { NotFoundPage } from "../../not-found";
-import { CountrySelect, DefaultButton, InputAuth, Loader } from "../../../shared";
-import { uploadImage } from "../api/uploadImage";
-import { checkUploadStatus } from "../helpers/checkUploadStatus";
-import { MainUserInfo } from "../../../widgets/main-user-info";
-import { Modal } from "../../../widgets/Modal";
+import { FC, useContext, useEffect, useRef, useState } from 'react'
+import { Context } from '../../../main'
+import { observer } from 'mobx-react-lite'
+import { Header } from '../../../widgets/header'
+import styles from './styles.module.scss'
+import { ProfileBgImg } from '../../../features'
+import { useNavigate } from 'react-router-dom'
+import { NotFoundPage } from '../../not-found'
+import { DefaultButton, InputAuth, Loader, Select } from '../../../shared'
+import { uploadImage } from '../api/uploadImage'
+import { checkUploadStatus } from '../helpers/checkUploadStatus'
+import { MainUserInfo } from '../../../widgets/main-user-info'
+import { Modal } from '../../../widgets/Modal'
+import { fetchCountries } from '../api/fetch-countries.ts'
+import { AnimeCollection } from '../../../widgets/anime-collection/index.ts'
+import $api from '../../../app/http/index.ts'
 
 export const Profile: FC = observer(() => {
-	const fileInputRef = useRef<HTMLInputElement | null>(null);
-	const { store } = useContext(Context);
-	const navigate = useNavigate();
-	const [img, setImage] = useState<File | null>(null);
-	const [modalActive, setModalActive] = useState<boolean>(false);
+   const fileInputRef = useRef<HTMLInputElement | null>(null)
+   const { store } = useContext(Context)
+   const navigate = useNavigate()
+   const [img, setImage] = useState<File | null>(null)
+   const [modalActive, setModalActive] = useState<boolean>(false)
+   const [lastName, setLastName] = useState<string | null>(store.user.lastName)
+   const [firstName, setFirstName] = useState<string | null>('')
+   const [age, setAge] = useState<number | null>(null)
+   const [sex, setSex] = useState<string | null>('')
+   const [country, setCountry] = useState<string | null>('')
+   const [countryData, setCountryData] = useState<string[]>([])
 
-	//! ПОФИКСИТЬ, ПРОВЕРИТЬ, ИСПРАВИТЬ. ЕБАЛ ВАШ ТАЙП СКРИПТ РАКЕТА ПУШКА АХАХАХ
-	console.log(store.user.age);
-	const [lastName, setLastName] = useState<string | null>("");
-	const [firstName, setFirstName] = useState<string | null>("");
-	const [age, setAge] = useState<number | null>(null);
-	const [sex, setSex] = useState<string | null>("");
-	const [country, setCountry] = useState<string | null>("");
+   useEffect(() => {
+      const fetchCountryData = async () => {
+         try {
+            const countries = await fetchCountries()
+            setCountryData(countries)
+         } catch (error) {
+            console.error('Ошибка при получении данных о странах:', error)
+         }
+      }
 
-	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files && event.target.files.length > 0) {
-			const selectedImage = event.target.files[0];
-			setImage(selectedImage);
-		}
-	};
+      fetchCountryData()
+   }, [])
 
-	useEffect(() => {
-		let intervalId: any;
+   useEffect(() => {
+      setLastName(store.user.lastName)
+      setFirstName(store.user.firstName)
+      setAge(store.user.age)
+      setSex(store.user.sex)
+      setCountry(store.user.country)
+   }, [store.user])
 
-		if (img) {
-			store.isLoading = true;
+   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files.length > 0) {
+         const selectedImage = event.target.files[0]
+         setImage(selectedImage)
+      }
+   }
 
-			try {
-				intervalId = uploadImage(img, store.user.username, () =>
-					checkUploadStatus(
-						store.user.username,
-						intervalId,
-						store.isLoading
-					)
-				);
-			} catch (error) {
-				clearInterval(intervalId);
-				store.isLoading = false;
-			}
-		}
+   useEffect(() => {
+      let intervalId: any
 
-		return () => clearInterval(intervalId);
-	}, [img]);
+      if (img) {
+         store.isLoading = true
 
-	const handleClick = () => {
-		fileInputRef.current?.click();
-	};
+         try {
+            intervalId = uploadImage(img, store.user.username, () =>
+               checkUploadStatus(
+                  store.user.username,
+                  intervalId,
+                  store.isLoading,
+               ),
+            )
+         } catch (error) {
+            clearInterval(intervalId)
+            store.isLoading = false
+         }
+      }
 
-	if (store.isLoading) {
-		return <Loader />;
-	}
+      return () => clearInterval(intervalId)
+   }, [img])
 
-	if (!store.isAuth) {
-		navigate("/login");
-		return <NotFoundPage />;
-	}
+   const handleEditProfile = async () => {
+      setModalActive(false)
+      const profileData = {
+         firstName: firstName,
+         lastName: lastName,
+         age: age,
+         sex: sex,
+         country: country,
+      }
 
-	if (store.isAuth) {
-		return (
-			<div>
-				<Header />
-				<div className={styles.container}>
-					<ProfileBgImg />
-					<div className={styles.profile_wrapper}>
-						<MainUserInfo
-							handleClick={handleClick}
-							fileInputRef={fileInputRef}
-							handleImageChange={handleImageChange}
-						/>
-						<button
-							onClick={() => setModalActive(true)}
-							className={styles.edit_btn}
-						></button>
-					</div>
-				</div>
+      try {
+         const response = await $api.put(
+            `/profile/editProfile/${store.user.id}`,
+            profileData,
+         )
+         if (response.status == 200) {
+            store.updateUserPersonalInfo(response.data)
+         }
+      } catch (e) {
+         console.error(e)
+      }
+   }
+   const handleClick = () => {
+      fileInputRef.current?.click()
+   }
 
-				<Modal active={modalActive} setActive={setModalActive} headerText={"Редактирование профиля"}>
-					<>
-						<div className={styles.modal_wrapper}>
-							<div className={styles.modal_container}>
-								<div className={styles.modal_container_input}>
-									<InputAuth
-										labelColor={"black"} img={null} setValue={setFirstName}
-										htmlFor={"firstName"} type={"text"}
-										textLabel={"Имя"} />
-									<InputAuth
-										labelColor={"black"} img={null} setValue={setLastName}
-										htmlFor={"lastName"} type={"text"}
-										textLabel={"Фамилия"} />
-								</div>
-								<div className={styles.modal_container_input}>
-									<InputAuth
-										labelColor={"black"}
-										img={null} setValue={setAge}
-										htmlFor={"age"}
-										type={"number"}
-										value={age}
-										textLabel={"Возраст"}
-									/>
-									<InputAuth
-										labelColor={"black"} img={null} setValue={setSex} htmlFor={"Пол"}
-										type={"text"} textLabel={"Пол"} />
-								</div>
-							</div>
+   if (store.isLoading) {
+      return <Loader />
+   }
 
-							<CountrySelect>
+   if (!store.isAuth) {
+      navigate('/login')
+      return <NotFoundPage />
+   }
 
-							</CountrySelect>
-							<div className={styles.btn_container}>
-								<DefaultButton
-									text={"Редактировать"}
-									padding={"10px"}
-									color={"white"}
-									backgroundColor={"#ff6666"}
-								/>
-							</div>
-						</div>
-					</>
-				</Modal>
-			</div>
-		);
-	}
-});
+   if (store.isAuth) {
+      return (
+         <div>
+            <Header />
+            <div className={styles.container}>
+               <ProfileBgImg />
+               <div className={styles.profile_wrapper}>
+                  <MainUserInfo
+                     handleClick={handleClick}
+                     fileInputRef={fileInputRef}
+                     handleImageChange={handleImageChange}
+                  />
+                  <button
+                     onClick={() => setModalActive(true)}
+                     className={styles.edit_btn}
+                  ></button>
+               </div>
+               <AnimeCollection />
+            </div>
+
+            <Modal
+               active={modalActive}
+               setActive={setModalActive}
+               headerText={'Редактирование профиля'}
+            >
+               <>
+                  <div className={styles.modal_wrapper}>
+                     <div className={styles.modal_container}>
+                        <div className={styles.modal_container_input}>
+                           <InputAuth
+                              labelColor={'black'}
+                              img={null}
+                              setValue={setFirstName}
+                              htmlFor={'firstName'}
+                              type={'text'}
+                              textLabel={'Имя'}
+                              value={firstName}
+                           />
+                           <InputAuth
+                              labelColor={'black'}
+                              img={null}
+                              setValue={setLastName}
+                              htmlFor={'lastName'}
+                              type={'text'}
+                              textLabel={'Фамилия'}
+                              value={lastName}
+                           />
+                        </div>
+                        <div className={styles.modal_container_input}>
+                           <InputAuth
+                              labelColor={'black'}
+                              img={null}
+                              setValue={setAge}
+                              htmlFor={'age'}
+                              type={'number'}
+                              value={age}
+                              textLabel={'Возраст'}
+                           />
+                           <Select
+                              options={['М', 'Ж']}
+                              defaultValue={sex}
+                              onSelect={(selectedOption) =>
+                                 setSex(selectedOption)
+                              }
+                           />
+                        </div>
+                     </div>
+                     <div className={styles.select_container}>
+                        <Select
+                           options={countryData}
+                           defaultValue={country}
+                           onSelect={(selectedOption) =>
+                              setCountry(selectedOption)
+                           }
+                        />
+                     </div>
+                     <div className={styles.btn_container}>
+                        <DefaultButton
+                           text={'Редактировать'}
+                           padding={'10px'}
+                           color={'white'}
+                           backgroundColor={'#ff6666'}
+                           onClick={handleEditProfile}
+                        />
+                     </div>
+                  </div>
+               </>
+            </Modal>
+         </div>
+      )
+   }
+})

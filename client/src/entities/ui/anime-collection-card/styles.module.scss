@@ -1,0 +1,68 @@
+.card {
+   display: flex;
+   justify-content: space-between;
+   border-bottom: 2px solid #ff6666;
+   transition: background-color 0.2s ease-in-out;
+
+   .card_poster_title {
+      display: flex;
+      align-items: center;
+
+      .poster {
+         height: 75px;
+         width: 50px;
+         margin-right: 15px;
+      }
+
+      .title {
+         color: #000;
+      }
+   }
+
+   .ratings {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .user_rating {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         width: 50px;
+         margin-right: 10px;
+
+         div {
+            min-width: 100px;
+         }
+
+         p {
+            color: #000;
+         }
+
+         img {
+            width: 35px;
+            height: 35px;
+         }
+      }
+   }
+
+   .anime_rating {
+      display: flex;
+      align-items: center;
+      width: 80px;
+
+      img {
+         width: 25px;
+         height: 25px;
+         margin-right: 10px;
+      }
+
+      .anime_rating_text {
+         color: #000;
+      }
+   }
+}
+
+.card:hover {
+   background-color: rgba($color: #404040, $alpha: 0.1);
+}

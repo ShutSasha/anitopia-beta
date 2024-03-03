@@ -1,5 +1,11 @@
 {
-	"tabWidth": 3,
-	"useTabs": true,
-	"prettier.singleAttributePerLine": true
+   "semi": false,
+   "singleQuote": true,
+   "jsxSingleQuote": true,
+   "trailingComma": "all",
+   "jsxBracketSameLine": false,
+   "arrowParens": "always",
+   "printWidth": 80,
+   "tabWidth": 3,
+   "useTabs": false
 }

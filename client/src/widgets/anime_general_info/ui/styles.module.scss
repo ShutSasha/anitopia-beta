@@ -1,0 +1,150 @@
+.anime_general_info_container {
+   display: flex;
+   gap: 20px;
+   margin-bottom: 25px;
+}
+
+.anime_poster {
+   max-width: 250px;
+   width: 100%;
+
+   .anime_poster_container {
+      position: relative;
+
+      img {
+         height: 350px;
+      }
+
+      .rate_star {
+         top: 5px;
+         right: 5px;
+         z-index: 1;
+         position: absolute;
+         background: url("../assets/rate-star.svg");
+         width: 25px;
+         height: 25px;
+         background-size: cover;
+         background-repeat: no-repeat;
+      }
+   }
+}
+
+.rate_star_list {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+
+   .rate_star_item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      transition: background-color 0.2s ease-in;
+      border-radius: 5px;
+      border-bottom: 1px solid #e2e2e2;
+
+      .rate_icon_text {
+         display: flex;
+         cursor: pointer;
+         align-items: center;
+
+         .rate_star_icon {
+            height: 32px;
+            width: 32px;
+            margin-right: 5px;
+            background-size: cover;
+            background-repeat: no-repeat;
+         }
+
+         .rate_text {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+         }
+      }
+
+      .icon_trash {
+         cursor: pointer;
+         height: 32px;
+         width: 32px;
+      }
+   }
+
+   .rate_star_item:last-child {
+      border-bottom: none;
+   }
+
+   .rate_star_item:hover {
+      background-color: rgba($color: #b9b9b9, $alpha: 0.2);
+   }
+}
+
+.anime_info_box {
+   width: 100%;
+
+   hr {
+      height: 1px;
+      background-color: #999;
+      margin: 10px 0;
+      opacity: 0.5;
+   }
+}
+
+.title_anime {
+   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+   font-size: 36px;
+   text-align: center;
+   margin-bottom: 25px;
+   font-weight: 300;
+   line-height: 48px;
+}
+
+.anime_info_list {
+   margin-bottom: 20px;
+
+   .anime_info_item {
+      display: flex;
+      line-height: 24px;
+      margin-bottom: 5px;
+
+      p,
+      span {
+         flex: 1;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+         font-weight: normal;
+      }
+      .anime_genres_container {
+         flex: 1;
+      }
+
+      .anime_genres_list {
+         display: flex;
+         flex-wrap: wrap;
+      }
+
+      .anime_genre {
+         background-color: #343a40;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         border-radius: 8px;
+         color: #fff;
+         padding: 3px 5px;
+         margin-right: 10px;
+         margin-bottom: 5px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .minimal_age {
+         background-color: #f66;
+         color: #fff;
+         max-width: 40px;
+         text-align: center;
+         border-radius: 8px;
+         padding: 2px 5px;
+      }
+   }
+}
+
+.anime_description {
+   text-align: justify;
+   margin-bottom: 25px;
+}

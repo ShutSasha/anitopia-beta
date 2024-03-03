@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { App } from "./App.tsx";
 import "./app/styles/main.scss";
 import Store from "./app/store/store.ts";
-
+import { ErrorBoundary } from "./shared/index.ts";
 interface State {
 	store: Store;
 }
@@ -16,7 +16,9 @@ export const Context = createContext<State>({
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	// <React.StrictMode>
 	<Context.Provider value={{ store }}>
-		<App />
+		<ErrorBoundary>
+			<App />
+		</ErrorBoundary>
 	</Context.Provider>
 	// </React.StrictMode>
 );

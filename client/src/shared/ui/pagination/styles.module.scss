@@ -1,0 +1,37 @@
+.pagination__container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.page__element{
+  background-color: #ff6666;
+  border-radius: 5px;
+  font-family: "Franklin Gothic Medium",sans-serif;
+  color: white;
+  float: left;
+  padding: 8px 16px;
+  margin: 0 5px;
+  text-decoration: none;
+  transition: background-color .3s;
+
+}
+
+.page__element:hover:not(.active){
+  background-color: #575757;
+}
+
+.active{
+  background-color: #6699cc;
+  pointer-events: none;
+}
+
+.border{
+  display: flex;
+  justify-content: center;
+}
+
+.border__span{
+  font-family: "Franklin Gothic Medium",sans-serif;
+
+}

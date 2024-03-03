@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { Header } from "../../../widgets/header";
 import styles from "./styles.module.scss";
 import { useState } from "react";
-import { InputAuth, Loader } from "../../../shared";
+import { InputAuth, Loader, Toast } from "../../../shared";
 import { AuthContext } from "../context/AuthContext";
 import { getInputsData } from "../consts/input-data";
 import { Context } from "../../../main";
@@ -10,10 +10,11 @@ import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 export const Login: FC = observer(() => {
+	const { store } = useContext(Context);
+	const [showToast, setShowToast] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
-	const { store } = useContext(Context);
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -23,6 +24,9 @@ export const Login: FC = observer(() => {
 			.then((isLoggedIn) => {
 				if (isLoggedIn) {
 					navigate("/");
+				} else {
+					store.setIsError(true);
+					setShowToast(true);
 				}
 			})
 			.catch((err) => console.error(err));
@@ -39,6 +43,15 @@ export const Login: FC = observer(() => {
 	const inputsData = getInputsData(setUsername, setPassword);
 	return (
 		<AuthContext.Provider value={{ setUsername, setPassword }}>
+			{showToast && (
+				<Toast
+					message={store.messageError}
+					duration={4000}
+					isError={store.isError}
+					clearIsError={() => store.setIsError(false)}
+					onClose={() => setShowToast(false)}
+				/>
+			)}
 			<div className={styles.registration_wrapper}>
 				<div className={styles.header}>
 					<Header />

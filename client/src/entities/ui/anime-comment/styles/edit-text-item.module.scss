@@ -1,0 +1,20 @@
+.edit_text_item {
+   padding: 5px 15px;
+   border: 1px solid #ccc;
+}
+
+.edit_text_item:hover {
+   background-color: #ccc;
+   transition: background-color 0.4s ease;
+   cursor: pointer;
+}
+
+.edit_text_item:first-child {
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
+
+.edit_text_item:last-child {
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px;
+}

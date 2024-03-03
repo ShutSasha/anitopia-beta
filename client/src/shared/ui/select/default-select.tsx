@@ -1,12 +1,37 @@
-import { FC } from "react";
+import { FC, ChangeEvent, useState } from 'react'
+import styles from './styles.module.scss'
 
+interface ISelectProps {
+   options: string[]
+   onSelect: (selectedOption: string) => void
+   defaultValue?: any
+}
 
-const DefaultSelect: FC = () => {
-	return (
-		<>
+export const Select: FC<ISelectProps> = ({
+   options,
+   onSelect,
+   defaultValue,
+}) => {
+   const [selectedOption, setSelectedOption] = useState<string>('Не указано')
 
-		</>
-	);
-};
+   const optionDefaultValue = defaultValue ? 'Не указано' : defaultValue
+   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+      setSelectedOption(event.target.value)
+      onSelect(event.target.value)
+   }
 
-export default DefaultSelect;
+   return (
+      <select
+         className={styles.select}
+         value={selectedOption}
+         onChange={handleChange}
+      >
+         <option value={optionDefaultValue}>{defaultValue}</option>
+         {options.map((option, index) => (
+            <option key={index} value={option}>
+               {option}
+            </option>
+         ))}
+      </select>
+   )
+}

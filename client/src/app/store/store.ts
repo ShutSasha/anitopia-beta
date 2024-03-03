@@ -1,91 +1,135 @@
-import { API_URL } from "./../http/index";
-import { IUser } from "../models/IUser";
-import { makeAutoObservable } from "mobx";
-import AuthService from "../services/AuthService";
-import axios from "axios";
-import { AuthResponse } from "../models/response/AuthResponse";
+import { API_URL } from './../http/index'
+import { IUser } from '../models/IUser'
+import { makeAutoObservable } from 'mobx'
+import AuthService from '../services/AuthService'
+import axios from 'axios'
+import { AuthResponse } from '../models/response/AuthResponse'
+import RandomAnime from './RandomAnime'
+import AnimePage from './AnimePage'
+import UserAnimeCollection from './UserAnimeCollection'
 
 export default class Store {
-	user = {} as IUser;
-	isAuth = false;
-	isLoading = false;
+   user = {} as IUser
+   isAuth = false
+   isLoading = false
+   isError = false
+   messageError = ''
+   randomAnime: RandomAnime
+   anime: AnimePage
+   userAnimeCollection: UserAnimeCollection
 
-	constructor() {
-		makeAutoObservable(this);
-	}
+   constructor() {
+      makeAutoObservable(this)
+      this.setLoading = this.setLoading.bind(this)
+      this.setError = this.setError.bind(this)
+      this.setIsError = this.setIsError.bind(this)
+      this.randomAnime = new RandomAnime()
+      this.anime = new AnimePage()
+      this.userAnimeCollection = new UserAnimeCollection()
+   }
 
-	setAuth(bool: boolean) {
-		this.isAuth = bool;
-	}
+   updateUserPersonalInfo(userData: any) {
+      this.user.firstName = userData.firstName
+      this.user.lastName = userData.lastName
+      this.user.age = userData.age
+      this.user.sex = userData.sex
+      this.user.country = userData.country
+   }
 
-	setUser(user: IUser) {
-		this.user = user;
-	}
+   randomAnimeClick(fucntionClick: () => void) {
+      fucntionClick()
+   }
 
-	setLoading(bool: boolean) {
-		this.isLoading = bool;
-	}
+   setAuth(bool: boolean) {
+      this.isAuth = bool
+   }
 
-	async login(username: string, password: string) {
-		try {
-			const response = await AuthService.login(username, password);
+   setUser(user: IUser) {
+      this.user = user
+   }
 
-			localStorage.setItem("token", response.data.accessToken);
-			this.setAuth(true);
-			this.setUser(response.data.user);
-			return true;
-		} catch (error: any) {
-			//! передивитись
-			console.error(error.response.data.message);
-			return false;
-		}
-	}
+   setLoading(bool: boolean) {
+      this.isLoading = bool
+   }
 
-	async registration(username: string, password: string, email: string) {
-		try {
-			const response = await AuthService.registration(
-				username,
-				password,
-				email
-			);
+   setError(message: string) {
+      this.messageError = message
+   }
 
-			localStorage.setItem("token", response.data.accessToken);
-			this.setAuth(true);
-			this.setUser(response.data.user);
-			return true;
-		} catch (error) {
-			//! передивитись
-			console.error(error);
-			return false;
-		}
-	}
+   setIsError(bool: boolean) {
+      this.isError = bool
+   }
 
-	async logout() {
-		try {
-			const response = await AuthService.logout();
-			localStorage.removeItem("token");
-			this.setAuth(false);
-			this.setUser({} as IUser);
-		} catch (error) {
-			//! передивитись
-			console.error(error);
-		}
-	}
+   async login(username: string, password: string) {
+      try {
+         const response = await AuthService.login(username, password)
+         console.log(123)
+         localStorage.setItem('token', response.data.accessToken)
+         this.setAuth(true)
+         this.setUser(response.data.user)
+         return true
+      } catch (error: any) {
+         //! передивитись
 
-	async checkAuth() {
-		try {
-			this.setLoading(true);
-			const response = await axios.get<AuthResponse>(
-				`${API_URL}/auth/refresh`,
-				{ withCredentials: true }
-			);
-			localStorage.setItem("token", response.data.accessToken);
-			this.setAuth(true);
-			this.setUser(response.data.user);
-		} catch (e) {
-			console.error(e);
-		} finally {
-			this.setLoading(false);
-		}
-	}
+         const err = error.response.data.errors[0]?.msg
+            ? error.response.data.errors[0].msg
+            : error.response.data.message
+         this.setError(err)
+         console.error(error.response.data.message)
+         return false
+      }
+   }
+
+   async registration(username: string, password: string, email: string) {
+      try {
+         const response = await AuthService.registration(
+            username,
+            password,
+            email,
+         )
+
+         localStorage.setItem('token', response.data.accessToken)
+         this.setAuth(true)
+         this.setUser(response.data.user)
+         return true
+      } catch (error: any) {
+         //! передивитись
+         console.error(error)
+         const err = error.response.data.errors[0]?.msg
+            ? error.response.data.errors[0].msg
+            : error.response.data.message
+
+         this.setError(err)
+         return false
+      }
+   }
+
+   async logout() {
+      try {
+         const response = await AuthService.logout()
+         localStorage.removeItem('token')
+         this.setAuth(false)
+         this.setUser({} as IUser)
+      } catch (error: any) {
+         //! передивитись
+         console.error(error.response.data.errors[0].msg)
+      }
+   }
+
+   async checkAuth() {
+      try {
+         this.setLoading(true)
+         const response = await axios.get<AuthResponse>(
+            `${API_URL}/auth/refresh`,
+            { withCredentials: true },
+         )
+         localStorage.setItem('token', response.data.accessToken)
+         this.setAuth(true)
+         this.setUser(response.data.user)
+      } catch (e: any) {
+         console.error(e)
+      } finally {
+         this.setLoading(false)
+      }
+   }
 }

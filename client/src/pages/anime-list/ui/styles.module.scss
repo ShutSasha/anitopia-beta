@@ -1,0 +1,42 @@
+.wrapper {
+   background-color: #e2e2e2;
+}
+
+.container {
+   max-width: var(--container-width);
+   margin: 0 auto;
+   min-height: 100vh;
+   padding: 0 20px;
+}
+
+.title {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   padding: 20px 10px;
+   font-size: 36px;
+   text-align: center;
+}
+
+.cards__container {
+   display: grid;
+   justify-content: center;
+   margin-top: 20px;
+}
+
+.no_anime_container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.no_anime_photo {
+   max-width: 25%;
+   height: auto;
+}
+
+.no_anime_text {
+   margin-top: 10px;
+   font-family: "Franklin Gothic Medium", sans-serif;
+   font-size: 24px;
+   color: #ff6666;
+}

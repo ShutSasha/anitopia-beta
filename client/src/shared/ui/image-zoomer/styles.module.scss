@@ -1,0 +1,11 @@
+.zoom_container {
+   background-color: rgba(0, 0, 0, 0);
+   transition: background-color 2s ease-in;
+   z-index: 9999;
+   overflow: visible;
+   cursor: pointer;
+}
+
+.zoom_container:hover {
+   background: rgba(0, 0, 0, 0.5);
+}

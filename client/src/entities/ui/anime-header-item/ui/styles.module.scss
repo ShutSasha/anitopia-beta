@@ -1,0 +1,14 @@
+.item {
+   padding: 13px 25px;
+   color: #fff;
+}
+
+.item:first-child {
+   border-top-left-radius: 10px;
+}
+
+.item:hover {
+   background-color: #ff6666;
+   transition: background-color 0.4s ease;
+   cursor: pointer;
+}

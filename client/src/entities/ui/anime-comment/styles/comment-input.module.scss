@@ -1,0 +1,15 @@
+.input {
+   display: block;
+   min-height: 100px;
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   outline: none;
+   border-radius: 6px;
+   margin-bottom: 5px;
+}
+
+.input:empty::before {
+   content: "Введите ваш комментарий...";
+   color: #999;
+}

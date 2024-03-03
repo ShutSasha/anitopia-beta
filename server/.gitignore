@@ -1,2 +1,4 @@
 node_modules
 .env
+anime-serial.json
+animeFilterData.json

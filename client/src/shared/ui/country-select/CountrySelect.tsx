@@ -55,24 +55,20 @@ export const CountrySelect: FC = () => {
 
 	return (
 		<>
-				<div className={styles.gridContainer}>
-					<div>
-						<select
-							value={selectedCountry}
-							onChange={(e) => setSelectedCountry(e.target.value)}
-							className={styles.selectContainer}
-						>
-							<option>Выберите страну</option>
-							{countries.map((item, index) => {
-								return (
-									<option key={index} value={item.name.common}>
-										{item.name.common}
-									</option>
-								);
-							})}
-						</select>
-					</div>
-				</div>
+			<select
+				value={selectedCountry}
+				onChange={(e) => setSelectedCountry(e.target.value)}
+				className={styles.selectContainer}
+			>
+				<option>Выберите страну</option>
+				{countries.map((item, index) => {
+					return (
+						<option key={index} value={item.name.common}>
+							{item.name.common}
+						</option>
+					);
+				})}
+			</select>
 		</>
 	);
 };

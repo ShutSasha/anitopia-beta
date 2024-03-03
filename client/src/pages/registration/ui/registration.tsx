@@ -1,113 +1,141 @@
-import { Header } from "../../../widgets/header";
-import styles from "./styles.module.scss";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-// import axios from "axios";
-import { Loader, Toast } from "../../../shared";
-import { InputAuth } from "../../../shared";
-import { AuthContext } from "../context/AuthContenx";
-import { getInputsData } from "../consts/input-data";
-import { Context } from "../../../main";
-import { observer } from "mobx-react-lite";
-
+import { Header } from '../../../widgets/header'
+import styles from './styles.module.scss'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Loader, Toast } from '../../../shared'
+import { InputAuth } from '../../../shared'
+import { AuthContext } from '../context/AuthContenx'
+import { getInputsData } from '../consts/input-data'
+import { Context } from '../../../main'
+import { observer } from 'mobx-react-lite'
+import googleIcon from '../assets/google-icon.png'
+import axios from 'axios'
 export const Registration = observer(() => {
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [repeatPassword, setRepeatPassword] = useState("");
-	const [showToast, setShowToast] = useState(false);
-	const { store } = useContext(Context);
-	const navigate = useNavigate();
+   const [username, setUsername] = useState('')
+   const [email, setEmail] = useState('')
+   const [password, setPassword] = useState('')
+   const [repeatPassword, setRepeatPassword] = useState('')
+   const [showToast, setShowToast] = useState(false)
+   const { store } = useContext(Context)
+   const navigate = useNavigate()
 
-	if (store.isLoading) {
-		return <Loader />;
-	}
+   const inputsData = getInputsData(
+      setUsername,
+      setEmail,
+      setPassword,
+      setRepeatPassword,
+   )
 
-	const handleButtonClick = () => {
-		setShowToast(true);
-		setTimeout(() => setShowToast(false), 4000);
-	};
+   const handleButtonClick = () => {
+      store.setError('Пароли не совпадают!')
+      setShowToast(true)
+      store.setIsError(true)
+   }
 
-	const handleSubmit = (event: any) => {
-		event.preventDefault();
+   const googleAuthButtonClick = async () => {
+      try {
+         const res = await axios.get('http://localhost:5000/api/auth/google')
+         window.location.href = res.data.url
+      } catch (error) {
+         console.error('Ошибка при аутентификации через Google:', error)
+      }
+   }
 
-		if (repeatPassword !== password) {
-			handleButtonClick();
-			return;
-		}
+   const handleSubmit = (event: any) => {
+      event.preventDefault()
 
-		store
-			.registration(username, password, email)
-			.then((isLoggedIn) => {
-				if (isLoggedIn) {
-					navigate("/");
-				}
-			})
-			.catch((err) => console.error(err));
-	};
+      if (repeatPassword !== password) {
+         handleButtonClick()
+         return
+      }
 
-	const inputsData = getInputsData(
-		setUsername,
-		setEmail,
-		setPassword,
-		setRepeatPassword
-	);
-	return (
-		<AuthContext.Provider
-			value={{ setUsername, setEmail, setPassword, setRepeatPassword }}
-		>
-			<div className={styles.registration_wrapper}>
-				{showToast && (
-					<Toast
-						message="Пароли не совпадают!"
-						duration={4000}
-						onClose={() => setShowToast(false)}
-					/>
-				)}
-				<div className={styles.header}>
-					<Header />
-				</div>
-				<div className={styles.container}>
-					<div className={styles.wrapper}>
-						<div className={styles.form_box}>
-							<h2>Регистрация</h2>
-							<form onSubmit={handleSubmit}>
-								{inputsData.map((item, index) => (
-									<InputAuth
-										labelColor={"white"}
-										key={index}
-										img={item.img}
-										setValue={item.setValue}
-										htmlFor={item.htmlFor}
-										type={item.type}
-										textLabel={item.textLabel}
-									/>
-								))}
-								<div className={styles.user_agreement}>
-									<label>
-										<input type="checkbox" />
-										<div className={styles.checkbox_icon}></div>
-										<p>
-											Я согласен с
-											<Link
-												className={styles.user_agreement_span}
-												to="/terms-of-use"
-											>
-												пользовательським соглашением
-											</Link>
-										</p>
-									</label>
-								</div>
-								<input
-									type="submit"
-									value="Зарегистрироваться"
-									className={styles.registration_btn}
-								></input>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</AuthContext.Provider>
-	);
-});
+      store
+         .registration(username, password, email)
+         .then((isLoggedIn) => {
+            if (isLoggedIn) {
+               navigate('/')
+            } else {
+               setShowToast(true)
+               store.setIsError(true)
+            }
+         })
+         .catch((err) => console.error(err))
+   }
+
+   if (store.isLoading) {
+      return <Loader />
+   }
+
+   return (
+      <AuthContext.Provider
+         value={{ setUsername, setEmail, setPassword, setRepeatPassword }}
+      >
+         {showToast && (
+            <Toast
+               message={store.messageError}
+               duration={4000}
+               isError={store.isError}
+               clearIsError={() => store.setIsError(false)}
+               onClose={() => setShowToast(false)}
+            />
+         )}
+         <div className={styles.registration_wrapper}>
+            <div className={styles.header}>
+               <Header />
+            </div>
+            <div className={styles.container}>
+               <div className={styles.wrapper}>
+                  <div className={styles.form_box}>
+                     <h2>Регистрация</h2>
+                     <form onSubmit={handleSubmit}>
+                        {inputsData.map((item, index) => (
+                           <InputAuth
+                              labelColor={'white'}
+                              key={index}
+                              img={item.img}
+                              setValue={item.setValue}
+                              htmlFor={item.htmlFor}
+                              type={item.type}
+                              textLabel={item.textLabel}
+                           />
+                        ))}
+                        <div className={styles.user_agreement}>
+                           <label>
+                              <input type='checkbox' />
+                              <div className={styles.checkbox_icon}></div>
+                              <p>
+                                 Я согласен с
+                                 <Link
+                                    className={styles.user_agreement_span}
+                                    to='/users-policy'
+                                 >
+                                    пользовательським соглашением
+                                 </Link>
+                              </p>
+                           </label>
+                        </div>
+                        <input
+                           type='submit'
+                           value='Зарегистрироваться'
+                           className={styles.registration_btn}
+                        ></input>
+                     </form>
+                     <a href={'http://localhost:5000/api/auth/google'}>
+                        <button
+                           className={styles.google_auth_btn}
+                           onClick={googleAuthButtonClick}
+                        >
+                           <img
+                              className={styles.google_img}
+                              src={googleIcon}
+                              alt='Google-icon'
+                           />
+                        </button>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </AuthContext.Provider>
+   )
+})
