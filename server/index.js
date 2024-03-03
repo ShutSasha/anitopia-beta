@@ -8,9 +8,10 @@ const router = require('./routes/index')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const PORT = process.env.PORT || 5000
 const app = express()
-const fs = require('fs')
-const Anime = require('./models/Anime')
+const filePathMiddleware = require('./middleware/fileMiddleware')
+const path = require('path')
 
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 app.use(express.json())
 app.use(cookieParser())
 app.use(
@@ -44,7 +45,6 @@ const start = async () => {
          `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.b0tz7ut.mongodb.net/`,
       )
 
-      // Запуск сервера
       app.listen(PORT, () => {
          console.log(`Server started on PORT ${PORT}`)
       })
