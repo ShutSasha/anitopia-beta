@@ -7,7 +7,6 @@ import { Loader } from '../../../shared'
 import { Splider } from '../../../widgets/splider'
 import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
 import $api from '../../../app/http'
-
 export interface AnimeSeason {
    id: string
    title: string
@@ -19,14 +18,8 @@ export const HomePage: FC = observer(() => {
    const [searchText, setSearchText] = useState<string>('')
    const animeSeasonData = useFetchAnimeSeasin()
 
-   const headers = {
-      Authorization: `Bearer ${localStorage.getItem(`token`)}`,
-   }
-
    const getUsersClick = () => {
-      $api.get('/auth/users', {
-         headers,
-      })
+      $api.get('/auth/users')
    }
 
    if (store.isLoading) {
