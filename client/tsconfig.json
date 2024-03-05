@@ -3,11 +3,11 @@
       "baseUrl": "./src",
       "paths": {
          "@app": ["app"],
-         "@pages": ["/src/pages"],
+         "@pages": ["pages"],
          "@widgets": ["widgets"],
          "@features": ["features"],
-         "@entities": ["entities"],
-         "@shared": ["shared"]
+         "@entities/*": ["entities/*"],
+         "@shared/*": ["shared/*"]
       },
       "target": "ES2020",
       "useDefineForClassFields": true,

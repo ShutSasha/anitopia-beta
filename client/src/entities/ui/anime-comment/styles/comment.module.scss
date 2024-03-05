@@ -1,0 +1,30 @@
+.comment {
+   padding: 10px 0;
+   border-bottom: 1px solid var(--border-underline);
+   display: grid;
+   grid-template-columns: repeat(10, 1fr);
+
+   .user_icon {
+      grid-column: 1;
+      max-width: 100px;
+      width: 100%;
+      height: 100px;
+   }
+
+   .comment_info {
+      grid-column: 2/8;
+
+      .username {
+         color: var(--anitopia-color);
+         margin-bottom: 4px;
+      }
+
+      .comment_date {
+         margin-bottom: 4px;
+      }
+   }
+
+   .features {
+      grid-column: 10;
+   }
+}

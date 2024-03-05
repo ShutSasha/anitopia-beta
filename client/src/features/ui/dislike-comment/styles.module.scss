@@ -1,0 +1,22 @@
+.like {
+   display: inline-block;
+   height: 25px;
+   cursor: pointer;
+   vertical-align: middle;
+}
+
+.like::before {
+   content: "";
+   display: inline-block;
+   vertical-align: middle;
+   width: 25px;
+   height: 25px;
+   background-image: url("../../../assets/thumbs-down-50px-icon.png");
+   background-size: cover;
+   margin-right: 5px;
+}
+
+.like:hover::before {
+   content: "";
+   background-image: url("../../../assets/thumbs-down-50px-icon-hover.png");
+}

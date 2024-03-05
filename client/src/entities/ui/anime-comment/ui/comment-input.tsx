@@ -1,20 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useRef } from 'react'
 import styles from '../styles/comment-input.module.scss'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../../../../main'
 
-export const CommentInput: FC = () => {
-   const [text, setText] = useState<string>('')
+export const CommentInput: FC = observer(() => {
+   const { store } = useContext(Context)
+   const contentEdittableRef = useRef<HTMLSpanElement>(null)
 
-   const handleChange = (event: any) => {
-      setText(event.target.value)
+   const handleChange = () => {
+      if (contentEdittableRef.current) {
+         store.anime.setInputComment(contentEdittableRef.current.textContent)
+      }
    }
 
-   return (
-      <span
-         contentEditable='true'
-         className={styles.input}
-         onChange={handleChange}
-      >
-         {text}
-      </span>
-   )
-}
+   return <span ref={contentEdittableRef} contentEditable='true' className={styles.input} onInput={handleChange} />
+})

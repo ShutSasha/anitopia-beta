@@ -1,16 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
-import { IAnime } from '../../../app/models/IAnime'
 import { Rating } from '../ui/anime-page'
 import { Context } from '../../../main'
-import {
-   arraySetRatings,
-   objSetAnimeState,
-} from '../../random-anime/helpers/objectsFetchAnime'
-import axios from 'axios'
+import { arraySetRatings, objSetAnimeState } from '../../random-anime/helpers/objectsFetchAnime'
 import { useParams } from 'react-router-dom'
+import { AnimeApi } from '@shared/api'
+import { Anime } from '@shared/api'
 
 export const useAnime = () => {
-   const [anime, setAnime] = useState<IAnime>()
+   const [anime, setAnime] = useState<Anime>()
    const [ratings, setRatings] = useState<Rating[]>()
    const { store } = useContext(Context)
    const { id } = useParams()
@@ -20,7 +17,7 @@ export const useAnime = () => {
          try {
             store.setLoading(true)
 
-            const res = await axios.get(`http://localhost:5000/api/anime/${id}`)
+            const res = await AnimeApi.anime.getAnimeById({ id })
 
             setAnime(objSetAnimeState(res))
             setRatings(arraySetRatings(res))
