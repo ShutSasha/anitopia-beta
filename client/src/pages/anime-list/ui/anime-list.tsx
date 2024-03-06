@@ -90,13 +90,9 @@ export const AnimeList: FC = observer(() => {
                   </ul>
                ) : (
                   <div className={styles.no_anime_container}>
-                     <img
-                        src={NoAnimePhoto}
-                        className={styles.no_anime_photo}
-                     />
+                     <img src={NoAnimePhoto} className={styles.no_anime_photo} />
                      <p className={styles.no_anime_text}>
-                        По запросу "{searchTerm}" ничего не найдено. Попробуйте
-                        изменить запрос
+                        По запросу "{searchTerm}" ничего не найдено. Попробуйте изменить запрос
                      </p>
                   </div>
                )}

@@ -11,9 +11,9 @@ import { uploadImage } from '../api/uploadImage'
 import { checkUploadStatus } from '../helpers/checkUploadStatus'
 import { MainUserInfo } from '../../../widgets/main-user-info'
 import { Modal } from '../../../widgets/Modal'
-import { fetchCountries } from '../api/fetch-countries.ts'
 import { AnimeCollection } from '../../../widgets/anime-collection/index.ts'
 import $api from '../../../app/http/index.ts'
+import { useCountries } from '../hooks/useCountries.ts'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -26,20 +26,7 @@ export const Profile: FC = observer(() => {
    const [age, setAge] = useState<number | null>(null)
    const [sex, setSex] = useState<string | null>('')
    const [country, setCountry] = useState<string | null>('')
-   const [countryData, setCountryData] = useState<string[]>([])
-
-   useEffect(() => {
-      const fetchCountryData = async () => {
-         try {
-            const countries = await fetchCountries()
-            setCountryData(countries)
-         } catch (error) {
-            console.error('Ошибка при получении данных о странах:', error)
-         }
-      }
-
-      fetchCountryData()
-   }, [])
+   const countryData = useCountries()
 
    useEffect(() => {
       setLastName(store.user.lastName)
@@ -64,11 +51,7 @@ export const Profile: FC = observer(() => {
 
          try {
             intervalId = uploadImage(img, store.user.username, () =>
-               checkUploadStatus(
-                  store.user.username,
-                  intervalId,
-                  store.isLoading,
-               ),
+               checkUploadStatus(store.user.username, intervalId, store.isLoading),
             )
          } catch (error) {
             clearInterval(intervalId)
@@ -90,10 +73,7 @@ export const Profile: FC = observer(() => {
       }
 
       try {
-         const response = await $api.put(
-            `/profile/editProfile/${store.user.id}`,
-            profileData,
-         )
+         const response = await $api.put(`/profile/editProfile/${store.user.id}`, profileData)
          if (response.status == 200) {
             store.updateUserPersonalInfo(response.data)
          }
@@ -126,19 +106,12 @@ export const Profile: FC = observer(() => {
                      fileInputRef={fileInputRef}
                      handleImageChange={handleImageChange}
                   />
-                  <button
-                     onClick={() => setModalActive(true)}
-                     className={styles.edit_btn}
-                  ></button>
+                  <button onClick={() => setModalActive(true)} className={styles.edit_btn}></button>
                </div>
                <AnimeCollection />
             </div>
 
-            <Modal
-               active={modalActive}
-               setActive={setModalActive}
-               headerText={'Редактирование профиля'}
-            >
+            <Modal active={modalActive} setActive={setModalActive} headerText={'Редактирование профиля'}>
                <>
                   <div className={styles.modal_wrapper}>
                      <div className={styles.modal_container}>
@@ -175,9 +148,7 @@ export const Profile: FC = observer(() => {
                            <Select
                               options={['М', 'Ж']}
                               defaultValue={sex}
-                              onSelect={(selectedOption) =>
-                                 setSex(selectedOption)
-                              }
+                              onSelect={(selectedOption) => setSex(selectedOption)}
                            />
                         </div>
                      </div>
@@ -185,9 +156,7 @@ export const Profile: FC = observer(() => {
                         <Select
                            options={countryData}
                            defaultValue={country}
-                           onSelect={(selectedOption) =>
-                              setCountry(selectedOption)
-                           }
+                           onSelect={(selectedOption) => setCountry(selectedOption)}
                         />
                      </div>
                      <div className={styles.btn_container}>

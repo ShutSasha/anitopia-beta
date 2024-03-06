@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
 import { Splider } from '../../../widgets/splider'
 import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
-import $api from '../../../app/http'
+
 export interface AnimeSeason {
    id: string
    title: string
@@ -17,10 +17,6 @@ export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
    const [searchText, setSearchText] = useState<string>('')
    const animeSeasonData = useFetchAnimeSeasin()
-
-   const getUsersClick = () => {
-      $api.get('/auth/users')
-   }
 
    if (store.isLoading) {
       return <Loader />
@@ -50,13 +46,9 @@ export const HomePage: FC = observer(() => {
                </div>
                <div className={styles_h.cards_anime_container}>
                   <div className={styles_h.anime_season_block}>
-                     <h2 className={styles_h.anime_season_title}>
-                        Аниме зимнего сезона
-                     </h2>
+                     <h2 className={styles_h.anime_season_title}>Аниме зимнего сезона</h2>
                   </div>
                   <Splider animeSeasonData={animeSeasonData} />
-                  {store.isAuth && <div>-_----_----_-----_---</div>}
-                  <button onClick={getUsersClick}>get users</button>
                </div>
             </div>
          </div>

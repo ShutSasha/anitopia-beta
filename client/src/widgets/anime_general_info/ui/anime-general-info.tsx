@@ -73,7 +73,6 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(
          if (store.isAuth) {
             fetchData()
          }
-         console.log(store.isAuth)
       }, [store.isAuth, rateAnimeClick])
 
       useEffect(() => {
