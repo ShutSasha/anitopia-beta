@@ -1,9 +1,12 @@
 const { Schema, model } = require('mongoose')
 
-const Anime = new Schema({
-   anime_id: { type: String, required: true },
+const AnimeSchema = new Schema({
+   id: { type: String, required: true, unique: true },
+   type: { type: String, required: true },
+   link: { type: String },
    title: { type: String, required: true },
-   rating: { type: Number, required: true },
+   year: { type: Number, required: true },
+   dynamic_data: { type: Schema.Types.Mixed },
 })
 
-module.exports = model('Anime', Anime)
+module.exports = model('Anime', AnimeSchema)

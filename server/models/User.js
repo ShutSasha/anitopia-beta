@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-const AnimeRating = require('./AnimeRating')
 
 const User = new Schema({
    username: { type: String, unique: true, required: true },
@@ -13,8 +12,7 @@ const User = new Schema({
    avatarLink: {
       type: String,
       required: false,
-      default:
-         'https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/default-user-icon.jpg',
+      default: 'https://ik.imagekit.io/duin0vggc/tr:h-200,w-200/user_icons/default-user-icon.jpg',
    },
    uploadStatus: { type: Boolean, required: false },
    registrationDate: { type: Date, required: true },

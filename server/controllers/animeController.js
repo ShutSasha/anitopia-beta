@@ -6,7 +6,7 @@ const { ca } = require('date-fns/locale/ca')
 const { resetWatchers } = require('nodemon/lib/monitor/watch')
 const fs = require('fs')
 const path = require('path')
-
+const Anime = require('../models/Anime')
 class AnimeController {
    async getAnimeList(req, res, next) {
       try {
@@ -26,11 +26,7 @@ class AnimeController {
          }
 
          const count = req.query.limit || 10
-         const result = AnimeService.getAnimeSubset(
-            sortedData,
-            Number(startIndex),
-            Number(count),
-         )
+         const result = AnimeService.getAnimeSubset(sortedData, Number(startIndex), Number(count))
 
          return res.json({
             data: result,
@@ -65,8 +61,7 @@ class AnimeController {
                   item.material_data &&
                   item.material_data.aired_at &&
                   item.material_data.shikimori_rating >= 7.5 &&
-                  Number(item.material_data.aired_at.split('-')[0]) ===
-                     Number(currentYear)
+                  Number(item.material_data.aired_at.split('-')[0]) === Number(currentYear)
                ) {
                   animeWithDate.push({
                      id: item.id,
@@ -103,34 +98,44 @@ class AnimeController {
             newArray.push(...response.data.results)
 
             nextUrl = response.data.next_page
-               ? `https://kodikapi.com/list?token=${process.env.KODIK_TOKEN}&types=anime-serial&limit=100&with_material_data=true&next=${response.data.next_page}`
+               ? `https://kodikapi.com/list?token=${process.env.KODIK_TOKEN}&types=anime-serial&
+               limit=100&with_material_data=true&next=${response.data.next_page}`
                : null
 
-            if (nextUrl === null || newArray.length === 300) {
+            if (nextUrl === null) {
                break
             }
          }
 
-         // const uniqueData = await AnimeService.removeDuplicates(
-         //    newArray,
-         //    'title',
-         // )
+         const uniqueData = await AnimeService.removeDuplicates(newArray, 'title')
 
-         // uniqueData.forEach((anime) => {
-         //    anime.title = AnimeService.replaceSpecificNames(anime.title)
-         // })
+         uniqueData.forEach((anime) => {
+            anime.title = AnimeService.replaceSpecificNames(anime.title)
+         })
 
-         // const serverDirectory = path.join(__dirname, '../')
+         for (const animeData of uniqueData) {
+            try {
+               const existingAnime = await Anime.findOne({ id: animeData.id })
+               if (existingAnime) {
+                  await Anime.updateOne({ id: animeData.id }, animeData)
+               } else {
+                  const anime = new Anime(animeData)
+                  await anime.save()
+               }
+            } catch (error) {
+               console.error('Error saving anime:', error)
+            }
+         }
 
-         // const filePath = path.join(serverDirectory, 'animeFilterData.json')
-         // fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
+         const serverDirectory = path.join(__dirname, '../')
 
-         return res.json(newArray.length)
+         const filePath = path.join(serverDirectory, 'animeFilterData.json')
+         fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
+
+         return res.json(uniqueData.length)
       } catch (error) {
          console.error('Error fetching anime data:', error)
-         return res
-            .status(500)
-            .json({ error: 'An error occurred while fetching anime data' })
+         return res.status(500).json({ error: 'An error occurred while fetching anime data' })
       }
    }
 
