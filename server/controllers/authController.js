@@ -5,23 +5,21 @@ const jwt = require('jsonwebtoken')
 const { validationResult, cookie } = require('express-validator')
 const userService = require('../services/UserService')
 const ApiError = require('../errors/apiError')
+const passport = require('passport')
+const uuid = require('uuid')
+const tokenService = require('../services/TokenService')
+const UserDto = require('../dtos/user-dto')
 
 class authController {
    async registration(req, res, next) {
       try {
          const errors = validationResult(req)
          if (!errors.isEmpty()) {
-            return next(
-               ApiError.BadRequest('Ошибка при валидации', errors.array()),
-            )
+            return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
          }
 
          const { username, password, email } = req.body
-         const userData = await userService.registration(
-            username,
-            email,
-            password,
-         )
+         const userData = await userService.registration(username, email, password)
          res.cookie('refreshToken', userData.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
@@ -88,6 +86,16 @@ class authController {
          const activationLink = req.params.link
          await userService.activation(activationLink)
          return res.redirect(process.env.CLIENT_URL)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async checkUser(req, res, next) {
+      try {
+         const { username } = req.body
+         let user = await User.findOne({ username })
+         return res.json(user)
       } catch (e) {
          next(e)
       }
