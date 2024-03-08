@@ -23,6 +23,9 @@ class UserService {
    async registration(username, email, password) {
       const candidate = await User.findOne({ $or: [{ username }, { email }] })
 
+      //TODO ПОМЕНЯТЬ
+      const isgoogleAuth = email.split('@')[0] === username
+
       if (candidate) {
          throw ApiError.BadRequest('Пользователь с таким именем/почтой уже существует')
       }
@@ -44,7 +47,7 @@ class UserService {
          registrationDate: Date.now(),
          uploadStatus: false,
          activationLink,
-         isActivated: false,
+         isActivated: isgoogleAuth,
          roles: [userRole.value],
       })
 

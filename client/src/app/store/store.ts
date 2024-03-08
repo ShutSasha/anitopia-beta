@@ -82,11 +82,7 @@ export default class Store {
 
    async registration(username: string, password: string, email: string) {
       try {
-         const response = await AuthService.registration(
-            username,
-            password,
-            email,
-         )
+         const response = await AuthService.registration(username, password, email)
 
          localStorage.setItem('token', response.data.accessToken)
          this.setAuth(true)
@@ -119,10 +115,7 @@ export default class Store {
    async checkAuth() {
       try {
          this.setLoading(true)
-         const response = await axios.get<AuthResponse>(
-            `${API_URL}/auth/refresh`,
-            { withCredentials: true },
-         )
+         const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, { withCredentials: true })
          localStorage.setItem('token', response.data.accessToken)
          this.setAuth(true)
          this.setUser(response.data.user)
@@ -130,6 +123,38 @@ export default class Store {
          console.error(e)
       } finally {
          this.setLoading(false)
+      }
+   }
+
+   async getUser() {
+      try {
+         console.log()
+      } catch (e: any) {
+         console.log(e)
+      }
+   }
+
+   async findOrCreate(username: string, password: string, email: string) {
+      try {
+         const response = await AuthService.checkUser(username)
+         if (!response.data) {
+            const registrationResponse = await this.registration(username, password, email)
+            if (!registrationResponse) {
+               console.error('Registration failed')
+               return false
+            }
+            return
+         }
+         const loginResponse = await this.login(username, password)
+         if (!loginResponse) {
+            // Handle login failure
+            console.error('Login failed')
+            return false
+         }
+         return true
+      } catch (e: any) {
+         console.log(e)
+         return false
       }
    }
 }

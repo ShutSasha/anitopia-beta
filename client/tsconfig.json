@@ -1,6 +1,7 @@
 {
    "compilerOptions": {
       "baseUrl": "./src",
+      "esModuleInterop": true, //idk
       "paths": {
          "@app/*": ["app/*"],
          "@pages": ["pages"],
