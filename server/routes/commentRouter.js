@@ -1,9 +1,9 @@
 const Router = require('express')
 const router = new Router()
 const commentController = require('../controllers/commentController')
-const authMiddlewate = require('../middleware/authMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
 
-router.get('/:animeId', authMiddlewate, commentController.getCommentsByAnimeId)
-router.post('/', authMiddlewate, commentController.createComment)
+router.get('/:animeId', authMiddleware, commentController.getCommentsByAnimeId)
+router.post('/', authMiddleware, commentController.createComment)
 
 module.exports = router

@@ -6,7 +6,6 @@ export const AnimeHeaderComments: FC = () => {
    return (
       <ul className={styles.container}>
          <AnimeHeaderItem />
-         <AnimeHeaderItem />
       </ul>
    )
 }

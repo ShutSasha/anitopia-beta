@@ -6,12 +6,14 @@ export default class AnimePage {
    animeData = {} as IAnime
    ratingForAnime = [] as Rating[]
    inputComment = ''
+   toggleUpdateComments = false
 
    constructor() {
       makeAutoObservable(this)
       this.setAnime = this.setAnime.bind(this)
       this.setRatingsAnime = this.setRatingsAnime.bind(this)
       this.setInputComment = this.setInputComment.bind(this)
+      this.setToggleUpdateComments = this.setToggleUpdateComments.bind(this)
    }
 
    setAnime(animeData: any) {
@@ -29,5 +31,9 @@ export default class AnimePage {
       if (input) {
          this.inputComment = input
       }
+   }
+
+   setToggleUpdateComments() {
+      this.toggleUpdateComments = !this.toggleUpdateComments
    }
 }

@@ -1,17 +1,14 @@
-import { FC, useContext } from 'react'
+import React, { FC } from 'react'
 import styles from '../styles/comment-button.module.scss'
 import { observer } from 'mobx-react-lite'
-import { Context } from '../../../../main'
 
-export const CommentButton: FC = observer(() => {
-   const { store } = useContext(Context)
+type Props = {
+   SendComment: React.MouseEventHandler<HTMLButtonElement>
+}
 
-   const handleClick = () => {
-      console.log(store.anime.inputComment)
-   }
-
+export const CommentButton: FC<Props> = observer(({ SendComment }) => {
    return (
-      <button onClick={handleClick} className={styles.btn}>
+      <button onClick={SendComment} className={styles.btn}>
          Отправить
       </button>
    )

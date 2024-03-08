@@ -6,6 +6,7 @@ const AnimeSchema = new Schema({
    link: { type: String },
    title: { type: String, required: true },
    year: { type: Number, required: true },
+   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
    dynamic_data: { type: Schema.Types.Mixed },
 })
 

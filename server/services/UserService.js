@@ -24,9 +24,7 @@ class UserService {
       const candidate = await User.findOne({ $or: [{ username }, { email }] })
 
       if (candidate) {
-         throw ApiError.BadRequest(
-            'Пользователь с таким именем/почтой уже существует',
-         )
+         throw ApiError.BadRequest('Пользователь с таким именем/почтой уже существует')
       }
 
       const hashPassword = await bcrypt.hashSync(password, 7)
@@ -50,10 +48,7 @@ class UserService {
          roles: [userRole.value],
       })
 
-      await mailService.sendActivationOnMail(
-         email,
-         `${process.env.API_URL}/api/auth/activate/${activationLink}`,
-      )
+      await mailService.sendActivationOnMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
 
       const userDto = new UserDto(user)
       const tokens = tokenService.generateToken({ ...userDto })
@@ -119,6 +114,11 @@ class UserService {
       return { ...tokens, user: userDto }
    }
 
+   async getUserById(id) {
+      const user = UserModel.findOne({ _id: id })
+      return user
+   }
+
    async getAllUsers() {
       const users = UserModel.find()
       return users
@@ -152,10 +152,7 @@ class UserService {
          async (error, result) => {
             if (error) console.log(error)
             else {
-               if (
-                  user.avatarLink &&
-                  user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE
-               ) {
+               if (user.avatarLink && user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE) {
                   const oldFilelink = user.avatarLink
                   await imageService.deleteImage(oldFilelink)
                }

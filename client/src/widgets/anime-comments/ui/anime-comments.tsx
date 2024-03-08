@@ -1,12 +1,12 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { AnimeHeaderComments, AnimeCommentForm } from '@features'
 import { AnimeComment } from '@entities/index'
 import styles from './styles.module.scss'
+import { useComments } from '../hooks/useComments'
+import { observer } from 'mobx-react-lite'
 
-export const AnimeComments: FC = () => {
-   useEffect(() => {
-      // fetch comments data
-   }, [])
+export const AnimeComments: FC = observer(() => {
+   const comments = useComments()
 
    return (
       <>
@@ -14,10 +14,7 @@ export const AnimeComments: FC = () => {
             <AnimeHeaderComments />
             <AnimeCommentForm />
          </div>
-         <AnimeComment />
-         <AnimeComment />
-         <AnimeComment />
-         <AnimeComment />
+         {comments && comments.map((item: any) => <AnimeComment key={item._id} {...item} />)}
       </>
    )
-}
+})

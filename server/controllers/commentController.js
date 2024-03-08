@@ -1,11 +1,15 @@
 const Comment = require('../models/Comment')
+const Anime = require('../models/Anime')
+const { ObjectId } = require('mongodb')
 
 class commentController {
    async getCommentsByAnimeId(req, res, next) {
       try {
          const { animeId } = req.params
 
-         const comments = await Comment.find({ animeId })
+         const anime = await Anime.findOne({ id: animeId })
+
+         const comments = await Comment.find({ anime: anime._id })
 
          return res.json(comments)
       } catch (error) {
@@ -18,13 +22,24 @@ class commentController {
       try {
          const { animeId, userId, commentText } = req.body
 
+         const animeExists = await Anime.exists({ id: animeId })
+         if (!animeExists) {
+            return res.status(404).json({ error: 'Anime not found' })
+         }
+
+         const anime = await Anime.findOne({ id: animeId })
+         const user = new ObjectId(userId)
+
          const newComment = new Comment({
-            animeId,
-            userId,
-            commentText,
+            anime: anime._id,
+            user: user,
+            comment_text: commentText,
          })
 
          await newComment.save()
+
+         anime.comments.push(newComment._id)
+         await anime.save()
 
          return res.status(201).json(newComment)
       } catch (error) {
