@@ -8,12 +8,13 @@ interface PlayerProps {
 export const PlayerBlock: FC<PlayerProps> = ({ link }) => {
    return (
       <div className={styles.player_container}>
-         <iframe
+         {link}
+         {/* <iframe
             src={link}
             width='610px'
             height='370px'
             allow='autoplay *; fullscreen *'
-         ></iframe>
+         ></iframe> */}
       </div>
    )
 }

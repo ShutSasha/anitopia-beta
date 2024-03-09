@@ -12,6 +12,11 @@ export type CreateComment = {
    commentText: string
 }
 
+export type DeleteComment = {
+   commentId: string
+   animeId: string
+}
+
 export type Comment = {
    anime: string
    comment_text: string

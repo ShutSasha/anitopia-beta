@@ -25,7 +25,7 @@ export const AnimeComment: FC<Comment> = ({ _id, anime, comment_text, timestamp,
             <div className={styles.features}>
                <LikeComment />
                <DislikeComment />
-               <CommentControls />
+               <CommentControls commentId={_id} animeId={anime} user_id={user} />
             </div>
          </div>
       </>
