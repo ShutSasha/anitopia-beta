@@ -1,0 +1,71 @@
+.wrapper {
+   position: fixed;
+   opacity: 0;
+   width: 100vw;
+   height: 100vh;
+   top: 0;
+   left: 0;
+   display: inline;
+}
+
+.wrapper_ {
+   display: inline;
+}
+
+.drop_menu_click {
+   display: inline-block;
+   height: 25px;
+   cursor: pointer;
+}
+
+.drop_menu_click::before {
+   content: "";
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   background-image: url("./assets/icons8-ellipsis-30.png");
+   background-size: cover;
+   vertical-align: middle;
+}
+
+.hidden_menu {
+   position: relative;
+   transition: 0.2s;
+
+   .drop_lits {
+      position: absolute;
+      background-color: #e2e2e2;
+      border-radius: 10px;
+      top: 8px;
+      right: 0;
+
+      .drop_menu_item {
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         padding: 8px 20px;
+         cursor: pointer;
+
+         &:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+         }
+
+         &:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+         }
+
+         &:hover {
+            transition: 0.2s ease-out;
+            background-color: var(--anitopia-color);
+            color: #fff;
+         }
+      }
+   }
+}
+
+.invisible {
+   visibility: hidden;
+   pointer-events: none;
+   transform: translateY(-10px);
+   opacity: 0;
+}

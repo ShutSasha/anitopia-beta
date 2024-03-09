@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styles from '../styles/comment.module.scss'
 import { Link } from 'react-router-dom'
-import { DislikeComment, LikeComment } from '@features'
+import { CommentControls, DislikeComment, LikeComment } from '@features'
 import { Comment } from '@shared/api'
 import { useUserComment } from '../hooks/useUserComment'
 import { parseISO, format } from 'date-fns'
@@ -25,6 +25,7 @@ export const AnimeComment: FC<Comment> = ({ _id, anime, comment_text, timestamp,
             <div className={styles.features}>
                <LikeComment />
                <DislikeComment />
+               <CommentControls />
             </div>
          </div>
       </>

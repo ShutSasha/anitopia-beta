@@ -18,20 +18,14 @@ export const Modal: FC<ModalProps> = ({
    modalWidth = '50vw',
    containerPadding = '15px 10px',
 }) => {
-   const modalActive = active
-      ? `${styles.modal} ${styles.modal_active}`
-      : `${styles.modal}`
+   const modalActive = active ? `${styles.modal} ${styles.modal_active}` : `${styles.modal}`
    const contentModalActive = active
       ? `${styles.modal_content} ${styles.modal_content_active}`
       : `${styles.modal_content}`
 
    return (
       <div className={modalActive} onClick={() => setActive(false)}>
-         <div
-            style={{ width: modalWidth }}
-            className={contentModalActive}
-            onClick={(e) => e.stopPropagation()}
-         >
+         <div style={{ width: modalWidth }} className={contentModalActive} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modal_header}>
                <p className={styles.header_text}>{headerText}</p>
             </div>

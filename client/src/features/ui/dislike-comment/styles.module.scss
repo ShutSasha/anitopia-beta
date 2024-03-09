@@ -1,11 +1,12 @@
-.like {
+.dislike {
+   margin-right: 5px;
    display: inline-block;
    height: 25px;
    cursor: pointer;
    vertical-align: middle;
 }
 
-.like::before {
+.dislike::before {
    content: "";
    display: inline-block;
    vertical-align: middle;
@@ -16,7 +17,7 @@
    margin-right: 5px;
 }
 
-.like:hover::before {
+.dislike:hover::before {
    content: "";
    background-image: url("../../../assets/thumbs-down-50px-icon-hover.png");
 }
