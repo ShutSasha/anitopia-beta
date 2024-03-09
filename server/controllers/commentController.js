@@ -47,6 +47,32 @@ class commentController {
          return res.status(500).json({ error: 'An error occurred while creating comment' })
       }
    }
+
+   async deleteComment(req, res, next) {
+      try {
+         const { commentId, animeId } = req.query
+
+         const animeExists = await Anime.exists({ _id: animeId })
+         if (!animeExists) {
+            return res.status(404).json({ error: 'Anime not found' })
+         }
+
+         const deletedComment = await Comment.deleteOne({ _id: commentId })
+         if (deletedComment.deletedCount === 0) {
+            return res.status(404).json({ error: 'Comment not found' })
+         }
+
+         const anime = await Anime.findById({ _id: animeId })
+         anime.comments = anime.comments.filter((item) => item.toString() !== commentId)
+
+         await anime.save()
+
+         return res.status(200).json({ message: 'Comment deleted successfully' })
+      } catch (error) {
+         console.error('Error creating comment:', error)
+         return res.status(500).json({ error: 'An error occurred while creating comment' })
+      }
+   }
 }
 
 module.exports = new commentController()
