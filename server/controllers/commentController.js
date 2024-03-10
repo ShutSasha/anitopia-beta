@@ -3,6 +3,18 @@ const Anime = require('../models/Anime')
 const { ObjectId } = require('mongodb')
 
 class commentController {
+   async getCommentByid(req, res, next) {
+      try {
+         const { commentId } = req.params
+
+         const comment = await Comment.findById(commentId)
+
+         return res.status(200).json(comment)
+      } catch (error) {
+         console.error(error)
+      }
+   }
+
    async getCommentsByAnimeId(req, res, next) {
       try {
          const { animeId } = req.params
@@ -45,6 +57,25 @@ class commentController {
       } catch (error) {
          console.error('Error creating comment:', error)
          return res.status(500).json({ error: 'An error occurred while creating comment' })
+      }
+   }
+
+   async editComment(req, res, next) {
+      try {
+         const { comment_id, new_comment_text } = req.body
+
+         const comment = await Comment.findById(comment_id)
+
+         if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' })
+         }
+
+         comment.comment_text = new_comment_text
+         await comment.save()
+
+         return res.status(200).json({ comment: comment.toObject() })
+      } catch (error) {
+         console.error(error)
       }
    }
 
