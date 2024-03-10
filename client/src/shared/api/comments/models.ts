@@ -1,3 +1,7 @@
+export type GetCommentById = {
+   id: string
+}
+
 export type GetCommentsByAnimeId = {
    id: string | undefined
 }
@@ -10,6 +14,11 @@ export type CreateComment = {
    animeId: string | undefined
    userId: string
    commentText: string
+}
+
+export type EditComment = {
+   comment_id: string
+   new_comment_text: string
 }
 
 export type DeleteComment = {

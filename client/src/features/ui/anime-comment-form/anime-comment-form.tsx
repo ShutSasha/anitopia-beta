@@ -25,7 +25,6 @@ export const AnimeCommentForm: FC = () => {
          }
       } catch (error) {
          console.error(error)
-      } finally {
       }
    }
 

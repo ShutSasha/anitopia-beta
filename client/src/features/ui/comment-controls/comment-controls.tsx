@@ -8,9 +8,10 @@ type Props = {
    commentId: string
    animeId: string
    user_id: string
+   setEdit: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_id }) => {
+export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_id, setEdit }) => {
    const { store } = useContext(Context)
    const [isActive, setActive] = useState<boolean>(false)
 
@@ -26,6 +27,10 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
       }
    }
 
+   const handleEditCommentClick = async () => {
+      setEdit(true)
+   }
+
    return (
       <>
          <div onClick={() => setActive(!isActive)} className={`${isActive ? styles.wrapper : styles.wrapper_}`} />
@@ -38,7 +43,9 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
             <div className={styles.drop_lits}>
                {store.user.id == user_id ? (
                   <>
-                     <div className={styles.drop_menu_item}>Редагувати</div>
+                     <div className={styles.drop_menu_item} onClick={handleEditCommentClick}>
+                        Редагувати
+                     </div>
                      <div className={styles.drop_menu_item} onClick={handleDeleteCommentClick}>
                         Видалити
                      </div>
