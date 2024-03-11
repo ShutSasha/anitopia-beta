@@ -10,7 +10,7 @@ import { editComment } from '@shared/api/comments/comments'
 import { Context } from '../../../../main'
 import { observer } from 'mobx-react-lite'
 
-export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, timestamp, user, __v }) => {
+export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, timestamp, user }) => {
    const { store } = useContext(Context)
    const userData = useUserComment(user)
    const parsedDate = parseISO(timestamp)

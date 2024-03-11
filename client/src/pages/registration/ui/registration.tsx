@@ -1,9 +1,9 @@
 import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
-import { Link, redirect, useHref, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
-import { Loader, Toast } from '@shared'
-import { InputAuth } from '@shared'
+import { Loader, Toast } from '@shared/index'
+import { InputAuth } from '@shared/index'
 import { AuthContext } from '../context/AuthContenx'
 import { getInputsData } from '../consts/input-data'
 import { Context } from '../../../main'
@@ -48,7 +48,8 @@ export const Registration = observer(() => {
          console.error(err)
       }
    }
-   function SplitEmail(email) {
+
+   function SplitEmail(email: string) {
       return email.split('@')[0]
    }
 
@@ -113,42 +114,39 @@ export const Registration = observer(() => {
                               <input type='checkbox' />
                               <div className={styles.checkbox_icon}></div>
                               <p>
-                                 Я согласен с
+                                 Я згоден з
                                  <Link className={styles.user_agreement_span} to='/users-policy'>
-                                    пользовательським соглашением
+                                    &nbsp;користувальницькою угодою
                                  </Link>
                               </p>
                            </label>
                         </div>
                         <input type='submit' value='Зарегистрироваться' className={styles.registration_btn}></input>
                      </form>
-                     <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                           const credentialResponseDecoded = jwtDecode(credentialResponse.credential)
-                           console.log(credentialResponseDecoded)
+                     <div className={styles.google_auth_btn}>
+                        <GoogleLogin
+                           onSuccess={(credentialResponse) => {
+                              if (credentialResponse.credential) {
+                                 const credentialResponseDecoded = jwtDecode(credentialResponse.credential)
 
-                           store
-                              .findOrCreate(
-                                 SplitEmail(credentialResponseDecoded.email),
-                                 'qwerty1234',
-                                 credentialResponseDecoded.email,
-                              )
-                              .then(() => {
-                                 navigate('/')
-                              })
-                        }}
-                        onError={() => {
-                           console.log('Login Failed')
-                        }}
-                     />
-                     {/*<a href={'http://localhost:5000/api/auth/google'}>*/}
-                     {/*   <button*/}
-                     {/*      className={styles.google_auth_btn}*/}
-                     {/*      //onClick={googleAuthButtonClick}*/}
-                     {/*   >*/}
-                     {/*      <img className={styles.google_img} src={googleIcon} alt='Google-icon' />*/}
-                     {/*   </button>*/}
-                     {/*</a>*/}
+                                 if (!credentialResponseDecoded.email) {
+                                    throw Error('issue with email')
+                                 }
+
+                                 const username = SplitEmail(credentialResponseDecoded.email)
+
+                                 store
+                                    .findOrCreate(username, 'qwerty1234', credentialResponseDecoded.email)
+                                    .then(() => {
+                                       navigate('/')
+                                    })
+                              }
+                           }}
+                           onError={() => {
+                              console.error('Login Failed')
+                           }}
+                        />
+                     </div>
                   </div>
                </div>
             </div>
