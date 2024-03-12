@@ -1,15 +1,11 @@
 .logo {
-	background-color: #ff6666;
-	border-radius: 15px;
-	color: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 156px;
-	height: 48px;
+   color: #fff;
+   font-family: "Baloo", sans-serif;
+   font-size: 36px;
+}
 
-	p {
-		font-family: "Baloo", sans-serif;
-		font-size: 36px;
-	}
+@media screen and (max-width: 1024px) {
+   .logo {
+      display: none;
+   }
 }

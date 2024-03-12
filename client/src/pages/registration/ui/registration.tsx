@@ -90,9 +90,7 @@ export const Registration = observer(() => {
             />
          )}
          <div className={styles.registration_wrapper}>
-            <div className={styles.header}>
-               <Header />
-            </div>
+            <Header />
             <div className={styles.container}>
                <div className={styles.wrapper}>
                   <div className={styles.form_box}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Toast.module.scss'
+
 interface ToastProps {
    message: string
    duration?: number
@@ -8,13 +9,7 @@ interface ToastProps {
    clearIsError: () => void
 }
 
-export const Toast: React.FC<ToastProps> = ({
-   message,
-   duration = 3000,
-   isError = false,
-   onClose,
-   clearIsError,
-}) => {
+export const Toast: React.FC<ToastProps> = ({ message, duration = 3000, isError = false, onClose, clearIsError }) => {
    const [isVisible, setIsVisible] = useState<boolean>(true)
 
    useEffect(() => {
@@ -28,16 +23,12 @@ export const Toast: React.FC<ToastProps> = ({
    }, [duration, onClose])
 
    return (
-      <div
-         className={`${styles.toast} ${isVisible ? styles.show : styles.hide}`}
-      >
+      <div className={`${styles.toast} ${isVisible ? styles.show : styles.hide}`}>
          <div>
             <div
                className={styles.caption}
                style={{
-                  borderBottom: isError
-                     ? '2px solid #ff6666'
-                     : '2px solid #9954d8',
+                  borderBottom: isError ? '2px solid #ff6666' : '2px solid #9954d8',
                }}
             >
                {isError ? (

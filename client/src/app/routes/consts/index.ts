@@ -8,4 +8,5 @@ export const routes = {
    ANIME_PAGE: '/anime/:id',
    TOP_ANIME: '/top-anime',
    USER_POLICY: '/users-policy',
+   NOTIFICATIONS: '/notifications',
 }
