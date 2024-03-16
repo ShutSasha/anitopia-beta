@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { User } from '../../../shared'
-import { Logout } from '../../../shared'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
 import NotificationIcon from '../../../assets/notification-icon.svg'

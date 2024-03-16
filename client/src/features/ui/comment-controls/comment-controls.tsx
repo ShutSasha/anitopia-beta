@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { FC, useContext, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { deleteComment } from '@shared/api/comments/comments'
 import { observer } from 'mobx-react-lite'
@@ -14,6 +14,7 @@ type Props = {
 export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_id, setEdit }) => {
    const { store } = useContext(Context)
    const [isActive, setActive] = useState<boolean>(false)
+   const optionsRef = useRef<HTMLDivElement>(null)
 
    const handleDeleteCommentClick = async () => {
       try {
@@ -31,12 +32,23 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
       setEdit(true)
    }
 
+   useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+         if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
+            setActive(false)
+         }
+      }
+
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+         document.removeEventListener('mousedown', handleClickOutside)
+      }
+   }, [])
+
    return (
-      <>
-         <div onClick={() => setActive(!isActive)} className={`${isActive ? styles.wrapper : styles.wrapper_}`} />
-         <span onClick={() => setActive(!isActive)} className={styles.drop_menu_click} />
+      <div ref={optionsRef} onClick={() => setActive(!isActive)} className={styles.options_wrapper}>
+         <span className={styles.drop_menu_click} />
          <div
-            onClick={(e) => e.stopPropagation()}
             className={`${isActive ? styles.hidden_menu : `${styles.hidden_menu} ${styles.invisible}`}`}
             id='drop-down-menu-comment'
          >
@@ -55,6 +67,6 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
                )}
             </div>
          </div>
-      </>
+      </div>
    )
 })
