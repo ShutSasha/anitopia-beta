@@ -48,10 +48,7 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
    return (
       <div ref={optionsRef} onClick={() => setActive(!isActive)} className={styles.options_wrapper}>
          <span className={styles.drop_menu_click} />
-         <div
-            className={`${isActive ? styles.hidden_menu : `${styles.hidden_menu} ${styles.invisible}`}`}
-            id='drop-down-menu-comment'
-         >
+         <div className={isActive ? `${styles.hidden_menu}` : `${styles.hidden_menu} ${styles.invisible}`}>
             <div className={styles.drop_lits}>
                {store.user.id == user_id ? (
                   <>

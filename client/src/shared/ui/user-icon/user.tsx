@@ -36,7 +36,7 @@ export const User: FC = observer(() => {
    return (
       <>
          <div className={styles.user_container}>
-            <Link className={styles.user_link} title='Профиль' to='/profile'>
+            <Link className={styles.user_link} title='Профіль' to={`/profile/${store.user.id}`}>
                <img className={styles.profile_img} src={store.user.avatarLink} alt='Profile' />
                <p>{store.user.username}</p>
             </Link>

@@ -17,6 +17,7 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
    const formattedDate = format(parsedDate, 'dd.MM.yyyy HH:mm:ss')
    const [isEdit, setEdit] = useState<boolean>(false)
    const inputRef = useRef<HTMLSpanElement>(null)
+
    const cancelEditComment = () => {
       setEdit(false)
    }
@@ -44,9 +45,9 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
                </div>
                <CommentInput inputRef={inputRef} isEdit={isEdit} comment_text={comment_text} />
                <div className={styles.btn_edit_comment}>
-                  <CommentButton SendComment={sendEditComment} />
+                  <CommentButton SendComment={sendEditComment} button_text='Змінити' />
                   <button className={styles.btn_cancel_edit} onClick={cancelEditComment}>
-                     Нє, не хачу
+                     Відмінити
                   </button>
                </div>
             </div>

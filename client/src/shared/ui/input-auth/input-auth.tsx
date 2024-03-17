@@ -12,7 +12,7 @@ interface InputAuthProps {
 }
 
 export const InputAuth: FC<InputAuthProps> = ({ img, setValue, htmlFor, type, textLabel, labelColor, value = '' }) => {
-   const [inputValue, setInputValue] = useState(value)
+   const [inputValue, setInputValue] = useState(value || '')
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value)

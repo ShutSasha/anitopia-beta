@@ -6,20 +6,14 @@ import user_rate_star from './assets/user-rate-star.png'
 import default_star from './assets/default-star.svg'
 import axios from 'axios'
 
-export const AnimeCollectionCard: FC<Collection> = ({
-   rating,
-   animeId,
-   poster_url,
-   title,
-}) => {
+export const AnimeCollectionCard: FC<Collection> = ({ rating, animeId, poster_url, title }) => {
    const [generalAnimeRating, setGeneralAnimeRating] = useState()
 
    useEffect(() => {
       const fetchAnimeRating = async () => {
-         const response = await axios.get(
-            `http://localhost:5000/api/anime/${animeId}`,
-         )
-         setGeneralAnimeRating(response.data.material_data.shikimori_rating)
+         const response = await axios.get(`http://localhost:5000/api/anime/${animeId}`)
+         const shikimori_rating = response.data.material_data.shikimori_rating
+         setGeneralAnimeRating(shikimori_rating ? shikimori_rating : 0)
       }
 
       fetchAnimeRating()
@@ -27,12 +21,7 @@ export const AnimeCollectionCard: FC<Collection> = ({
 
    return (
       <>
-         <Link
-            to={
-               location.pathname.replace(window.location.pathname, '/anime/') +
-               animeId
-            }
-         >
+         <Link to={location.pathname.replace(window.location.pathname, '/anime/') + animeId}>
             <div className={styles.card}>
                <div className={styles.card_poster_title}>
                   <img className={styles.poster} src={poster_url} alt='' />
@@ -41,20 +30,14 @@ export const AnimeCollectionCard: FC<Collection> = ({
                <div className={styles.ratings}>
                   {rating && (
                      <div title='Мой рейтинг' className={styles.user_rating}>
-                        <img
-                           className={styles.user_rate_star}
-                           src={user_rate_star}
-                           alt=''
-                        />
+                        <img className={styles.user_rate_star} src={user_rate_star} alt='' />
                         <p>{rating}</p>
                      </div>
                   )}
                   {generalAnimeRating && (
                      <div title='Рейтинг аниме' className={styles.anime_rating}>
                         <img src={default_star} alt='' />
-                        <p className={styles.anime_rating_text}>
-                           {generalAnimeRating}
-                        </p>
+                        <p className={styles.anime_rating_text}>{generalAnimeRating}</p>
                      </div>
                   )}
                </div>

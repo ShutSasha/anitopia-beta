@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
 import { ProfileBgImg } from '../../../features'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NotFoundPage } from '../../not-found'
 import { DefaultButton, InputAuth, Loader, Select } from '../../../shared'
 import { uploadImage } from '../api/uploadImage'
@@ -27,6 +27,8 @@ export const Profile: FC = observer(() => {
    const [sex, setSex] = useState<string | null>('')
    const [country, setCountry] = useState<string | null>('')
    const countryData = useCountries()
+   const { id } = useParams()
+   console.log('user id: ', id)
 
    useEffect(() => {
       setLastName(store.user.lastName)

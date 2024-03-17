@@ -3,6 +3,7 @@ import { FC, useContext, useEffect, useState } from 'react'
 import { Context } from '../../../main'
 import { AnimeCollectionCard } from '../../../entities'
 import $api from '../../../app/http'
+import { useParams } from 'react-router-dom'
 
 export interface Collection {
    rating?: number
@@ -14,19 +15,16 @@ export interface Collection {
 export const AnimeCollectionInner: FC = observer(() => {
    const { store } = useContext(Context)
    const [collection, setCollection] = useState<any[] | undefined>([])
+   const { id } = useParams()
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             let response
             if (store.userAnimeCollection.collectionType === 'rate') {
-               response = await $api.get<Collection[]>(
-                  `/rate-anime/${store.user.id}`,
-               )
+               response = await $api.get<Collection[]>(`/rate-anime/${id}`)
                console.log(response)
-            } else if (
-               store.userAnimeCollection.collectionType === 'watching'
-            ) {
+            } else if (store.userAnimeCollection.collectionType === 'watching') {
             }
 
             setCollection(response?.data)
@@ -38,14 +36,7 @@ export const AnimeCollectionInner: FC = observer(() => {
    }, [store.userAnimeCollection.collectionType])
 
    if (store.userAnimeCollection.collectionType === 'rate') {
-      return (
-         <div>
-            {collection &&
-               collection.map((item) => (
-                  <AnimeCollectionCard key={item.animeId} {...item} />
-               ))}
-         </div>
-      )
+      return <div>{collection && collection.map((item) => <AnimeCollectionCard key={item.animeId} {...item} />)}</div>
    }
 
    if (store.userAnimeCollection.collectionType === 'watching') {

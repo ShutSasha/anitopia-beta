@@ -36,7 +36,7 @@ export const AnimeCommentForm: FC = () => {
                <EditTextItem />
                <EditTextItem />
             </ul>
-            <CommentButton SendComment={SendComment} />
+            <CommentButton SendComment={SendComment} button_text='Надіслати' />
          </div>
       </>
    )
