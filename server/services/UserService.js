@@ -174,7 +174,6 @@ class UserService {
 
    async editProfile(userId, updatedFields) {
       const user = await UserModel.findById(userId)
-      console.log(user)
 
       if (!user) {
          throw new ApiError.BadRequest()
