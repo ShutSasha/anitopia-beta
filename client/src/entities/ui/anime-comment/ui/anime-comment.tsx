@@ -58,7 +58,7 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
    return (
       <>
          <div className={styles.comment}>
-            <Link to='/user'>
+            <Link to={`/profile/${user}`}>
                <img className={styles.user_icon} src={userData?.avatarLink} alt='' />
             </Link>
             <div className={styles.comment_info}>

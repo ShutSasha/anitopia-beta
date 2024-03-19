@@ -23,7 +23,6 @@ export const AnimeCollectionInner: FC = observer(() => {
             let response
             if (store.userAnimeCollection.collectionType === 'rate') {
                response = await $api.get<Collection[]>(`/rate-anime/${id}`)
-               console.log(response)
             } else if (store.userAnimeCollection.collectionType === 'watching') {
             }
 
@@ -33,7 +32,7 @@ export const AnimeCollectionInner: FC = observer(() => {
          }
       }
       fetchData()
-   }, [store.userAnimeCollection.collectionType])
+   }, [store.userAnimeCollection.collectionType, id])
 
    if (store.userAnimeCollection.collectionType === 'rate') {
       return <div>{collection && collection.map((item) => <AnimeCollectionCard key={item.animeId} {...item} />)}</div>

@@ -6,7 +6,7 @@ class userController {
       const { id } = req.params
       try {
          const user = await userService.getUserById(id)
-         return res.json({ username: user.username, avatarLink: user.avatarLink })
+         return res.json(user)
       } catch (e) {
          next(e)
       }

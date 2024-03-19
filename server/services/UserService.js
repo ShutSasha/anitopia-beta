@@ -118,7 +118,7 @@ class UserService {
    }
 
    async getUserById(id) {
-      const user = UserModel.findOne({ _id: id })
+      const user = await UserModel.findById(id)
       return user
    }
 
