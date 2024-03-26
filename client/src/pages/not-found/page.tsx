@@ -1,25 +1,33 @@
-import { FC, useContext } from "react";
-import notFoundImg from "./assets/404.png";
-import styles from "./style.module.scss";
-import { ButtonReturn, Loader } from "../../shared";
-import { Link } from "react-router-dom";
-import { Context } from "../../main";
-import { observer } from "mobx-react-lite";
+import { FC, useContext } from 'react'
+import styles from './style.module.scss'
+import { ButtonReturn, Loader } from '../../shared'
+import { Link } from 'react-router-dom'
+import { Context } from '../../main'
+import { observer } from 'mobx-react-lite'
 
 export const NotFoundPage: FC = observer(() => {
-	const { store } = useContext(Context);
+   const { store } = useContext(Context)
 
-	if (store.isLoading) {
-		return <Loader />;
-	}
+   if (store.isLoading) {
+      return <Loader />
+   }
 
-	return (
-		<div className={styles.container}>
-			<p className={styles.text}>Ошибка 404. Вы скорее всего, перешли не на ту страничку</p>
-			<Link to="/">
-				<ButtonReturn />
-			</Link>
-			<img src={notFoundImg} className={styles.img} alt="404 not found" />
-		</div>
-	);
-});
+   return (
+      <div className={styles.container}>
+         <div className={styles.content}>
+            <p className={styles.title_404}>404</p>
+            <div className={styles.general_text}>
+               <p className={styles.page_not_found_title}>СТОРІНКА НЕ ЗНАЙДЕНА</p>
+               <p className={styles.default_text}>Сторінку, до якої ви звернулися, видалено або перенесено.</p>
+               <p className={styles.default_text}>
+                  Будь ласка, перейдіть на&#32;
+                  <Link className={styles.link_to_home_page} to='/'>
+                     головну сторінку
+                  </Link>{' '}
+                  сайту.
+               </p>
+            </div>
+         </div>
+      </div>
+   )
+})

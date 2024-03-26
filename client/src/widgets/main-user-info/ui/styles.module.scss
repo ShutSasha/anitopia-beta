@@ -1,0 +1,26 @@
+.profile_wrapper {
+   position: relative;
+   padding: 24px 24px;
+   margin-bottom: 20px;
+   background-color: #343a40;
+   border-bottom-left-radius: 10px;
+   border-bottom-right-radius: 10px;
+
+   h2 {
+      color: #fff;
+   }
+}
+
+.edit_btn {
+   top: 24px;
+   right: 24px;
+   position: absolute;
+   background: transparent;
+   background-image: url("../assets/edit-icon.svg");
+   height: 40px;
+   width: 40px;
+   background-size: cover;
+   border: none;
+   outline: none;
+   background-repeat: no-repeat;
+}

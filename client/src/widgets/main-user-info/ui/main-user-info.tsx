@@ -1,7 +1,9 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { AvatarUsernameProfile, UserPersonalInfo } from '../../../features'
-import { observer } from 'mobx-react-lite'
 import { UserByIdResponse } from '@shared/api'
+import styles from './styles.module.scss'
+import { Link } from 'react-router-dom'
+import { Context } from '../../../main'
 export interface MainUserInfoProps {
    handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
    fileInputRef: React.RefObject<HTMLInputElement>
@@ -9,18 +11,18 @@ export interface MainUserInfoProps {
    user: UserByIdResponse
 }
 
-export const MainUserInfo: FC<MainUserInfoProps> = observer(
-   ({ user, handleClick, fileInputRef, handleImageChange }) => {
-      return (
-         <>
-            <AvatarUsernameProfile
-               user={user}
-               handleClick={handleClick}
-               fileInputRef={fileInputRef}
-               handleImageChange={handleImageChange}
-            />
-            <UserPersonalInfo user={user} />
-         </>
-      )
-   },
-)
+export const MainUserInfo: FC<MainUserInfoProps> = ({ user, handleClick, fileInputRef, handleImageChange }) => {
+   const { store } = useContext(Context)
+   return (
+      <div className={styles.profile_wrapper}>
+         <AvatarUsernameProfile
+            user={user}
+            handleClick={handleClick}
+            fileInputRef={fileInputRef}
+            handleImageChange={handleImageChange}
+         />
+         <UserPersonalInfo user={user} />
+         {store.user.id === user._id && <Link to={`/aboba`} className={styles.edit_btn} />}
+      </div>
+   )
+}

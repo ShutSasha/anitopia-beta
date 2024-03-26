@@ -1,32 +1,10 @@
+.wrapper {
+   background-color: #e2e2e2;
+}
+
 .container {
    max-width: var(--container-width);
    margin: 0 auto;
-}
-
-.profile_wrapper {
-   position: relative;
-   padding: 20px 10px;
-   margin-bottom: 20px;
-   background-color: #404040;
-   border-bottom-left-radius: 10px;
-   border-bottom-right-radius: 10px;
-
-   h2 {
-      color: #fff;
-   }
-}
-
-.edit_btn {
-   top: 10px;
-   right: 10px;
-   position: absolute;
-   background: transparent;
-   background-image: url("../assets/edit-icon.svg");
-   height: 36px;
-   width: 36px;
-   border: none;
-   outline: none;
-   background-repeat: no-repeat;
 }
 
 .modal_wrapper {

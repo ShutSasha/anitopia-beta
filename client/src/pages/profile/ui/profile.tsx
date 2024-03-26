@@ -76,21 +76,19 @@ export const Profile: FC = observer(() => {
    }
 
    return (
-      <div>
+      <div className={styles.wrapper}>
          <Header />
          <div className={styles.container}>
             <ProfileBgImg />
-            <div className={styles.profile_wrapper}>
-               <MainUserInfo
-                  user={user}
-                  handleClick={handleClick}
-                  fileInputRef={fileInputRef}
-                  handleImageChange={handleImageChange}
-               />
-               <button className={styles.edit_btn}></button>
-            </div>
+            <MainUserInfo
+               user={user}
+               handleClick={handleClick}
+               fileInputRef={fileInputRef}
+               handleImageChange={handleImageChange}
+            />
             <AnimeCollection />
          </div>
+         <div>footer</div>
       </div>
    )
 })

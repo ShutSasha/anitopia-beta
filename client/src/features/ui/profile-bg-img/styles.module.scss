@@ -1,8 +1,41 @@
-.background {
-	height: 240px;
-	width: 100%;
-	background-image: url("./assets/test-profile-bg-img.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
+.background_wrapper {
+   position: relative;
+   height: 240px;
+   cursor: pointer;
+
+   .background_img {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: filter 0.25s ease-in-out;
+   }
+
+   &:hover .background_img {
+      filter: brightness(0.5);
+   }
+
+   .upload_user_bg_title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 24px;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      line-height: 27px;
+      padding: 11px 54px;
+      background-color: #343a40;
+      border-radius: 30px;
+      opacity: 0;
+      visibility: hidden;
+      transition:
+         opacity 0.4s ease,
+         visibility 0.4s ease;
+   }
+
+   &:hover .upload_user_bg_title {
+      visibility: visible;
+      opacity: 1;
+   }
 }
