@@ -183,6 +183,17 @@ class UserService {
       await user.save()
       return user
    }
+
+   async generatePassword(user) {
+      var tempPassword = 'temp' + uuid.v4()
+      const hashPassword = await bcrypt.hashSync(tempPassword, 7)
+
+      user.password = hashPassword
+
+      await user.save()
+
+      await mailService.sendTempPassword(user.email, tempPassword)
+   }
 }
 
 module.exports = new UserService()

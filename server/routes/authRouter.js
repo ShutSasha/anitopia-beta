@@ -11,4 +11,5 @@ router.post('/logout', authController.logout)
 router.get('/activate/:link', authController.activate)
 router.get('/refresh', authController.refresh)
 router.post('/checkUser', authController.checkUser)
+router.put('/rechange', authController.generateTempPassword)
 module.exports = router

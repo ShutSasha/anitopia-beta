@@ -9,6 +9,7 @@ const passport = require('passport')
 const uuid = require('uuid')
 const tokenService = require('../services/TokenService')
 const UserDto = require('../dtos/user-dto')
+const { or } = require('sequelize')
 
 class authController {
    async registration(req, res, next) {
@@ -96,6 +97,18 @@ class authController {
       try {
          const { username } = req.body
          let user = await User.findOne({ username })
+         return res.json(user)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async generateTempPassword(req, res, next) {
+      try {
+         const { email } = req.body
+         let user = await User.findOne({ email })
+         console.log(user)
+         await userService.generatePassword(user)
          return res.json(user)
       } catch (e) {
          next(e)
