@@ -1,8 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
    require('dotenv').config()
 }
-const mongoose = require('mongoose')
 const express = require('express')
+const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const ImageKit = require('imagekit')
