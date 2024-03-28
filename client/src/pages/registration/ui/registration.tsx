@@ -28,31 +28,6 @@ export const Registration = observer(() => {
       store.setIsError(true)
    }
 
-   const googleAuthButtonClick = async () => {
-      try {
-         const response = await axios.get(`http://localhost:5000/api/auth/google`, {
-            withCredentials: true,
-         })
-         console.log(response)
-         const userData = response.data
-         console.log(userData.username)
-
-         const isLoggedIn = await store.login(userData.username, userData.password)
-         if (isLoggedIn) {
-            navigate('/')
-         } else {
-            store.setIsError(true)
-            setShowToast(true)
-         }
-      } catch (err) {
-         console.error(err)
-      }
-   }
-
-   function SplitEmail(email: string) {
-      return email.split('@')[0]
-   }
-
    const handleSubmit = (event: any) => {
       event.preventDefault()
 
@@ -121,30 +96,7 @@ export const Registration = observer(() => {
                         </div>
                         <input type='submit' value='Зарегистрироваться' className={styles.registration_btn}></input>
                      </form>
-                     <div className={styles.google_auth_btn}>
-                        {/* <GoogleLogin
-                           onSuccess={(credentialResponse) => {
-                              if (credentialResponse.credential) {
-                                 const credentialResponseDecoded = jwtDecode(credentialResponse.credential)
-
-                                 if (!credentialResponseDecoded.email) {
-                                    throw Error('issue with email')
-                                 }
-
-                                 const username = SplitEmail(credentialResponseDecoded.email)
-
-                                 store
-                                    .findOrCreate(username, 'qwerty1234', credentialResponseDecoded.email)
-                                    .then(() => {
-                                       navigate('/')
-                                    })
-                              }
-                           }}
-                           onError={() => {
-                              console.error('Login Failed')
-                           }}
-                        /> */}
-                     </div>
+                     <div className={styles.google_auth_btn}></div>
                   </div>
                </div>
             </div>

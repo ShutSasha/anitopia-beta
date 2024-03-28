@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
 import styles from './style.module.scss'
-import { ButtonReturn, Loader } from '../../shared'
+import { Loader } from '../../shared'
 import { Link } from 'react-router-dom'
 import { Context } from '../../main'
 import { observer } from 'mobx-react-lite'
@@ -23,7 +23,7 @@ export const NotFoundPage: FC = observer(() => {
                   Будь ласка, перейдіть на&#32;
                   <Link className={styles.link_to_home_page} to='/'>
                      головну сторінку
-                  </Link>{' '}
+                  </Link>
                   сайту.
                </p>
             </div>
