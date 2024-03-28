@@ -8,6 +8,6 @@ interface AnimeCollectionItemType {
 }
 
 export const AnimeCollectionItemData: AnimeCollectionItemType[] = [
-   { type: 'rate', icon: rate_star, text: 'Оценено' },
-   { type: 'watching', icon: eye_icon, text: 'Смотрю' },
+   { type: 'rate', icon: rate_star, text: 'Оцінено' },
+   { type: 'watching', icon: eye_icon, text: 'Дивлюсь' },
 ]

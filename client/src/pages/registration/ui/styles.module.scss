@@ -3,7 +3,7 @@
    justify-content: center;
    align-items: center;
    height: 100%;
-   background-image: url('../assets/background.gif');
+   background-image: url("../assets/background.gif");
    background-repeat: no-repeat;
    background-size: cover;
 
@@ -11,7 +11,7 @@
       text-align: center;
       color: #fff;
       margin-bottom: 60px;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
    }
 }
 
@@ -86,8 +86,8 @@ form {
       line-height: 57px;
    }
 }
+
 .user_agreement {
-   margin-bottom: 55px;
    display: inline-block;
    position: relative;
    cursor: pointer;
@@ -108,7 +108,7 @@ form {
 }
 
 .user_agreement input:checked + .checkbox_icon::before {
-   content: '\2713';
+   content: "\2713";
    font-size: 14px;
    color: #fff;
    position: absolute;
@@ -126,7 +126,7 @@ form {
 
    label {
       color: #fff;
-      font-family: 'Chakra Petch';
+      font-family: "Chakra Petch";
       font-size: 12px;
       font-style: normal;
       font-weight: 700;
@@ -152,22 +152,18 @@ form {
    font-weight: 700;
    line-height: normal;
    cursor: pointer;
+   margin-bottom: 20px;
 }
 
 .google_auth_btn {
-   border-radius: 5px;
    width: 100%;
-   padding: 5px 0;
-}
-
-.google_img {
-   height: 25px;
-   width: 25px;
+   display: flex;
+   justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
    .container {
-      background-image: url('../assets/background-phone.gif');
+      background-image: url("../assets/background-phone.gif");
    }
 
    .wrapper {

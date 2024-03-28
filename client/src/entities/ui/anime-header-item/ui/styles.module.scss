@@ -8,7 +8,7 @@
 }
 
 .item:hover {
-   background-color: #ff6666;
+   background-color: var(--anitopia-color);
    transition: background-color 0.4s ease;
    cursor: pointer;
 }

@@ -9,12 +9,12 @@ export interface IUser {
    country: string | null
    sex: string | null
    age: number | null
-   animeRatings: AnimeRatings[]
+   // animeRatings: AnimeRatings[]
 }
 
-interface AnimeRatings {
-   rating: number
-   animeId: string
-   poster_url: string
-   title: string
-}
+// interface AnimeRatings {
+//    rating: number
+//    animeId: string
+//    poster_url: string
+//    title: string
+// }

@@ -10,6 +10,7 @@ import { AnimeList } from './anime-list'
 import { AnimePage } from './anime-page'
 import { TopAnime } from './top-anime'
 import { UserPolicy } from './user-policy'
+import { Notifications } from './notifications'
 
 export const router = createBrowserRouter(
    [
@@ -48,6 +49,10 @@ export const router = createBrowserRouter(
       {
          path: routes.USER_POLICY,
          element: <UserPolicy />,
+      },
+      {
+         path: routes.NOTIFICATIONS,
+         element: <Notifications />,
       },
       {
          path: '*',

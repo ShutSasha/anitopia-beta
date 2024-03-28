@@ -66,7 +66,7 @@ export const AnimeList: FC = observer(() => {
          <Header />
          <div className={styles.wrapper}>
             <div className={styles.container}>
-               <h1 className={styles.title}>Список Аниме</h1>
+               <h1 className={styles.title}>Список Аніме</h1>
                <SearchInput
                   onClickEvent={(searchParam: string) => {
                      setSearchTerm(searchParam)
@@ -90,13 +90,9 @@ export const AnimeList: FC = observer(() => {
                   </ul>
                ) : (
                   <div className={styles.no_anime_container}>
-                     <img
-                        src={NoAnimePhoto}
-                        className={styles.no_anime_photo}
-                     />
+                     <img src={NoAnimePhoto} className={styles.no_anime_photo} />
                      <p className={styles.no_anime_text}>
-                        По запросу "{searchTerm}" ничего не найдено. Попробуйте
-                        изменить запрос
+                        За запитом "{searchTerm}" нічого не знайдено. Спробуйте змінити запит
                      </p>
                   </div>
                )}

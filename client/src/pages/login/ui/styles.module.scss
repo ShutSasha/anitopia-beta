@@ -141,6 +141,36 @@ form {
 	text-decoration: underline;
 }
 
+.form_text{
+	color: #ffffff;
+	font-family: "Franklin Gothic Medium", sans-serif;
+	text-decoration: underline;
+	cursor: pointer;
+	//transition: color 3s ease;
+	.form_text:hover{
+		color: #ff6666;
+	}
+}
+
+.modal_wrapper{
+	padding: 10px;
+
+}
+
+.modal_container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 50px;
+}
+
+.modal_text{
+	font-family: "Franklin Gothic Medium", sans-serif;
+	font-size: 24px;
+	text-align: center;
+}
+
 .registration_btn {
 	width: 100%;
 	border-radius: 20px;

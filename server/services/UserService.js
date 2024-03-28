@@ -23,10 +23,11 @@ class UserService {
    async registration(username, email, password) {
       const candidate = await User.findOne({ $or: [{ username }, { email }] })
 
+      //TODO ПОМЕНЯТЬ
+      const isgoogleAuth = email.split('@')[0] === username
+
       if (candidate) {
-         throw ApiError.BadRequest(
-            'Пользователь с таким именем/почтой уже существует',
-         )
+         throw ApiError.BadRequest('Пользователь с таким именем/почтой уже существует')
       }
 
       const hashPassword = await bcrypt.hashSync(password, 7)
@@ -46,14 +47,11 @@ class UserService {
          registrationDate: Date.now(),
          uploadStatus: false,
          activationLink,
-         isActivated: false,
+         isActivated: isgoogleAuth,
          roles: [userRole.value],
       })
 
-      await mailService.sendActivationOnMail(
-         email,
-         `${process.env.API_URL}/api/auth/activate/${activationLink}`,
-      )
+      await mailService.sendActivationOnMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
 
       const userDto = new UserDto(user)
       const tokens = tokenService.generateToken({ ...userDto })
@@ -119,6 +117,11 @@ class UserService {
       return { ...tokens, user: userDto }
    }
 
+   async getUserById(id) {
+      const user = await UserModel.findById(id)
+      return user
+   }
+
    async getAllUsers() {
       const users = UserModel.find()
       return users
@@ -152,10 +155,7 @@ class UserService {
          async (error, result) => {
             if (error) console.log(error)
             else {
-               if (
-                  user.avatarLink &&
-                  user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE
-               ) {
+               if (user.avatarLink && user.avatarLink !== process.env.IMAFE_KIT_DEFAULT_IMAGE) {
                   const oldFilelink = user.avatarLink
                   await imageService.deleteImage(oldFilelink)
                }
@@ -174,7 +174,6 @@ class UserService {
 
    async editProfile(userId, updatedFields) {
       const user = await UserModel.findById(userId)
-      console.log(user)
 
       if (!user) {
          throw new ApiError.BadRequest()
@@ -183,6 +182,17 @@ class UserService {
       Object.assign(user, updatedFields)
       await user.save()
       return user
+   }
+
+   async generatePassword(user) {
+      var tempPassword = 'temp' + uuid.v4()
+      const hashPassword = await bcrypt.hashSync(tempPassword, 7)
+
+      user.password = hashPassword
+
+      await user.save()
+
+      await mailService.sendTempPassword(user.email, tempPassword)
    }
 }
 

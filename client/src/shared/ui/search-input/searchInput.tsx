@@ -19,7 +19,7 @@ export const SearchInput: FC<ISearchInputProps> = ({ onClickEvent }) => {
             <input
                type='text'
                className={styles.input}
-               placeholder={searchParam ? searchParam : 'НАЙТИ АНИМЕ'}
+               placeholder={searchParam ? searchParam : 'ЗНАЙТИ АНІМЕ'}
                onChange={(e) => setSearchParam(e.target.value)}
             />
          </form>

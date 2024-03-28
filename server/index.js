@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000
 const app = express()
 const filePathMiddleware = require('./middleware/fileMiddleware')
 const path = require('path')
+const swaggerDocs = require('./utils/swagger')
 
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 app.use(express.json())
@@ -48,6 +49,8 @@ const start = async () => {
       app.listen(PORT, () => {
          console.log(`Server started on PORT ${PORT}`)
       })
+
+      swaggerDocs(app, PORT)
    } catch (error) {
       console.error('Ошибка:', error)
    }

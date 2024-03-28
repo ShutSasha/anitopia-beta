@@ -1,21 +1,17 @@
-.logo {
-	display: block;
-	margin-right: 40px;
-}
-
 .navbar {
-	display: flex;
-	align-items: center;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 }
 
 @media screen and (max-width: 1440px) {
-	.navbar {
-		width: 100%;
-	}
+   .navbar {
+      width: 100%;
+   }
 }
 
 @media screen and (max-width: 1024px) {
-	.logo {
-		display: none;
-	}
+   .navbar {
+      width: 100%;
+   }
 }

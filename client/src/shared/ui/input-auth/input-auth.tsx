@@ -11,16 +11,8 @@ interface InputAuthProps {
    value?: any
 }
 
-export const InputAuth: FC<InputAuthProps> = ({
-   img,
-   setValue,
-   htmlFor,
-   type,
-   textLabel,
-   labelColor,
-   value,
-}) => {
-   const [inputValue, setInputValue] = useState(value)
+export const InputAuth: FC<InputAuthProps> = ({ img, setValue, htmlFor, type, textLabel, labelColor, value = '' }) => {
+   const [inputValue, setInputValue] = useState(value || '')
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value)
@@ -33,13 +25,7 @@ export const InputAuth: FC<InputAuthProps> = ({
             <span className={styles.icon}>
                <img src={img} alt='' />
             </span>
-            <input
-               onChange={handleChange}
-               id={htmlFor}
-               type={type}
-               value={inputValue}
-               required
-            />
+            <input onChange={handleChange} id={htmlFor} type={type} value={inputValue} required />
             <label htmlFor={htmlFor} style={{ color: labelColor }}>
                {textLabel}
             </label>

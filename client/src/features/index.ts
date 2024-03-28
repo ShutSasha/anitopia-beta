@@ -1,5 +1,8 @@
-export { AnimeCommentForm } from './ui/anime-comment-form/anime-comment-form';
-export { AnimeHeaderComments } from './ui/anime-header-comments/anime-header-comments';
+export { CommentControls } from './ui/comment-controls/comment-controls'
+export { DislikeComment } from './ui/dislike-comment/dislike-comment'
+export { LikeComment } from './ui/like-comment/like-comment'
+export { AnimeCommentForm } from './ui/anime-comment-form/anime-comment-form'
+export { AnimeHeaderComments } from './ui/anime-header-comments/anime-header-comments'
 export { AnimeCollectionInner } from './ui/anime-collection-inner/anime-collection-inner'
 export { AnimeCollectionHeader } from './ui/anime-collection-header/anime-collection-header'
 export { UserPersonalInfo } from './ui/user-personal-info/user-personal-info'

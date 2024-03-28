@@ -2,14 +2,16 @@ import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
-import { Loader, Toast } from '../../../shared'
-import { InputAuth } from '../../../shared'
+import { Loader, Toast } from '@shared/index'
+import { InputAuth } from '@shared/index'
 import { AuthContext } from '../context/AuthContenx'
 import { getInputsData } from '../consts/input-data'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
-import googleIcon from '../assets/google-icon.png'
 import axios from 'axios'
+import { GoogleLogin } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
+
 export const Registration = observer(() => {
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
@@ -17,15 +19,9 @@ export const Registration = observer(() => {
    const [repeatPassword, setRepeatPassword] = useState('')
    const [showToast, setShowToast] = useState(false)
    const { store } = useContext(Context)
+
+   const inputsData = getInputsData(setUsername, setEmail, setPassword, setRepeatPassword)
    const navigate = useNavigate()
-
-   const inputsData = getInputsData(
-      setUsername,
-      setEmail,
-      setPassword,
-      setRepeatPassword,
-   )
-
    const handleButtonClick = () => {
       store.setError('Пароли не совпадают!')
       setShowToast(true)
@@ -34,11 +30,27 @@ export const Registration = observer(() => {
 
    const googleAuthButtonClick = async () => {
       try {
-         const res = await axios.get('http://localhost:5000/api/auth/google')
-         window.location.href = res.data.url
-      } catch (error) {
-         console.error('Ошибка при аутентификации через Google:', error)
+         const response = await axios.get(`http://localhost:5000/api/auth/google`, {
+            withCredentials: true,
+         })
+         console.log(response)
+         const userData = response.data
+         console.log(userData.username)
+
+         const isLoggedIn = await store.login(userData.username, userData.password)
+         if (isLoggedIn) {
+            navigate('/')
+         } else {
+            store.setIsError(true)
+            setShowToast(true)
+         }
+      } catch (err) {
+         console.error(err)
       }
+   }
+
+   function SplitEmail(email: string) {
+      return email.split('@')[0]
    }
 
    const handleSubmit = (event: any) => {
@@ -67,9 +79,7 @@ export const Registration = observer(() => {
    }
 
    return (
-      <AuthContext.Provider
-         value={{ setUsername, setEmail, setPassword, setRepeatPassword }}
-      >
+      <AuthContext.Provider value={{ setUsername, setEmail, setPassword, setRepeatPassword }}>
          {showToast && (
             <Toast
                message={store.messageError}
@@ -80,9 +90,7 @@ export const Registration = observer(() => {
             />
          )}
          <div className={styles.registration_wrapper}>
-            <div className={styles.header}>
-               <Header />
-            </div>
+            <Header />
             <div className={styles.container}>
                <div className={styles.wrapper}>
                   <div className={styles.form_box}>
@@ -104,34 +112,39 @@ export const Registration = observer(() => {
                               <input type='checkbox' />
                               <div className={styles.checkbox_icon}></div>
                               <p>
-                                 Я согласен с
-                                 <Link
-                                    className={styles.user_agreement_span}
-                                    to='/users-policy'
-                                 >
-                                    пользовательським соглашением
+                                 Я згоден з
+                                 <Link className={styles.user_agreement_span} to='/users-policy'>
+                                    &nbsp;користувальницькою угодою
                                  </Link>
                               </p>
                            </label>
                         </div>
-                        <input
-                           type='submit'
-                           value='Зарегистрироваться'
-                           className={styles.registration_btn}
-                        ></input>
+                        <input type='submit' value='Зарегистрироваться' className={styles.registration_btn}></input>
                      </form>
-                     <a href={'http://localhost:5000/api/auth/google'}>
-                        <button
-                           className={styles.google_auth_btn}
-                           onClick={googleAuthButtonClick}
-                        >
-                           <img
-                              className={styles.google_img}
-                              src={googleIcon}
-                              alt='Google-icon'
-                           />
-                        </button>
-                     </a>
+                     <div className={styles.google_auth_btn}>
+                        <GoogleLogin
+                           onSuccess={(credentialResponse) => {
+                              if (credentialResponse.credential) {
+                                 const credentialResponseDecoded = jwtDecode(credentialResponse.credential)
+
+                                 if (!credentialResponseDecoded.email) {
+                                    throw Error('issue with email')
+                                 }
+
+                                 const username = SplitEmail(credentialResponseDecoded.email)
+
+                                 store
+                                    .findOrCreate(username, 'qwerty1234', credentialResponseDecoded.email)
+                                    .then(() => {
+                                       navigate('/')
+                                    })
+                              }
+                           }}
+                           onError={() => {
+                              console.error('Login Failed')
+                           }}
+                        />
+                     </div>
                   </div>
                </div>
             </div>
