@@ -122,7 +122,7 @@ export const Registration = observer(() => {
                         <input type='submit' value='Зарегистрироваться' className={styles.registration_btn}></input>
                      </form>
                      <div className={styles.google_auth_btn}>
-                        <GoogleLogin
+                        {/* <GoogleLogin
                            onSuccess={(credentialResponse) => {
                               if (credentialResponse.credential) {
                                  const credentialResponseDecoded = jwtDecode(credentialResponse.credential)
@@ -143,7 +143,7 @@ export const Registration = observer(() => {
                            onError={() => {
                               console.error('Login Failed')
                            }}
-                        />
+                        /> */}
                      </div>
                   </div>
                </div>
