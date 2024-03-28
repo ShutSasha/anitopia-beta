@@ -47,7 +47,7 @@ export const Profile: FC = observer(() => {
 
          try {
             intervalId = uploadImage(img, store.user.username, () =>
-               checkUploadStatus(store.user.username, intervalId, store.isLoading),
+               checkUploadStatus(store.user.username, intervalId),
             )
          } catch (error) {
             clearInterval(intervalId)
