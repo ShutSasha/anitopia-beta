@@ -99,12 +99,12 @@ class AnimeController {
                limit=100&with_material_data=true&next=${response.data.next_page}`
                : null
 
-            if (nextUrl === null) {
+            if (nextUrl === null || newArray.length >= 500) {
                break
             }
          }
 
-         const uniqueData = await AnimeService.removeDuplicates(newArray, 'title')
+         const uniqueData = AnimeService.removeDuplicates(newArray, 'shikimori_id')
 
          uniqueData.forEach((anime) => {
             anime.title = AnimeService.replaceSpecificNames(anime.title)
@@ -112,7 +112,7 @@ class AnimeController {
 
          for (const animeData of uniqueData) {
             try {
-               const existingAnime = await Anime.findOne({ id: animeData.id })
+               const existingAnime = await Anime.findOne({ shikimori_id: animeData.shikimori_id })
                if (existingAnime) {
                   await Anime.updateOne({ id: animeData.id }, animeData)
                } else {
@@ -123,11 +123,6 @@ class AnimeController {
                console.error('Error saving anime:', error)
             }
          }
-
-         const serverDirectory = path.join(__dirname, '../')
-
-         const filePath = path.join(serverDirectory, 'animeFilterData.json')
-         fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
 
          return res.json(uniqueData.length)
       } catch (error) {

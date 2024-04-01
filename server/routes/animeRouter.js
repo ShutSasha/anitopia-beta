@@ -11,7 +11,7 @@ const animeController = require('../controllers/animeController')
  *  get:
  *     tags:
  *       - anime
- *     summary: Отримати всі аніме -  НЕ ЮЗАТИ!!! БО ХУЙ ВІДПАДЕ
+ *     summary: Отримати всі аніме -  НЕ ЮЗАТИ!!!
  *     description: Перезаписує аніме фільтр дату.
  *     responses:
  *       200:
