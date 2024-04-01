@@ -1,6 +1,6 @@
-const anime_serials = require('../animeFilterData.json')
 const AnimeRating = require('../models/AnimeRating')
 const User = require('../models/User')
+const { getAnimeData } = require('../animeData')
 
 class rateAnimeController {
    async getRatedAnime(req, res, next) {
@@ -27,14 +27,12 @@ class rateAnimeController {
    async makeRateAnime(req, res, next) {
       try {
          const { rate, anime_id, user_id } = req.body
-
+         const allAnime = getAnimeData()
          const user = await User.findById(user_id)
 
-         const existingRatingIndex = user.animeRatings.findIndex(
-            (item) => item.animeId === anime_id,
-         )
+         const existingRatingIndex = user.animeRatings.findIndex((item) => item.animeId === anime_id)
 
-         const anime = anime_serials.find((item) => item.id === anime_id)
+         const anime = allAnime.find((item) => item.id === anime_id)
 
          if (existingRatingIndex !== -1) {
             user.animeRatings[existingRatingIndex].rating = rate
@@ -63,9 +61,7 @@ class rateAnimeController {
 
          const user = await User.findById(user_id)
 
-         user.animeRatings = user.animeRatings.filter(
-            (item) => item.animeId !== anime_id,
-         )
+         user.animeRatings = user.animeRatings.filter((item) => item.animeId !== anime_id)
 
          await user.save()
 

@@ -1,13 +1,12 @@
 const { default: axios } = require('axios')
-const animeSerials = require('../animeFilterData.json')
 const AnimeService = require('../services/AnimeService')
-const fs = require('fs')
-const path = require('path')
 const Anime = require('../models/Anime')
+const { getAnimeData } = require('../animeData')
+
 class AnimeController {
    async getAnimeList(req, res, next) {
       try {
-         const data = animeSerials
+         const data = getAnimeData()
          let sortedData = AnimeService.sortByRating(data)
          const query = req.query.search
 
@@ -36,9 +35,8 @@ class AnimeController {
 
    async getTopAnime(req, res, next) {
       try {
-         const data = animeSerials
-         const uniqueData = await AnimeService.removeDuplicates(data, 'title')
-         let sortedData = AnimeService.sortByRating(uniqueData)
+         const data = getAnimeData()
+         let sortedData = AnimeService.sortByRating(data)
 
          return res.json(sortedData.slice(0, 100))
       } catch (error) {
@@ -51,9 +49,10 @@ class AnimeController {
          const animeWithDate = []
          const currentDate = new Date()
          const currentYear = currentDate.getFullYear()
+         const data = getAnimeData()
 
          await Promise.all(
-            animeSerials.map(async (item) => {
+            data.map(async (item) => {
                if (
                   item.material_data &&
                   item.material_data.aired_at &&
@@ -78,8 +77,8 @@ class AnimeController {
    async getAnime(req, res, next) {
       try {
          const { id } = req.params
-         const animeData = animeSerials
-         const anime = animeData.find((item) => item.id === id)
+
+         const anime = await Anime.findById(id)
 
          return res.json(anime)
       } catch (error) {}
@@ -99,7 +98,7 @@ class AnimeController {
                limit=100&with_material_data=true&next=${response.data.next_page}`
                : null
 
-            if (nextUrl === null || newArray.length >= 500) {
+            if (nextUrl === null) {
                break
             }
          }
@@ -124,7 +123,7 @@ class AnimeController {
             }
          }
 
-         return res.json(uniqueData.length)
+         return res.json(uniqueData)
       } catch (error) {
          console.error('Error fetching anime data:', error)
          return res.status(500).json({ error: 'An error occurred while fetching anime data' })

@@ -1,6 +1,24 @@
-const { logger } = require('sequelize/lib/utils/logger')
+const Anime = require('../models/Anime')
 
 class AnimeService {
+   async getCountAnime() {
+      try {
+         const count = await Anime.countDocuments({})
+         return count
+      } catch (err) {
+         next(err)
+      }
+   }
+
+   async getAllAnime() {
+      try {
+         const allAnime = await Anime.find({})
+         return allAnime
+      } catch (err) {
+         next(err)
+      }
+   }
+
    getAnimeSubset(data, startIndex, count) {
       const resultData = data.slice(startIndex, startIndex + count)
       return resultData
