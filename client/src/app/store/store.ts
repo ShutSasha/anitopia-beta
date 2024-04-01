@@ -79,9 +79,9 @@ export default class Store {
       }
    }
 
-   async registration(username: string, password: string, email: string) {
+   async registration(username: string, password: string, email: string, pictureLink: string | null) {
       try {
-         const response = await AuthService.registration(username, password, email)
+         const response = await AuthService.registration(username, password, email, pictureLink)
 
          localStorage.setItem('token', response.data.accessToken)
          this.setAuth(true)
@@ -133,11 +133,11 @@ export default class Store {
       }
    }
 
-   async findOrCreate(username: string, password: string, email: string) {
+   async findOrCreate(username: string, password: string, email: string, pictureLink: string) {
       try {
          const response = await AuthService.checkUser(username)
          if (!response.data) {
-            const registrationResponse = await this.registration(username, password, email)
+            const registrationResponse = await this.registration(username, password, email, pictureLink)
             if (!registrationResponse) {
                console.error('Registration failed')
                return false

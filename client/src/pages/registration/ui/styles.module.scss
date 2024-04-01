@@ -141,9 +141,14 @@ form {
    text-decoration: underline;
 }
 
+.btn_container{
+   display: flex;
+   justify-content: space-between;
+}
+
 .registration_btn {
    width: 100%;
-   border-radius: 20px;
+   border-radius: 10px;
    background: #101031;
    padding: 9px 0;
    color: #fff;
@@ -156,10 +161,13 @@ form {
 }
 
 .google_auth_btn {
+   padding: 10px;
+   border-radius: 10px;
    width: 100%;
    display: flex;
    justify-content: center;
 }
+
 
 @media screen and (max-width: 768px) {
    .container {
