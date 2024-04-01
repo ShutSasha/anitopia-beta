@@ -20,7 +20,7 @@ var imagekit = new ImageKit({
 })
 
 class UserService {
-   async registration(username, email, password) {
+   async registration(username, email, password, pictureLink) {
       const candidate = await User.findOne({ $or: [{ username }, { email }] })
 
       //TODO ПОМЕНЯТЬ
@@ -42,7 +42,7 @@ class UserService {
          country: null,
          age: null,
          sex: null,
-         avatarLink: process.env.IMAFE_KIT_DEFAULT_IMAGE,
+         avatarLink: pictureLink ? pictureLink : process.env.IMAFE_KIT_DEFAULT_IMAGE,
          password: hashPassword,
          registrationDate: Date.now(),
          uploadStatus: false,
@@ -185,7 +185,7 @@ class UserService {
    }
 
    async generatePassword(user) {
-      var tempPassword = 'temp' + uuid.v4()
+      let tempPassword = 'temp' + uuid.v4()
       const hashPassword = await bcrypt.hashSync(tempPassword, 7)
 
       user.password = hashPassword
