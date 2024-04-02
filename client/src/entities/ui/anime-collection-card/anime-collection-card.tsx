@@ -4,14 +4,14 @@ import { Collection } from '../../../features/ui/anime-collection-inner/anime-co
 import styles from './styles.module.scss'
 import user_rate_star from './assets/user-rate-star.png'
 import default_star from './assets/default-star.svg'
-import axios from 'axios'
+import $api from '@app/http'
 
 export const AnimeCollectionCard: FC<Collection> = ({ rating, animeId, poster_url, title }) => {
    const [generalAnimeRating, setGeneralAnimeRating] = useState<number>()
 
    useEffect(() => {
       const fetchAnimeRating = async () => {
-         const response = await axios.get(`http://localhost:5000/api/anime/${animeId}`)
+         const response = await $api.get(`/anime/${animeId}`)
          const is_shikimori_rating = response.data.material_data.shikimori_rating !== undefined
          const shikimori_rating = response.data.material_data.shikimori_rating
 

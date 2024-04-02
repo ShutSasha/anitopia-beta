@@ -16,7 +16,6 @@ export const useReleasedAnimeLastMonth = () => {
       const fetchData = async () => {
          try {
             const res = await getReleasedAnimeLastMonth()
-            console.log(res.data)
             setReleasedAnime(res.data)
          } catch (err) {
             console.error(err)

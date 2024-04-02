@@ -3,10 +3,10 @@ import { Context } from '../../../main'
 import { Loader } from '../../../shared'
 import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
-import axios from 'axios'
 import { Anime } from '../../anime-list/ui/anime-list'
 import { formattedAnimeData } from '../../anime-list/helpers/formattedAnimeData'
 import { AnimeCard } from '../../../entities'
+import $api from '@app/http'
 
 export const TopAnime: FC = () => {
    const { store } = useContext(Context)
@@ -15,12 +15,9 @@ export const TopAnime: FC = () => {
    useEffect(() => {
       const fetchAnimeTop = async () => {
          try {
-            const response = await axios.get(
-               'http://localhost:5000/api/anime/top-anime',
-            )
+            const response = await $api.get('/anime/top-anime')
             const gettedData = formattedAnimeData(response)
             setAnimeData(gettedData)
-            console.log(gettedData)
          } catch (error) {
             console.error(error)
          }
@@ -45,7 +42,7 @@ export const TopAnime: FC = () => {
                      </div>
                   ))
                ) : (
-                  <h1>НЕТ АНИМЕ</h1>
+                  <h1>НЕМАЄ АНІМЕ</h1>
                )}
             </div>
          </div>
