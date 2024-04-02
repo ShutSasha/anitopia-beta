@@ -5,8 +5,11 @@ import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
 import { Splider } from '../../../widgets/splider'
-import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
+import { useFetchAnimeSeason } from '../helpers/fetchAnimeSeason'
 import { DynamicAnimeSection } from '@widgets/dynamic-anime-section'
+import { useUpdatedAnime } from '../helpers/useUpdatedAnime'
+import { useReleasedAnimeLastMonth } from '../helpers/useReleasedAnimeLastMonth'
+import { ReleasedAnimeLastMonthCard, UpdatedAnimeCard } from '@entities/index'
 
 export interface AnimeSeason {
    id: string
@@ -16,7 +19,9 @@ export interface AnimeSeason {
 
 export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
-   const animeSeasonData = useFetchAnimeSeasin()
+   const animeSeasonData = useFetchAnimeSeason()
+   const updatedAnime = useUpdatedAnime()
+   const releasedAnime = useReleasedAnimeLastMonth()
 
    if (store.isLoading) {
       return <Loader />
@@ -35,10 +40,11 @@ export const HomePage: FC = observer(() => {
                </div>
                <div className={styles_h.updated_and_released_anime}>
                   <DynamicAnimeSection header_title='Оновлене аніме'>
-                     <div>aboba1</div>
+                     {updatedAnime && updatedAnime.map((item, index) => <UpdatedAnimeCard key={index} {...item} />)}
                   </DynamicAnimeSection>
                   <DynamicAnimeSection header_title='Нещодавно вийшли аніме'>
-                     <div>aboba2</div>
+                     {releasedAnime &&
+                        releasedAnime.map((item, index) => <ReleasedAnimeLastMonthCard key={index} {...item} />)}
                   </DynamicAnimeSection>
                </div>
             </div>

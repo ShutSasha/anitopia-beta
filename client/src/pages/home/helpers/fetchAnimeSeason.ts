@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 import { AnimeSeason } from '../ui/page'
-import axios from 'axios'
+import { getAnimeSeason } from '@shared/api/anime/anime'
 
-export const useFetchAnimeSeasin = () => {
+export const useFetchAnimeSeason = () => {
    const [animeSeasonData, setAnimeSeasonData] = useState<AnimeSeason[]>([])
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const res = await axios.get<AnimeSeason[]>(
-               'http://localhost:5000/api/anime/season-anime',
-            )
+            const res = await getAnimeSeason()
             setAnimeSeasonData(res.data)
          } catch (err) {
             console.error(err)
