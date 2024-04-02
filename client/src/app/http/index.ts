@@ -2,7 +2,9 @@ import axios from 'axios'
 import { AuthResponse } from '../models/response/AuthResponse'
 
 export const API_URL =
-   process.env.NODE_ENV === 'production' ? 'https://your-production-url.com/api' : 'http://localhost:5000/api'
+   process.env.NODE_ENV === 'production'
+      ? 'https://anitopia-272e22b911e8.herokuapp.com/api'
+      : 'http://localhost:5000/api'
 
 // Тут мы создаем instance axios
 const $api = axios.create({
