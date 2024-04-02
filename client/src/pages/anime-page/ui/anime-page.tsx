@@ -33,7 +33,7 @@ export const AnimePage: FC = observer(() => {
                <AnimeGeneralInfo anime={anime} ratings={ratings} />
                <PlayerBlock link={anime.link} />
                <AnimeScreenshots screenshots={anime.screenshots} />
-               <AnimeComments/>
+               <AnimeComments />
             </div>
          </div>
       </>

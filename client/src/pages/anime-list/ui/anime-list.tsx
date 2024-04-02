@@ -3,11 +3,11 @@ import { Header } from '../../../widgets/header'
 import { Context } from '../../../main.tsx'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import styles from './styles.module.scss'
-import axios from 'axios'
 import { AnimeCard } from '../../../entities'
 import { observer } from 'mobx-react-lite'
 import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 import NoAnimePhoto from '../assets/Anime-Girl-Sad-Free-PNG.png'
+import $api from '@app/http/index.ts'
 
 export interface MaterialData {
    description: string | undefined
@@ -35,8 +35,8 @@ export const AnimeList: FC = observer(() => {
       const fetchAnimeList = async () => {
          store.setLoading(true)
          try {
-            const response = await axios.get(
-               `http://localhost:5000/api/anime/list-anime?page=${currentPage}&limit=${animesPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
+            const response = await $api.get(
+               `/anime/list-anime?page=${currentPage}&limit=${animesPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
             )
             const gettedData = formattedAnimeData(response.data)
             setAnimeData(gettedData)
