@@ -2,7 +2,7 @@ const { default: axios } = require('axios')
 const AnimeService = require('../services/AnimeService')
 const Anime = require('../models/Anime')
 const { getAnimeData } = require('../animeData')
-
+const { startOfWeek, endOfWeek, parseISO, subDays } = require('date-fns')
 class AnimeController {
    async getAnimeList(req, res, next) {
       try {
@@ -127,6 +127,64 @@ class AnimeController {
       } catch (error) {
          console.error('Error fetching anime data:', error)
          return res.status(500).json({ error: 'An error occurred while fetching anime data' })
+      }
+   }
+
+   async updatedAnime(req, res, next) {
+      try {
+         const allAnime = getAnimeData()
+         let updatedAnimeOfThisWeek = []
+
+         let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 })
+         let endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
+
+         for (let anime of allAnime) {
+            if (anime.material_data && anime.material_data.aired_at) {
+               let airedAtDate = parseISO(anime.material_data.aired_at)
+
+               if (airedAtDate >= startOfWeekDate && airedAtDate <= endOfWeekDate) {
+                  updatedAnimeOfThisWeek.push({
+                     _id: anime._id,
+                     title: anime.title,
+                     last_episode: anime.last_episode,
+                     poster_url: anime.material_data.poster_url,
+                  })
+               }
+            }
+         }
+
+         return res.status(200).json(updatedAnimeOfThisWeek)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async releasedAnimeLastMonth(req, res, next) {
+      try {
+         const allAnime = getAnimeData()
+         let releasedAnimeLastMonth = []
+
+         let thirtyDaysAgo = subDays(new Date(), 30)
+
+         for (let anime of allAnime) {
+            if (anime.material_data && anime.material_data.released_at && anime.material_data.shikimori_rating >= 7.5) {
+               let releasedAtDate = parseISO(anime.material_data.released_at)
+
+               if (releasedAtDate >= thirtyDaysAgo) {
+                  releasedAnimeLastMonth.push({
+                     _id: anime._id,
+                     title: anime.title,
+                     last_episode: anime.last_episode,
+                     poster_url: anime.material_data.poster_url,
+                     type: anime.type,
+                  })
+               }
+            }
+         }
+
+         return res.status(200).json(releasedAnimeLastMonth)
+      } catch (e) {
+         next(e)
       }
    }
 
