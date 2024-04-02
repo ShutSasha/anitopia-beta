@@ -36,10 +36,23 @@
       }
    }
 
-   .episode {
-      font-family: "Franklin Gothic Medium", sans-serif;
-      color: #000;
-      font-size: 18px;
-      line-height: 20px;
+   .episode_and_type {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .episode {
+         font-family: "Franklin Gothic Medium", sans-serif;
+         color: #000;
+         font-size: 18px;
+         line-height: 20px;
+      }
+
+      .type {
+         font-family: "Franklin Gothic Medium", sans-serif;
+         line-height: 18px;
+         font-size: 16px;
+         color: #9a9a9a;
+      }
    }
 }
