@@ -5,7 +5,7 @@ import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
 import { Splider } from '../../../widgets/splider'
-import { useFetchAnimeSeasin } from '../helpers/fetchAnimeSeason'
+import { useFetchAnimeSeason } from '../helpers/fetchAnimeSeason'
 import { DynamicAnimeSection } from '@widgets/dynamic-anime-section'
 import { useUpdatedAnime } from '../helpers/useUpdatedAnime'
 import { useReleasedAnimeLastMonth } from '../helpers/useReleasedAnimeLastMonth'
@@ -19,7 +19,7 @@ export interface AnimeSeason {
 
 export const HomePage: FC = observer(() => {
    const { store } = useContext(Context)
-   const animeSeasonData = useFetchAnimeSeasin()
+   const animeSeasonData = useFetchAnimeSeason()
    const updatedAnime = useUpdatedAnime()
    const releasedAnime = useReleasedAnimeLastMonth()
 

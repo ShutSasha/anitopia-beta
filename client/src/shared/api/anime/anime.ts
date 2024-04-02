@@ -15,3 +15,7 @@ export const getUpdatedAnime = () => {
 export const getReleasedAnimeLastMonth = () => {
    return $api.get(`${BASE_URL}/releasedLastMonth`)
 }
+
+export const getAnimeSeason = () => {
+   return $api.get(`${BASE_URL}/season-anime`)
+}
