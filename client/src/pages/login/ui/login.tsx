@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { Header } from '../../../widgets/header'
+import { Header } from '@widgets/header'
 import styles from './styles.module.scss'
 import { useState } from 'react'
 import { DefaultButton, InputAuth, Loader, Toast } from '../../../shared'
@@ -10,6 +10,8 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from '@widgets/Modal'
 import axios from 'axios'
+import { useGoogleLogin } from '@react-oauth/google'
+import { getUserData } from '../../registration/api/get-user-data.ts'
 
 export const Login: FC = observer(() => {
    const { store } = useContext(Context)
@@ -39,8 +41,8 @@ export const Login: FC = observer(() => {
    const handleModalButton = async () => {
       try {
          const data = { email: vefifyEmail }
-         const response = await axios.put('http://localhost:5000/api/auth/rechange', data)
-         console.log(response)
+         const response = await axios.put(`http://localhost:5000/api/auth/rechange`, data)
+         console.log(response.status)
       } catch (e) {
          console.error(e)
       }

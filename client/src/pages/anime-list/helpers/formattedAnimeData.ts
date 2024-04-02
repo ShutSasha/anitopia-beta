@@ -2,7 +2,7 @@ export const formattedAnimeData = (response: any) => {
    try {
       return response.data.map((anime: any) => ({
          title: anime.title,
-         id: anime.id,
+         id: anime._id,
          material_data: anime.material_data
             ? {
                  description: anime.material_data.description

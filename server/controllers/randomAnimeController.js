@@ -1,22 +1,21 @@
-const ApiError = require("../errors/apiError");
-const axios = require("axios");
-const anime_serials = require("../animeFilterData.json");
+const ApiError = require('../errors/apiError')
+const AnimeService = require('../services/AnimeService')
+const Anime = require('../models/Anime')
 class randomAnimeController {
-	async getRandomAnime(req, res, next) {
-		try {
+   async getRandomAnime(req, res, next) {
+      try {
+         const CountAnime = await AnimeService.getCountAnime()
 
-			const data = anime_serials;
+         const randomIndex = Math.floor(Math.random() * CountAnime)
 
-			const randomIndex = Math.floor(Math.random() * data.length);
+         const randomAnime = await Anime.findOne().skip(randomIndex) // пропускаєм випадкову кількість документів
 
-			const randomAnime = data[randomIndex];
-
-			return res.json(randomAnime);
-		} catch (e) {
-			console.error(e);
-			next(e);
-		}
-	}
+         return res.json(randomAnime)
+      } catch (e) {
+         console.error(e)
+         next(e)
+      }
+   }
 }
 
-module.exports = new randomAnimeController();
+module.exports = new randomAnimeController()

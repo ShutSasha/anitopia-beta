@@ -13,6 +13,7 @@ const app = express()
 const filePathMiddleware = require('./middleware/fileMiddleware')
 const path = require('path')
 const swaggerDocs = require('./utils/swagger')
+const { loadAnimeData } = require('./animeData')
 
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 app.use(express.json())
@@ -47,6 +48,8 @@ const start = async () => {
       await mongoose.connect(
          `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.b0tz7ut.mongodb.net/`,
       )
+
+      await loadAnimeData()
 
       app.listen(PORT, () => {
          console.log(`Server started on PORT ${PORT}`)

@@ -1,13 +1,12 @@
 const { default: axios } = require('axios')
-const animeSerials = require('../animeFilterData.json')
 const AnimeService = require('../services/AnimeService')
-const fs = require('fs')
-const path = require('path')
 const Anime = require('../models/Anime')
+const { getAnimeData } = require('../animeData')
+
 class AnimeController {
    async getAnimeList(req, res, next) {
       try {
-         const data = animeSerials
+         const data = getAnimeData()
          let sortedData = AnimeService.sortByRating(data)
          const query = req.query.search
 
@@ -36,9 +35,8 @@ class AnimeController {
 
    async getTopAnime(req, res, next) {
       try {
-         const data = animeSerials
-         const uniqueData = await AnimeService.removeDuplicates(data, 'title')
-         let sortedData = AnimeService.sortByRating(uniqueData)
+         const data = getAnimeData()
+         let sortedData = AnimeService.sortByRating(data)
 
          return res.json(sortedData.slice(0, 100))
       } catch (error) {
@@ -51,9 +49,10 @@ class AnimeController {
          const animeWithDate = []
          const currentDate = new Date()
          const currentYear = currentDate.getFullYear()
+         const data = getAnimeData()
 
          await Promise.all(
-            animeSerials.map(async (item) => {
+            data.map(async (item) => {
                if (
                   item.material_data &&
                   item.material_data.aired_at &&
@@ -78,8 +77,8 @@ class AnimeController {
    async getAnime(req, res, next) {
       try {
          const { id } = req.params
-         const animeData = animeSerials
-         const anime = animeData.find((item) => item.id === id)
+
+         const anime = await Anime.findById(id)
 
          return res.json(anime)
       } catch (error) {}
@@ -104,7 +103,7 @@ class AnimeController {
             }
          }
 
-         const uniqueData = await AnimeService.removeDuplicates(newArray, 'title')
+         const uniqueData = AnimeService.removeDuplicates(newArray, 'shikimori_id')
 
          uniqueData.forEach((anime) => {
             anime.title = AnimeService.replaceSpecificNames(anime.title)
@@ -112,7 +111,7 @@ class AnimeController {
 
          for (const animeData of uniqueData) {
             try {
-               const existingAnime = await Anime.findOne({ id: animeData.id })
+               const existingAnime = await Anime.findOne({ shikimori_id: animeData.shikimori_id })
                if (existingAnime) {
                   await Anime.updateOne({ id: animeData.id }, animeData)
                } else {
@@ -124,12 +123,7 @@ class AnimeController {
             }
          }
 
-         const serverDirectory = path.join(__dirname, '../')
-
-         const filePath = path.join(serverDirectory, 'animeFilterData.json')
-         fs.writeFileSync(filePath, JSON.stringify(uniqueData, null, 3))
-
-         return res.json(uniqueData.length)
+         return res.json(uniqueData)
       } catch (error) {
          console.error('Error fetching anime data:', error)
          return res.status(500).json({ error: 'An error occurred while fetching anime data' })

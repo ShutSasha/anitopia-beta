@@ -10,6 +10,7 @@ const uuid = require('uuid')
 const tokenService = require('../services/TokenService')
 const UserDto = require('../dtos/user-dto')
 const { or } = require('sequelize')
+const { ca } = require('date-fns/locale')
 
 class authController {
    async registration(req, res, next) {
@@ -19,8 +20,8 @@ class authController {
             return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
          }
 
-         const { username, password, email } = req.body
-         const userData = await userService.registration(username, email, password)
+         const { username, password, email, pictureLink } = req.body
+         const userData = await userService.registration(username, email, password, pictureLink)
          res.cookie('refreshToken', userData.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
@@ -106,8 +107,7 @@ class authController {
    async generateTempPassword(req, res, next) {
       try {
          const { email } = req.body
-         let user = await User.findOne({ email })
-         console.log(user)
+         const user = await User.findOne({ email })
          await userService.generatePassword(user)
          return res.json(user)
       } catch (e) {

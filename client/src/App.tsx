@@ -12,7 +12,5 @@ export const App: FC = () => {
       }
    }, [])
 
-   useEffect(() => {}, [])
-
    return <RouterProvider router={router} />
 }

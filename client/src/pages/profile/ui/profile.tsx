@@ -1,16 +1,16 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
-import { Header } from '../../../widgets/header'
+import { Header } from '@widgets/header'
 import styles from './styles.module.scss'
-import { ProfileBgImg } from '../../../features'
+import { ProfileBgImg } from '@features'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NotFoundPage } from '../../not-found'
 import { Loader } from '../../../shared'
 import { uploadImage } from '../api/uploadImage'
 import { checkUploadStatus } from '../helpers/checkUploadStatus'
-import { MainUserInfo } from '../../../widgets/main-user-info'
-import { AnimeCollection } from '../../../widgets/anime-collection/index.ts'
+import { MainUserInfo } from '@widgets/main-user-info'
+import { AnimeCollection } from '@widgets/anime-collection'
 import { getUserById } from '@shared/api/users/users.ts'
 import { UserByIdResponse } from '@shared/api/models.ts'
 
@@ -46,9 +46,7 @@ export const Profile: FC = observer(() => {
          store.isLoading = true
 
          try {
-            intervalId = uploadImage(img, store.user.username, () =>
-               checkUploadStatus(store.user.username, intervalId),
-            )
+            intervalId = uploadImage(img, store.user.username, () => checkUploadStatus(store.user.username, intervalId))
          } catch (error) {
             clearInterval(intervalId)
             store.isLoading = false
