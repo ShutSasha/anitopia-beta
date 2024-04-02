@@ -27,7 +27,7 @@ app.use(
 app.use('/api', router)
 app.use(errorMiddleware)
 
-app.use(express.static(path.join(__dirname, '../client')))
+app.use(express.static(path.join(__dirname, '../client/build')))
 
 app.get('*', (req, res) => {
    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
