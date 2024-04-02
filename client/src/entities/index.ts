@@ -1,4 +1,6 @@
 export * from './ui/anime-comment'
+export { ReleasedAnimeLastMonthCard } from './ui/released-anime-last-month-card/released-anime-last-month-card'
+export { UpdatedAnimeCard } from '@entities/ui/updated-anime-card/updated-anime-card'
 export { AnimeCollectionCard } from './ui/anime-collection-card/anime-collection-card'
 export { CollectionHeaderItem } from './ui/collection-header-item/collection-header-item'
 export { PosterSeasonCard } from './ui/poster-season-card/poster-season-card'
