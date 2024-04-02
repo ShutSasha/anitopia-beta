@@ -38,7 +38,7 @@ export const Registration = observer(() => {
       }
 
       store
-         .registration(username, password, email)
+         .registration(username, password, email, null)
          .then((isLoggedIn) => {
             if (isLoggedIn) {
                navigate('/')
