@@ -27,6 +27,12 @@ app.use(
 app.use('/api', router)
 app.use(errorMiddleware)
 
+app.use(express.static(path.join(__dirname, '../client')))
+
+app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+})
+
 var imagekit = new ImageKit({
    publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
    privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
