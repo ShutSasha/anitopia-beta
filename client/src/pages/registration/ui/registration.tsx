@@ -8,9 +8,7 @@ import { AuthContext } from '../context/AuthContenx'
 import { getInputsData } from '../consts/input-data'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
-import axios from 'axios'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
-import { jwtDecode } from 'jwt-decode'
+import { useGoogleLogin } from '@react-oauth/google'
 import { getUserData } from '../api/get-user-data.ts'
 
 export const Registration = observer(() => {
@@ -24,7 +22,7 @@ export const Registration = observer(() => {
    const inputsData = getInputsData(setUsername, setEmail, setPassword, setRepeatPassword)
    const navigate = useNavigate()
    const handleButtonClick = () => {
-      store.setError('Пароли не совпадают!')
+      store.setError('Паролі не співпадають!')
       setShowToast(true)
       store.setIsError(true)
    }
@@ -64,7 +62,7 @@ export const Registration = observer(() => {
             const res = await getUserData(tokenResponse)
 
             const username = SplitEmail(res.email)
-            console.log(res)
+
             store.findOrCreate(username, 'qwerty1234', res.email, res.picture).then(() => {
                navigate('/')
             })

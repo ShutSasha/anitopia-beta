@@ -1,4 +1,3 @@
-// inputsData.ts
 import userImg from "../assets/person.svg";
 import passwordImg from "../assets/lock-closed.svg";
 
@@ -8,7 +7,7 @@ export const getInputsData = (setUsername: any, setPassword: any) => [
 		setValue: setUsername,
 		htmlFor: "username",
 		type: "text",
-		textLabel: "Имя пользователя",
+		textLabel: `Ім'я користувача`,
 	},
 	{
 		img: passwordImg,

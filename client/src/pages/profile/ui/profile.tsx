@@ -64,11 +64,6 @@ export const Profile: FC = observer(() => {
       return <Loader />
    }
 
-   if (!store.isAuth) {
-      navigate('/login')
-      return <NotFoundPage />
-   }
-
    if (user === undefined) {
       return <p>Користувача не існує або можливо виникла якась помилка</p>
    }
