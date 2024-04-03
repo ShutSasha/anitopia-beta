@@ -1,23 +1,14 @@
 const User = require('../models/User')
-const Role = require('../models/Role')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const { validationResult, cookie } = require('express-validator')
 const userService = require('../services/UserService')
 const ApiError = require('../errors/apiError')
-const passport = require('passport')
-const uuid = require('uuid')
-const tokenService = require('../services/TokenService')
-const UserDto = require('../dtos/user-dto')
-const { or } = require('sequelize')
-const { ca } = require('date-fns/locale')
 
 class authController {
    async registration(req, res, next) {
       try {
          const errors = validationResult(req)
          if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
+            return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
          }
 
          const { username, password, email, pictureLink } = req.body

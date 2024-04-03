@@ -1,3 +1,6 @@
+export { ContentContainer } from './content-container/ui/content-container'
+export { Wrapper } from './wrapper/ui/wrapper'
+export { Footer } from './footer/ui/footer'
 export { Splider } from './splider/ui/Splider'
 export { PlayerBlock } from './Player-block/ui/player-block'
 export { Modal } from './Modal/ui/modal'
