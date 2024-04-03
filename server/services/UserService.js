@@ -27,7 +27,7 @@ class UserService {
       const isgoogleAuth = email.split('@')[0] === username
 
       if (candidate) {
-         throw ApiError.BadRequest('Пользователь с таким именем/почтой уже существует')
+         throw ApiError.BadRequest(`Користувач з таким ім'ям/поштою вже існує`)
       }
 
       const hashPassword = await bcrypt.hashSync(password, 7)

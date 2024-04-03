@@ -15,18 +15,22 @@ class MailService {
    }
 
    async sendActivationOnMail(to, link) {
-      await this.transporter.sendMail({
-         from: process.env.SMTP_USER,
-         to,
-         subject: `Активация аккаунта на сайте Anitopia ${process.env.API_URL}`,
-         text: '',
-         html: `
+      try {
+         await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: `Активація аккаунта на сайті Anitopia ${process.env.API_URL}`,
+            text: '',
+            html: `
                 <div>
-                    <h1>Для активации аккаунта перейдите по ссылке</h1>
+                    <h1>Для активації аккаунта перейдіть по посиланню</h1>
                     <a href="${link}">${link}</a>
                 </div>
             `,
-      })
+         })
+      } catch (error) {
+         next(error)
+      }
    }
 
    async sendTempPassword(to, password) {
