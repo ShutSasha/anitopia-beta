@@ -41,7 +41,6 @@ export const AnimeList: FC = observer(() => {
             const gettedData = formattedAnimeData(response.data)
             setAnimeData(gettedData)
             setTotalAnimeLength(response.data.length)
-            console.log(response.data)
          } catch (e) {
             console.error(e)
          } finally {

@@ -2,7 +2,6 @@ import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { Header } from '@widgets/header'
-import styles from './styles.module.scss'
 import { ProfileBgImg } from '@features'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NotFoundPage } from '../../not-found'
@@ -13,6 +12,7 @@ import { MainUserInfo } from '@widgets/main-user-info'
 import { AnimeCollection } from '@widgets/anime-collection'
 import { getUserById } from '@shared/api/users/users.ts'
 import { UserByIdResponse } from '@shared/api/models.ts'
+import { ContentContainer, Footer, Wrapper } from '@widgets/index'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -74,9 +74,9 @@ export const Profile: FC = observer(() => {
    }
 
    return (
-      <div className={styles.wrapper}>
+      <Wrapper>
          <Header />
-         <div className={styles.container}>
+         <ContentContainer>
             <ProfileBgImg />
             <MainUserInfo
                user={user}
@@ -85,8 +85,8 @@ export const Profile: FC = observer(() => {
                handleImageChange={handleImageChange}
             />
             <AnimeCollection />
-         </div>
-         <div>footer</div>
-      </div>
+         </ContentContainer>
+         <Footer />
+      </Wrapper>
    )
 })
