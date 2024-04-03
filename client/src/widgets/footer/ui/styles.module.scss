@@ -1,0 +1,96 @@
+@mixin font-title-property($font-size: 30px, $line-height: 32px, $margin-bottom: 10px) {
+   font-size: $font-size;
+   line-height: $line-height;
+   margin-bottom: $margin-bottom;
+   font-family: "Franklin Gothic Heavy", sans-serif;
+}
+
+.container {
+   background-color: #343a40;
+   margin-top: auto;
+
+   .container_inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      color: #515860;
+   }
+
+   .social_media {
+      .social_media_title {
+         @include font-title-property();
+      }
+
+      .social_media_list {
+         display: flex;
+         gap: 10px;
+         margin-bottom: 10px;
+
+         .social_media_item img {
+            width: 50px;
+            height: 50px;
+         }
+      }
+
+      .anitopia_title {
+         font-family: "Baloo";
+         font-size: 32px;
+         line-height: 36px;
+      }
+
+      .social_media_text {
+         font-family: "Franklin Gothic Heavy", sans-serif;
+         font-size: 18px;
+         max-width: 290px;
+      }
+   }
+
+   .website_info {
+      display: flex;
+      flex-direction: column;
+
+      .website_info_title {
+         @include font-title-property();
+      }
+
+      .FAQ {
+         color: #515860;
+         @include font-title-property(28px, 32px, 10px);
+         font-family: "Franklin Gothic Heavy", sans-serif;
+         text-decoration: underline;
+      }
+
+      .user_agreement {
+         @include font-title-property(28px, 32px, 10px);
+         color: #515860;
+         text-decoration: underline;
+      }
+   }
+
+   .support {
+      display: flex;
+      flex-direction: column;
+
+      .support_title {
+         @include font-title-property();
+      }
+
+      .tg_chanel_dev {
+         color: #515860;
+         text-decoration: underline;
+         @include font-title-property(24px, 28px);
+      }
+
+      .email_support {
+         @include font-title-property(18px, 24px);
+
+         a {
+            color: #515860;
+            text-decoration: underline;
+         }
+      }
+   }
+}

@@ -10,6 +10,7 @@ import { DynamicAnimeSection } from '@widgets/dynamic-anime-section'
 import { useUpdatedAnime } from '../helpers/useUpdatedAnime'
 import { useReleasedAnimeLastMonth } from '../helpers/useReleasedAnimeLastMonth'
 import { ReleasedAnimeLastMonthCard, UpdatedAnimeCard } from '@entities/index'
+import { ContentContainer, Footer, Wrapper } from '@widgets/index'
 
 export interface AnimeSeason {
    id: string
@@ -28,27 +29,26 @@ export const HomePage: FC = observer(() => {
    }
 
    return (
-      <>
+      <Wrapper>
          <Header />
-         <div className={styles_h.wrapper}>
-            <div className={styles_h.container}>
-               <div className={styles_h.anime_season}>
-                  <div className={styles_h.anime_season_inner}>
-                     <h2 className={styles_h.anime_season_title}>Аніме зимового сезона</h2>
-                  </div>
-                  <Splider animeSeasonData={animeSeasonData} />
+         <ContentContainer padding='25px 0 0 0'>
+            <div className={styles_h.anime_season}>
+               <div className={styles_h.anime_season_inner}>
+                  <h2 className={styles_h.anime_season_title}>Аніме зимового сезона</h2>
                </div>
-               <div className={styles_h.updated_and_released_anime}>
-                  <DynamicAnimeSection header_title='Оновлене аніме'>
-                     {updatedAnime && updatedAnime.map((item, index) => <UpdatedAnimeCard key={index} {...item} />)}
-                  </DynamicAnimeSection>
-                  <DynamicAnimeSection header_title='Нещодавно вийшли аніме'>
-                     {releasedAnime &&
-                        releasedAnime.map((item, index) => <ReleasedAnimeLastMonthCard key={index} {...item} />)}
-                  </DynamicAnimeSection>
-               </div>
+               <Splider animeSeasonData={animeSeasonData} />
             </div>
-         </div>
-      </>
+            <div className={styles_h.updated_and_released_anime}>
+               <DynamicAnimeSection header_title='Оновлене аніме'>
+                  {updatedAnime && updatedAnime.map((item, index) => <UpdatedAnimeCard key={index} {...item} />)}
+               </DynamicAnimeSection>
+               <DynamicAnimeSection header_title='Нещодавно вийшли аніме'>
+                  {releasedAnime &&
+                     releasedAnime.map((item, index) => <ReleasedAnimeLastMonthCard key={index} {...item} />)}
+               </DynamicAnimeSection>
+            </div>
+         </ContentContainer>
+         <Footer />
+      </Wrapper>
    )
 })
