@@ -14,7 +14,7 @@ class MailService {
       })
    }
 
-   async sendActivationOnMail(to, link, next) {
+   async sendActivationOnMail(to, link) {
       try {
          await this.transporter.sendMail({
             from: process.env.SMTP_USER,
@@ -29,7 +29,7 @@ class MailService {
             `,
          })
       } catch (error) {
-         next(error)
+         console.log(error)
       }
    }
 
