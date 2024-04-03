@@ -27,12 +27,6 @@ app.use(
 app.use('/api', router)
 app.use(errorMiddleware)
 
-app.use(express.static(path.join(__dirname, '../client/dist')))
-
-app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
-})
-
 var imagekit = new ImageKit({
    publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
    privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
@@ -57,11 +51,17 @@ const start = async () => {
 
       await loadAnimeData()
 
+      swaggerDocs(app, PORT)
+
+      app.use(express.static(path.join(__dirname, '../client/dist')))
+
+      app.get('*', (req, res) => {
+         res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+      })
+
       app.listen(PORT, () => {
          console.log(`Server started on PORT ${PORT}`)
       })
-
-      swaggerDocs(app, PORT)
    } catch (error) {
       console.error('Ошибка:', error)
    }
