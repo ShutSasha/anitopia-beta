@@ -8,7 +8,7 @@ module.exports = class ApiError extends Error {
       this.errors = errors
    }
 
-   static UnauthorizedError(message = 'Пользователь не авторизирован') {
+   static UnauthorizedError(message = 'Користувач не авторизований') {
       return new ApiError(401, message)
    }
 
@@ -16,7 +16,7 @@ module.exports = class ApiError extends Error {
       return new ApiError(400, message, error)
    }
 
-   static Forbidden(message = 'Недостаточно прав доступа') {
+   static Forbidden(message = 'Недостатньо прав доступу') {
       return new ApiError(403, message)
    }
 }

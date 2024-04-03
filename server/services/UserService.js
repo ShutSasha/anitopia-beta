@@ -63,7 +63,7 @@ class UserService {
    async activation(activationLink) {
       const user = await UserModel.findOne({ activationLink })
       if (!user) {
-         throw ApiError.BadRequest('Неккоректная ссылка активации')
+         throw ApiError.BadRequest('Неправильне посилання активації')
       }
       user.isActivated = true
       await user.save()
@@ -73,17 +73,17 @@ class UserService {
       const user = await User.findOne({ username })
 
       if (!user) {
-         throw ApiError.BadRequest('Пользователь с таким именем не найден')
+         throw ApiError.BadRequest('Користувач з таким іменем не знайдено :(')
       }
 
       const validPassword = bcrypt.compareSync(password, user.password)
 
       if (!validPassword) {
-         throw ApiError.BadRequest('Неверный пароль')
+         throw ApiError.BadRequest('Неправильний пароль')
       }
 
       if (user.isActivated === false) {
-         throw ApiError.Forbidden('У вас не активирован аккаунт!')
+         throw ApiError.Forbidden('У вас не активований аккаунт!')
       }
 
       const userDto = new UserDto(user)
@@ -100,13 +100,13 @@ class UserService {
 
    async refresh(refreshToken) {
       if (!refreshToken) {
-         throw ApiError.UnauthorizedError('Пользователь не авторизирован')
+         throw ApiError.UnauthorizedError('Користувач не авторизований')
       }
       const userData = tokenService.validateRefreshToken(refreshToken)
       const tokenFromDb = await tokenService.findToken(refreshToken)
 
       if (!userData || !tokenFromDb) {
-         throw ApiError.UnauthorizedError('Пользователь не авторизирован')
+         throw ApiError.UnauthorizedError('Користувач не авторизований')
       }
 
       const user = await UserModel.findById(userData.id)
@@ -131,7 +131,7 @@ class UserService {
       const user = await UserModel.findOne({ username })
 
       if (!user) {
-         throw ApiError.BadRequest('Пользователь с таким именем не найден')
+         throw ApiError.BadRequest('Користувач з таким нікнеймом не знайдено')
       }
 
       user.uploadStatus = true

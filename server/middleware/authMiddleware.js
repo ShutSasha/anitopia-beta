@@ -8,29 +8,23 @@ module.exports = function (req, res, next) {
    try {
       const authorizationHeader = req.headers.authorization
       if (!authorizationHeader) {
-         return next(
-            ApiError.UnauthorizedError('Пользователь не авторизирован1'),
-         )
+         return next(ApiError.UnauthorizedError('Користувач не авторизований (headers)'))
       }
 
       const accessToken = authorizationHeader.split(' ')[1]
       if (!accessToken) {
-         return next(
-            ApiError.UnauthorizedError('Пользователь не авторизирован2'),
-         )
+         return next(ApiError.UnauthorizedError('Користувач не авторизований (token)'))
       }
 
       const userData = tokenService.validateAccessToken(accessToken)
 
       if (!userData) {
-         return next(
-            ApiError.UnauthorizedError('Пользователь не авторизирован3'),
-         )
+         return next(ApiError.UnauthorizedError('Користувач не авторизований (user)'))
       }
 
       req.user = userData
       next()
    } catch (e) {
-      return next(ApiError.UnauthorizedError('Пользователь не авторизирован4'))
+      return next(ApiError.UnauthorizedError('Користувач не авторизований (an error ocurred)'))
    }
 }
