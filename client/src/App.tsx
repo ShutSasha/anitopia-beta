@@ -3,6 +3,10 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './pages/router'
 import { Context } from './main'
 
+const NoticeContainer: FC = () => {
+   return <div className='notice-container'></div>
+}
+
 export const App: FC = () => {
    const { store } = useContext(Context)
 
@@ -12,5 +16,10 @@ export const App: FC = () => {
       }
    }, [])
 
-   return <RouterProvider router={router} />
+   return (
+      <>
+         <NoticeContainer />
+         <RouterProvider router={router} />
+      </>
+   )
 }

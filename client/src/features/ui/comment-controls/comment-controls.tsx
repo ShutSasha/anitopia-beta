@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import { deleteComment } from '@shared/api/comments/comments'
 import { observer } from 'mobx-react-lite'
 import { Context } from '../../../main'
+import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 type Props = {
    commentId: string
@@ -22,9 +23,10 @@ export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_i
 
          if (res.status === 200) {
             store.anime.setToggleUpdateComments()
+            showNotice('Коментар видалено', '=_=')
          }
       } catch (error) {
-         console.error(error)
+         handleFetchError(error)
       }
    }
 
