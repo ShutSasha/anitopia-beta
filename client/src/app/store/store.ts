@@ -95,7 +95,7 @@ export default class Store {
          this.setAuth(true)
          this.setUser(response.data.user)
       } catch (e: any) {
-         handleFetchError(e)
+         console.error(e)
       } finally {
          this.setLoading(false)
       }

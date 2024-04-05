@@ -1,3 +1,4 @@
+export { AvatarUserSettings } from './ui/avatar-user-settings/ui/avatar-user-settings'
 export { CommentControls } from './ui/comment-controls/comment-controls'
 export { DislikeComment } from './ui/dislike-comment/dislike-comment'
 export { LikeComment } from './ui/like-comment/like-comment'
