@@ -61,7 +61,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
                         //setCurrentPage(currentPage - 1);
                      }}
                   >
-                     Предыдущая
+                     &laquo;
                   </a>
                </li>
             )}
@@ -117,7 +117,7 @@ export const Pagination: FC<IPaginationProps> = observer(({ animesPerPage, total
                         //setCurrentPage(currentPage + 1);
                      }}
                   >
-                     Следующая
+                     &raquo;
                   </a>
                </li>
             )}

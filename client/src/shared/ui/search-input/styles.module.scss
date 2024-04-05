@@ -1,14 +1,16 @@
 .form {
+   width: 100%;
    display: flex;
+   box-sizing: border-box;
    justify-content: center;
-   align-items: center;
+   //align-items: center;
 }
 
 .input {
+   box-sizing: border-box;
    width: 50%;
    height: 40px;
-   border-radius: 15px;
-   padding: 0 auto;
+   border-radius: 10px;
    line-height: 35px;
    outline: none;
    font-size: 20px;

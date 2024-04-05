@@ -6,26 +6,22 @@ import { Anime } from '../../../pages/anime-list/ui/anime-list'
 import NotLoadedImage from './assets/6e1420ed-dd20-4ba6-bc4d-965a6d6e9718.png'
 import { Link } from 'react-router-dom'
 
-export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, year,worldart_link }) => {
+export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, worldart_link }) => {
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
    function convertPosterLinkToImageLink(posterLink: string): string {
-      if(!posterLink){
-         return material_data?.poster_url!
+      if (!posterLink) {
+         return material_data.poster_url!
       }
-      const url = new URL(posterLink);
-      const id = url.searchParams.get('id');
 
-      if (!id) {
-         console.log("НЕТ")
-      }
-      const range = Math.ceil(parseInt(id, 10) / 1000) * 1000;
+      const url = new URL(posterLink)
+      const id: string = url.searchParams.get('id') ?? ''
+      const range = Math.ceil(parseInt(id, 10) / 1000) * 1000
 
-      const imageLink = `http://www.world-art.ru/animation/img/${range}/${id}/1.jpg`;
+      const imageLink = `http://www.world-art.ru/animation/img/${range}/${id}/1.jpg`
 
-      return imageLink;
+      return imageLink
    }
-
 
    useEffect(() => {
       setIsLoadingImage(true)
@@ -45,22 +41,25 @@ export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, year,w
                </div>
             ) : (
                <ImageWithFallback
-                  primarySrc={convertPosterLinkToImageLink(worldart_link)} //worldart_link
+                  primarySrc={convertPosterLinkToImageLink(worldart_link)}
                   secondarySrc={NotLoadedImage}
                   altText={title}
-               />
+                  animeTitle={title}
+               >
+                  <span className={styles.anime__rating}>
+                     <svg width='20' height='19' viewBox='0 0 20 19' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path
+                           d='M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z'
+                           fill='#FFD700'
+                        />
+                     </svg>
+                     <p>{material_data?.rating}</p>
+                  </span>
+                  <div className={styles.information}>
+                     <p className={styles.image__text}>{title}</p>
+                  </div>
+               </ImageWithFallback>
             )}
-            <div className={styles.content}>
-               <h3>{title}</h3>
-               <p className={styles.anime__genres}>
-                  Жанри:&nbsp;
-                  {material_data?.genres?.join(', ')}
-               </p>
-               <p className={styles.anime__description}>
-                  {material_data?.description ? material_data.description : 'Нет'}
-               </p>
-               <span>{year}</span>
-            </div>
          </Link>
       </>
    )

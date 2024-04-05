@@ -1,5 +1,8 @@
 .wrapper {
    background-color: #e2e2e2;
+   min-height: 100vh;
+ //  display: flex;
+   flex-direction: column;
 }
 
 .container {
@@ -7,7 +10,11 @@
    margin: 0 auto;
    min-height: 100vh;
    padding: 0 20px;
+   display: flex;
+   align-items: flex-start;
+   flex-direction: column;
 }
+
 
 .title {
    font-family: "Franklin Gothic Heavy", sans-serif;
@@ -18,8 +25,9 @@
 
 .cards__container {
    display: grid;
-   justify-content: center;
-   margin-top: 20px;
+   grid-template-columns: repeat(5, 1fr);
+   gap: 30px;
+   margin-top: 30px;
 }
 
 .no_anime_container {

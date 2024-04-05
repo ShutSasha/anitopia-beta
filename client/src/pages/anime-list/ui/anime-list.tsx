@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from 'react'
-import { Header } from '../../../widgets/header'
+import { Header } from '@widgets/header'
 import { Context } from '../../../main.tsx'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import styles from './styles.module.scss'
@@ -9,20 +9,22 @@ import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 import NoAnimePhoto from '../assets/Anime-Girl-Sad-Free-PNG.png'
 import $api from '@app/http/index.ts'
 import { handleFetchError } from '@app/helpers/functions.tsx'
+import { Footer } from '@widgets/footer'
 
 export interface MaterialData {
    description: string | undefined
    poster_url: string | undefined
    genres: Array<string> | undefined
-   shikimori_rating: number | undefined
+   rating: number | undefined
 }
 
 export interface Anime {
    id: string
    title: string
-   material_data: MaterialData | undefined
+   material_data: MaterialData
    year: number
    worldart_link: string
+   type: string
 }
 
 export const AnimeList: FC = observer(() => {
@@ -64,10 +66,10 @@ export const AnimeList: FC = observer(() => {
 
    return (
       <>
-         <Header />
          <div className={styles.wrapper}>
+            <Header />
             <div className={styles.container}>
-               <h1 className={styles.title}>Список Аніме</h1>
+               <h1 className={styles.title}>Каталог аніме</h1>
                <SearchInput
                   onClickEvent={(searchParam: string) => {
                      setSearchTerm(searchParam)
@@ -80,14 +82,6 @@ export const AnimeList: FC = observer(() => {
                            <AnimeCard {...item} />
                         </li>
                      ))}
-                     {!store.isLoading && (
-                        <Pagination
-                           animesPerPage={animesPerPage}
-                           totalAnimes={totalAnimeLength}
-                           paginate={paginate}
-                           currentPage={currentPage}
-                        />
-                     )}
                   </ul>
                ) : (
                   <div className={styles.no_anime_container}>
@@ -97,7 +91,16 @@ export const AnimeList: FC = observer(() => {
                      </p>
                   </div>
                )}
+               {!store.isLoading && (
+                  <Pagination
+                     animesPerPage={animesPerPage}
+                     totalAnimes={totalAnimeLength}
+                     paginate={paginate}
+                     currentPage={currentPage}
+                  />
+               )}
             </div>
+            <Footer />
          </div>
       </>
    )
