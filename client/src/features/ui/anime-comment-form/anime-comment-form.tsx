@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 import { Context } from '../../../main'
 import { useParams } from 'react-router-dom'
 import { createComment } from '@shared/api/comments/comments'
+import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 export const AnimeCommentForm: FC = () => {
    const { store } = useContext(Context)
@@ -14,17 +15,16 @@ export const AnimeCommentForm: FC = () => {
       try {
          const res = await createComment({ animeId: id, userId: store.user.id, commentText: store.anime.inputComment })
 
-         console.log(res)
-
          if (res.status === 201) {
             store.anime.setInputComment('')
             store.anime.setToggleUpdateComments()
+            showNotice('Коментар відправлено', 'Ура! Новий коментар', 'success')
             if (inputRef.current) {
                inputRef.current.textContent = ''
             }
          }
       } catch (error) {
-         console.error(error)
+         handleFetchError(error)
       }
    }
 

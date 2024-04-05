@@ -7,19 +7,23 @@ import { Anime } from '../../anime-list/ui/anime-list'
 import { formattedAnimeData } from '../../anime-list/helpers/formattedAnimeData'
 import { AnimeCard } from '../../../entities'
 import $api from '@app/http'
+import { observer } from 'mobx-react-lite'
 
-export const TopAnime: FC = () => {
+export const TopAnime: FC = observer(() => {
    const { store } = useContext(Context)
    const [animeData, setAnimeData] = useState<Anime[]>([])
 
    useEffect(() => {
       const fetchAnimeTop = async () => {
          try {
+            store.setLoading(true)
             const response = await $api.get('/anime/top-anime')
             const gettedData = formattedAnimeData(response)
             setAnimeData(gettedData)
          } catch (error) {
             console.error(error)
+         } finally {
+            store.setLoading(false)
          }
       }
       fetchAnimeTop()
@@ -35,17 +39,13 @@ export const TopAnime: FC = () => {
          <div className={styles.container}>
             <div className={styles.wrapper}>
                <div>Top-100 page</div>
-               {animeData.length && animeData.length != 0 && animeData ? (
-                  animeData.map((item, index) => (
-                     <div key={index}>
-                        <AnimeCard {...item} />
-                     </div>
-                  ))
-               ) : (
-                  <h1>НЕМАЄ АНІМЕ</h1>
-               )}
+               {animeData.map((item, index) => (
+                  <div key={index}>
+                     <AnimeCard {...item} />
+                  </div>
+               ))}
             </div>
          </div>
       </div>
    )
-}
+})

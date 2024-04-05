@@ -1,4 +1,4 @@
-const AnimeService = require("./services/AnimeService")
+const AnimeService = require('./services/AnimeService')
 
 let allAnime
 

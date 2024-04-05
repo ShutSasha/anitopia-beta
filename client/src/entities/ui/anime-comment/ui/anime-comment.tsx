@@ -9,6 +9,7 @@ import { CommentButton, CommentInput } from '..'
 import { editComment } from '@shared/api/comments/comments'
 import { Context } from '../../../../main'
 import { observer } from 'mobx-react-lite'
+import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, timestamp, user }) => {
    const { store } = useContext(Context)
@@ -24,11 +25,14 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
 
    const sendEditComment = async () => {
       try {
-         await editComment({ comment_id: _id, new_comment_text: store.anime.editInputComment })
+         const res = await editComment({ comment_id: _id, new_comment_text: store.anime.editInputComment })
+
+         if (res.status === 200) showNotice('Коментар відредаговано')
+      } catch (error) {
+         handleFetchError(error)
+      } finally {
          setEdit(false)
          store.anime.setToggleUpdateComments()
-      } catch (error) {
-         console.error(error)
       }
    }
 

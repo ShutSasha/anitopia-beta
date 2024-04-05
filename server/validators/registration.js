@@ -1,14 +1,11 @@
-const { check } = require("express-validator");
+const { check } = require('express-validator')
 
 const validateRegistration = () => {
-	return [
-		check("username", "Имя пользователя не может быть пустым").notEmpty(),
-		check(
-			"password",
-			"Пароль должен быть больше 8 и меньше 20 символов"
-		).isLength({ min: 8, max: 20 }),
-		check("email", "Неправильный формат электронной почты").isEmail(),
-	];
-};
+   return [
+      check('username', `Ім'я користувача не може бути пустим`).notEmpty(),
+      check('password', 'Пароль повинен бути більше 8 і менше 20 символів').isLength({ min: 8, max: 20 }),
+      check('email', 'Неправильний формат електронної пошти').isEmail(),
+   ]
+}
 
-module.exports = { validateRegistration };
+module.exports = { validateRegistration }

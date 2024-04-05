@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite'
 import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 import NoAnimePhoto from '../assets/Anime-Girl-Sad-Free-PNG.png'
 import $api from '@app/http/index.ts'
+import { handleFetchError } from '@app/helpers/functions.tsx'
 
 export interface MaterialData {
    description: string | undefined
@@ -42,7 +43,7 @@ export const AnimeList: FC = observer(() => {
             setAnimeData(gettedData)
             setTotalAnimeLength(response.data.length)
          } catch (e) {
-            console.error(e)
+            handleFetchError(e)
          } finally {
             store.setLoading(false)
          }
