@@ -19,6 +19,7 @@ export const formattedAnimeData = (response: any) => {
                  rating: 0,
               },
          year: anime.year,
+         worldart_link: anime.worldart_link,
       }))
    } catch (e) {
       console.error('An error occured to get anime list')

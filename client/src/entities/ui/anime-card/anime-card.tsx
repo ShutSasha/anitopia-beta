@@ -6,8 +6,26 @@ import { Anime } from '../../../pages/anime-list/ui/anime-list'
 import NotLoadedImage from './assets/6e1420ed-dd20-4ba6-bc4d-965a6d6e9718.png'
 import { Link } from 'react-router-dom'
 
-export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, year }) => {
+export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, year,worldart_link }) => {
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
+
+   function convertPosterLinkToImageLink(posterLink: string): string {
+      if(!posterLink){
+         return material_data?.poster_url!
+      }
+      const url = new URL(posterLink);
+      const id = url.searchParams.get('id');
+
+      if (!id) {
+         console.log("НЕТ")
+      }
+      const range = Math.ceil(parseInt(id, 10) / 1000) * 1000;
+
+      const imageLink = `http://www.world-art.ru/animation/img/${range}/${id}/1.jpg`;
+
+      return imageLink;
+   }
+
 
    useEffect(() => {
       setIsLoadingImage(true)
@@ -27,7 +45,7 @@ export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, year }
                </div>
             ) : (
                <ImageWithFallback
-                  primarySrc={material_data?.poster_url}
+                  primarySrc={convertPosterLinkToImageLink(worldart_link)} //worldart_link
                   secondarySrc={NotLoadedImage}
                   altText={title}
                />

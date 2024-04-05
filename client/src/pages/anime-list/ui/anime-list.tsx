@@ -22,6 +22,7 @@ export interface Anime {
    title: string
    material_data: MaterialData | undefined
    year: number
+   worldart_link: string
 }
 
 export const AnimeList: FC = observer(() => {
