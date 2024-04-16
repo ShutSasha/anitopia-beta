@@ -3,6 +3,7 @@ const AnimeService = require('../services/AnimeService')
 const Anime = require('../models/Anime')
 const { getAnimeData } = require('../animeData')
 const { startOfWeek, endOfWeek, parseISO, subDays } = require('date-fns')
+
 class AnimeController {
    async getList(req, res, next) {
       try {
@@ -74,7 +75,7 @@ class AnimeController {
       }
    }
 
-   async getById(req, res, next) {
+   async getAnimeById(req, res, next) {
       try {
          const { id } = req.params
 
@@ -84,7 +85,7 @@ class AnimeController {
       } catch (error) {}
    }
 
-   async getAll(req, res, next) {
+   async getAllAnime(req, res, next) {
       try {
          let newArray = []
          let nextUrl = `https://kodikapi.com/list?token=${process.env.KODIK_TOKEN}&types=anime-serial&limit=100&with_material_data=true`

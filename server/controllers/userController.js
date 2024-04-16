@@ -1,8 +1,9 @@
-const User = require('../models/User')
 const userService = require('../services/UserService')
+const { validationResult } = require('express-validator')
+const ApiError = require('../errors/apiError')
 
 class userController {
-   async getById(req, res, next) {
+   async getUserById(req, res, next) {
       const { id } = req.params
       try {
          const user = await userService.getUserById(id)
@@ -12,7 +13,7 @@ class userController {
       }
    }
 
-   async getAll(req, res, next) {
+   async getUsers(req, res, next) {
       try {
          const users = await userService.getAllUsers()
          return res.json(users)
@@ -23,6 +24,11 @@ class userController {
 
    async editPersonalData(req, res, next) {
       try {
+         const errors = validationResult(req)
+         if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
+         }
+
          const { id } = req.params
 
          const { firstName, lastName, country, sex, age } = req.body
@@ -36,9 +42,9 @@ class userController {
 
    async uploadAvatar(req, res, next) {
       try {
-         const { username } = req.body
+         const { id } = req.params
          const uploadedFile = req.file.path
-         const result = await userService.changeUserIcon(uploadedFile, username)
+         const result = await userService.changeUserIcon(uploadedFile, id)
          return res.status(200).json(result)
       } catch (e) {
          next(e)
@@ -47,10 +53,7 @@ class userController {
 
    async uploadBackground(req, res, next) {
       try {
-         const { username } = req.body
-         const uploadedFile = req.file.path
-         const result = await userService.changeUserIcon(uploadedFile, username)
-         return res.status(200).json(result)
+         console.log('uploadBackground')
       } catch (e) {
          next(e)
       }

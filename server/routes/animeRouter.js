@@ -17,7 +17,7 @@ const animeController = require('../controllers/animeController')
  *       200:
  *         description: Успішна відповідь. Список всих аніме отримана.
  */
-router.get('/', animeController.getAll)
+router.get('/', animeController.getAllAnime)
 
 /**
  * @openapi
@@ -122,6 +122,6 @@ router.get('/random', animeController.getRandom)
  *       200:
  *         description: Успішна відповідь .Отримано аніме.
  */
-router.get('/:id', animeController.getById)
+router.get('/:id', animeController.getAnimeById)
 
 module.exports = router

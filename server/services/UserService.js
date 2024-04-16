@@ -127,11 +127,11 @@ class UserService {
       return users
    }
 
-   async changeUserIcon(file, username) {
-      const user = await UserModel.findOne({ username })
+   async changeUserIcon(file, id) {
+      const user = await UserModel.findById(id)
 
       if (!user) {
-         throw ApiError.BadRequest('Користувач з таким нікнеймом не знайдено')
+         throw ApiError.BadRequest('Користувач з таким ідентифікатором не знайдено')
       }
 
       user.uploadStatus = true

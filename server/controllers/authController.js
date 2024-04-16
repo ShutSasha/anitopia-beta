@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const { validationResult, cookie } = require('express-validator')
+const { validationResult } = require('express-validator')
 const userService = require('../services/UserService')
 const ApiError = require('../errors/apiError')
 
