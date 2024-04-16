@@ -5,7 +5,7 @@ import { Context } from '../../../main'
 export const checkUploadStatus = async (username: string, intervalId: any) => {
    const { store } = useContext(Context)
    try {
-      const response = await $api.get(`/profile/uploadStatus/${username}`)
+      const response = await $api.get(`/users/upload-status/${username}`)
       const status = response.data.status
       if (status === false) {
          console.log('Image upload completed')

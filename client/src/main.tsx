@@ -19,7 +19,7 @@ export const Context = createContext<State>({
 ReactDOM.createRoot(document.getElementById('root')!).render(
    <GoogleOAuthProvider clientId='264314347191-trnhhm4le2gs6igghf0vjuhigfek7e9t.apps.googleusercontent.com'>
       <Context.Provider value={{ store }}>
-            <App />
+         <App />
       </Context.Provider>
    </GoogleOAuthProvider>,
 )

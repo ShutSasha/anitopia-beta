@@ -3,8 +3,7 @@ import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { Header } from '@widgets/header'
 import { ProfileBgImg } from '@features'
-import { useNavigate, useParams } from 'react-router-dom'
-import { NotFoundPage } from '../../not-found'
+import { useParams } from 'react-router-dom'
 import { Loader } from '../../../shared'
 import { uploadImage } from '../api/uploadImage'
 import { checkUploadStatus } from '../helpers/checkUploadStatus'
@@ -17,7 +16,6 @@ import { ContentContainer, Footer, Wrapper } from '@widgets/index'
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
    const { store } = useContext(Context)
-   const navigate = useNavigate()
 
    const [user, setUser] = useState<UserByIdResponse>()
    const [img, setImage] = useState<File | null>(null)
@@ -46,7 +44,9 @@ export const Profile: FC = observer(() => {
          store.isLoading = true
 
          try {
-            intervalId = uploadImage(img, store.user.username, () => checkUploadStatus(store.user.username, intervalId))
+            intervalId = uploadImage(store.user.id, img, store.user.username, () =>
+               checkUploadStatus(store.user.username, intervalId),
+            )
          } catch (error) {
             clearInterval(intervalId)
             store.isLoading = false

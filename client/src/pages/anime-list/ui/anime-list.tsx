@@ -40,7 +40,7 @@ export const AnimeList: FC = observer(() => {
          store.setLoading(true)
          try {
             const response = await $api.get(
-               `/anime/list-anime?page=${currentPage}&limit=${animesPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
+               `/anime/list?page=${currentPage}&limit=${animesPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
             )
             const gettedData = formattedAnimeData(response.data)
             setAnimeData(gettedData)

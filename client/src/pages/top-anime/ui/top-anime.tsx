@@ -17,7 +17,7 @@ export const TopAnime: FC = observer(() => {
       const fetchAnimeTop = async () => {
          try {
             store.setLoading(true)
-            const response = await $api.get('/anime/top-anime')
+            const response = await $api.get('/anime/top')
             const gettedData = formattedAnimeData(response)
             setAnimeData(gettedData)
          } catch (error) {
