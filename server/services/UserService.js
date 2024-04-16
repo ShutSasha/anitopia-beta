@@ -172,7 +172,7 @@ class UserService {
       return user.uploadStatus
    }
 
-   async editProfile(userId, updatedFields) {
+   async editPersonalData(userId, updatedFields) {
       const user = await UserModel.findById(userId)
 
       if (!user) {
