@@ -1,3 +1,4 @@
+export { SexSelect } from './ui/sex-select/sex-select'
 export { Loader } from './ui/loader/loader'
 export { User } from './ui/user-icon/user.tsx'
 export { Logout } from './ui/logout/logout'

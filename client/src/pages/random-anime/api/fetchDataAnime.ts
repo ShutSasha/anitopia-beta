@@ -15,7 +15,7 @@ export const fetchAnimeData = async (
          setAnime(objSetAnimeState(res))
          setRatings(arraySetRatings(res))
       } else {
-         const res = await $api.get('/random-anime')
+         const res = await $api.get('/anime/random')
 
          setAnime(objSetAnimeState(res))
          setRatings(arraySetRatings(res))

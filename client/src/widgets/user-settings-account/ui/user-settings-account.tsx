@@ -1,11 +1,14 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
+import { AvatarUserSettings, CheckBox, ProfileBgImg, UserPersonalInfoForm } from '@features'
+import { useParams } from 'react-router-dom'
+import { Context } from '../../../main'
+import { handleEditUserInfo } from '../helpers/handleEditUserInfo'
 import styles from './styles.module.scss'
-import { AvatarUserSettings, ProfileBgImg } from '@features'
-import TextField from '@mui/material/TextField'
-import { CountrySelectMUI } from '@shared/ui/country-select-mui'
-import { AboutMeField } from '@entities/index'
 
 export const UserSettingsAccount: FC = () => {
+   const { store } = useContext(Context)
+   const { id } = useParams()
+
    return (
       <>
          <div className={styles.user_avatar_and_background}>
@@ -15,25 +18,12 @@ export const UserSettingsAccount: FC = () => {
                <ProfileBgImg maxWidth='874px' height='150px' />
             </div>
          </div>
-         <div className={styles.user_personal_container}>
-            <div className={styles.user_personal_inputs}>
-               <TextField label={`Ім'я`} variant='standard' />
-               <TextField label={`Прізвище`} variant='standard' />
-               <TextField label={`Вік`} variant='standard' />
-               <TextField label={`Стать`} variant='standard' />
-               <CountrySelectMUI />
-            </div>
-            <AboutMeField />
-         </div>
+         <UserPersonalInfoForm />
          <div className={styles.user_settigns_controls}>
-            <div className={styles.user_agreement}>
-               <label>
-                  <input type='checkbox' />
-                  <div className={styles.checkbox_icon}></div>
-                  <p>Приховати профіль користувача</p>
-               </label>
-            </div>
-            <button className={styles.submit_edit_user_settings}>Редагувати</button>
+            <CheckBox text='Приховати профіль користувача' />
+            <button onClick={() => handleEditUserInfo(id, store)} className={styles.submit_edit_user_settings}>
+               Редагувати
+            </button>
          </div>
       </>
    )

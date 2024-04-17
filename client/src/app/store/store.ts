@@ -8,6 +8,7 @@ import RandomAnime from './RandomAnime'
 import AnimePage from './AnimePage'
 import UserAnimeCollection from './UserAnimeCollection'
 import { handleFetchError } from '@app/helpers/functions'
+import UserPersonalData from './UserPersonalData'
 
 export default class Store {
    user = {} as IUser
@@ -16,6 +17,7 @@ export default class Store {
    randomAnime: RandomAnime
    anime: AnimePage
    userAnimeCollection: UserAnimeCollection
+   userPersonalData: UserPersonalData
 
    constructor() {
       makeAutoObservable(this)
@@ -23,6 +25,7 @@ export default class Store {
       this.randomAnime = new RandomAnime()
       this.anime = new AnimePage()
       this.userAnimeCollection = new UserAnimeCollection()
+      this.userPersonalData = new UserPersonalData(this)
    }
 
    updateUserPersonalInfo(userData: any) {

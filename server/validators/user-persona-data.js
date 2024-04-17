@@ -8,8 +8,17 @@ const validateUserPersonalData = () => {
       check('sex', `Стать користувача не може бути пустою`).optional(),
       check('age', `Вік користувача не може бути пустим`)
          .optional()
-         .isInt({ min: 0, max: 99 })
-         .withMessage('Вік користувача повинен бути від 0 до 99 років'),
+         .custom((value, { req }) => {
+            if (!Number.isNaN(Number(value))) {
+               const age = parseInt(value)
+               if (age < 0 || age > 99) {
+                  throw new Error('Вік користувача повинен бути від 0 до 99 років')
+               }
+               return true
+            } else {
+               throw new Error('Вік користувача повинен бути числом')
+            }
+         }),
    ]
 }
 

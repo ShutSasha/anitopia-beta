@@ -1,14 +1,35 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
+import { FC, useContext, useEffect, useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../../../../main'
 
-export const CountrySelectMUI = () => {
+export const CountrySelectMUI: FC = observer(() => {
+   const { store } = useContext(Context)
+
+   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
+      countries.find((country) => country.label === store.userPersonalData.country) || null,
+   )
+
+   const handleCountryChange = (country: CountryType | null) => {
+      setSelectedCountry(country)
+      store.userPersonalData.setCountry(country && country.label)
+   }
+
+   useEffect(() => {
+      const updatedCountry = countries.find((country) => country.label === store.userPersonalData.country)
+      setSelectedCountry(updatedCountry || null)
+   }, [store.userPersonalData.country])
+
    return (
       <Autocomplete
          id='country-select-demo'
          sx={{ width: 275 }}
          options={countries}
          autoHighlight
+         value={selectedCountry}
+         onChange={(_, newValue) => handleCountryChange(newValue)}
          getOptionLabel={(option) => option.label}
          renderOption={(props, option) => (
             <Box component='li' sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -34,7 +55,7 @@ export const CountrySelectMUI = () => {
          )}
       />
    )
-}
+})
 
 interface CountryType {
    code: string
