@@ -2,7 +2,7 @@ const { default: axios } = require('axios')
 const AnimeService = require('../services/AnimeService')
 const Anime = require('../models/Anime')
 const { getAnimeData } = require('../animeData')
-const { startOfWeek, endOfWeek, parseISO, subDays } = require('date-fns')
+const { startOfWeek, endOfWeek, parseISO, subDays, isAfter, isBefore, isEqual } = require('date-fns')
 
 class AnimeController {
    async getList(req, res, next) {
@@ -136,14 +136,17 @@ class AnimeController {
          const allAnime = getAnimeData()
          let updatedAnimeOfThisWeek = []
 
-         let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 })
-         let endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
+         const startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 0 })
+         const endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
 
          for (let anime of allAnime) {
             if (anime.material_data && anime.material_data.aired_at) {
-               let airedAtDate = parseISO(anime.material_data.aired_at)
+               const airedAtDate = parseISO(anime.material_data.aired_at)
 
-               if (airedAtDate >= startOfWeekDate && airedAtDate <= endOfWeekDate) {
+               if (
+                  (isAfter(airedAtDate, startOfWeekDate) || isEqual(airedAtDate, startOfWeekDate)) &&
+                  (isBefore(airedAtDate, endOfWeekDate) || isEqual(airedAtDate, endOfWeekDate))
+               ) {
                   updatedAnimeOfThisWeek.push({
                      _id: anime._id,
                      title: anime.title,
