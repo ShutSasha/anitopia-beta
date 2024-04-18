@@ -1,0 +1,14 @@
+.user_personal_container {
+   display: flex;
+   justify-content: space-between;
+   gap: 100px;
+   margin-bottom: 40px;
+
+   .user_personal_inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 275px;
+      width: 100%;
+   }
+}

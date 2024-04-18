@@ -21,7 +21,7 @@ router.get('/', animeController.getAllAnime)
 
 /**
  * @openapi
- * /api/anime/list-anime:
+ * /api/anime/list:
  *  get:
  *     tags:
  *       - anime
@@ -31,11 +31,11 @@ router.get('/', animeController.getAllAnime)
  *       200:
  *         description: Успішна відповідь. Отримано список аніме.
  */
-router.get('/list-anime', animeController.getAnimeList)
+router.get('/list', animeController.getList)
 
 /**
  * @openapi
- * /api/anime/top-anime:
+ * /api/anime/top:
  *  get:
  *     tags:
  *       - anime
@@ -45,7 +45,7 @@ router.get('/list-anime', animeController.getAnimeList)
  *       200:
  *         description: Успішна відповідь.Отримано топ аніме.
  */
-router.get('/top-anime', animeController.getTopAnime)
+router.get('/top', animeController.getTop)
 
 /**
  * @openapi
@@ -59,11 +59,11 @@ router.get('/top-anime', animeController.getTopAnime)
  *       200:
  *         description: Успішна відповідь. Отримано оновлений список аніме.
  */
-router.get('/updated', animeController.updatedAnime)
+router.get('/updated', animeController.getUpdated)
 
 /**
  * @openapi
- * /api/anime/releasedLastMonth:
+ * /api/anime/released:
  *  get:
  *     tags:
  *       - anime
@@ -73,11 +73,11 @@ router.get('/updated', animeController.updatedAnime)
  *       200:
  *         description: Успішна відповідь. Отримано список аніме, випущених за останній місяць.
  */
-router.get('/releasedLastMonth', animeController.releasedAnimeLastMonth)
+router.get('/released', animeController.getReleasedLastMonth)
 
 /**
  * @openapi
- * /api/anime/season-anime:
+ * /api/anime/season:
  *  get:
  *     tags:
  *       - anime
@@ -87,7 +87,21 @@ router.get('/releasedLastMonth', animeController.releasedAnimeLastMonth)
  *       200:
  *         description: Успішна відповідь .Отримано список аніме сезону.
  */
-router.get('/season-anime', animeController.getAnimeSeason)
+router.get('/season', animeController.getSeason)
+
+/**
+ * @openapi
+ * /api/anime/random:
+ *  get:
+ *     tags:
+ *       - anime
+ *     summary: Отримати випадкове аніме
+ *     description: Повертає випадкове аніме з бази даних.
+ *     responses:
+ *       200:
+ *         description: Успішна відповідь. Повернуто випадкове аніме.
+ */
+router.get('/random', animeController.getRandom)
 
 /**
  * @openapi
@@ -108,27 +122,6 @@ router.get('/season-anime', animeController.getAnimeSeason)
  *       200:
  *         description: Успішна відповідь .Отримано аніме.
  */
-router.get('/:id', animeController.getAnime)
-
-/**
- * @openapi
- * /api/anime/search/{title}:
- *  get:
- *     tags:
- *       - anime
- *     summary: Отримати аніме за title
- *     description: Отримуємо аніме за title
- *     parameters:
- *       - in: path
- *         name: title
- *         schema:
- *           type: string
- *         required: true
- *         description: title аніме
- *     responses:
- *       200:
- *         description: Успішна відповідь .Отримано аніме.
- */
-router.get('/search/:title', animeController.searchAnime)
+router.get('/:id', animeController.getAnimeById)
 
 module.exports = router

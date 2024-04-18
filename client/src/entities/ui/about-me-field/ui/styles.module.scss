@@ -1,0 +1,18 @@
+.input {
+   display: block;
+   min-height: 100px;
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   outline: none;
+   border-radius: 6px;
+   margin-bottom: 5px;
+}
+
+.input:empty::before {
+   content: "Розкажіть про себе...";
+   color: var(--anitopia-color);
+   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+   font-size: 18px;
+   line-height: 24px;
+}

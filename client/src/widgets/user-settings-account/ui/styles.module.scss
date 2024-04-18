@@ -1,0 +1,97 @@
+.user_avatar_and_background {
+   margin-bottom: 100px;
+   display: flex;
+   justify-content: space-between;
+}
+
+.background_title {
+   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+   font-size: 24px;
+   line-height: 28px;
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+.user_personal_container {
+   display: flex;
+   justify-content: space-between;
+   gap: 100px;
+   margin-bottom: 40px;
+
+   .user_personal_inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 275px;
+      width: 100%;
+   }
+}
+
+.user_settigns_controls {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 25px;
+
+   .user_is_hide_profile {
+      display: block;
+      position: relative;
+      cursor: pointer;
+   }
+
+   .user_is_hide_profile input {
+      display: none;
+   }
+
+   .user_is_hide_profile .checkbox_icon {
+      width: 20px;
+      height: 20px;
+      background-color: #000;
+      border-radius: 3px;
+      position: absolute;
+      top: 0;
+      left: 0;
+   }
+
+   .user_is_hide_profile input:checked + .checkbox_icon::before {
+      content: "\2713";
+      font-size: 14px;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+   }
+
+   .user_is_hide_profile {
+      p {
+         position: absolute;
+         font-size: 18px;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         width: 300px;
+         left: 30px;
+         top: 0;
+      }
+
+      label {
+         color: #000;
+         font-family: "Chakra Petch";
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 700;
+         line-height: normal;
+         display: flex;
+         align-items: center;
+      }
+   }
+
+   .submit_edit_user_settings {
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      padding: 6px 12px;
+      font-size: 18px;
+      line-height: 24px;
+      background-color: var(--main-green);
+      color: var(--light-text);
+      border-radius: 6px;
+   }
+}

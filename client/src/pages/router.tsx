@@ -11,6 +11,7 @@ import { AnimePage } from './anime-page'
 import { TopAnime } from './top-anime'
 import { UserPolicy } from './user-policy'
 import { Notifications } from './notifications'
+import { UserSettings } from './user-settings'
 
 export const router = createBrowserRouter(
    [
@@ -53,6 +54,10 @@ export const router = createBrowserRouter(
       {
          path: routes.NOTIFICATIONS,
          element: <Notifications />,
+      },
+      {
+         path: routes.USER_SETTINGS,
+         element: <UserSettings />,
       },
       {
          path: '*',

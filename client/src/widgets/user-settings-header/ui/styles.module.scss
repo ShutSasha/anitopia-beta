@@ -1,0 +1,38 @@
+.header_settigns_container {
+   border-top-left-radius: 20px;
+   border-top-right-radius: 20px;
+   background-color: var(--dark-greyish-blue);
+   max-width: var(--container-width);
+   margin: 50px auto 0;
+   width: 100%;
+
+   .settings_header {
+      padding: 11px 0 11px 32px;
+
+      .settings_title {
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         font-size: 24px;
+         line-height: 28px;
+         color: var(--light-text);
+      }
+   }
+
+   .settings_tab {
+      .settings_tab_list {
+         display: flex;
+         .settings_tab_item {
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+            font-size: 24px;
+            line-height: 28px;
+            color: var(--light-text);
+            padding: 21px 46px;
+            transition: all 0.3s ease-out;
+
+            &:hover {
+               background-color: var(--anitopia-color);
+               cursor: pointer;
+            }
+         }
+      }
+   }
+}

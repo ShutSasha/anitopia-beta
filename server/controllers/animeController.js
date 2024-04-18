@@ -2,9 +2,10 @@ const { default: axios } = require('axios')
 const AnimeService = require('../services/AnimeService')
 const Anime = require('../models/Anime')
 const { getAnimeData } = require('../animeData')
-const { startOfWeek, endOfWeek, parseISO, subDays } = require('date-fns')
+const { startOfWeek, endOfWeek, parseISO, subDays, isAfter, isBefore, isEqual } = require('date-fns')
+
 class AnimeController {
-   async getAnimeList(req, res, next) {
+   async getList(req, res, next) {
       try {
          const data = getAnimeData()
          let sortedData = AnimeService.sortByRating(data)
@@ -33,7 +34,7 @@ class AnimeController {
       }
    }
 
-   async getTopAnime(req, res, next) {
+   async getTop(req, res, next) {
       try {
          const data = getAnimeData()
          let sortedData = AnimeService.sortByRating(data)
@@ -44,7 +45,7 @@ class AnimeController {
       }
    }
 
-   async getAnimeSeason(req, res, next) {
+   async getSeason(req, res, next) {
       try {
          const animeWithDate = []
          const currentDate = new Date()
@@ -74,7 +75,7 @@ class AnimeController {
       }
    }
 
-   async getAnime(req, res, next) {
+   async getAnimeById(req, res, next) {
       try {
          const { id } = req.params
 
@@ -130,19 +131,22 @@ class AnimeController {
       }
    }
 
-   async updatedAnime(req, res, next) {
+   async getUpdated(req, res, next) {
       try {
          const allAnime = getAnimeData()
          let updatedAnimeOfThisWeek = []
 
-         let startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 1 })
-         let endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
+         const startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 0 })
+         const endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
 
          for (let anime of allAnime) {
             if (anime.material_data && anime.material_data.aired_at) {
-               let airedAtDate = parseISO(anime.material_data.aired_at)
+               const airedAtDate = parseISO(anime.material_data.aired_at)
 
-               if (airedAtDate >= startOfWeekDate && airedAtDate <= endOfWeekDate) {
+               if (
+                  (isAfter(airedAtDate, startOfWeekDate) || isEqual(airedAtDate, startOfWeekDate)) &&
+                  (isBefore(airedAtDate, endOfWeekDate) || isEqual(airedAtDate, endOfWeekDate))
+               ) {
                   updatedAnimeOfThisWeek.push({
                      _id: anime._id,
                      title: anime.title,
@@ -159,7 +163,7 @@ class AnimeController {
       }
    }
 
-   async releasedAnimeLastMonth(req, res, next) {
+   async getReleasedLastMonth(req, res, next) {
       try {
          const allAnime = getAnimeData()
          let releasedAnimeLastMonth = []
@@ -188,14 +192,15 @@ class AnimeController {
       }
    }
 
-   //? is not used
-   async searchAnime(req, res, next) {
+   async getRandom(req, res, next) {
       try {
-         const { title } = req.params
-         const data = animeSerials
-         const searchedAnime = await AnimeService.findAnime(data, title)
-         const uniqueData = await AnimeService.removeDuplicates(searchedAnime)
-         return res.json(searchedAnime)
+         const CountAnime = await AnimeService.getCountAnime()
+
+         const randomIndex = Math.floor(Math.random() * CountAnime)
+
+         const randomAnime = await Anime.findOne().skip(randomIndex) // пропускаєм випадкову кількість документів
+
+         return res.status(200).json(randomAnime)
       } catch (e) {
          next(e)
       }

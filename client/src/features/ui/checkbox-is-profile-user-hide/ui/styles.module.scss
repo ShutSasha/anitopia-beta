@@ -1,0 +1,51 @@
+.user_is_hide_profile {
+      display: block;
+      position: relative;
+      cursor: pointer;
+   }
+
+   .user_is_hide_profile input {
+      display: none;
+   }
+
+   .user_is_hide_profile .checkbox_icon {
+      width: 20px;
+      height: 20px;
+      background-color: #000;
+      border-radius: 3px;
+      position: absolute;
+      top: 0;
+      left: 0;
+   }
+
+   .user_is_hide_profile input:checked + .checkbox_icon::before {
+      content: "\2713";
+      font-size: 14px;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+   }
+
+   .user_is_hide_profile {
+      p {
+         position: absolute;
+         font-size: 18px;
+         font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+         width: 300px;
+         left: 30px;
+         top: 0;
+      }
+
+      label {
+         color: #000;
+         font-family: "Chakra Petch";
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 700;
+         line-height: normal;
+         display: flex;
+         align-items: center;
+      }
+   }

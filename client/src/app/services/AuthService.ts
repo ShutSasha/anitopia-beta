@@ -26,7 +26,7 @@ export default class AuthService {
       return $api.post('/auth/logout')
    }
    static async checkUser(username: string): Promise<AxiosResponse<AuthResponse>> {
-      return $api.post('/auth/checkUser', {
+      return $api.post('/auth/check-user', {
          username,
       })
    }

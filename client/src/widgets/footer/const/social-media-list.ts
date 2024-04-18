@@ -5,8 +5,8 @@ import YoutubeLogo from '../assets/YouTube-icon.svg'
 import TikTokLogo from '../assets/Tiktok-logo.svg'
 
 export const SocialMediaList = [
-   { logo: YoutubeLogo, link: 'youtube/undefined' },
-   { logo: TelegramLogo, link: 'telegram/undefined' },
+   { logo: YoutubeLogo, link: 'https://www.youtube.com/@Anitopia-xd2oh' },
+   { logo: TelegramLogo, link: 'https://t.me/AnitopiaNews' },
    { logo: DiscordLogo, link: 'discord/undefined' },
    { logo: IstagramLogo, link: 'instagram/undefined' },
    { logo: TikTokLogo, link: 'tiktok/undefined' },

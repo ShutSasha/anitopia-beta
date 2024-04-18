@@ -1,13 +1,13 @@
 import { FC, useContext, useEffect, useState } from 'react'
 import { Context } from '../../../main'
-import { Loader } from '../../../shared'
+import { Loader, PageTitle } from '../../../shared'
 import { Header } from '../../../widgets/header'
-import styles from './styles.module.scss'
 import { Anime } from '../../anime-list/ui/anime-list'
 import { formattedAnimeData } from '../../anime-list/helpers/formattedAnimeData'
-import { AnimeCard } from '../../../entities'
 import $api from '@app/http'
 import { observer } from 'mobx-react-lite'
+import { AnimeCardsContainerView, ContentContainer, Footer, Wrapper } from '@widgets/index'
+import { handleFetchError } from '@app/helpers/functions'
 
 export const TopAnime: FC = observer(() => {
    const { store } = useContext(Context)
@@ -16,14 +16,11 @@ export const TopAnime: FC = observer(() => {
    useEffect(() => {
       const fetchAnimeTop = async () => {
          try {
-            store.setLoading(true)
-            const response = await $api.get('/anime/top-anime')
+            const response = await $api.get('/anime/top')
             const gettedData = formattedAnimeData(response)
             setAnimeData(gettedData)
-         } catch (error) {
-            console.error(error)
-         } finally {
-            store.setLoading(false)
+         } catch (e) {
+            handleFetchError(e)
          }
       }
       fetchAnimeTop()
@@ -34,18 +31,22 @@ export const TopAnime: FC = observer(() => {
    }
 
    return (
-      <div>
+      <Wrapper>
          <Header />
-         <div className={styles.container}>
-            <div className={styles.wrapper}>
-               <div>Top-100 page</div>
-               {animeData.map((item, index) => (
-                  <div key={index}>
-                     <AnimeCard {...item} />
-                  </div>
-               ))}
-            </div>
-         </div>
-      </div>
+         <ContentContainer backgroundColor='#fff' padding='0px 20px'>
+            <PageTitle
+               style={{
+                  margin: '30px 0px',
+                  fontSize: '24px',
+                  lineHeight: '32px',
+                  fontFamily: 'Franklin Gothic Medium',
+                  textAlign: 'center',
+               }}
+               title='Топ 100 найпопулярніших аніме на нашому сайті'
+            />
+            <AnimeCardsContainerView animeData={animeData} />
+         </ContentContainer>
+         <Footer />
+      </Wrapper>
    )
 })

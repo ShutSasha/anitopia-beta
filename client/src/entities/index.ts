@@ -1,3 +1,4 @@
+export { AboutMeField } from './ui/about-me-field/ui/about-me-field'
 export * from './ui/anime-comment'
 export { ReleasedAnimeLastMonthCard } from './ui/released-anime-last-month-card/released-anime-last-month-card'
 export { UpdatedAnimeCard } from '@entities/ui/updated-anime-card/updated-anime-card'

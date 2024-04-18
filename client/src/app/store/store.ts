@@ -7,25 +7,25 @@ import { AuthResponse } from '../models/response/AuthResponse'
 import RandomAnime from './RandomAnime'
 import AnimePage from './AnimePage'
 import UserAnimeCollection from './UserAnimeCollection'
+import { handleFetchError } from '@app/helpers/functions'
+import UserPersonalData from './UserPersonalData'
 
 export default class Store {
    user = {} as IUser
    isAuth = false
    isLoading = false
-   isError = false
-   messageError = ''
    randomAnime: RandomAnime
    anime: AnimePage
    userAnimeCollection: UserAnimeCollection
+   userPersonalData: UserPersonalData
 
    constructor() {
       makeAutoObservable(this)
       this.setLoading = this.setLoading.bind(this)
-      this.setError = this.setError.bind(this)
-      this.setIsError = this.setIsError.bind(this)
       this.randomAnime = new RandomAnime()
       this.anime = new AnimePage()
       this.userAnimeCollection = new UserAnimeCollection()
+      this.userPersonalData = new UserPersonalData(this)
    }
 
    updateUserPersonalInfo(userData: any) {
@@ -52,14 +52,6 @@ export default class Store {
       this.isLoading = bool
    }
 
-   setError(message: string) {
-      this.messageError = message
-   }
-
-   setIsError(bool: boolean) {
-      this.isError = bool
-   }
-
    async login(username: string, password: string) {
       try {
          const response = await AuthService.login(username, password)
@@ -68,13 +60,7 @@ export default class Store {
          this.setUser(response.data.user)
          return true
       } catch (error: any) {
-         //! передивитись
-
-         const err = error.response.data.errors[0]?.msg
-            ? error.response.data.errors[0].msg
-            : error.response.data.message
-         this.setError(err)
-         console.error(error.response.data.message)
+         handleFetchError(error)
          return false
       }
    }
@@ -88,13 +74,7 @@ export default class Store {
          this.setUser(response.data.user)
          return true
       } catch (error: any) {
-         //! передивитись
-         console.error(error)
-         const err = error.response.data.errors[0]?.msg
-            ? error.response.data.errors[0].msg
-            : error.response.data.message
-
-         this.setError(err)
+         handleFetchError(error)
          return false
       }
    }
@@ -106,8 +86,7 @@ export default class Store {
          this.setAuth(false)
          this.setUser({} as IUser)
       } catch (error: any) {
-         //! передивитись
-         console.error(error.response.data.errors[0].msg)
+         handleFetchError(error)
       }
    }
 
@@ -122,14 +101,6 @@ export default class Store {
          console.error(e)
       } finally {
          this.setLoading(false)
-      }
-   }
-
-   async getUser() {
-      try {
-         console.log()
-      } catch (e: any) {
-         console.log(e)
       }
    }
 
@@ -152,7 +123,7 @@ export default class Store {
          }
          return true
       } catch (e: any) {
-         console.log(e)
+         handleFetchError(e)
          return false
       }
    }

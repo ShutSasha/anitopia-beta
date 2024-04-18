@@ -2,6 +2,15 @@ export type GetUserById = {
    id: string | undefined
 }
 
+export type EditUserPersonalInfo = {
+   id: string | undefined
+   firstName: string
+   lastName: string
+   country: string
+   sex: string
+   age: number | string
+}
+
 export type UserByIdResponse = {
    _id: string
    activationLink: string

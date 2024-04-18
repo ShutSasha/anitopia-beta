@@ -2,7 +2,7 @@ import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
-import { Loader, Toast } from '@shared/index'
+import { Loader } from '@shared/index'
 import { InputAuth } from '@shared/index'
 import { AuthContext } from '../context/AuthContenx'
 import { getInputsData } from '../consts/input-data'
@@ -10,28 +10,33 @@ import { Context } from '../../../main'
 import { observer } from 'mobx-react-lite'
 import { useGoogleLogin } from '@react-oauth/google'
 import { getUserData } from '../api/get-user-data.ts'
+import { handleFetchError, showNotice } from '@app/helpers/functions.tsx'
 
 export const Registration = observer(() => {
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [repeatPassword, setRepeatPassword] = useState('')
-   const [showToast, setShowToast] = useState(false)
+   const [isUserAgree, setUserAgree] = useState<boolean>(false)
    const { store } = useContext(Context)
 
    const inputsData = getInputsData(setUsername, setEmail, setPassword, setRepeatPassword)
    const navigate = useNavigate()
-   const handleButtonClick = () => {
-      store.setError('Паролі не співпадають!')
-      setShowToast(true)
-      store.setIsError(true)
+
+   const handleUserAgreement = () => {
+      setUserAgree(!isUserAgree)
    }
 
    const handleSubmit = (event: any) => {
       event.preventDefault()
 
       if (repeatPassword !== password) {
-         handleButtonClick()
+         showNotice('Паролі не співпадають!', 'Помилка!', 'error')
+         return
+      }
+
+      if (isUserAgree === false) {
+         showNotice('Ви не підтвердили користувальницьку угоду', '=_=', 'error')
          return
       }
 
@@ -40,12 +45,9 @@ export const Registration = observer(() => {
          .then((isLoggedIn) => {
             if (isLoggedIn) {
                navigate('/')
-            } else {
-               setShowToast(true)
-               store.setIsError(true)
             }
          })
-         .catch((err) => console.error(err))
+         .catch((e) => handleFetchError(e))
    }
 
    if (store.isLoading) {
@@ -67,22 +69,13 @@ export const Registration = observer(() => {
                navigate('/')
             })
          } catch (e) {
-            console.log(e)
+            handleFetchError(e)
          }
       },
    })
 
    return (
       <AuthContext.Provider value={{ setUsername, setEmail, setPassword, setRepeatPassword }}>
-         {showToast && (
-            <Toast
-               message={store.messageError}
-               duration={4000}
-               isError={store.isError}
-               clearIsError={() => store.setIsError(false)}
-               onClose={() => setShowToast(false)}
-            />
-         )}
          <div className={styles.registration_wrapper}>
             <Header />
             <div className={styles.container}>
@@ -103,7 +96,7 @@ export const Registration = observer(() => {
                         ))}
                         <div className={styles.user_agreement}>
                            <label>
-                              <input type='checkbox' />
+                              <input onChange={handleUserAgreement} type='checkbox' />
                               <div className={styles.checkbox_icon}></div>
                               <p>
                                  Я згоден з

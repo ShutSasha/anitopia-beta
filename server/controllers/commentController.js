@@ -5,25 +5,25 @@ const { ObjectId } = require('mongodb')
 class commentController {
    async getCommentByid(req, res, next) {
       try {
-         const { commentId } = req.params
+         const { id } = req.params
 
-         const comment = await Comment.findById(commentId)
+         const comment = await Comment.findById(id)
 
          return res.status(200).json(comment)
-      } catch (error) {
-         console.error(error)
+      } catch (e) {
+         next(e)
       }
    }
 
    async getCommentsByAnimeId(req, res, next) {
       try {
-         const { animeId } = req.params
+         const { id } = req.params
 
-         const anime = await Anime.findById(animeId)
+         const anime = await Anime.findById(id)
 
          const comments = await Comment.find({ anime: anime._id })
 
-         return res.json(comments)
+         return res.status(200).json(comments)
       } catch (error) {
          console.error('Error fetching comments:', error)
          return res.status(500).json({ error: 'An error occurred while fetching comments' })

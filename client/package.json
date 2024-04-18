@@ -10,6 +10,10 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@mui/icons-material": "^5.15.15",
+		"@mui/material": "^5.15.15",
 		"@react-oauth/google": "^0.12.1",
 		"@splidejs/react-splide": "^0.7.12",
 		"@types/axios": "^0.14.0",

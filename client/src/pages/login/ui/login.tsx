@@ -2,7 +2,7 @@ import { FC, useContext } from 'react'
 import { Header } from '@widgets/header'
 import styles from './styles.module.scss'
 import { useState } from 'react'
-import { DefaultButton, InputAuth, Loader, Toast } from '../../../shared'
+import { DefaultButton, InputAuth, Loader } from '../../../shared'
 import { AuthContext } from '../context/AuthContext'
 import { getInputsData } from '../consts/input-data'
 import { Context } from '../../../main'
@@ -10,12 +10,9 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from '@widgets/Modal'
 import axios from 'axios'
-import { useGoogleLogin } from '@react-oauth/google'
-import { getUserData } from '../../registration/api/get-user-data.ts'
 
 export const Login: FC = observer(() => {
    const { store } = useContext(Context)
-   const [showToast, setShowToast] = useState(false)
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
    const [modal, setModalActive] = useState<boolean>(false)
@@ -30,9 +27,6 @@ export const Login: FC = observer(() => {
          .then((isLoggedIn) => {
             if (isLoggedIn) {
                navigate('/')
-            } else {
-               store.setIsError(true)
-               setShowToast(true)
             }
          })
          .catch((err) => console.error(err))
@@ -59,15 +53,6 @@ export const Login: FC = observer(() => {
    const inputsData = getInputsData(setUsername, setPassword)
    return (
       <AuthContext.Provider value={{ setUsername, setPassword }}>
-         {showToast && (
-            <Toast
-               message={store.messageError}
-               duration={4000}
-               isError={store.isError}
-               clearIsError={() => store.setIsError(false)}
-               onClose={() => setShowToast(false)}
-            />
-         )}
          <div className={styles.registration_wrapper}>
             <div className={styles.header}>
                <Header />
