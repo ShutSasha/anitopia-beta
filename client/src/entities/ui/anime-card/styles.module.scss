@@ -1,118 +1,30 @@
-.animeCard {
-  display: flex;
-  flex-direction: column;
-  height: 310px;
-  max-width: 230px;
-  border-radius: 5px;
-  background-color: white;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
+.anime_card {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   border-radius: 7px;
+   background-color: white;
+   cursor: pointer;
+   overflow: hidden;
+   position: relative;
 }
 
-.anime__rating {
-  position: absolute;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: #343A40;
-  top: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px 5px 3px;
+.anime_title_container {
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   display: flex;
+   height: 80px;
+   background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%);
+   padding: 20px 10px;
 
-  text-align: center;
-  color: #FFD700;
+   .anime_title {
+      font-family: "Franklin Gothic Medium", serif;
+      color: white;
+      font-size: 16px;
+      max-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      align-self: flex-end;
+   }
 }
-
-.information{
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-
-.image__text {
-  position: absolute;
-  font-family: "Franklin Gothic Medium", serif;
-  bottom: 0px;
-  //	left: 5px;
-  color: white;
-  font-size: 16px;
-  padding: 5px;
-  font-weight: bold;
-  background-color: rgba(0,0,0,0.3);
-  width: 100%;
-}
-
-
-@media screen and (max-width: 1600px ){
-  .animeCard{
-    height: 250px;
-    max-width: 180px;
-  }
-}
-// .skeleton {
-// 	height: 100%;
-// 	max-width: 150px;
-// 	width: 100%;
-// }
-
-//.animeCard:hover {
-//	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//	 background-color: #f8f8f8;
-//	border-color: #ddd;
-//}
-//
-//.content {
-//	margin: 0 20px;
-//	display: flex;
-//	flex-direction: column;
-//	font-family: "Franklin Gothic Medium", sans-serif;
-//
-//	h3 {
-//		color: black;
-//		margin-top: 10px;
-//		font-size: 20px;
-//		transition: color 0.5s ease;
-//		cursor: pointer;
-//	}
-//
-//	h3:hover {
-//		color: #ff6666;
-//	}
-//
-//	.anime__description {
-//		margin: 0.5rem 0;
-//		font-size: 12px;
-//		color: #333;
-//		max-height: 200px;
-//		max-width: 100%;
-//		overflow: hidden;
-//		position: relative;
-//		text-align: justify;
-//	}
-//
-//	.anime__description::after {
-//		content: "";
-//		position: absolute;
-//		bottom: 0;
-//		right: 0;
-//		background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
-//		width: 50px;
-//		height: 1rem;
-//	}
-//
-//	.anime__genres {
-//		color: black;
-//		margin: 10px 0;
-//	}
-//
-//	span {
-//		bottom: 0;
-//		font-size: 0.8rem;
-//		color: #777;
-//	}
-//}

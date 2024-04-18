@@ -1,0 +1,16 @@
+.cards_container {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   gap: 30px;
+   margin-bottom: 20px;
+
+   .card_container {
+      height: 310px;
+   }
+}
+
+@media screen and (max-width: 1600px) {
+   .card_container {
+      max-width: 280px;
+   }
+}

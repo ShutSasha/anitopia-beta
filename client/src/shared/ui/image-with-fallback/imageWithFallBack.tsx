@@ -18,9 +18,9 @@ export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, al
    }
 
    return (
-      <div className={styles.imageWrapper} style={{ backgroundImage: `url(${currentSrc})` }}>
+      <div className={styles.image_wrapper} style={{ backgroundImage: `url(${currentSrc})` }}>
+         <img src={currentSrc} alt={altText} onError={handleError} style={{ display: 'none' }} />
          {children}
-         <img className={styles.image} src={currentSrc} alt={altText} onError={handleError} />
       </div>
    )
 }
