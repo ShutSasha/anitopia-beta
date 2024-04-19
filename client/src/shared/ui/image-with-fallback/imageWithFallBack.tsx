@@ -1,5 +1,6 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
+import { handleFetchError } from '@app/helpers/functions'
 
 interface ImageProps {
    primarySrc: string | undefined
@@ -16,6 +17,24 @@ export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, al
    const handleError = () => {
       setCurrentSrc(secondarySrc)
    }
+
+   useEffect(() => {
+      const fetchImage = async () => {
+         try {
+            let url = primarySrc
+            let corsProxy = 'https://cors-anywhere.herokuapp.com/'
+            let finalUrl = corsProxy + url
+            const res = await fetch(finalUrl)
+            const bld = await res.blob()
+            setCurrentSrc(URL.createObjectURL(bld))
+         } catch (e) {
+            handleFetchError(e)
+         }
+      }
+      if (process.env.NODE_ENV !== 'development') {
+         fetchImage()
+      }
+   }, [])
 
    return (
       <div className={styles.image_wrapper} style={{ backgroundImage: `url(${currentSrc})` }}>
