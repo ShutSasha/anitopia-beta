@@ -1,11 +1,11 @@
 import { Comment } from '@shared/api'
 import { getCommentsByAnimeId } from '@shared/api/comments/comments'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export const useComments = () => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const { id } = useParams()
    const [comments, setComments] = useState<Comment[]>()
 

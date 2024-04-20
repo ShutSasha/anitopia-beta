@@ -3,7 +3,7 @@ import { AvatarUsernameProfile, UserPersonalInfo } from '../../../features'
 import { UserByIdResponse } from '@shared/api'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 export interface MainUserInfoProps {
    handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
    fileInputRef: React.RefObject<HTMLInputElement>
@@ -12,7 +12,7 @@ export interface MainUserInfoProps {
 }
 
 export const MainUserInfo: FC<MainUserInfoProps> = ({ user, handleClick, fileInputRef, handleImageChange }) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    return (
       <div className={styles.profile_wrapper}>
          <AvatarUsernameProfile

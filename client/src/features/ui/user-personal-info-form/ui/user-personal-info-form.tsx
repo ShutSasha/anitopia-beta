@@ -3,13 +3,13 @@ import styles from './styles.module.scss'
 import TextField from '@mui/material/TextField'
 import { CountrySelectMUI } from '@shared/ui/country-select-mui'
 import { AboutMeField } from '@entities/index'
-import { Context } from '../../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { SexSelect } from '@shared/index'
 
 export const UserPersonalInfoForm: FC = React.memo(
    observer(() => {
-      const { store } = useContext(Context)
+      const { store } = useStore()
       const [sex, setSex] = useState<string>(store.userPersonalData.sex)
 
       const handleSex = (sex: string) => {

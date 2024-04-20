@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from 'react'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { Loader, PageTitle } from '../../../shared'
 import { Header } from '../../../widgets/header'
 import { Anime } from '../../anime-list/ui/anime-list'
@@ -10,7 +10,7 @@ import { AnimeCardsContainerView, ContentContainer, Footer, Wrapper } from '@wid
 import { handleFetchError } from '@app/helpers/functions'
 
 export const TopAnime: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [animeData, setAnimeData] = useState<Anime[]>([])
 
    useEffect(() => {

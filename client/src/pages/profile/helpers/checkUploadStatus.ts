@@ -1,9 +1,8 @@
-import { useContext } from 'react'
 import $api from '../../../app/http'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 
 export const checkUploadStatus = async (username: string, intervalId: any) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    try {
       const response = await $api.get(`/users/upload-status/${username}`)
       const status = response.data.status

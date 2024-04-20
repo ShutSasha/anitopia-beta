@@ -1,10 +1,10 @@
 import { FC, useContext } from 'react'
 import styles from './styles.module.scss'
-import { Context } from '../../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 
 export const AvatarUserSettings: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const handleImageChange = () => {}
 
    return (

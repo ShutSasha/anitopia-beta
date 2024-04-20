@@ -1,13 +1,13 @@
 import { FC, useContext, useRef } from 'react'
 import { CommentButton, CommentInput, EditTextItem } from '../../../entities/ui/anime-comment'
 import styles from './styles.module.scss'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { useParams } from 'react-router-dom'
 import { createComment } from '@shared/api/comments/comments'
 import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 export const AnimeCommentForm: FC = () => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const inputRef = useRef<HTMLSpanElement>(null)
    const { id } = useParams()
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { Rating } from '../ui/anime-page'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { arraySetRatings, objSetAnimeState } from '../../random-anime/helpers/objectsFetchAnime'
 import { useParams } from 'react-router-dom'
 import { AnimeApi } from '@shared/api'
@@ -9,7 +9,7 @@ import { Anime } from '@shared/api'
 export const useAnime = () => {
    const [anime, setAnime] = useState<Anime>()
    const [ratings, setRatings] = useState<Rating[]>()
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const { id } = useParams()
 
    useEffect(() => {

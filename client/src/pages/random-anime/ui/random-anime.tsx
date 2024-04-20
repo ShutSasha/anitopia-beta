@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { Loader } from '../../../shared'
 import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
@@ -16,7 +16,7 @@ export interface Rating {
 }
 
 export const RandomAnime: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    let anime = store.anime.animeData
    let ratings = store.anime.ratingForAnime

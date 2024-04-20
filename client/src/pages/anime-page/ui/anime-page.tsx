@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { Loader } from '../../../shared'
 import { Header } from '../../../widgets/header'
 import { observer } from 'mobx-react-lite'
@@ -18,7 +18,7 @@ export interface Rating {
 }
 
 export const AnimePage: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const { anime, ratings } = useAnime()
 
    if (store.isLoading || !anime) {

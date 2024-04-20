@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import { FC, useContext, useEffect, useState } from 'react'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { AnimeCollectionCard } from '../../../entities'
 import $api from '../../../app/http'
 import { useParams } from 'react-router-dom'
@@ -13,7 +13,7 @@ export interface Collection {
 }
 
 export const AnimeCollectionInner: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [collection, setCollection] = useState<any[] | undefined>([])
    const { id } = useParams()
 

@@ -2,11 +2,11 @@ import { FC, useContext } from 'react'
 import styles from './style.module.scss'
 import { Loader } from '../../shared'
 import { Link } from 'react-router-dom'
-import { Context } from '../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 
 export const NotFoundPage: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    if (store.isLoading) {
       return <Loader />

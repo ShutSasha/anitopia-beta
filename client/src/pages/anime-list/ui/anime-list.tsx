@@ -1,5 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
-import { Context } from '../../../main.tsx'
+import { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 import $api from '@app/http/index.ts'
@@ -8,6 +7,7 @@ import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } fro
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
+import { useStore } from '@app/hooks/useStore.ts'
 import styles from './styles.module.scss'
 
 export interface MaterialData {
@@ -27,7 +27,7 @@ export interface Anime {
 }
 
 export const AnimeList: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [animeData, setAnimeData] = useState<Anime[]>([])
    const [currentPage, setCurrentPage] = useState<number>(1)
    const [animesPerPage] = useState<number>(20)

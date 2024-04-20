@@ -5,14 +5,14 @@ import { useState } from 'react'
 import { DefaultButton, InputAuth, Loader } from '../../../shared'
 import { AuthContext } from '../context/AuthContext'
 import { getInputsData } from '../consts/input-data'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from '@widgets/Modal'
 import axios from 'axios'
 
 export const Login: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
    const [modal, setModalActive] = useState<boolean>(false)

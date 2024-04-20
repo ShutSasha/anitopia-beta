@@ -1,12 +1,12 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 import ProfileUserOptions from '../../../assets/profile-options-icon.svg'
 
 export const User: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [isActive, setActive] = useState<boolean>(false)
    const navigate = useNavigate()
    const optionsRef = useRef<HTMLDivElement>(null)
