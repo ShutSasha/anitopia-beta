@@ -1,7 +1,7 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import styles_h from './styles.module.scss'
 import { Header } from '../../../widgets/header'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
 import { Splider } from '../../../widgets/splider'
@@ -19,7 +19,7 @@ export interface AnimeSeason {
 }
 
 export const HomePage: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const animeSeasonData = useFetchAnimeSeason()
    const updatedAnime = useUpdatedAnime()
    const releasedAnime = useReleasedAnimeLastMonth()

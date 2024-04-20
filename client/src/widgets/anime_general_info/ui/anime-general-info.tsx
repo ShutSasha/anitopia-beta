@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { Rating } from '../../../pages/random-anime/ui/random-anime'
 import { ImageZoomer, Skeleton } from '../../../shared'
@@ -6,48 +6,62 @@ import { AnimeRatingList } from '../../../entities'
 import { Modal } from '../../Modal'
 import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
-import { Context } from '../../../main'
 import $api from '../../../app/http'
 import { IAnime } from '../../../app/models/IAnime'
 import icon_trash from '../assets/trash.svg'
-import { Collection } from '../../../features/ui/anime-collection-inner/anime-collection-inner'
 import { observer } from 'mobx-react-lite'
+import { handleFetchError } from '@app/helpers/functions'
+import { useStore } from '@app/hooks/useStore'
 
 interface AnimeGeneralInfoProps {
    anime: IAnime
    ratings: Rating[] | undefined
 }
 
+type RatedAnime = {
+   animeId: string
+   poster_url: string
+   rating: number
+   title: string
+}
+
 export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ratings }) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const { id } = useParams()
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
    const [modalActive, setModalActive] = useState<boolean>(false)
-   const [ratedAnime, setRatedAnime] = useState<any | undefined>()
+   const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
 
    const fetchData = async () => {
       try {
-         const response = await $api.get<Collection[]>(`/rate-anime/${store.user.id}`)
-         const rated_anime = response.data.filter((item) => item.animeId === id || item.animeId === anime.id)
-         if (!rated_anime[0]) {
-            setRatedAnime(false)
+         const response = await $api.get<RatedAnime[]>(`/rate-anime/${store.user.id}`)
+
+         const rated_anime_data = response.data.filter((item) => item.animeId === id || item.animeId === anime.id)
+         const rated_anime = rated_anime_data[0]
+
+         if (!rated_anime) {
+            setRatedAnime(undefined)
          }
-         setRatedAnime(rated_anime[0])
-      } catch (error) {
-         console.error(error)
+         setRatedAnime(rated_anime)
+      } catch (e) {
+         handleFetchError(e)
       }
    }
 
    const rateAnimeClick = useCallback(
       async (rate: number) => {
-         await $api.post('/rate-anime', {
-            rate: rate,
-            anime_id: id || anime.id,
-            user_id: store.user.id,
-         })
-         fetchData()
+         try {
+            await $api.post('/rate-anime', {
+               rate: rate,
+               anime_id: id || anime.id,
+               user_id: store.user.id,
+            })
+            fetchData()
 
-         setModalActive(false)
+            setModalActive(false)
+         } catch (e) {
+            handleFetchError(e)
+         }
       },
       [id, anime.id, store.user.id],
    )

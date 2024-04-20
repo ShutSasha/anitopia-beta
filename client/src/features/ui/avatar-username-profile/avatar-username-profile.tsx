@@ -1,12 +1,12 @@
 import { FC, useContext } from 'react'
 import styles from './styles.module.scss'
 import { MainUserInfoProps } from '../../../widgets/main-user-info'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 
 export const AvatarUsernameProfile: FC<MainUserInfoProps> = observer(
    ({ user, handleClick, fileInputRef, handleImageChange }) => {
-      const { store } = useContext(Context)
+      const { store } = useStore()
 
       if (user._id === store.user.id) {
          return (

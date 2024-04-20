@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { deleteComment } from '@shared/api/comments/comments'
 import { observer } from 'mobx-react-lite'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const CommentControls: FC<Props> = observer(({ commentId, animeId, user_id, setEdit }) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const [isActive, setActive] = useState<boolean>(false)
    const optionsRef = useRef<HTMLDivElement>(null)
 

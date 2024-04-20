@@ -7,12 +7,12 @@ import { useUserComment } from '../hooks/useUserComment'
 import { parseISO, format } from 'date-fns'
 import { CommentButton, CommentInput } from '..'
 import { editComment } from '@shared/api/comments/comments'
-import { Context } from '../../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, timestamp, user }) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const userData = useUserComment(user)
    const parsedDate = parseISO(timestamp)
    const formattedDate = format(parsedDate, 'dd.MM.yyyy HH:mm:ss')

@@ -3,10 +3,10 @@ import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { FC, useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Context } from '../../../../main'
+import { useStore } from '@app/hooks/useStore'
 
 export const CountrySelectMUI: FC = observer(() => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
       countries.find((country) => country.label === store.userPersonalData.country) || null,

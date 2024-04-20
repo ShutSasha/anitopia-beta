@@ -1,12 +1,12 @@
 import { FC, useContext } from 'react'
 import { AvatarUserSettings, CheckBox, ProfileBgImg, UserPersonalInfoForm } from '@features'
 import { useParams } from 'react-router-dom'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { handleEditUserInfo } from '../helpers/handleEditUserInfo'
 import styles from './styles.module.scss'
 
 export const UserSettingsAccount: FC = () => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
    const { id } = useParams()
 
    return (

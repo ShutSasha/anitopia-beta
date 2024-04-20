@@ -4,12 +4,12 @@ import styles from './styles.module.scss'
 import { Menu } from './menu'
 import { items } from './consts/nav-names'
 import { handleClickRandomAnime } from '../../../pages/random-anime/api/fetchDataAnime'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import SearchIcon from '../../../assets/search-icon.svg'
 
 export const NavList: FC = () => {
    const [menuActive, setMenuActive] = useState(false)
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    const handleRandomAnimeClick = () => {
       handleClickRandomAnime(store.anime.setAnime, store.anime.setRatingsAnime, store.setLoading, null)

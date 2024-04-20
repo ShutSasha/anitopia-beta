@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect } from 'react'
 import styles from '../styles/comment-input.module.scss'
 import { observer } from 'mobx-react-lite'
-import { Context } from '../../../../main'
+import { useStore } from '@app/hooks/useStore'
 
 type Props = {
    inputRef: React.RefObject<HTMLSpanElement>
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const CommentInput: FC<Props> = observer(({ inputRef, isEdit, comment_text }) => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    useEffect(() => {
       if (inputRef.current && comment_text) {

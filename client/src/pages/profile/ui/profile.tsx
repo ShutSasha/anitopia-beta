@@ -1,5 +1,4 @@
-import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { Context } from '../../../main'
+import { FC, useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Header } from '@widgets/header'
 import { ProfileBgImg } from '@features'
@@ -12,10 +11,12 @@ import { AnimeCollection } from '@widgets/anime-collection'
 import { getUserById } from '@shared/api/users/users.ts'
 import { UserByIdResponse } from '@shared/api/models.ts'
 import { ContentContainer, Footer, Wrapper } from '@widgets/index'
+import { useStore } from '@app/hooks/useStore'
+import { handleFetchError } from '@app/helpers/functions'
 
 export const Profile: FC = observer(() => {
    const fileInputRef = useRef<HTMLInputElement | null>(null)
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    const [user, setUser] = useState<UserByIdResponse>()
    const [img, setImage] = useState<File | null>(null)
@@ -24,8 +25,12 @@ export const Profile: FC = observer(() => {
 
    useEffect(() => {
       const fetchData = async () => {
-         const res = await getUserById({ id })
-         setUser(res.data)
+         try {
+            const res = await getUserById({ id })
+            setUser(res.data)
+         } catch (e) {
+            handleFetchError(e)
+         }
       }
       fetchData()
    }, [id])
@@ -58,12 +63,8 @@ export const Profile: FC = observer(() => {
       fileInputRef.current?.click()
    }
 
-   if (store.isLoading) {
+   if (store.isLoading || user === undefined) {
       return <Loader />
-   }
-
-   if (user === undefined) {
-      return <p>Користувача не існує або можливо виникла якась помилка</p>
    }
 
    return (

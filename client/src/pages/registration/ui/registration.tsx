@@ -6,7 +6,7 @@ import { Loader } from '@shared/index'
 import { InputAuth } from '@shared/index'
 import { AuthContext } from '../context/AuthContenx'
 import { getInputsData } from '../consts/input-data'
-import { Context } from '../../../main'
+import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { useGoogleLogin } from '@react-oauth/google'
 import { getUserData } from '../api/get-user-data.ts'
@@ -18,7 +18,7 @@ export const Registration = observer(() => {
    const [password, setPassword] = useState('')
    const [repeatPassword, setRepeatPassword] = useState('')
    const [isUserAgree, setUserAgree] = useState<boolean>(false)
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    const inputsData = getInputsData(setUsername, setEmail, setPassword, setRepeatPassword)
    const navigate = useNavigate()

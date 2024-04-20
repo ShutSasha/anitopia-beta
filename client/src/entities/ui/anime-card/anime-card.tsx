@@ -6,9 +6,8 @@ import { Anime } from '../../../pages/anime-list/ui/anime-list'
 import NotLoadedImage from './assets/6e1420ed-dd20-4ba6-bc4d-965a6d6e9718.png'
 import { Link } from 'react-router-dom'
 import { AnimeRating } from './ui/anime-rating'
-import { convertPosterLinkToImageLink } from './helpers/convert-poster-link'
 
-export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, worldart_link }) => {
+export const AnimeCard: FC<Anime> = observer(({ id, title, material_data }) => {
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
    useEffect(() => {
@@ -28,7 +27,7 @@ export const AnimeCard: FC<Anime> = observer(({ id, title, material_data, worlda
             </div>
          ) : (
             <ImageWithFallback
-               primarySrc={convertPosterLinkToImageLink(material_data, worldart_link)}
+               primarySrc={material_data.poster_url}
                secondarySrc={NotLoadedImage}
                altText={title}
                animeTitle={title}

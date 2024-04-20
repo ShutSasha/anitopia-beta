@@ -1,14 +1,15 @@
 import { FC, useContext, useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './pages/router'
-import { Context } from './main'
+import { useStore } from '@app/hooks/useStore'
+
 
 const NoticeContainer: FC = () => {
    return <div className='notice-container'></div>
 }
 
 export const App: FC = () => {
-   const { store } = useContext(Context)
+   const { store } = useStore()
 
    useEffect(() => {
       if (localStorage.getItem('token')) {

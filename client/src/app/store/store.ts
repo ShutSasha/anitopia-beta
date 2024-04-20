@@ -28,14 +28,6 @@ export default class Store {
       this.userPersonalData = new UserPersonalData(this)
    }
 
-   updateUserPersonalInfo(userData: any) {
-      this.user.firstName = userData.firstName
-      this.user.lastName = userData.lastName
-      this.user.age = userData.age
-      this.user.sex = userData.sex
-      this.user.country = userData.country
-   }
-
    randomAnimeClick(fucntionClick: () => void) {
       fucntionClick()
    }
