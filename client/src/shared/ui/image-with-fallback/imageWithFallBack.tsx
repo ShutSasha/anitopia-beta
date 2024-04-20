@@ -18,24 +18,6 @@ export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, al
       setCurrentSrc(secondarySrc)
    }
 
-   useEffect(() => {
-      const fetchImage = async () => {
-         try {
-            let url = primarySrc
-            let corsProxy = 'https://cors-anywhere.herokuapp.com/'
-            let finalUrl = corsProxy + url
-            const res = await fetch(finalUrl)
-            const bld = await res.blob()
-            setCurrentSrc(URL.createObjectURL(bld))
-         } catch (e) {
-            handleFetchError(e)
-         }
-      }
-      if (process.env.NODE_ENV !== 'development') {
-         fetchImage()
-      }
-   }, [])
-
    return (
       <div className={styles.image_wrapper} style={{ backgroundImage: `url(${currentSrc})` }}>
          <img src={currentSrc} alt={altText} onError={handleError} style={{ display: 'none' }} />
