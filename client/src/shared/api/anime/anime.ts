@@ -19,3 +19,11 @@ export const getReleasedAnimeLastMonth = () => {
 export const getAnimeSeason = () => {
    return $api.get(`${BASE_URL}/season`)
 }
+
+export const getCatalogAnime = ({ page, limit, query }: { page: number; limit: number; query: string }) => {
+   return $api.get(`${BASE_URL}/list`, { params: { page, limit, query } })
+}
+
+// export const searchAnime = (query: string) => {
+//    return $api.get(`${BASE_URL}/search`, { params: { query } })
+// }

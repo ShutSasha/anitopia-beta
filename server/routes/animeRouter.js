@@ -26,12 +26,44 @@ router.get('/', animeController.getAllAnime)
  *     tags:
  *       - anime
  *     summary: Отримати список аніме
- *     description: Отримати список аніме 10 штук (для пагінації)
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: The page number to retrieve
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: Отримати список аніме 10 штук (для пагінації)
  *     responses:
  *       200:
  *         description: Успішна відповідь. Отримано список аніме.
  */
 router.get('/list', animeController.getList)
+
+/**
+ * @openapi
+ * /api/anime/search:
+ *  get:
+ *     tags:
+ *       - anime
+ *     summary: Отримати список аніме за запитом
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         schema:
+ *           type: string
+ *           example: Гинтама
+ *         description: Пошук аніме за запитом
+ *     responses:
+ *       200:
+ *         description: Успішна відповідь. Отримано список аніме за запитом.
+ */
+router.get('/search', animeController.search)
 
 /**
  * @openapi

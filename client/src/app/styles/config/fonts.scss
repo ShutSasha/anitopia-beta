@@ -1,6 +1,37 @@
 @import "./mixins.scss";
 
-@include font-face("balooregular", "400", "normal");
-@include font-face-m("ChakraPetch", "400", "normal");
-@include font-face-franklin("ITC Franklin Gothic", "400", "normal");
-@include Font-Franklin-Gothic-Heavy("Franklin Gothic Heavy");
+@font-face {
+   font-family: "Baloo-Regular";
+   src: url(/fonts/Baloo/Baloo-Regular.eot);
+   src:
+      url(/fonts/Baloo/Baloo-Regular.eot?#iefix) format("embedded-opentype"),
+      url(/fonts/Baloo/Baloo-Regular.otf) format("otf"),
+      url(/fonts/Baloo/Baloo-Regular.svg#Baloo-Regular) format("svg"),
+      url(/fonts/Baloo/Baloo-Regular.ttf) format("truetype"),
+      url(/fonts/Baloo/Baloo-Regular.woff2) format("woff2"),
+      url(/fonts/Baloo/Baloo-Regular.woff) format("woff");
+}
+
+@font-face {
+   font-family: "Franklin Gothic Medium";
+   src: url(/fonts/FranklinGothicMedium/FranklinGothicMedium.eot);
+   src:
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.eot?#iefix) format("embedded-opentype"),
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.otf) format("otf"),
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.svg#FranklinGothicMedium) format("svg"),
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.ttf) format("truetype"),
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.woff) format("woff"),
+      url(/fonts/FranklinGothicMedium/FranklinGothicMedium.woff2) format("woff2");
+}
+
+@font-face {
+   font-family: "Franklin Gothic Heavy";
+   src: url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.eot);
+   src:
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.eot?#iefix) format("embedded-opentype"),
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.woff2) format("woff2"),
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.woff) format("woff"),
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.ttf) format("truetype"),
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.svg#FranklinGothicHeavy) format("svg"),
+      url(/fonts/FranklinGothicHeavy/FranklinGothicHeavy.otf) format("otf");
+}

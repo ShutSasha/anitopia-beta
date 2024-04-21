@@ -5,21 +5,48 @@ const { getAnimeData } = require('../animeData')
 const { startOfWeek, endOfWeek, parseISO, subDays, isAfter, isBefore, isEqual } = require('date-fns')
 
 class AnimeController {
+   async search(req, res, next) {
+      try {
+         const { query } = req.query
+         const data = getAnimeData()
+
+         let filteredData = data.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
+
+         filteredData = AnimeService.sortByRating(filteredData)
+
+         let startIndex = 0
+
+         if (req.query.page >= 2) {
+            startIndex = (req.query.page - 1) * req.query.limit || 0
+         }
+
+         const count = req.query.limit || 20
+         const result = AnimeService.getAnimeSubset(filteredData, Number(startIndex), Number(count))
+
+         return res.json({
+            data: result,
+            length: filteredData.length,
+         })
+      } catch (e) {
+         next(e)
+      }
+   }
+
    async getList(req, res, next) {
       try {
+         const { query } = req.query
          const data = getAnimeData()
+
          let sortedData = AnimeService.sortByRating(data)
-         const query = req.query.search
 
          if (query) {
-            sortedData = await AnimeService.findAnime(data, query)
-            sortedData = AnimeService.sortByRating(sortedData)
+            sortedData = sortedData.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
          }
 
          let startIndex = 0
 
-         if (sortedData.length >= 10) {
-            startIndex = req.query.page * req.query.limit || 0
+         if (req.query.page >= 2) {
+            startIndex = (req.query.page - 1) * req.query.limit || 0
          }
 
          const count = req.query.limit || 10

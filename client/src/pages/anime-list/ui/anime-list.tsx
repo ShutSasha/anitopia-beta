@@ -1,14 +1,15 @@
-import { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
-import $api from '@app/http/index.ts'
-import { handleFetchError } from '@app/helpers/functions.tsx'
 import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } from '@widgets/index.ts'
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
 import { useStore } from '@app/hooks/useStore.ts'
 import styles from './styles.module.scss'
+import { fetchAnimeList } from '../hooks/useCatalogAnime.ts'
+import { getCatalogAnime } from '@shared/api/anime/anime.ts'
+import { handleFetchError } from '@app/helpers/functions.tsx'
+import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 
 export interface MaterialData {
    description: string | undefined
@@ -28,32 +29,39 @@ export interface Anime {
 
 export const AnimeList: FC = observer(() => {
    const { store } = useStore()
-   const [animeData, setAnimeData] = useState<Anime[]>([])
+   const { catalogAnimeData } = store.animeCatalogStore
    const [currentPage, setCurrentPage] = useState<number>(1)
    const [animesPerPage] = useState<number>(20)
-   const [totalAnimeLength, setTotalAnimeLength] = useState<number>(0)
    const [searchTerm, setSearchTerm] = useState<string>('')
+   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
    useEffect(() => {
-      const fetchAnimeList = async () => {
-         try {
-            const response = await $api.get(
-               `/anime/list?page=${currentPage}&limit=${animesPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
-            )
-            const gettedData = formattedAnimeData(response.data)
-            setAnimeData(gettedData)
-            setTotalAnimeLength(response.data.length)
-         } catch (e) {
-            handleFetchError(e)
-         }
-      }
-      fetchAnimeList()
-   }, [currentPage, searchTerm])
+      fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
+   }, [currentPage, animesPerPage, store])
 
    const paginate = (pageNumber: number) => {
-      setAnimeData([])
       setCurrentPage(pageNumber)
       setSearchTerm(searchTerm ? searchTerm : '')
+   }
+
+   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newSearchTerm = e.target.value
+      setSearchTerm(newSearchTerm)
+      if (timer) {
+         clearTimeout(timer)
+      }
+      setTimer(
+         setTimeout(async () => {
+            try {
+               const response = await getCatalogAnime({ page: currentPage, limit: animesPerPage, query: newSearchTerm })
+               const formattedData = formattedAnimeData(response.data)
+               store.animeCatalogStore.setCatalog(formattedData)
+               store.animeCatalogStore.setTotalLength(response.data.length)
+            } catch (error) {
+               handleFetchError(error)
+            }
+         }, 500),
+      )
    }
 
    if (store.isLoading) {
@@ -66,21 +74,20 @@ export const AnimeList: FC = observer(() => {
          <ContentContainer backgroundColor='#fff' padding='0px 20px'>
             <h1 className={styles.title}>Каталог аніме</h1>
             <SearchInput
-               style={{ marginBottom: '30px' }}
-               onClickEvent={(searchParam: string) => {
-                  setSearchTerm(searchParam)
-               }}
+               style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+               searchTerm={searchTerm}
+               handleChangeSearch={handleChangeSearch}
             />
-            {animeData.length && animeData.length != 0 && animeData ? (
-               <AnimeCardsContainerView animeData={animeData} />
+            {catalogAnimeData.length && catalogAnimeData.length != 0 && catalogAnimeData ? (
+               <AnimeCardsContainerView animeData={catalogAnimeData} />
             ) : (
                <AnimeNotFound searchTerm={searchTerm} />
             )}
-            {!store.isLoading && (
+            {store.animeCatalogStore.totalLength > 20 && (
                <Pagination
                   style={{ marginBottom: '20px' }}
                   animesPerPage={animesPerPage}
-                  totalAnimes={totalAnimeLength}
+                  totalAnimes={store.animeCatalogStore.totalLength}
                   paginate={paginate}
                   currentPage={currentPage}
                />

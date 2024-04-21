@@ -1,27 +1,22 @@
-import { CSSProperties, FC, FormEvent, useState } from 'react'
+import { CSSProperties, ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
 import styles from './styles.module.scss'
 
 interface ISearchInputProps {
-   onClickEvent: (value: string) => void
+   searchTerm: string
+   handleChangeSearch: (event: ChangeEvent<HTMLInputElement>) => void
    style?: CSSProperties
 }
 
-export const SearchInput: FC<ISearchInputProps> = ({ onClickEvent, style }) => {
-   const [searchParam, setSearchParam] = useState<string>('')
-
-   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      onClickEvent(searchParam)
-   }
-
+export const SearchInput: FC<ISearchInputProps> = ({ searchTerm, handleChangeSearch, style }) => {
    return (
-      <form style={{ ...style }} className={styles.form} onSubmit={handleSubmit}>
+      <div style={{ ...style }}>
          <input
             type='text'
             className={styles.input}
-            placeholder={searchParam ? searchParam : 'Пошук за назвою...'}
-            onChange={(e) => setSearchParam(e.target.value)}
+            placeholder={searchTerm ? searchTerm : 'Пошук за назвою...'}
+            value={searchTerm}
+            onChange={handleChangeSearch}
          />
-      </form>
+      </div>
    )
 }
