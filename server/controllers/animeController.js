@@ -34,8 +34,14 @@ class AnimeController {
 
    async getList(req, res, next) {
       try {
+         const { query } = req.query
          const data = getAnimeData()
+
          let sortedData = AnimeService.sortByRating(data)
+
+         if (query) {
+            sortedData = sortedData.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
+         }
 
          let startIndex = 0
 
