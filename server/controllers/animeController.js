@@ -9,14 +9,15 @@ class AnimeController {
       try {
          const { query } = req.query
          const data = getAnimeData()
-         let sortedData = AnimeService.sortByRating(data)
 
-         let filteredData = sortedData.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
+         let filteredData = data.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
+
+         filteredData = AnimeService.sortByRating(filteredData)
 
          let startIndex = 0
 
-         if (sortedData.length >= 20) {
-            startIndex = req.query.page * req.query.limit || 0
+         if (req.query.page >= 2) {
+            startIndex = (req.query.page - 1) * req.query.limit || 0
          }
 
          const count = req.query.limit || 20
@@ -35,17 +36,11 @@ class AnimeController {
       try {
          const data = getAnimeData()
          let sortedData = AnimeService.sortByRating(data)
-         const query = req.query.search
-
-         if (query) {
-            sortedData = await AnimeService.findAnime(data, query)
-            sortedData = AnimeService.sortByRating(sortedData)
-         }
 
          let startIndex = 0
 
-         if (sortedData.length >= 10) {
-            startIndex = req.query.page * req.query.limit || 0
+         if (req.query.page >= 2) {
+            startIndex = (req.query.page - 1) * req.query.limit || 0
          }
 
          const count = req.query.limit || 10
