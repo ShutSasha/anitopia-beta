@@ -7,7 +7,7 @@ import { Footer } from '@widgets/footer'
 import { useStore } from '@app/hooks/useStore.ts'
 import styles from './styles.module.scss'
 import { fetchAnimeList } from '../hooks/useCatalogAnime.ts'
-import { searchAnime } from '@shared/api/anime/anime.ts'
+import { getCatalogAnime } from '@shared/api/anime/anime.ts'
 import { handleFetchError } from '@app/helpers/functions.tsx'
 import { formattedAnimeData } from '../helpers/formattedAnimeData.ts'
 
@@ -36,7 +36,7 @@ export const AnimeList: FC = observer(() => {
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
    useEffect(() => {
-      fetchAnimeList(currentPage, animesPerPage, store)
+      fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
    }, [currentPage, animesPerPage, store])
 
    const paginate = (pageNumber: number) => {
@@ -53,7 +53,7 @@ export const AnimeList: FC = observer(() => {
       setTimer(
          setTimeout(async () => {
             try {
-               const response = await searchAnime(newSearchTerm)
+               const response = await getCatalogAnime({ page: currentPage, limit: animesPerPage, query: newSearchTerm })
                const formattedData = formattedAnimeData(response.data)
                store.animeCatalogStore.setCatalog(formattedData)
                store.animeCatalogStore.setTotalLength(response.data.length)
