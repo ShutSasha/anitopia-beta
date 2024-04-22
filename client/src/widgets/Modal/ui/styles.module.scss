@@ -11,7 +11,7 @@
    align-items: center;
    opacity: 0;
    pointer-events: none;
-   transition: 0.5s;
+   transition: 0.5s ease-in;
 }
 
 .modal_active {
@@ -25,6 +25,7 @@
    transform: scale(0.5);
    transition: 0.4s all;
    width: 50vw;
+   height: fit-content;
 }
 
 .modal_content_active {

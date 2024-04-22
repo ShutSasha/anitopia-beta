@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
+import { CSSProperties, ChangeEvent, FC } from 'react'
 import styles from './styles.module.scss'
 
 interface ISearchInputProps {
