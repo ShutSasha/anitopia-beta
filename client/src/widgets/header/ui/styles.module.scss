@@ -10,3 +10,17 @@
       // justify-content: space-between;
    }
 }
+
+.modal_content_block{
+   max-height: 70vh;
+   overflow-y: auto;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   margin-top: 15px;
+}
+
+.modal_img{
+   max-width: 100%;
+   width: auto;
+}

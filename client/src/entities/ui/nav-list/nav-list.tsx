@@ -7,7 +7,10 @@ import SearchIcon from '../../../assets/search-icon.svg'
 import { getRandomAnime } from '@shared/api/anime/anime'
 import { handleFetchError } from '@app/helpers/functions'
 
-export const NavList: FC = () => {
+interface NavListProps {
+   searchClickHandler?: () => void
+}
+export const NavList: FC<NavListProps> = ({ searchClickHandler }) => {
    const [menuActive, setMenuActive] = useState(false)
    const navitage = useNavigate()
 
@@ -26,7 +29,16 @@ export const NavList: FC = () => {
             <span />
          </div>
          <div className={styles.search_nav_list_wrapper}>
-            <img className={styles.search} src={SearchIcon} alt='search' />
+            <img
+               className={styles.search}
+               src={SearchIcon}
+               alt='search'
+               onClick={() => {
+                  if (searchClickHandler) {
+                     searchClickHandler()
+                  }
+               }}
+            />
             <ul className={styles.nav_list}>
                {NAV_NAMES.map((item, index) => {
                   if (item.word_key === 'random') {
