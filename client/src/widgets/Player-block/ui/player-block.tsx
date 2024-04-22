@@ -11,6 +11,7 @@ export const PlayerBlock: FC<PlayerProps> = ({ link }) => {
          const res = await fetch('https://api.lib.social/api/episodes/118743?')
          const data = await res.json()
          console.log(data)
+         console.log(link)
       }
       fetchAnime()
    }, [])
