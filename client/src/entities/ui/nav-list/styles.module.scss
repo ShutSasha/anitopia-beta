@@ -16,6 +16,12 @@
    .nav_list_item {
       transition: background-color 0.4s ease-out;
       color: #fff;
+      cursor: pointer;
+
+      li {
+         font-family: "Baloo", sans-serif;
+         font-weight: 600;
+      }
    }
 
    .nav_list_item:hover {

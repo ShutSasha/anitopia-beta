@@ -33,9 +33,9 @@ export const PosterSeasonCard: FC<Card> = ({ id, poster_url, title }) => {
             </Link>
          )}
 
-         <div title={title} className={styles.card_text_block}>
+         <h3 title={title} className={styles.card_text_block}>
             {title}
-         </div>
+         </h3>
       </>
    )
 }

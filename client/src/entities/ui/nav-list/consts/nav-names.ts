@@ -1,7 +1,5 @@
-export const items = [
-   // { value: 'Главная', href: '/' },
+export const NAV_NAMES = [
    { value: 'Аніме', href: '/anime-list' },
-   // { value: 'Манга', href: '/manga' },
    { value: 'Топ-100', href: '/top-anime' },
-   { value: 'Випадкове аніме', href: '/random-anime', click: true },
+   { value: 'Випадкове аніме', href: '/anime/', word_key: 'random' },
 ]

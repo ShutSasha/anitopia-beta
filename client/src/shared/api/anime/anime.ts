@@ -24,6 +24,10 @@ export const getCatalogAnime = ({ page, limit, query }: { page: number; limit: n
    return $api.get(`${BASE_URL}/list`, { params: { page, limit, query } })
 }
 
+export const getRandomAnime = (): AxiosPromise<{ _id: string }> => {
+   return $api.get(`${BASE_URL}/random`)
+}
+
 // export const searchAnime = (query: string) => {
 //    return $api.get(`${BASE_URL}/search`, { params: { query } })
 // }

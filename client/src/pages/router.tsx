@@ -5,7 +5,6 @@ import { HomePage } from './home'
 import { Registration } from './registration'
 import { Login } from './login'
 import { Profile } from './profile'
-import { RandomAnime } from './random-anime'
 import { AnimeList } from './anime-list'
 import { AnimePage } from './anime-page'
 import { TopAnime } from './top-anime'
@@ -30,10 +29,6 @@ export const router = createBrowserRouter(
       {
          path: routes.PROFILE,
          element: <Profile />,
-      },
-      {
-         path: routes.RANDOM_ANIME,
-         element: <RandomAnime />,
       },
       {
          path: routes.ANIME_PAGE,

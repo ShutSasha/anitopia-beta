@@ -30,7 +30,7 @@ class UserService {
          throw ApiError.BadRequest(`Користувач з таким ім'ям/поштою вже існує`)
       }
 
-      const hashPassword = await bcrypt.hashSync(password, 7)
+      const hashPassword = bcrypt.hashSync(password, 7)
       const userRole = await Role.findOne({ value: 'USER' })
       const activationLink = uuid.v4()
 
@@ -42,7 +42,7 @@ class UserService {
          country: null,
          age: null,
          sex: null,
-         avatarLink: pictureLink ? pictureLink : process.env.IMAFE_KIT_DEFAULT_IMAGE,
+         avatarLink: pictureLink ? pictureLink : process.env.IMAGE_KIT_DEFAULT_IMAGE,
          password: hashPassword,
          registrationDate: Date.now(),
          uploadStatus: false,
