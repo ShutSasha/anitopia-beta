@@ -17,6 +17,7 @@ export interface MaterialData {
    genres: Array<string> | undefined
    rating: number | undefined
    anime_title: string
+   screenshots: Array<string> | undefined
 }
 
 export interface Anime {

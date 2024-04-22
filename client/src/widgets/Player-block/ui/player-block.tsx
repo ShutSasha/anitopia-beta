@@ -9,6 +9,11 @@ import { PLAYER_JS_PATH } from '../consts/player-js-path'
 import { checkSuitableAnime } from '../helpers/check-suitable-anime'
 import { ANILIB_SEARCH_API, ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
 
+const PLAYER_JS_URL =
+   import.meta.env.MODE === 'production'
+      ? import.meta.env.VITE_PLAYER_JS_URL_PRODUCTION
+      : import.meta.env.VITE_PLAYER_JS_URL_DEVELOPMENT
+
 interface PlayerProps {
    link: string
    width?: number
@@ -19,6 +24,8 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
    const { id } = useParams()
    const [anilibLink, setAnilibLink] = useState<string>('')
    const [currentPlayer, setCurrentPlayer] = useState<'Anitopia' | 'Kodik'>('Anitopia')
+   const [isLoadingPlayer, setIsLoadingPlayer] = useState<boolean>(true)
+   const [playerPoster, setPlayerPoster] = useState<string>('')
 
    const [teams, setTeams] = useState<Team[]>([])
    const [selectedTeam, setSelectedTeam] = useState<Team>()
@@ -29,7 +36,11 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
    useEffect(() => {
       const fetchAnime = async () => {
          try {
+            setIsLoadingPlayer(true)
             const animeById = await getAnimeById({ id })
+            if (animeById.data.material_data.screenshots !== undefined) {
+               setPlayerPoster(animeById.data.material_data.screenshots[0])
+            }
             const AnitopiaAnimeTitle = animeById.data.material_data.anime_title
             const encodedUrl = toUrlEncoded(AnitopiaAnimeTitle)
             const searchAnime = await fetch(`${ANILIB_SEARCH_API}=${encodedUrl}`)
@@ -44,22 +55,21 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                   .then((res) => res.json())
                   .then((res) => res.data)
                setEpisodes(episodes)
-               const firstEpisode = episodes[0].id
+               const firstEpisodeId = episodes[0].id
                setCurrentEpisode(episodes[0])
 
-               const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisode}?`)
+               const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisodeId}?`)
                   .then((res) => res.json())
                   .then((res) => res.data.players)
-
                const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
 
                if (animeLibPlayers.length === 0) {
+                  setCurrentPlayer('Kodik')
                   throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
                }
 
                setPlayers(animeLibPlayers)
                const player: Player = animeLibPlayers[0]
-
                const teams = animeLibPlayers.map((player: Player) => player.team)
                setTeams(teams)
 
@@ -71,28 +81,42 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                   .join(',\n')
 
                setAnilibLink(linksQuality)
+            } else {
+               setCurrentPlayer('Kodik')
             }
          } catch (e) {
-            setCurrentPlayer('Kodik')
             handleFetchError(e)
+         } finally {
+            setIsLoadingPlayer(false)
          }
       }
       fetchAnime()
    }, [])
 
    const handleSelectedTeam = (team: Team) => {
-      setSelectedTeam(team)
-      const player: Player | undefined = players.find((player) => player.team.name === team.name)
-      if (!player) throw new AnitopiaServerError('Player not found')
-      const newAnilibVideo: Video = player.video
-      const linksQuality = newAnilibVideo.quality
-         .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
-         .join(',\n')
-      setAnilibLink(linksQuality)
+      try {
+         setIsLoadingPlayer(true)
+         setSelectedTeam(team)
+         const player: Player | undefined = players.find((player) => player.team.name === team.name)
+         if (!player) {
+            setCurrentPlayer('Kodik')
+            throw new AnitopiaServerError('Player not found')
+         }
+         const newAnilibVideo: Video = player.video
+         const linksQuality = newAnilibVideo.quality
+            .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
+            .join(',\n')
+         setAnilibLink(linksQuality)
+      } catch (e) {
+         handleFetchError(e)
+      } finally {
+         setIsLoadingPlayer(false)
+      }
    }
 
    const handleSelectedEpisode = async (episode: Episode) => {
       try {
+         setIsLoadingPlayer(true)
          const findEpisode = episodes.find((e) => e.id === episode.id)
          if (!findEpisode) throw new AnitopiaServerError('Episode not found')
 
@@ -105,6 +129,11 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
          setPlayers(animeLibPlayers)
 
          const player: Player = animeLibPlayers[0]
+
+         if (!player) {
+            setCurrentPlayer('Kodik')
+            throw new AnitopiaServerError('Плеєр Anitopia для цього аніме не знайдено')
+         }
 
          const teams = animeLibPlayers.map((player: Player) => player.team)
          setTeams(teams)
@@ -121,6 +150,8 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
       } catch (e) {
          setCurrentPlayer('Kodik')
          handleFetchError(e)
+      } finally {
+         setIsLoadingPlayer(false)
       }
    }
 
@@ -128,18 +159,23 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
       <div className={styles.player_container}>
          <div className={styles.player_inner}>
             <div className={styles.player_and_voices}>
-               {anilibLink && currentPlayer === 'Anitopia' && (
-                  <iframe
-                     className={styles.playerJS}
-                     // TODO change to production
-                     src={`http://localhost:5173${PLAYER_JS_PATH}?file=${anilibLink}`}
-                     width={width}
-                     height={height}
-                     allowFullScreen={true}
-                  ></iframe>
-               )}
-               {currentPlayer === 'Kodik' && (
-                  <iframe src={link} width={width} height={height} allow='autoplay *; fullscreen *'></iframe>
+               {isLoadingPlayer ? (
+                  <div className={styles.player_loading}>Loading...</div>
+               ) : (
+                  <>
+                     {anilibLink && currentPlayer === 'Anitopia' && (
+                        <iframe
+                           className={styles.playerJS}
+                           src={`${PLAYER_JS_URL}${PLAYER_JS_PATH}?file=${anilibLink}&poster=${playerPoster}`}
+                           width={width}
+                           height={height}
+                           allowFullScreen={true}
+                        ></iframe>
+                     )}
+                     {currentPlayer === 'Kodik' && (
+                        <iframe src={link} width={width} height={height} allow='autoplay *; fullscreen *'></iframe>
+                     )}
+                  </>
                )}
                <div className={styles.choose_player_container}>
                   <div className={styles.choose_player_buttons}>
@@ -160,11 +196,11 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                   {teams && (
                      <div className={styles.anime_voice_acting_container}>
                         <div className={styles.anime_voice_acting_inner}>
-                           {teams.map((team) => (
+                           {teams.map((team, index) => (
                               <button
                                  onClick={() => handleSelectedTeam(team)}
                                  className={`${team.name === selectedTeam?.name ? styles.selected_team : styles.anime_voice_acting_btn}`}
-                                 key={team.id}
+                                 key={index}
                               >
                                  {team.name}
                               </button>
