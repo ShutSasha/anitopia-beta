@@ -1,13 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { getAnimeById } from '@shared/api/anime/anime'
 import { useParams } from 'react-router-dom'
 import { AnitopiaServerError, handleFetchError } from '@app/helpers/functions'
 import { Episode, Player, Team, Video } from '../models/models'
-import { toUrlEncoded } from '../helpers/to-url-encoded'
 import { PLAYER_JS_PATH } from '../consts/player-js-path'
-import { checkSuitableAnime } from '../helpers/check-suitable-anime'
-import { ANILIB_SEARCH_API, ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
+import { ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
+import { findSuitableAnime } from '../helpers/find-suitable-anime'
 
 const PLAYER_JS_URL =
    import.meta.env.MODE === 'production'
@@ -37,53 +35,45 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
       const fetchAnime = async () => {
          try {
             setIsLoadingPlayer(true)
-            const animeById = await getAnimeById({ id })
-            if (animeById.data.material_data.screenshots !== undefined) {
-               setPlayerPoster(animeById.data.material_data.screenshots[0])
+
+            const SuitableAnime = await findSuitableAnime(id, setPlayerPoster)
+
+            if (!SuitableAnime) {
+               setCurrentPlayer('Kodik')
+               return
             }
-            const AnitopiaAnimeTitle = animeById.data.material_data.anime_title
-            const encodedUrl = toUrlEncoded(AnitopiaAnimeTitle)
-            const searchAnime = await fetch(`${ANILIB_SEARCH_API}=${encodedUrl}`)
+
+            const titleId = SuitableAnime.id
+            const episodes = await fetch(`https://api.lib.social/api/episodes?anime_id=${titleId}`)
                .then((res) => res.json())
                .then((res) => res.data)
+            setEpisodes(episodes)
+            const firstEpisodeId = episodes[0].id
+            setCurrentEpisode(episodes[0])
 
-            const SuitableAnime = checkSuitableAnime(searchAnime, AnitopiaAnimeTitle)
+            const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisodeId}?`)
+               .then((res) => res.json())
+               .then((res) => res.data.players)
+            const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
 
-            if (SuitableAnime) {
-               const titleId = SuitableAnime.id
-               const episodes = await fetch(`https://api.lib.social/api/episodes?anime_id=${titleId}`)
-                  .then((res) => res.json())
-                  .then((res) => res.data)
-               setEpisodes(episodes)
-               const firstEpisodeId = episodes[0].id
-               setCurrentEpisode(episodes[0])
-
-               const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisodeId}?`)
-                  .then((res) => res.json())
-                  .then((res) => res.data.players)
-               const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
-
-               if (animeLibPlayers.length === 0) {
-                  setCurrentPlayer('Kodik')
-                  throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
-               }
-
-               setPlayers(animeLibPlayers)
-               const player: Player = animeLibPlayers[0]
-               const teams = animeLibPlayers.map((player: Player) => player.team)
-               setTeams(teams)
-
-               const selectedTeam = teams[0]
-               setSelectedTeam(selectedTeam)
-               const newAnilibVideo: Video = player.video
-               const linksQuality = newAnilibVideo.quality
-                  .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
-                  .join(',\n')
-
-               setAnilibLink(linksQuality)
-            } else {
+            if (animeLibPlayers.length === 0) {
                setCurrentPlayer('Kodik')
+               throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
             }
+
+            setPlayers(animeLibPlayers)
+            const player: Player = animeLibPlayers[0]
+            const teams = animeLibPlayers.map((player: Player) => player.team)
+            setTeams(teams)
+
+            const selectedTeam = teams[0]
+            setSelectedTeam(selectedTeam)
+            const newAnilibVideo: Video = player.video
+            const linksQuality = newAnilibVideo.quality
+               .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
+               .join(',\n')
+
+            setAnilibLink(linksQuality)
          } catch (e) {
             handleFetchError(e)
          } finally {
@@ -180,6 +170,7 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                <div className={styles.choose_player_container}>
                   <div className={styles.choose_player_buttons}>
                      <button
+                        //TODO add onClick handler for check player availability
                         onClick={() => setCurrentPlayer('Anitopia')}
                         className={`${styles.choose_player_button} ${currentPlayer === 'Anitopia' ? styles.choosen_player : ''}`}
                      >
