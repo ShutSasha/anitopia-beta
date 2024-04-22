@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
-import { Rating } from '../../../pages/random-anime/ui/random-anime'
 import { IAnime } from '../../models/IAnime'
+import { Rating } from 'pages/anime-page/ui/anime-page'
 
 export default class AnimePage {
    animeData = {} as IAnime

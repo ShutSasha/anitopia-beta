@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { Rating } from '../../../pages/random-anime/ui/random-anime'
 import { ImageZoomer, Skeleton } from '../../../shared'
 import { AnimeRatingList } from '../../../entities'
 import { Modal } from '../../Modal'
@@ -12,6 +11,7 @@ import icon_trash from '../assets/trash.svg'
 import { observer } from 'mobx-react-lite'
 import { handleFetchError } from '@app/helpers/functions'
 import { useStore } from '@app/hooks/useStore'
+import { Rating } from 'pages/anime-page/ui/anime-page'
 
 interface AnimeGeneralInfoProps {
    anime: IAnime

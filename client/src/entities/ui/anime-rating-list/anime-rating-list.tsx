@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import styles from './styles.module.scss'
-import { Rating } from '../../../pages/random-anime/ui/random-anime'
+import { Rating } from 'pages/anime-page/ui/anime-page'
 
 interface Ratings {
    ratings: Rating[] | undefined
