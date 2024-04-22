@@ -137,19 +137,24 @@ class AnimeController {
             anime.title = AnimeService.replaceSpecificNames(anime.title)
          })
 
+         const year = new Date().getFullYear()
+
          for (const animeData of uniqueData) {
             try {
-               const existingAnime = await Anime.findOne({ shikimori_id: animeData.shikimori_id })
-               if (existingAnime) {
-                  await Anime.updateOne({ id: animeData.id }, animeData)
-               } else {
-                  const anime = new Anime(animeData)
-                  await anime.save()
+               if (animeData.material_data?.anime_status === 'ongoing' || year === animeData.year) {
+                  const existingAnime = await Anime.findOne({ shikimori_id: animeData.shikimori_id })
+                  if (existingAnime) {
+                     await Anime.updateOne({ id: animeData.id }, animeData)
+                  } else {
+                     const anime = new Anime(animeData)
+                     await anime.save()
+                  }
                }
             } catch (error) {
                console.error('Error saving anime:', error)
             }
          }
+         console.log(`Ongoing: ${countOngoing}, All: ${countAll}`)
 
          return res.json(uniqueData)
       } catch (error) {
