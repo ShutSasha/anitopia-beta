@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Rating } from '../ui/anime-page'
 import { useStore } from '@app/hooks/useStore'
 import { arraySetRatings, objSetAnimeState } from '../../random-anime/helpers/objectsFetchAnime'
 import { useParams } from 'react-router-dom'
 import { AnimeApi } from '@shared/api'
 import { Anime } from '@shared/api'
+import { handleFetchError } from '@app/helpers/functions'
 
 export const useAnime = () => {
    const [anime, setAnime] = useState<Anime>()
@@ -21,14 +22,14 @@ export const useAnime = () => {
 
             setAnime(objSetAnimeState(res))
             setRatings(arraySetRatings(res))
-         } catch (error) {
-            console.error(error)
+         } catch (e) {
+            handleFetchError(e)
          } finally {
             store.setLoading(false)
          }
       }
       getAnime()
-   }, [])
+   }, [id])
 
    return { anime, ratings }
 }

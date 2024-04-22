@@ -26,12 +26,3 @@ export const fetchAnimeData = async (
       setLoading(false)
    }
 }
-
-export const handleClickRandomAnime = (
-   setAnime: React.Dispatch<React.SetStateAction<any>>,
-   setRatings: React.Dispatch<React.SetStateAction<any>>,
-   setLoading: (loading: boolean) => void,
-   id: string | null,
-) => {
-   fetchAnimeData(setAnime, setRatings, setLoading, id)
-}
