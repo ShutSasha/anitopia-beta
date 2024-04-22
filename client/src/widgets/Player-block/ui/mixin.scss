@@ -1,0 +1,13 @@
+@mixin anime_voice_acting_btn_style($bgColor: #fff, $color: #000) {
+   font-family: "Baloo", sans-serif;
+   font-weight: 700;
+   border: none;
+   padding: 5px 10px;
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px;
+   cursor: pointer;
+   transition: all 0.3s;
+
+   background-color: $bgColor;
+   color: $color;
+}

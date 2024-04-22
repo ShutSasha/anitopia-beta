@@ -1,33 +1,192 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
+import { getAnimeById } from '@shared/api/anime/anime'
+import { useParams } from 'react-router-dom'
+import { AnitopiaServerError, handleFetchError } from '@app/helpers/functions'
+import { Episode, Player, Team, Video } from '../models/models'
+import { toUrlEncoded } from '../helpers/to-url-encoded'
+import { PLAYER_JS_PATH } from '../consts/player-js-path'
+import { checkSuitableAnime } from '../helpers/check-suitable-anime'
+import { ANILIB_SEARCH_API, ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
 
 interface PlayerProps {
    link: string
+   width?: number
+   height?: number
 }
 
-export const PlayerBlock: FC<PlayerProps> = ({ link }) => {
+export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 }) => {
+   const { id } = useParams()
+   const [anilibLink, setAnilibLink] = useState<string>('')
+   const [currentPlayer, setCurrentPlayer] = useState<'Anitopia' | 'Kodik'>('Anitopia')
+
+   const [teams, setTeams] = useState<Team[]>([])
+   const [selectedTeam, setSelectedTeam] = useState<Team>()
+   const [players, setPlayers] = useState<Player[]>([])
+   const [episodes, setEpisodes] = useState<Episode[]>([])
+   const [currentEpisode, setCurrentEpisode] = useState<Episode>()
+
    useEffect(() => {
       const fetchAnime = async () => {
-         const res = await fetch('https://api.lib.social/api/episodes/118743?')
-         const data = await res.json()
-         console.log(data)
-         console.log(link)
+         try {
+            const animeById = await getAnimeById({ id })
+            const AnitopiaAnimeTitle = animeById.data.material_data.anime_title
+            const encodedUrl = toUrlEncoded(AnitopiaAnimeTitle)
+            const searchAnime = await fetch(`${ANILIB_SEARCH_API}=${encodedUrl}`)
+               .then((res) => res.json())
+               .then((res) => res.data)
+
+            const SuitableAnime = checkSuitableAnime(searchAnime, AnitopiaAnimeTitle)
+
+            if (SuitableAnime) {
+               const titleId = SuitableAnime.id
+               const episodes = await fetch(`https://api.lib.social/api/episodes?anime_id=${titleId}`)
+                  .then((res) => res.json())
+                  .then((res) => res.data)
+               setEpisodes(episodes)
+               const firstEpisode = episodes[0].id
+               setCurrentEpisode(episodes[0])
+
+               const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisode}?`)
+                  .then((res) => res.json())
+                  .then((res) => res.data.players)
+
+               const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
+
+               if (animeLibPlayers.length === 0) {
+                  throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
+               }
+
+               setPlayers(animeLibPlayers)
+               const player: Player = animeLibPlayers[0]
+
+               const teams = animeLibPlayers.map((player: Player) => player.team)
+               setTeams(teams)
+
+               const selectedTeam = teams[0]
+               setSelectedTeam(selectedTeam)
+               const newAnilibVideo: Video = player.video
+               const linksQuality = newAnilibVideo.quality
+                  .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
+                  .join(',\n')
+
+               setAnilibLink(linksQuality)
+            }
+         } catch (e) {
+            setCurrentPlayer('Kodik')
+            handleFetchError(e)
+         }
       }
       fetchAnime()
    }, [])
+
+   const handleSelectedTeam = (team: Team) => {
+      setSelectedTeam(team)
+      const player: Player | undefined = players.find((player) => player.team.name === team.name)
+      if (!player) throw new AnitopiaServerError('Player not found')
+      const newAnilibVideo: Video = player.video
+      const linksQuality = newAnilibVideo.quality
+         .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
+         .join(',\n')
+      setAnilibLink(linksQuality)
+   }
+
+   const handleSelectedEpisode = async (episode: Episode) => {
+      try {
+         const findEpisode = episodes.find((e) => e.id === episode.id)
+         if (!findEpisode) throw new AnitopiaServerError('Episode not found')
+
+         const episodeData = await fetch(`https://api.lib.social/api/episodes/${findEpisode.id}?`)
+            .then((res) => res.json())
+            .then((res) => res.data.players)
+
+         setCurrentEpisode(findEpisode)
+         const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
+         setPlayers(animeLibPlayers)
+
+         const player: Player = animeLibPlayers[0]
+
+         const teams = animeLibPlayers.map((player: Player) => player.team)
+         setTeams(teams)
+
+         const selectedTeam = teams[0]
+         setSelectedTeam(selectedTeam)
+
+         const newAnilibVideo: Video = player.video
+         const linksQuality = newAnilibVideo.quality
+            .map((q) => `[${q.quality}]${ANILIB_UPLOAD_VIDEO_API}${q.href}`)
+            .join(',\n')
+
+         setAnilibLink(linksQuality)
+      } catch (e) {
+         setCurrentPlayer('Kodik')
+         handleFetchError(e)
+      }
+   }
+
    return (
       <div className={styles.player_container}>
-         {/* <iframe src={link} width='610px' height='370px' allow='autoplay *; fullscreen *'></iframe> */}
-         {/* https://api.lib.social/api/anime?fields[]=rate_avg&fields[]=rate&fields[]=releaseDate&q=%D1%81%D0%B8%D0%BD%D0%B8%D0%B9%20%D0%B0%D1%80%D1%85%D0%B8%D0%B2 */}
-         {/* //kodik.info/seria/1299191/888609c22d3355ca1183a74b908387fa/720p */}
-         {/* <iframe
-            src={`${playerjs}?file=https://www.youtube.com/watch?v=ZXsQAXx_ao0&t=1s&ab_channel=MotivaShian`}
-            type='text/html'
-            width='ширина'
-            height='высота'
-            frameborder='0'
-            allowfullscreen
-         ></iframe> */}
+         <div className={styles.player_inner}>
+            <div className={styles.player_and_voices}>
+               {anilibLink && currentPlayer === 'Anitopia' && (
+                  <iframe
+                     className={styles.playerJS}
+                     // TODO change to production
+                     src={`http://localhost:5173${PLAYER_JS_PATH}?file=${anilibLink}`}
+                     width={width}
+                     height={height}
+                     allowFullScreen={true}
+                  ></iframe>
+               )}
+               {currentPlayer === 'Kodik' && (
+                  <iframe src={link} width={width} height={height} allow='autoplay *; fullscreen *'></iframe>
+               )}
+               <div className={styles.choose_player_container}>
+                  <div className={styles.choose_player_buttons}>
+                     <button
+                        onClick={() => setCurrentPlayer('Anitopia')}
+                        className={`${styles.choose_player_button} ${currentPlayer === 'Anitopia' ? styles.choosen_player : ''}`}
+                     >
+                        Anitopia player
+                     </button>
+                     <button
+                        onClick={() => setCurrentPlayer('Kodik')}
+                        className={`${styles.choose_player_button} ${currentPlayer === 'Kodik' ? styles.choosen_player : ''}`}
+                     >
+                        Kodik
+                     </button>
+                  </div>
+                  <h2 className={styles.anime_voice_acting_title}>Озвучка</h2>
+                  {teams && (
+                     <div className={styles.anime_voice_acting_container}>
+                        <div className={styles.anime_voice_acting_inner}>
+                           {teams.map((team) => (
+                              <button
+                                 onClick={() => handleSelectedTeam(team)}
+                                 className={`${team.name === selectedTeam?.name ? styles.selected_team : styles.anime_voice_acting_btn}`}
+                                 key={team.id}
+                              >
+                                 {team.name}
+                              </button>
+                           ))}
+                        </div>
+                     </div>
+                  )}
+               </div>
+            </div>
+            <div className={styles.episodes_container}>
+               {episodes &&
+                  episodes.map((episode) => (
+                     <div
+                        onClick={() => handleSelectedEpisode(episode)}
+                        className={`${currentEpisode?.id === episode.id ? styles.selected_episode : styles.episode_item}`}
+                        key={episode.id}
+                     >
+                        {episode.item_number} Серія
+                     </div>
+                  ))}
+            </div>
+         </div>
       </div>
    )
 }

@@ -16,6 +16,7 @@ export interface MaterialData {
    poster_url: string | undefined
    genres: Array<string> | undefined
    rating: number | undefined
+   anime_title: string
 }
 
 export interface Anime {

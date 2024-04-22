@@ -1,5 +1,162 @@
+@import "./mixin.scss";
+
 .player_container {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 25px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   margin-bottom: 25px;
+
+   .player_inner {
+      display: flex;
+      flex-direction: column;
+
+      .player_and_voices {
+         display: flex;
+      }
+   }
+
+   .playerJS {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+   }
+
+   .choose_player_container {
+      background-color: #343a40;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      max-width: 280px;
+      width: 100%;
+      border-left: 2px solid #343a40;
+
+      .choose_player_buttons {
+         padding: 15px 10px 8px 10px;
+         display: flex;
+         gap: 10px;
+
+         .choosen_player {
+            background-color: #ff6666;
+            color: #fff;
+         }
+
+         button {
+            @include anime_voice_acting_btn_style($bgColor: #fff, $color: #000);
+            border-radius: 5px;
+
+            &:hover {
+               background-color: #ff6666;
+               color: #fff;
+            }
+         }
+      }
+
+      .anime_voice_acting_container {
+         padding-right: 5px;
+
+         .anime_voice_acting_inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            padding-right: 4px;
+            box-sizing: content-box;
+            height: 480px;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+               width: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+               background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+               background: #fff;
+               border-radius: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+               background: #ff6666;
+            }
+
+            .selected_team {
+               @include anime_voice_acting_btn_style($bgColor: #ff6666, $color: #fff);
+            }
+
+            .anime_voice_acting_btn {
+               @include anime_voice_acting_btn_style;
+
+               &:hover {
+                  background-color: #ff6666;
+                  color: #fff;
+               }
+            }
+         }
+      }
+   }
+
+   .anime_voice_acting_title {
+      text-align: center;
+      font-family: "Baloo", sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 24px;
+      color: #000;
+      background-color: #fff;
+   }
+
+   .episodes_container {
+      max-width: 1224px;
+      overflow-x: auto;
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      padding-bottom: 5px;
+
+      &::-webkit-scrollbar {
+         height: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+         background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+         background: #343a40;
+         border-radius: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+         background: #ff6666;
+      }
+
+      .episode_item {
+         cursor: pointer;
+         padding: 5px 10px;
+         background-color: #343a40;
+         border-radius: 8px;
+         white-space: nowrap;
+         font-family: "Baloo", "Arial Narrow", sans-serif;
+         letter-spacing: 0.4px;
+         font-weight: 600;
+         color: #fff;
+
+         &:hover {
+            background-color: #ff6666;
+         }
+      }
+
+      .selected_episode {
+         cursor: pointer;
+         padding: 5px 10px;
+         background-color: #ff6666;
+         border-radius: 8px;
+         white-space: nowrap;
+         font-family: "Baloo", "Arial Narrow", sans-serif;
+         letter-spacing: 0.4px;
+         font-weight: 600;
+         color: #fff;
+      }
+   }
 }
