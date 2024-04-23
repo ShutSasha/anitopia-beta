@@ -8,7 +8,7 @@ import { ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
 import { findSuitableAnime } from '../helpers/find-suitable-anime'
 
 const PLAYER_JS_URL =
-   import.meta.env.MODE === 'production'
+   import.meta.env.NODE_ENV === 'production'
       ? import.meta.env.VITE_PLAYER_JS_URL_PRODUCTION
       : import.meta.env.VITE_PLAYER_JS_URL_DEVELOPMENT
 
@@ -169,13 +169,14 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                )}
                <div className={styles.choose_player_container}>
                   <div className={styles.choose_player_buttons}>
-                     <button
-                        //TODO add onClick handler for check player availability
-                        onClick={() => setCurrentPlayer('Anitopia')}
-                        className={`${styles.choose_player_button} ${currentPlayer === 'Anitopia' ? styles.choosen_player : ''}`}
-                     >
-                        Anitopia player
-                     </button>
+                     {anilibLink && (
+                        <button
+                           onClick={() => setCurrentPlayer('Anitopia')}
+                           className={`${styles.choose_player_button} ${currentPlayer === 'Anitopia' ? styles.choosen_player : ''}`}
+                        >
+                           Anitopia player
+                        </button>
+                     )}
                      <button
                         onClick={() => setCurrentPlayer('Kodik')}
                         className={`${styles.choose_player_button} ${currentPlayer === 'Kodik' ? styles.choosen_player : ''}`}
