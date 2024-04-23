@@ -8,8 +8,9 @@ import { getRandomAnime } from '@shared/api/anime/anime'
 import { handleFetchError } from '@app/helpers/functions'
 
 interface NavListProps {
-   searchClickHandler?: () => void
+   searchClickHandler: () => void
 }
+
 export const NavList: FC<NavListProps> = ({ searchClickHandler }) => {
    const [menuActive, setMenuActive] = useState(false)
    const navitage = useNavigate()
@@ -29,16 +30,7 @@ export const NavList: FC<NavListProps> = ({ searchClickHandler }) => {
             <span />
          </div>
          <div className={styles.search_nav_list_wrapper}>
-            <img
-               className={styles.search}
-               src={SearchIcon}
-               alt='search'
-               onClick={() => {
-                  if (searchClickHandler) {
-                     searchClickHandler()
-                  }
-               }}
-            />
+            <img className={styles.search} src={SearchIcon} alt='search' onClick={() => searchClickHandler()} />
             <ul className={styles.nav_list}>
                {NAV_NAMES.map((item, index) => {
                   if (item.word_key === 'random') {

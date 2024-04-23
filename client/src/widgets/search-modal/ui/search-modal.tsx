@@ -1,5 +1,6 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import styles from './styles.module.scss'
+
 interface ModalProps {
    active: boolean
    setActive: (value: boolean) => void

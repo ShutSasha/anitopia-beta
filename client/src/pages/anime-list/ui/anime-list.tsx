@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, SearchModal, Wrapper } from '@widgets/index.ts'
+import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } from '@widgets/index.ts'
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
