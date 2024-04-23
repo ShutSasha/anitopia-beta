@@ -8,7 +8,7 @@ import { ANILIB_UPLOAD_VIDEO_API } from '../consts/api'
 import { findSuitableAnime } from '../helpers/find-suitable-anime'
 
 const PLAYER_JS_URL =
-   import.meta.env.NODE_ENV === 'production'
+   import.meta.env.VITE_NODE_ENV === 'production'
       ? import.meta.env.VITE_PLAYER_JS_URL_PRODUCTION
       : import.meta.env.VITE_PLAYER_JS_URL_DEVELOPMENT
 
@@ -48,6 +48,12 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
                .then((res) => res.json())
                .then((res) => res.data)
             setEpisodes(episodes)
+
+            if (episodes.length === 0) {
+               setCurrentPlayer('Kodik')
+               return
+            }
+
             const firstEpisodeId = episodes[0].id
             setCurrentEpisode(episodes[0])
 
@@ -58,7 +64,8 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
 
             if (animeLibPlayers.length === 0) {
                setCurrentPlayer('Kodik')
-               throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
+               return
+               // throw new AnitopiaServerError('Не знайдено Anitopia player для цього аніме')
             }
 
             setPlayers(animeLibPlayers)
