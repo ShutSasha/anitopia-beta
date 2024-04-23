@@ -31,6 +31,7 @@ export const objSetAnimeState = (res: any) => {
       description: res.data.material_data.description,
       genres: res.data.material_data.anime_genres,
       year: res.data.year,
+      material_data: res.material_data || {},
    }
 }
 
