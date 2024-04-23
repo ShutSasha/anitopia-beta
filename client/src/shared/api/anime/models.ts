@@ -1,3 +1,5 @@
+import { MaterialData } from 'pages/anime-list/ui/anime-list'
+
 export type Anime = {
    id: string
    link: string
@@ -12,6 +14,7 @@ export type Anime = {
    description: string
    genres: string[]
    year: number
+   material_data: MaterialData
 }
 
 export type GetAnimeById = {

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } from '@widgets/index.ts'
+import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, SearchModal, Wrapper } from '@widgets/index.ts'
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
@@ -16,6 +16,8 @@ export interface MaterialData {
    poster_url: string | undefined
    genres: Array<string> | undefined
    rating: number | undefined
+   anime_title: string
+   screenshots: Array<string> | undefined
 }
 
 export interface Anime {
@@ -34,7 +36,6 @@ export const AnimeList: FC = observer(() => {
    const [animesPerPage] = useState<number>(20)
    const [searchTerm, setSearchTerm] = useState<string>('')
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-
    useEffect(() => {
       fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
    }, [currentPage, animesPerPage, store])
@@ -53,6 +54,7 @@ export const AnimeList: FC = observer(() => {
       setTimer(
          setTimeout(async () => {
             try {
+               setCurrentPage(1)
                const response = await getCatalogAnime({ page: currentPage, limit: animesPerPage, query: newSearchTerm })
                const formattedData = formattedAnimeData(response.data)
                store.animeCatalogStore.setCatalog(formattedData)

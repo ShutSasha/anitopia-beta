@@ -154,7 +154,6 @@ class AnimeController {
                console.error('Error saving anime:', error)
             }
          }
-         console.log(`Ongoing: ${countOngoing}, All: ${countAll}`)
 
          return res.json(uniqueData)
       } catch (error) {
