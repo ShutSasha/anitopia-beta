@@ -55,7 +55,16 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
             }
 
             const firstEpisodeId = episodes[0].id
-            setCurrentEpisode(episodes[0])
+            const currentUserEpisode = localStorage.getItem('currentEpisode')
+
+            if (currentUserEpisode) {
+               const parsedEpisode = JSON.parse(currentUserEpisode)
+               if (parsedEpisode.anime_id === episodes[0].anime_id) {
+                  setCurrentEpisode(parsedEpisode)
+               } else {
+                  setCurrentEpisode(episodes[0])
+               }
+            }
 
             const episodeData = await fetch(`https://api.lib.social/api/episodes/${firstEpisodeId}?`)
                .then((res) => res.json())
@@ -122,6 +131,7 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
             .then((res) => res.data.players)
 
          setCurrentEpisode(findEpisode)
+         localStorage.setItem('currentEpisode', JSON.stringify(findEpisode))
          const animeLibPlayers: Player[] = episodeData.filter((player: Player) => player.player === 'Animelib')
          setPlayers(animeLibPlayers)
 

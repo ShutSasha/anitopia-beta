@@ -6,6 +6,7 @@ import { SearchModal } from '@widgets/search-modal/ui/search-modal.tsx'
 import { SearchInput } from '@shared/ui/search-input/searchInput.tsx'
 import searchIcon from '@widgets/search-modal/assets/search.png'
 import { useStore } from '@app/hooks/useStore.ts'
+
 export const Header: FC = observer(() => {
    const { store } = useStore()
    const [modalActive, setModalActive] = useState<boolean>(false)
@@ -14,6 +15,10 @@ export const Header: FC = observer(() => {
 
    const handleSearchClick = () => {
       setModalActive(true)
+   }
+
+   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value)
    }
 
    return (
@@ -28,14 +33,18 @@ export const Header: FC = observer(() => {
                <SearchInput
                   // style={{ width: 'inherit', borderRadius: '0px' }}
                   searchTerm={searchTerm}
-                  handleChangeSearch={(e) => {
-                     setSearchTerm(e.target.value)
-                  }}
+                  handleChangeSearch={handleChangeSearch}
                />
-               <div className={styles.modal_content_block}>
-                  <img className={styles.modal_img} src={searchIcon} alt='search-icon' draggable='false' />
-                  <p>Напишіть назву тайтлу, щоб знайти його</p>
-               </div>
+               {!searchTerm ? (
+                  <div className={styles.modal_content_block}>
+                     <img className={styles.modal_img} src={searchIcon} alt='search-icon' draggable='false' />
+                     <p>Напишіть назву тайтлу, щоб знайти його</p>
+                  </div>
+               ) : (
+                  <div className={styles.modal_content_block}>
+                     <p>Карточки аніме</p>
+                  </div>
+               )}
             </SearchModal>
          )}
       </>
