@@ -28,6 +28,6 @@ export const getRandomAnime = (): AxiosPromise<{ _id: string }> => {
    return $api.get(`${BASE_URL}/random`)
 }
 
-// export const searchAnime = (query: string) => {
-//    return $api.get(`${BASE_URL}/search`, { params: { query } })
-// }
+export const searchAnime = (query: string, page: number, limit: number) => {
+   return $api.get(`${BASE_URL}/search`, { params: { page, limit, query } })
+}

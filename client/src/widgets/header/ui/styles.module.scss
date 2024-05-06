@@ -18,6 +18,29 @@
    align-items: center;
    flex-direction: column;
    margin-top: 15px;
+
+   &::-webkit-scrollbar {
+      width: 10px;
+   }
+
+   &::-webkit-scrollbar-track {
+      background: transparent;
+   }
+
+   &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 5px;
+   }
+
+   &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+   }
+}
+
+.loader_container{
+   display: flex;
+   justify-content: center;
+   margin-top: 10px;
 }
 
 .modal_img{

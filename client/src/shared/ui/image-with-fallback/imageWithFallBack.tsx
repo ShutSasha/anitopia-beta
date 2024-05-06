@@ -8,7 +8,7 @@ interface ImageProps {
    altText: string
    textStyle?: string
    animeTitle?: string
-   children: ReactNode
+   children?: ReactNode
 }
 
 export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, altText, children }) => {
