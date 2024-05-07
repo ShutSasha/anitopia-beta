@@ -1,5 +1,4 @@
 const ImageKit = require('imagekit')
-const ImageKit = require('imagekit')
 
 var imagekit = new ImageKit({
    publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
