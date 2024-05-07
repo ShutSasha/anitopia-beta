@@ -36,8 +36,6 @@ export const Header: FC = observer(() => {
             const responseData = response.data
             setTotalLength(responseData.length)
             const formattedData = formattedAnimeData(response.data)
-            store.animeCatalogStore.setCatalog(formattedData)
-            store.animeCatalogStore.setTotalLength(response.data.length)
             return formattedData
          } catch (e) {
             handleFetchError(e)
