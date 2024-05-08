@@ -1,31 +1,30 @@
-.card_body{
-  width: 100%;
-  background-color: #515860;
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  text-decoration: none;
+.card_body {
+   width: 100%;
+   background-color: #515860;
+   margin-bottom: 15px;
+   padding: 10px;
+   border-radius: 10px;
+   text-decoration: none;
 }
 
-.card_content{
-  display: flex;
-  flex-direction: row;
-
+.card_content {
+   display: flex;
+   flex-direction: row;
 }
 
-.card_info{
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
+.card_info {
+   display: flex;
+   flex-direction: column;
+   margin-top: 10px;
 }
 
-.card_info p{
-  color: white;
+.card_info p {
+   color: white;
 }
 
-.card_poster{
-  width: 56px;
-  height: 78px;
-  border-radius: 5px;
-  margin-right: 10px;
+.card_poster {
+   width: 56px;
+   height: 78px;
+   border-radius: 5px;
+   margin-right: 10px;
 }
