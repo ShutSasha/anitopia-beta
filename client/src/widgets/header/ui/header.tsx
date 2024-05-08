@@ -8,7 +8,6 @@ import searchIcon from '@widgets/search-modal/assets/search.png'
 import { searchAnime } from '@shared/api/anime/anime.ts'
 import { formattedAnimeData } from '../../../pages/anime-list/helpers/formattedAnimeData.ts'
 import { handleFetchError } from '@app/helpers/functions.tsx'
-import { useQuery } from 'react-query'
 import { SearchCard } from '@entities/ui/search-card/search-card.tsx'
 import { SearchLoader } from '@shared/ui/search-loader/search-loader.tsx'
 import { DefaultButton } from '@shared/ui/button/defaultButton.tsx'
@@ -25,10 +24,6 @@ export const Header: FC = observer(() => {
    const [searchData, setSearchData] = useState<ISearchCard[]>([])
    const [searchLoading, setSearchLoading] = useState<boolean>(false)
 
-   // TODO переробити пошук, при зміні на currentpage >= 2 відбувається дублювання даних, та й ваще чет крінге
-   // нару
-   // нар
-   // нару
    async function fetchSearchData() {
       try {
          setSearchLoading(true)
@@ -49,8 +44,6 @@ export const Header: FC = observer(() => {
                return [...prevSearchData, ...uniqueData]
             })
          }
-
-         // return formattedAnimeData(data)
       } catch (e) {
          handleFetchError(e)
       } finally {
@@ -58,13 +51,9 @@ export const Header: FC = observer(() => {
       }
    }
 
-   // const {
-   //    data: searchData,
-   //    isLoading: searchLoading,
-   //    isError: searchError,
-   // } = useQuery<ISearchCard[], Error>(['search', searchTerm, currentPage], fetchSearchData, {
-   //    enabled: !!searchTerm,
-   // })
+   useEffect(() => {
+      setCurrentPage(1)
+   }, [searchTerm])
 
    useEffect(() => {
       fetchSearchData()
@@ -88,11 +77,7 @@ export const Header: FC = observer(() => {
          </div>
          {modalActive && (
             <SearchModal active={modalActive} setActive={() => setModalActive(false)}>
-               <SearchInput
-                  // style={{ width: 'inherit', borderRadius: '0px' }}
-                  searchTerm={searchTerm}
-                  handleChangeSearch={handleChangeSearch}
-               />
+               <SearchInput searchTerm={searchTerm} handleChangeSearch={handleChangeSearch} />
                {!searchTerm ? (
                   <div className={styles.modal_content_block}>
                      <img className={styles.modal_img} src={searchIcon} alt='search-icon' draggable='false' />
