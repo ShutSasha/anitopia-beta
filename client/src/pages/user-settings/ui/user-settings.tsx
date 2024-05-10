@@ -1,18 +1,19 @@
-import { ContentContainer, Footer, Header, SelectUserFrame, UserSettingsHeader, Wrapper } from '@widgets/index'
-import { UserSettingsAccount } from '@widgets/user-settings-account'
+import { ContentContainer, Footer, Header, UserSettingsHeader, Wrapper } from '@widgets/index'
 import { FC } from 'react'
+import { SETTINGS_PAGES } from '../consts/settings-pages'
 
 export const UserSettings: FC = () => {
+   const pathURL = window.location.pathname.split('/').pop()
+
+   if (!pathURL) {
+      return <div>404</div>
+   }
+
    return (
       <Wrapper>
          <Header />
-         <UserSettingsHeader />
-         <ContentContainer padding='30px' backgroundColor='#fff' borderBottom='5px solid #ff6666'>
-            <UserSettingsAccount />
-         </ContentContainer>
-         <ContentContainer padding='30px' backgroundColor='#fff'>
-            <SelectUserFrame />
-         </ContentContainer>
+         <UserSettingsHeader pathURL={pathURL} />
+         {SETTINGS_PAGES.map((item) => item.page === pathURL && item.component)}
          <Footer />
       </Wrapper>
    )

@@ -22,7 +22,7 @@ export const MainUserInfo: FC<MainUserInfoProps> = ({ user, handleClick, fileInp
             handleImageChange={handleImageChange}
          />
          <UserPersonalInfo user={user} />
-         {store.user.id === user._id && <Link to={`/user-settings/${user._id}`} className={styles.edit_btn} />}
+         {store.user.id === user._id && <Link to={`/user-settings/${user._id}/account`} className={styles.edit_btn} />}
       </div>
    )
 }

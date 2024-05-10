@@ -1,1 +1,6 @@
-export const SETTINGS_TABS = [{ tab: 'Акаунт' }, { tab: 'Сайт' }, { tab: 'Безпека' }, { tab: 'Преміум підписка' }]
+export const SETTINGS_TABS = [
+   { tab: 'Акаунт', path: 'account' },
+   { tab: 'Сайт', path: 'site' },
+   { tab: 'Безпека', path: 'security' },
+   { tab: 'Преміум підписка', path: 'premium' },
+]

@@ -1,13 +1,14 @@
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 import styles from './styles.module.scss'
 
 interface CheckBoxProps {
    text: string
+   style?: CSSProperties
 }
 
-export const CheckBox: FC<CheckBoxProps> = ({ text }) => {
+export const CheckBox: FC<CheckBoxProps> = ({ text, style }) => {
    return (
-      <div className={styles.user_is_hide_profile}>
+      <div style={{ ...style }} className={styles.user_is_hide_profile}>
          <label>
             <input type='checkbox' />
             <div className={styles.checkbox_icon}></div>
