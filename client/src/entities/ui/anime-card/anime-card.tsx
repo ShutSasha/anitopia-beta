@@ -20,7 +20,7 @@ export const AnimeCard: FC<Anime> = observer(({ id, title, material_data }) => {
    }, [material_data?.poster_url])
 
    return (
-      <Link to={location.pathname.replace(window.location.pathname, '/anime/') + id} className={styles.anime_card}>
+      <Link to={location.pathname.replace(window.location.pathname, '/anime/') + id} className={styles.card_body}>
          {isLoadingImage ? (
             <div className={styles.skeleton}>
                <Skeleton width={232} height={310} />

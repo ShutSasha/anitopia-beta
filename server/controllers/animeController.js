@@ -16,11 +16,11 @@ class AnimeController {
 
          let startIndex = 0
 
-         if (req.query.page >= 2) {
-            startIndex = (req.query.page - 1) * req.query.limit || 0
-         }
+         // if (req.query.page >= 2) {
+         //    startIndex = (req.query.page - 1) * req.query.limit || 0
+         // }
 
-         const count = req.query.limit || 20
+         const count = req.query.limit * req.query.page || 20
          const result = AnimeService.getAnimeSubset(filteredData, Number(startIndex), Number(count))
 
          return res.json({

@@ -57,6 +57,10 @@
                   background-color: #ff6666;
                   color: #fff;
                   transition: all 0.25s ease-out;
+
+                  .link_user_settings {
+                     color: #fff;
+                  }
                }
 
                &:first-child {
@@ -68,6 +72,10 @@
                   border-bottom-left-radius: 10px;
                   border-bottom-right-radius: 10px;
                }
+            }
+
+            .link_user_settings {
+               color: #000;
             }
          }
       }

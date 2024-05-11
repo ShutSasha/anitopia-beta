@@ -73,7 +73,7 @@ export const AnimeList: FC = observer(() => {
    return (
       <Wrapper>
          <Header />
-         <ContentContainer backgroundColor='#fff' padding='0px 20px'>
+         <ContentContainer style={{ backgroundColor: '#fff', padding: '0px 20px' }}>
             <h1 className={styles.title}>Каталог аніме</h1>
             <SearchInput
                style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}

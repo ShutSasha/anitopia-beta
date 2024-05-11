@@ -33,7 +33,7 @@ export const TopAnime: FC = observer(() => {
    return (
       <Wrapper>
          <Header />
-         <ContentContainer backgroundColor='#fff' padding='0px 20px'>
+         <ContentContainer style={{ backgroundColor: '#fff', padding: '0px 20px' }}>
             <PageTitle
                style={{
                   margin: '30px 0px',

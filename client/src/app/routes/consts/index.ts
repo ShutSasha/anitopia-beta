@@ -8,5 +8,8 @@ export const routes = {
    TOP_ANIME: '/top-anime',
    USER_POLICY: '/users-policy',
    NOTIFICATIONS: '/notifications',
-   USER_SETTINGS: '/user-settings/:id',
+   USER_SETTINGS_ACCOUNT: '/user-settings/:id/account',
+   USER_SETTINGS_SITE: '/user-settings/:id/site',
+   USER_SETTINGS_SECURITY: '/user-settings/:id/security',
+   USER_SETTINGS_PREMIUM: '/user-settings/:id/premium',
 }

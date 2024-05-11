@@ -1,0 +1,100 @@
+.anitopia_better_with_premium_title {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   line-height: 54px;
+   font-size: 44px;
+   text-align: center;
+   color: var(--anitopia-color);
+}
+
+.what_we_offer_title {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   line-height: 54px;
+   font-size: 44px;
+   text-align: center;
+   color: #000;
+   margin-bottom: 50px;
+}
+
+.offers_lsit {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 30px;
+
+   .offer_card {
+      height: 140px;
+      width: 300px;
+      border-radius: 10px;
+      background-color: #ff6666;
+      position: relative;
+      margin-bottom: 12px;
+   }
+
+   .card_text {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      line-height: 28px;
+      font-size: 24px;
+      max-width: 300px;
+      text-align: center;
+   }
+
+   .notification::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75px;
+      height: 75px;
+      background-image: url("../assets/notification-icon.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      z-index: 50;
+   }
+
+   .customize_profile::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75px;
+      height: 75px;
+      background-image: url("../assets/user-icon.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      z-index: 50;
+   }
+
+   .web_settings::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75px;
+      height: 75px;
+      background-image: url("../assets/web-icon.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      z-index: 50;
+   }
+}
+
+.buy_premium {
+   display: block;
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   line-height: 24px;
+   font-size: 18px;
+   border-radius: 10px;
+   background-color: var(--main-green);
+   color: var(--light-text);
+   max-width: 155px;
+   padding: 15px 38px;
+   margin: 0 auto;
+}

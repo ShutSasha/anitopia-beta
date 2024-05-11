@@ -51,7 +51,19 @@ export const router = createBrowserRouter(
          element: <Notifications />,
       },
       {
-         path: routes.USER_SETTINGS,
+         path: routes.USER_SETTINGS_ACCOUNT,
+         element: <UserSettings />,
+      },
+      {
+         path: routes.USER_SETTINGS_SITE,
+         element: <UserSettings />,
+      },
+      {
+         path: routes.USER_SETTINGS_SECURITY,
+         element: <UserSettings />,
+      },
+      {
+         path: routes.USER_SETTINGS_PREMIUM,
          element: <UserSettings />,
       },
       {

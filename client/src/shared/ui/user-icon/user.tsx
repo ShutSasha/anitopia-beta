@@ -47,7 +47,11 @@ export const User: FC = observer(() => {
                >
                   <ul className={styles.user_options_list}>
                      <li className={styles.user_option_item}>Колекція</li>
-                     <li className={styles.user_option_item}>Налаштування</li>
+                     <li className={styles.user_option_item}>
+                        <Link className={styles.link_user_settings} to={`/user-settings/${store.user.id}` + '/account'}>
+                           Налаштування
+                        </Link>
+                     </li>
                      <li className={styles.user_option_item} onClick={handleLogout}>
                         Вихід
                      </li>

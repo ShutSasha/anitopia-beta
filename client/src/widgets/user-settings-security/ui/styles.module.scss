@@ -1,0 +1,32 @@
+.security_title {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   line-height: 46px;
+   font-size: 40px;
+   margin-bottom: 30px;
+   text-align: center;
+}
+
+.change_password_form {
+   max-width: 490px;
+   width: 100%;
+   gap: 0;
+
+   .current_password_title {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      line-height: 28px;
+      font-size: 24px;
+      margin-bottom: 20px;
+   }
+
+   .btn {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      line-height: 22px;
+      font-size: 14px;
+      border-radius: 10px;
+      background-color: var(--main-green);
+      color: var(--light-text);
+      max-width: 155px;
+      padding: 5px 16px;
+      margin: 0 auto;
+   }
+}

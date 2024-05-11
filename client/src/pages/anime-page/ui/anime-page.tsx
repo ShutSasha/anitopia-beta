@@ -28,7 +28,7 @@ export const AnimePage: FC = observer(() => {
    return (
       <Wrapper>
          <Header />
-         <ContentContainer padding='25px 20px' backgroundColor='#fff'>
+         <ContentContainer style={{ padding: '25px 20px', backgroundColor: '#fff' }}>
             <AnimeGeneralInfo anime={anime} ratings={ratings} />
             <PlayerBlock link={anime.link} />
             <AnimeScreenshots screenshots={anime.screenshots} />

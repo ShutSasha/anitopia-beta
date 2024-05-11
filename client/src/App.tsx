@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './pages/router'
 import { useStore } from '@app/hooks/useStore'
