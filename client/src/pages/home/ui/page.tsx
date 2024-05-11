@@ -31,7 +31,7 @@ export const HomePage: FC = observer(() => {
    return (
       <Wrapper>
          <Header />
-         <ContentContainer padding='25px 0 0 0'>
+         <ContentContainer style={{ padding: '25px 0 0 0' }}>
             <div className={styles_h.anime_season}>
                <div className={styles_h.anime_season_inner}>
                   <h2 className={styles_h.anime_season_title}>Аніме зимового сезона</h2>
