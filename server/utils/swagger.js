@@ -24,7 +24,9 @@ function swaggerDocs(app, port) {
       res.send(swaggerSpec)
    })
 
-   console.log(`Docs available at http://localhost:${port}/docs`)
+   const baseUrl = process.env.API_URL || `http://localhost:${port}`
+
+   console.log(`Docs available at ${baseUrl}/docs`)
 }
 
 module.exports = swaggerDocs
