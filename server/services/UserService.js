@@ -194,6 +194,25 @@ class UserService {
 
       await mailService.sendTempPassword(user.email, tempPassword)
    }
+
+   async changePassword(userId, oldPassword, newPassword) {
+      const user = await UserModel.findById(userId)
+
+      if (!user) {
+         throw ApiError.BadRequest()
+      }
+
+      const validatedPassword = bcrypt.compareSync(oldPassword, user.password)
+      console.log(validatedPassword)
+
+      if (!validatedPassword) {
+         throw ApiError.BadRequest('Ви ввели неправильний пароль')
+      }
+
+      const newHash = bcrypt.hashSync(newPassword, 7)
+      user.password = newHash
+      user.save()
+   }
 }
 
 module.exports = new UserService()
