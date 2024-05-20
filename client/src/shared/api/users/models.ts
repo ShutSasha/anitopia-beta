@@ -28,3 +28,9 @@ export type UserByIdResponse = {
    uploadStatus: boolean
    username: string
 }
+
+export type ChangePasswordResponse = {
+   id: string
+   oldPassword: string
+   newPassword: string
+}
