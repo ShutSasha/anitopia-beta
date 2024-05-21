@@ -88,7 +88,7 @@ class AnimeController {
                   Number(item.material_data.aired_at.split('-')[0]) === Number(currentYear)
                ) {
                   animeWithDate.push({
-                     id: item.id,
+                     id: item._id,
                      title: item.title,
                      poster_url: item.material_data.poster_url,
                   })

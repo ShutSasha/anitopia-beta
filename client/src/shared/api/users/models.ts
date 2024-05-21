@@ -1,3 +1,4 @@
+import { AnimeRating } from './../../../entities/ui/anime-card/ui/anime-rating'
 export type GetUserById = {
    id: string | undefined
 }
@@ -15,7 +16,7 @@ export type UserByIdResponse = {
    _id: string
    activationLink: string
    age: number | null
-   // animeRatings: AnimeRating[]
+   animeRatings: RatedAnime[] | undefined
    avatarLink: string
    country: string | null
    email: string
@@ -27,6 +28,14 @@ export type UserByIdResponse = {
    sex: string | null
    uploadStatus: boolean
    username: string
+}
+
+export interface RatedAnime {
+   _id: string
+   animeId: string
+   poster_url: string
+   rating: number
+   title: string
 }
 
 export type ChangePasswordResponse = {

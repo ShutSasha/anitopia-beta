@@ -1,3 +1,9 @@
+.ratings_container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
 .anime_ratings_list {
    display: flex;
    gap: 20px;
@@ -14,4 +20,13 @@
    border-radius: 15px;
    font-size: 24px;
    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.user_rating {
+   background-color: #ff6666;
+   padding: 8px 6px;
+   border-radius: 15px;
+   color: #fff;
+   line-height: 28px;
+   font-size: 24px;
 }
