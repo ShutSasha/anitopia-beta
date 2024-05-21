@@ -2,17 +2,15 @@ import { ContentContainer } from '@widgets/content-container'
 import { FC, useState } from 'react'
 import styles from './styles.module.scss'
 import { TextField } from '@mui/material'
-import { showNotice } from '@app/helpers/functions'
+import { useParams } from 'react-router-dom'
+import { handleChangePassword } from '@widgets/user-settings-security/helpers/handleChangePassword.ts'
 
 export const UserSettingsSecurity: FC = () => {
    const [currentPasswords, setCurrentPasswords] = useState<string>('')
    const [newPasswords, setNewPasswords] = useState<string>('')
    const [confirmPasswords, setConfirmPasswords] = useState<string>('')
 
-   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      showNotice('success', 'Пароль успішно змінено')
-   }
+   const { id } = useParams()
 
    return (
       <ContentContainer
@@ -29,7 +27,13 @@ export const UserSettingsSecurity: FC = () => {
          }}
       >
          <h2 className={styles.security_title}>Зміна паролю</h2>
-         <form onSubmit={handleSubmit} className={styles.change_password_form}>
+         <form
+            onSubmit={(e) => {
+               e.preventDefault()
+               handleChangePassword(id, currentPasswords, newPasswords, confirmPasswords)
+            }}
+            className={styles.change_password_form}
+         >
             <h2 className={styles.current_password_title}>Поточний пароль</h2>
             <TextField
                type='password'

@@ -1,4 +1,5 @@
 const Anime = require('../models/Anime')
+const { startOfWeek, endOfWeek, parseISO, subWeeks, isAfter, isBefore, isEqual } = require('date-fns')
 
 class AnimeService {
    async getCountAnime() {
@@ -17,6 +18,58 @@ class AnimeService {
       } catch (err) {
          next(err)
       }
+   }
+
+   getUpdatedAnime(data) {
+      let updatedAnimeOfLastThreeWeeks = []
+
+      const threeWeeksAgo = subWeeks(new Date(), 3)
+      const startOfThreeWeeksAgo = startOfWeek(threeWeeksAgo, { weekStartsOn: 0 })
+      const endOfCurrentWeek = endOfWeek(new Date(), { weekStartsOn: 0 })
+
+      for (let anime of data) {
+         if (anime.material_data && anime.material_data.aired_at) {
+            const airedAtDate = parseISO(anime.material_data.aired_at)
+
+            if (
+               (isAfter(airedAtDate, startOfThreeWeeksAgo) || isEqual(airedAtDate, startOfThreeWeeksAgo)) &&
+               (isBefore(airedAtDate, endOfCurrentWeek) || isEqual(airedAtDate, endOfCurrentWeek))
+            ) {
+               updatedAnimeOfLastThreeWeeks.push({
+                  _id: anime._id,
+                  title: anime.title,
+                  last_episode: anime.last_episode,
+                  poster_url: anime.material_data.poster_url,
+               })
+            }
+         }
+      }
+
+      return updatedAnimeOfLastThreeWeeks
+   }
+
+   getReleasedHalfYear(data) {
+      let releasedAnimeLastHalfYear = []
+
+      const sixMonthsAgo = subWeeks(new Date(), 26)
+
+      for (let anime of data) {
+         if (anime.material_data && anime.material_data.released_at && anime.material_data.shikimori_rating >= 7.8) {
+            const releasedAtDate = parseISO(anime.material_data.released_at)
+
+            if (isAfter(releasedAtDate, sixMonthsAgo) || isEqual(releasedAtDate, sixMonthsAgo)) {
+               releasedAnimeLastHalfYear.push({
+                  _id: anime._id,
+                  title: anime.title,
+                  last_episode: anime.last_episode,
+                  poster_url: anime.material_data.poster_url,
+                  type: anime.type,
+               })
+            }
+         }
+      }
+
+      return releasedAnimeLastHalfYear
    }
 
    getAnimeSubset(data, startIndex, count) {

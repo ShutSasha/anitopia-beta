@@ -2,7 +2,7 @@ const { default: axios } = require('axios')
 const AnimeService = require('../services/AnimeService')
 const Anime = require('../models/Anime')
 const { getAnimeData } = require('../animeData')
-const { startOfWeek, endOfWeek, parseISO, subDays, isAfter, isBefore, isEqual } = require('date-fns')
+const { parseISO, subDays } = require('date-fns')
 
 class AnimeController {
    async search(req, res, next) {
@@ -88,7 +88,7 @@ class AnimeController {
                   Number(item.material_data.aired_at.split('-')[0]) === Number(currentYear)
                ) {
                   animeWithDate.push({
-                     id: item.id,
+                     id: item._id,
                      title: item.title,
                      poster_url: item.material_data.poster_url,
                   })
@@ -165,28 +165,7 @@ class AnimeController {
    async getUpdated(req, res, next) {
       try {
          const allAnime = getAnimeData()
-         let updatedAnimeOfThisWeek = []
-
-         const startOfWeekDate = startOfWeek(new Date(), { weekStartsOn: 0 })
-         const endOfWeekDate = endOfWeek(new Date(), { weekStartsOn: 1 })
-
-         for (let anime of allAnime) {
-            if (anime.material_data && anime.material_data.aired_at) {
-               const airedAtDate = parseISO(anime.material_data.aired_at)
-
-               if (
-                  (isAfter(airedAtDate, startOfWeekDate) || isEqual(airedAtDate, startOfWeekDate)) &&
-                  (isBefore(airedAtDate, endOfWeekDate) || isEqual(airedAtDate, endOfWeekDate))
-               ) {
-                  updatedAnimeOfThisWeek.push({
-                     _id: anime._id,
-                     title: anime.title,
-                     last_episode: anime.last_episode,
-                     poster_url: anime.material_data.poster_url,
-                  })
-               }
-            }
-         }
+         let updatedAnimeOfThisWeek = AnimeService.getUpdatedAnime(allAnime)
 
          return res.status(200).json(updatedAnimeOfThisWeek)
       } catch (e) {
@@ -194,30 +173,12 @@ class AnimeController {
       }
    }
 
-   async getReleasedLastMonth(req, res, next) {
+   async getReleasedHalfYear(req, res, next) {
       try {
          const allAnime = getAnimeData()
-         let releasedAnimeLastMonth = []
+         let releasedAnimeHalfYear = AnimeService.getReleasedHalfYear(allAnime)
 
-         let thirtyDaysAgo = subDays(new Date(), 30)
-
-         for (let anime of allAnime) {
-            if (anime.material_data && anime.material_data.released_at && anime.material_data.shikimori_rating >= 7.5) {
-               let releasedAtDate = parseISO(anime.material_data.released_at)
-
-               if (releasedAtDate >= thirtyDaysAgo) {
-                  releasedAnimeLastMonth.push({
-                     _id: anime._id,
-                     title: anime.title,
-                     last_episode: anime.last_episode,
-                     poster_url: anime.material_data.poster_url,
-                     type: anime.type,
-                  })
-               }
-            }
-         }
-
-         return res.status(200).json(releasedAnimeLastMonth)
+         return res.status(200).json(releasedAnimeHalfYear)
       } catch (e) {
          next(e)
       }

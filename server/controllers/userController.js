@@ -68,6 +68,23 @@ class userController {
          next(e)
       }
    }
+
+   async changePassword(req, res, next) {
+      try {
+         const errors = validationResult(req)
+         if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
+         }
+
+         const { id } = req.params
+         const { oldPassword, newPassword } = req.body
+         const result = await userService.changePassword(id, oldPassword, newPassword)
+
+         return res.status(200).json(result)
+      } catch (e) {
+         next(e)
+      }
+   }
 }
 
 module.exports = new userController()

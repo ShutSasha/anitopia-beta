@@ -3,6 +3,7 @@ const router = new Router()
 const userController = require('../controllers/userController')
 const multer = require('multer')
 const { validateUserPersonalData } = require('../validators/user-persona-data')
+const { validatePassword } = require('../validators/password')
 const upload = multer({ dest: 'uploads/' })
 const authMiddleware = require('../middleware/authMiddleware')
 
@@ -183,5 +184,7 @@ router.post('/:id/avatar', upload.single('img'), userController.uploadAvatar)
  *         description: Помилка сервера. Не вдалося завантажити фон користувача.
  */
 router.post('/:id/background', userController.uploadBackground)
+
+router.put('/:id/password', validatePassword(), userController.changePassword)
 
 module.exports = router

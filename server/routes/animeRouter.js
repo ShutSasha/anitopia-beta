@@ -86,7 +86,7 @@ router.get('/top', animeController.getTop)
  *     tags:
  *       - anime
  *     summary: Оновлені аніме
- *     description: Отримати список аніме, де випущений епізод на цьому тижні.
+ *     description: Отримати список аніме, де випущений епізод був протягом троьх тижнів.
  *     responses:
  *       200:
  *         description: Успішна відповідь. Отримано оновлений список аніме.
@@ -99,13 +99,13 @@ router.get('/updated', animeController.getUpdated)
  *  get:
  *     tags:
  *       - anime
- *     summary: Аніме, випущені за останній місяць
- *     description: Отримати список аніме, які були випущені протягом останніх 30 днів.
+ *     summary: Аніме, випущені за останні пів року
+ *     description: Отримати список аніме, які були випущені протягом останніх 180 днів.
  *     responses:
  *       200:
  *         description: Успішна відповідь. Отримано список аніме, випущених за останній місяць.
  */
-router.get('/released', animeController.getReleasedLastMonth)
+router.get('/released', animeController.getReleasedHalfYear)
 
 /**
  * @openapi
