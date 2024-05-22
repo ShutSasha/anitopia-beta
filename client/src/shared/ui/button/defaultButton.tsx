@@ -6,7 +6,7 @@ interface ButtonProps {
    color?: string
    backgroundColor?: string
    disabled?: boolean
-   onClick: () => void
+   onClick: () => any
 }
 
 export const DefaultButton: FC<ButtonProps> = ({
@@ -25,12 +25,7 @@ export const DefaultButton: FC<ButtonProps> = ({
 
    return (
       <>
-         <button
-            className={styles.default_btn}
-            style={buttonStyles}
-            onClick={onClick}
-            disabled={disabled}
-         >
+         <button className={styles.default_btn} style={buttonStyles} onClick={onClick} disabled={disabled}>
             {text}
          </button>
       </>
