@@ -1,8 +1,9 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import styles from './styles.module.scss'
 import { MainUserInfoProps } from '../../../widgets/main-user-info'
 import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
+import { UserBadget } from '@shared/api'
 
 export const AvatarUsernameProfile: FC<MainUserInfoProps> = observer(
    ({ user, handleClick, fileInputRef, handleImageChange }) => {
@@ -24,6 +25,13 @@ export const AvatarUsernameProfile: FC<MainUserInfoProps> = observer(
                   />
                </div>
                <h2 className={styles.title_username}>{user.username}</h2>
+               <div className={styles.badge_list}>
+                  {user.roles.map((role: UserBadget, index: number) => (
+                     <div key={index} className={`${styles.badge} ${styles[role]}`}>
+                        {role}
+                     </div>
+                  ))}
+               </div>
             </div>
          )
       }
