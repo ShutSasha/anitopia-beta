@@ -1,0 +1,72 @@
+.expandable_block {
+   width: 100%;
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   font-size: 18px;
+   line-height: 24px;
+   padding: 20px;
+   color: white;
+   cursor: pointer;
+   border-radius: 5px;
+   position: relative;
+   transition: all 0.3s ease;
+}
+
+.title {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.arrow_wrapper {
+   width: 24px;
+   height: 24px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: #ff6666;
+   border-radius: 50%;
+   transition: transform 0.3s;
+}
+
+.arrow {
+   width: 8px;
+   height: 8px;
+   border-left: 2px solid white;
+   border-bottom: 2px solid white;
+   transform: rotate(-45deg);
+   transition: transform 0.3s;
+}
+
+.arrow_wrapper.open .arrow {
+   transform: rotate(-45deg);
+}
+
+.open {
+   transform: rotate(180deg);
+}
+
+.description_wrapper {
+   overflow: hidden;
+   max-height: 0;
+   transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
+   opacity: 0;
+}
+
+.description_wrapper.open_desc {
+   max-height: 200px;
+   opacity: 1;
+}
+
+.line {
+   height: 1px;
+   background-color: white;
+   margin: 10px 0;
+}
+
+.description {
+   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+   font-size: 16px;
+   margin-top: 10px;
+}

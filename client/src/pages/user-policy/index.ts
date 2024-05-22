@@ -1,1 +1,1 @@
-export { UserPolicy } from './ui/userPolicy.tsx'
+export { UserPolicy } from './ui/user-policy.tsx'
