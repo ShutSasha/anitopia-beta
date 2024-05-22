@@ -98,6 +98,7 @@ class authController {
    async generateTempPassword(req, res, next) {
       try {
          const { email } = req.body
+         console.log(email)
          const user = await User.findOne({ email })
          await userService.generatePassword(user)
          return res.json(user)

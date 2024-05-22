@@ -187,4 +187,6 @@ router.post('/:id/background', userController.uploadBackground)
 
 router.put('/:id/password', validatePassword(), userController.changePassword)
 
+router.post('/:id/subscribe', userController.BuySubscribe)
+
 module.exports = router
