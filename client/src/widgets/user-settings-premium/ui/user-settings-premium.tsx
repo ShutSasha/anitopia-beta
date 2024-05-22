@@ -1,12 +1,23 @@
 import { ContentContainer } from '@widgets/content-container'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import styles from './styles.module.scss'
-import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 export const UserSettingsPremium: FC = () => {
-   const handleBuyPremium = () => {
-      window.location.href = 'https://www.liqpay.ua/uk'
+   const { id } = useParams()
+   const [htmlForm, setHtmlForm] = useState<string>('')
+   const [showForm, setShowForm] = useState<boolean>(false)
+   const handleBuyPremium = async () => {
+      try {
+         const response = await axios.post(`http://localhost:5000/api/users/${id}/subscribe`)
+         setHtmlForm(response.data)
+         setShowForm(true)
+      } catch (e) {
+         console.error(e)
+      }
    }
+   console.log(htmlForm)
 
    return (
       <ContentContainer
@@ -34,9 +45,10 @@ export const UserSettingsPremium: FC = () => {
                <p className={styles.card_text}>Налаштування сайту на власне бажання</p>
             </li>
          </ul>
-         <Link target='_blank' to={'https://www.liqpay.ua/uk'}>
-            <button className={styles.buy_premium}>Придбати</button>
-         </Link>
+
+         <button className={styles.buy_premium} onClick={handleBuyPremium}>
+            Придбати
+         </button>
       </ContentContainer>
    )
 }
