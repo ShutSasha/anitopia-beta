@@ -18,10 +18,8 @@ class commentController {
    async getCommentsByAnimeId(req, res, next) {
       try {
          const { id } = req.params
-
-         const anime = await Anime.findById(id)
-
-         const comments = await Comment.find({ anime: anime._id })
+			
+			const {comments} = await Anime.findById(id).populate('comments')
 
          return res.status(200).json(comments)
       } catch (error) {
