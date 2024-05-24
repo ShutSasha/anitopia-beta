@@ -185,7 +185,7 @@ class commentController {
             comment.dislikesBy.push(user._id)
             comment.dislikes += 1
             if (comment.likesBy.includes(user._id)) {
-               comment.likesBy = comment.dislikesBy.filter((item) => item.toString() !== user._id.toString())
+               comment.likesBy = comment.likesBy.filter((item) => item.toString() !== user._id.toString())
                comment.likes -= 1
             }
          }
