@@ -1,0 +1,23 @@
+.modal_buttons {
+   display: flex;
+   justify-content: space-around;
+   margin-top: 20px;
+}
+
+.modal_button_yes,
+.modal_button_no {
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.modal_button_yes {
+   background-color: #d9d9d9;
+   color: #000;
+}
+
+.modal_button_no {
+   background-color: #ff6666;
+   color: #fff;
+}

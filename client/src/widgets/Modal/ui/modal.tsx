@@ -8,6 +8,7 @@ interface ModalProps {
    headerText: string
    modalWidth?: string
    containerPadding?: string
+   headerTextSize?: string
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -17,6 +18,7 @@ export const Modal: FC<ModalProps> = ({
    headerText,
    modalWidth = '50vw',
    containerPadding = '15px 10px',
+   headerTextSize = '24px',
 }) => {
    const modalActive = active ? `${styles.modal} ${styles.modal_active}` : `${styles.modal}`
    const contentModalActive = active
@@ -27,7 +29,9 @@ export const Modal: FC<ModalProps> = ({
       <div className={modalActive} onClick={() => setActive(false)}>
          <div style={{ width: modalWidth }} className={contentModalActive} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modal_header}>
-               <p className={styles.header_text}>{headerText}</p>
+               <p style={{ fontSize: headerTextSize }} className={styles.header_text}>
+                  {headerText}
+               </p>
             </div>
             <div style={{ padding: containerPadding }}>{children}</div>
          </div>

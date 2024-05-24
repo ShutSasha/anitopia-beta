@@ -1,0 +1,25 @@
+.notification_container {
+   background-color: #343a40;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   padding: 10px 15px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   .notification_title {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+   }
+
+   .delete_all_notifications_btn {
+      background-image: url("../assets/delete-all-notifications-btn.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 35px;
+      width: 35px;
+      background-color: transparent;
+   }
+}
