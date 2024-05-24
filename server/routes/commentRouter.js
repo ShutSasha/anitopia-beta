@@ -148,5 +148,9 @@ router.get('/anime/:id', commentController.getCommentsByAnimeId)
 router.post('/', authMiddleware, commentController.createComment)
 router.patch('/', authMiddleware, commentController.editComment)
 router.delete('/', authMiddleware, commentController.deleteComment)
+router.get('/like/:id', commentController.getLikes)
+router.get('/dislike/:id', commentController.getDislikes)
+router.patch('/like', authMiddleware, commentController.likeComment)
+router.patch('/dislike', authMiddleware, commentController.dislikeComment)
 
 module.exports = router

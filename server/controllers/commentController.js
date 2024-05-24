@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment')
 const Anime = require('../models/Anime')
+const User = require('../models/User')
 const { ObjectId } = require('mongodb')
 
 class commentController {
@@ -18,8 +19,8 @@ class commentController {
    async getCommentsByAnimeId(req, res, next) {
       try {
          const { id } = req.params
-			
-			const {comments} = await Anime.findById(id).populate('comments')
+
+         const { comments } = await Anime.findById(id).populate('comments')
 
          return res.status(200).json(comments)
       } catch (error) {
@@ -98,6 +99,102 @@ class commentController {
       } catch (error) {
          console.error('Error delete comment:', error)
          return res.status(500).json({ error: 'An error occurred while delete comment' })
+      }
+   }
+
+   async getLikes(req, res, next) {
+      try {
+         const { id } = req.params
+
+         const comment = await Comment.findById(id)
+
+         return res.status(200).json({ likes: comment.likes })
+      } catch (error) {
+         next(error)
+      }
+   }
+
+   async getDislikes(req, res, next) {
+      try {
+         const { id } = req.params
+
+         const comment = await Comment.findById(id)
+
+         return res.status(200).json({ dislikes: comment.dislikes })
+      } catch (error) {
+         next(error)
+      }
+   }
+
+   async likeComment(req, res, next) {
+      try {
+         const { commentId, userId } = req.body
+
+         const comment = await Comment.findById(commentId)
+
+         const user = await User.findById(userId)
+
+         if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' })
+         }
+
+         if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+         }
+
+         if (comment.likesBy.includes(user._id)) {
+            comment.likesBy = comment.likesBy.filter((item) => item.toString() !== user._id.toString())
+            comment.likes -= 1
+         } else {
+            comment.likesBy.push(user._id)
+            comment.likes += 1
+            if (comment.dislikesBy.includes(user._id)) {
+               comment.dislikesBy = comment.dislikesBy.filter((item) => item.toString() !== user._id.toString())
+               comment.dislikes -= 1
+            }
+         }
+
+         await comment.save()
+
+         return res.status(200).json({ likes: comment.likes })
+      } catch (error) {
+         next(error)
+      }
+   }
+
+   async dislikeComment(req, res, next) {
+      try {
+         const { commentId, userId } = req.body
+
+         const comment = await Comment.findById(commentId)
+
+         const user = await User.findById(userId)
+
+         if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' })
+         }
+
+         if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+         }
+
+         if (comment.dislikesBy.includes(user._id)) {
+            comment.dislikesBy = comment.dislikesBy.filter((item) => item.toString() !== user._id.toString())
+            comment.dislikes -= 1
+         } else {
+            comment.dislikesBy.push(user._id)
+            comment.dislikes += 1
+            if (comment.likesBy.includes(user._id)) {
+               comment.likesBy = comment.dislikesBy.filter((item) => item.toString() !== user._id.toString())
+               comment.likes -= 1
+            }
+         }
+
+         await comment.save()
+
+         return res.status(200).json({ dislikes: comment.dislikes })
+      } catch (error) {
+         next(error)
       }
    }
 }
