@@ -99,6 +99,33 @@ class AnimeService {
       return data
    }
 
+   async sortBy(data, query, order) {
+      data.sort((a, b) => {
+         const queryA =
+            a[query] !== undefined
+               ? a[query]
+               : (a.material_data && a.material_data[query]) !== undefined
+                 ? a.material_data[query]
+                 : 0
+         const queryB =
+            b[query] !== undefined
+               ? b[query]
+               : (b.material_data && b.material_data[query]) !== undefined
+                 ? b.material_data[query]
+                 : 0
+
+         if (order.toString() === 'asc') {
+            return queryA - queryB
+         } else if (order.toString() === 'desc') {
+            return queryB - queryA
+         } else {
+            throw new Error('Invalid order value. Must be "asc" or "desc".')
+         }
+      })
+
+      return data
+   }
+
    findAnime(data, searchText) {
       const lowerCaseSearchText = searchText.trim().toLowerCase()
       const searchedData = data.filter((anime) => {

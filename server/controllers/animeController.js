@@ -31,16 +31,25 @@ class AnimeController {
          next(e)
       }
    }
-
    async getList(req, res, next) {
       try {
-         const { query } = req.query
+         const { query, shikimori_votes, episodes_count, year } = req.query
          const data = getAnimeData()
 
          let sortedData = AnimeService.sortByRating(data)
 
          if (query) {
             sortedData = sortedData.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
+         }
+
+         if (shikimori_votes) {
+            sortedData = await AnimeService.sortBy(data, 'shikimori_votes', shikimori_votes)
+         }
+         if (episodes_count) {
+            sortedData = await AnimeService.sortBy(data, 'episodes_count', episodes_count)
+         }
+         if (year) {
+            sortedData = await AnimeService.sortBy(data, 'year', year)
          }
 
          let startIndex = 0
