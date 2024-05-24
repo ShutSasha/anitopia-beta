@@ -1,4 +1,4 @@
-import { AnitopiaServerError, handleFetchError } from '@app/helpers/functions'
+import { AnitopiaServerError, handleFetchError, showNotice } from '@app/helpers/functions'
 import { Notification } from '@shared/api'
 import { deleteAllNotifications, getNotificationsByUserid } from '@shared/api/notifications/notifications'
 import { Header } from '@widgets/header'
@@ -37,6 +37,7 @@ export const Notifications: FC = () => {
          await deleteAllNotifications({ id })
          setNotifications([])
          setModalActive(false)
+         showNotice('Успішно видалено всі повідомлення', 'Нове пвідомлення', 'success')
       } catch (e) {
          handleFetchError(e)
       }

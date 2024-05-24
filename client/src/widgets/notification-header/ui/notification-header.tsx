@@ -1,6 +1,5 @@
 import { CSSProperties, FC } from 'react'
 import styles from './styles.module.scss'
-import { showNotice } from '@app/helpers/functions'
 
 interface NotificationHeaderProps {
    style?: CSSProperties
@@ -10,8 +9,8 @@ interface NotificationHeaderProps {
 export const NotificationHeader: FC<NotificationHeaderProps> = ({ style, onDelete }) => {
    const handleDeleteAllNotifications = () => {
       onDelete()
-      showNotice('Успішно видалено всі повідомлення', 'Нове пвідомлення', 'success')
    }
+
    return (
       <div style={{ ...style }} className={styles.notification_container}>
          <h2 className={styles.notification_title}>Повідомлення</h2>

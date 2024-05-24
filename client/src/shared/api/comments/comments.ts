@@ -7,6 +7,7 @@ import {
    GetCommentsByAnimeId,
    GetUserComment,
 } from './models'
+import { AxiosResponse } from 'axios'
 
 const BASE_URL = '/comments'
 
@@ -32,4 +33,30 @@ export const editComment = ({ ...body }: EditComment) => {
 
 export const deleteComment = ({ ...body }: DeleteComment) => {
    return $api.delete(`${BASE_URL}?commentId=${body.commentId}&animeId=${body.animeId}`)
+}
+
+export const getLikes = ({ id }: { id: string }): Promise<AxiosResponse<{ likes: number }>> => {
+   return $api.get(`${BASE_URL}/like/${id}`)
+}
+
+export const getDislikes = ({ id }: { id: string }): Promise<AxiosResponse<{ dislikes: number }>> => {
+   return $api.get(`${BASE_URL}/dislike/${id}`)
+}
+
+export const likeComment = ({
+   ...body
+}: {
+   commentId: string
+   userId: string
+}): Promise<AxiosResponse<{ likes: number }>> => {
+   return $api.patch(`${BASE_URL}/like`, body)
+}
+
+export const dislikeComment = ({
+   ...body
+}: {
+   commentId: string
+   userId: string
+}): Promise<AxiosResponse<{ dislikes: number }>> => {
+   return $api.patch(`${BASE_URL}/dislike`, body)
 }
