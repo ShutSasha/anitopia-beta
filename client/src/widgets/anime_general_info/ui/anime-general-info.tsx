@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { ImageZoomer, Skeleton } from '../../../shared'
 import { AnimeRatingList } from '../../../entities'
@@ -31,6 +31,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
    const [modalActive, setModalActive] = useState<boolean>(false)
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
+   const [toggleRate, setToggleRate] = useState<boolean>(false)
 
    const fetchData = async () => {
       try {
@@ -48,23 +49,21 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
       }
    }
 
-   const rateAnimeClick = useCallback(
-      async (rate: number) => {
-         try {
-            await $api.post('/rate-anime', {
-               rate: rate,
-               anime_id: id || anime.id,
-               user_id: store.user.id,
-            })
-            fetchData()
+   const rateAnimeClick = async (rate: number) => {
+      try {
+         await $api.post('/rate-anime', {
+            rate: rate,
+            anime_id: id || anime.id,
+            user_id: store.user.id,
+         })
+         fetchData()
 
-            setModalActive(false)
-         } catch (e) {
-            handleFetchError(e)
-         }
-      },
-      [id, anime.id, store.user.id],
-   )
+         setModalActive(false)
+         setToggleRate(!toggleRate)
+      } catch (e) {
+         handleFetchError(e)
+      }
+   }
 
    const removeAnimeClick = async () => {
       await $api.delete('/rate-anime', {
@@ -76,13 +75,14 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
       fetchData()
 
       setModalActive(false)
+      setToggleRate(!toggleRate)
    }
 
    useEffect(() => {
       if (store.isAuth) {
          fetchData()
       }
-   }, [store.isAuth, rateAnimeClick])
+   }, [store.isAuth, toggleRate])
 
    useEffect(() => {
       setIsLoadingImage(true)
@@ -112,7 +112,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                <div className={styles.anime_info_box}>
                   <h2 className={styles.title_anime}>{anime.title}</h2>
                   <hr />
-                  <AnimeRatingList ratings={ratings} />
+                  <AnimeRatingList toggleRate={toggleRate} ratings={ratings} />
                   <hr />
                   <div className={styles.anime_info}>
                      <ul className={styles.anime_info_list}>

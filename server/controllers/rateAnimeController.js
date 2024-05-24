@@ -27,12 +27,13 @@ class rateAnimeController {
    async makeRateAnime(req, res, next) {
       try {
          const { rate, anime_id, user_id } = req.body
+
          const allAnime = getAnimeData()
          const user = await User.findById(user_id)
 
          const existingRatingIndex = user.animeRatings.findIndex((item) => item.animeId === anime_id)
 
-         const anime = allAnime.find((item) => item.id === anime_id)
+         const anime = allAnime.find((item) => item._id === anime_id)
 
          if (existingRatingIndex !== -1) {
             user.animeRatings[existingRatingIndex].rating = rate

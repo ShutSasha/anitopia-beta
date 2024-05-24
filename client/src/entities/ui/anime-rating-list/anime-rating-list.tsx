@@ -9,9 +9,10 @@ import { useParams } from 'react-router-dom'
 
 interface Ratings {
    ratings: Rating[] | undefined
+   toggleRate?: boolean
 }
 
-export const AnimeRatingList: FC<Ratings> = ({ ratings }) => {
+export const AnimeRatingList: FC<Ratings> = ({ ratings, toggleRate }) => {
    const { store } = useStore()
    const { id } = useParams()
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
@@ -34,7 +35,7 @@ export const AnimeRatingList: FC<Ratings> = ({ ratings }) => {
          }
       }
       if (store.user.id) fetchUser()
-   }, [store.user.id])
+   }, [store.user.id, toggleRate])
 
    return (
       <div className={styles.ratings_container}>
