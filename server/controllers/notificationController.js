@@ -72,6 +72,8 @@ class notificationController {
 
          await user.save()
 
+         await Notification.deleteMany({ user: user_id })
+
          res.json({ message: 'success' })
       } catch (error) {
          next(error)
@@ -94,7 +96,7 @@ class notificationController {
 
          await user.save()
 
-         await notification.delete()
+         await Notification.deleteOne({ _id: id })
 
          res.json({ message: 'success' })
       } catch (error) {
