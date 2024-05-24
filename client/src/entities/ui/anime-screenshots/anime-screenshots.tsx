@@ -31,7 +31,7 @@ export const AnimeScreenshots: FC<Screenshots> = ({ screenshots }) => {
 
    return (
       <>
-         <h2 className={styles.screens_anime_title}>Скриншоты аниме</h2>
+         <h2 className={styles.screens_anime_title}>Скріншоти аніме</h2>
          <div className={styles.anime_screensots}>
             {screenshots.map((screen, index) => (
                <div key={index}>

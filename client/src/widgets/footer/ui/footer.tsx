@@ -26,7 +26,7 @@ export const Footer: FC = () => {
                <Link className={styles.FAQ} to={`undefined`}>
                   FAQ
                </Link>
-               <Link className={styles.user_agreement} to={`users-policy`}>
+               <Link className={styles.user_agreement} to={`/users-policy`}>
                   Користувальницька угода
                </Link>
             </div>

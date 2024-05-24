@@ -33,8 +33,8 @@ export const AnimeCommentForm: FC = () => {
          <CommentInput inputRef={inputRef} />
          <div className={styles.comment_menu}>
             <ul className={styles.edit_text_list}>
-               <EditTextItem />
-               <EditTextItem />
+               {/* <EditTextItem />
+               <EditTextItem /> */}
             </ul>
             <CommentButton SendComment={SendComment} button_text='Надіслати' />
          </div>
