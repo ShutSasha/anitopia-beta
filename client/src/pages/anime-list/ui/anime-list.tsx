@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } from '@widgets/index.ts'
+import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, ToolBar, Wrapper } from '@widgets/index.ts'
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
@@ -36,6 +36,7 @@ export const AnimeList: FC = observer(() => {
    const [animesPerPage] = useState<number>(20)
    const [searchTerm, setSearchTerm] = useState<string>('')
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+
    useEffect(() => {
       fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
    }, [currentPage, animesPerPage, store])
@@ -76,10 +77,11 @@ export const AnimeList: FC = observer(() => {
          <ContentContainer style={{ backgroundColor: '#fff', padding: '0px 20px' }}>
             <h1 className={styles.title}>Каталог аніме</h1>
             <SearchInput
-               style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+               style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                searchTerm={searchTerm}
                handleChangeSearch={handleChangeSearch}
             />
+            <ToolBar style={{ marginBottom: '15px' }} />
             {catalogAnimeData.length && catalogAnimeData.length != 0 && catalogAnimeData ? (
                <AnimeCardsContainerView animeData={catalogAnimeData} />
             ) : (
