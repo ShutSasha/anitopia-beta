@@ -2,6 +2,7 @@ const Comment = require('../models/Comment')
 const Anime = require('../models/Anime')
 const User = require('../models/User')
 const { ObjectId } = require('mongodb')
+const mongoose = require('mongoose')
 
 class commentController {
    async getCommentByid(req, res, next) {
@@ -127,18 +128,21 @@ class commentController {
    }
 
    async likeComment(req, res, next) {
+      const session = await mongoose.startSession()
+      session.startTransaction()
       try {
          const { commentId, userId } = req.body
 
-         const comment = await Comment.findById(commentId)
-
-         const user = await User.findById(userId)
+         const comment = await Comment.findById(commentId).session(session)
+         const user = await User.findById(userId).session(session)
 
          if (!comment) {
+            await session.abortTransaction()
             return res.status(404).json({ message: 'Comment not found' })
          }
 
          if (!user) {
+            await session.abortTransaction()
             return res.status(404).json({ message: 'User not found' })
          }
 
@@ -154,27 +158,35 @@ class commentController {
             }
          }
 
-         await comment.save()
+         await comment.save({ session })
+
+         await session.commitTransaction()
+         session.endSession()
 
          return res.status(200).json({ likes: comment.likes })
       } catch (error) {
+         await session.abortTransaction()
+         session.endSession()
          next(error)
       }
    }
 
    async dislikeComment(req, res, next) {
+      const session = await mongoose.startSession()
+      session.startTransaction()
       try {
          const { commentId, userId } = req.body
 
-         const comment = await Comment.findById(commentId)
-
-         const user = await User.findById(userId)
+         const comment = await Comment.findById(commentId).session(session)
+         const user = await User.findById(userId).session(session)
 
          if (!comment) {
+            await session.abortTransaction()
             return res.status(404).json({ message: 'Comment not found' })
          }
 
          if (!user) {
+            await session.abortTransaction()
             return res.status(404).json({ message: 'User not found' })
          }
 
@@ -190,10 +202,15 @@ class commentController {
             }
          }
 
-         await comment.save()
+         await comment.save({ session })
+
+         await session.commitTransaction()
+         session.endSession()
 
          return res.status(200).json({ dislikes: comment.dislikes })
       } catch (error) {
+         await session.abortTransaction()
+         session.endSession()
          next(error)
       }
    }
