@@ -24,11 +24,13 @@ export type UserByIdResponse = {
    isActivated: boolean
    lastName: string | null
    registrationDate: string
-   roles: string[]
+   roles: UserBadget[]
    sex: string | null
    uploadStatus: boolean
    username: string
 }
+
+export type UserBadget = 'ADMIN' | 'USER' | 'PREMIUM' | 'MODERATOR' | 'BANNED' | 'DELETED' | 'GUEST' | 'UNKNOWN'
 
 export interface RatedAnime {
    _id: string

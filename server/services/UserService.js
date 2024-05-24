@@ -8,7 +8,6 @@ const mailService = require('./MailService')
 const tokenService = require('./TokenService')
 const UserDto = require('../dtos/user-dto')
 const ApiError = require('../errors/apiError')
-const jwt = require('jsonwebtoken')
 const imageService = require('./ImageService')
 const fs = require('fs')
 const ImageKit = require('imagekit')
@@ -186,7 +185,7 @@ class UserService {
 
    async generatePassword(user) {
       let tempPassword = 'temp' + uuid.v4()
-      const hashPassword = await bcrypt.hashSync(tempPassword, 7)
+      const hashPassword = bcrypt.hashSync(tempPassword, 7)
 
       user.password = hashPassword
 

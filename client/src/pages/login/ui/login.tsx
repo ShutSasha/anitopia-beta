@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import { Header } from '@widgets/header'
 import styles from './styles.module.scss'
 import { useState } from 'react'
@@ -9,7 +9,8 @@ import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 import { Modal } from '@widgets/Modal'
-import axios from 'axios'
+
+import { handleResetPassword } from '../helpers/handleResetPassword.ts'
 
 export const Login: FC = observer(() => {
    const { store } = useStore()
@@ -32,15 +33,15 @@ export const Login: FC = observer(() => {
          .catch((err) => console.error(err))
    }
 
-   const handleModalButton = async () => {
-      try {
-         const data = { email: vefifyEmail }
-         const response = await axios.put(`http://localhost:5000/api/auth/rechange`, data)
-         console.log(response.status)
-      } catch (e) {
-         console.error(e)
-      }
-   }
+   // const handleModalButton = async () => {
+   //    try {
+   //       const data = { email: vefifyEmail }
+   //       const response = await axios.put(`http://localhost:5000/api/auth/rechange`, data)
+   //       console.log(response.status)
+   //    } catch (e) {
+   //       console.error(e)
+   //    }
+   // }
 
    if (store.isLoading) {
       return <Loader />
@@ -102,7 +103,7 @@ export const Login: FC = observer(() => {
                         <DefaultButton
                            text={'Відправити'}
                            onClick={() => {
-                              handleModalButton()
+                              handleResetPassword(vefifyEmail)
                            }}
                         />
                      </div>

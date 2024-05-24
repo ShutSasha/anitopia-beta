@@ -8,6 +8,21 @@ const options = {
          title: 'REST API Docs',
          description: 'Here we are storing our apis',
       },
+		components: {
+			securitySchemes: {
+				bearerAuth: {
+					type: 'http',
+					scheme: 'bearer',
+					bearerFormat: 'JWT',
+					description: 'JWT authorization using the access token.'
+				},
+			},
+		},
+		security: [
+         {
+            bearerAuth: [],
+         },
+      ],
    },
    apis: ['./routes/**/*js'],
 }

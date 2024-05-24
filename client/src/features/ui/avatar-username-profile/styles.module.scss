@@ -50,4 +50,46 @@
 .title_username {
    font-size: 36px;
    font-weight: 700;
+   margin-right: 10px;
+}
+
+.badge_list {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.badge {
+   font-family: "Baloo-Regular";
+   border-radius: 5px;
+   padding: 4px 18px;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000;
+   letter-spacing: 1.2;
+}
+
+.badge.ADMIN {
+   background-color: #ff6666;
+}
+.badge.USER {
+   background-color: #fff;
+}
+.badge.PREMIUM {
+   background-color: gold;
+}
+.badge.MODERATOR {
+   background-color: green;
+}
+.badge.BANNED {
+   background-color: black;
+}
+.badge.DELETED {
+   background-color: gray;
+}
+.badge.GUEST {
+   background-color: lightgray;
+}
+.badge.UNKNOWN {
+   background-color: darkgray;
 }

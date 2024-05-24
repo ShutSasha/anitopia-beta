@@ -71,8 +71,8 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
                <p className={styles.comment_text}>{comment_text}</p>
             </div>
             <div className={styles.features}>
-               <LikeComment />
-               <DislikeComment />
+               <LikeComment id={_id} />
+               <DislikeComment id={_id} />
                <CommentControls commentId={_id} animeId={anime} user_id={user} setEdit={setEdit} />
             </div>
          </div>

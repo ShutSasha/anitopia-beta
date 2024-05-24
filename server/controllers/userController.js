@@ -1,4 +1,5 @@
 const userService = require('../services/UserService')
+const paymentService = require('../services/PaymentService')
 const { validationResult } = require('express-validator')
 const ApiError = require('../errors/apiError')
 
@@ -81,6 +82,23 @@ class userController {
          const result = await userService.changePassword(id, oldPassword, newPassword)
 
          return res.status(200).json(result)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async BuySubscribe(req, res, next) {
+      try {
+         const params = {
+            version: 3,
+            action: 'pay',
+            amount: 1,
+            currency: 'UAH',
+            description: 'Anitopia subcribe',
+            order_id: 'order12345',
+         }
+         const result = await paymentService.generateHtmlForm(params)
+         return res.json(result)
       } catch (e) {
          next(e)
       }

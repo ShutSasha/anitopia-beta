@@ -1,11 +1,21 @@
-.container {
-   max-width: var(--container-width);
-   margin: 0 auto;
+.anitopia_rules_title {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   font-size: 32px;
+   line-height: 36px;
+   text-align: center;
+   margin-bottom: 20px;
 }
 
-.wrapper {
+.rule_title_of_topic {
+   font-family: "Franklin Gothic Heavy", sans-serif;
+   font-size: 28px;
+   line-height: 32px;
+   margin-bottom: 40px;
+}
+
+.rules_list {
    display: flex;
-   justify-content: center;
    flex-direction: column;
-   align-items: center;
+   gap: 10px;
+   margin-bottom: 50px;
 }

@@ -78,6 +78,7 @@ class authController {
    async activate(req, res, next) {
       try {
          const activationLink = req.params.link
+
          await userService.activation(activationLink)
          return res.redirect(process.env.CLIENT_URL)
       } catch (e) {
@@ -98,6 +99,7 @@ class authController {
    async generateTempPassword(req, res, next) {
       try {
          const { email } = req.body
+
          const user = await User.findOne({ email })
          await userService.generatePassword(user)
          return res.json(user)

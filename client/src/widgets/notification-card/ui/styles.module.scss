@@ -1,0 +1,44 @@
+.notification_card_container {
+   position: relative;
+   background-color: #f5f5f5;
+   padding: 10px;
+   border-radius: 8px;
+   display: flex;
+   gap: 20px;
+
+   .btn_delete {
+      background-image: url("../assets/delete_btn.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: absolute;
+      height: 25px;
+      width: 25px;
+      right: 5px;
+      top: 5px;
+   }
+
+   .notification_poster {
+      height: 130px;
+      width: 100px;
+   }
+
+   .notification_info_container {
+      display: flex;
+      flex-direction: column;
+
+      .notification_title {
+         font-family: "Franklin Gothic Heavy", sans-serif;
+         font-size: 24px;
+         line-height: 28px;
+      }
+
+      .notification_description {
+         font-family: "Franklin Gothic Medium", sans-serif;
+         font-size: 18px;
+         line-height: 24px;
+      }
+      .notification_date {
+         margin-top: auto;
+      }
+   }
+}

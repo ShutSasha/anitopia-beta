@@ -19,6 +19,7 @@ const User = new Schema({
    activationLink: { type: String },
    isActivated: { type: Boolean, default: false },
    roles: [{ type: String, ref: 'Role' }],
+   notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
    animeRatings: [Schema.Types.Mixed],
 })
 
