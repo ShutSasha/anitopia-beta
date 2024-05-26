@@ -20,8 +20,8 @@ export const getAnimeSeason = () => {
    return $api.get(`${BASE_URL}/season`)
 }
 
-export const getCatalogAnime = ({ page, limit, query }: { page: number; limit: number; query: string }) => {
-   return $api.get(`${BASE_URL}/list`, { params: { page, limit, query } })
+export const getCatalogAnime = (params: { [key: string]: any }) => {
+   return $api.get(`${BASE_URL}/list`, { params })
 }
 
 export const getRandomAnime = (): AxiosPromise<{ _id: string }> => {

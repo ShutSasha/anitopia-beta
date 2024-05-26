@@ -31,7 +31,7 @@ export interface Anime {
 
 export const AnimeList: FC = observer(() => {
    const { store } = useStore()
-   const { catalogAnimeData } = store.animeCatalogStore
+   const [catalogAnimeData, setCatalogAnimeData] = useState(store.animeCatalogStore.catalogAnimeData)
    const [currentPage, setCurrentPage] = useState<number>(1)
    const [animesPerPage] = useState<number>(20)
    const [searchTerm, setSearchTerm] = useState<string>('')
@@ -39,7 +39,11 @@ export const AnimeList: FC = observer(() => {
 
    useEffect(() => {
       fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
-   }, [currentPage, animesPerPage, store])
+   }, [currentPage, animesPerPage, store, store.animeCatalogStore.sortType, store.animeCatalogStore.sortBy])
+
+   useEffect(() => {
+      setCatalogAnimeData(store.animeCatalogStore.catalogAnimeData)
+   }, [store.animeCatalogStore.catalogAnimeData])
 
    const paginate = (pageNumber: number) => {
       setCurrentPage(pageNumber)

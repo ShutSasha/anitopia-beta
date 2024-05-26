@@ -1,22 +1,23 @@
 import * as React from 'react'
-import { pink } from '@mui/material/colors'
 import Radio from '@mui/material/Radio'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import RadioGroup from '@mui/material/RadioGroup'
+import { observer } from 'mobx-react-lite'
+import { set } from 'date-fns'
 
 interface ColorRadioButtonsProps {
    valueList: { label: string; value: string }[]
+   sortValue: string
+   setSort: (value: string) => void
 }
 
-export const ColorRadioButtons: React.FC<ColorRadioButtonsProps> = ({ valueList }) => {
-   const [selectedValue, setSelectedValue] = React.useState('')
-
+export const ColorRadioButtons: React.FC<ColorRadioButtonsProps> = observer(({ valueList, sortValue, setSort }) => {
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedValue(event.target.value)
+      setSort(event.target.value)
    }
 
    return (
-      <RadioGroup value={selectedValue} onChange={handleChange}>
+      <RadioGroup value={sortValue} onChange={handleChange}>
          {valueList.map((item, index) => (
             <FormControlLabel
                key={index}
@@ -39,4 +40,4 @@ export const ColorRadioButtons: React.FC<ColorRadioButtonsProps> = ({ valueList 
          ))}
       </RadioGroup>
    )
-}
+})
