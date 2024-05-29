@@ -17,6 +17,11 @@
    margin-right: 5px;
 }
 
+.dislike.isDislike::before {
+   content: "";
+   background-image: url("../../../assets/thumbs-down-50px-icon-hover.png");
+}
+
 .dislike:hover::before {
    content: "";
    background-image: url("../../../assets/thumbs-down-50px-icon-hover.png");
