@@ -13,6 +13,7 @@ class rateAnimeController {
             return {
                rating: item.rating,
                animeId: item.animeId,
+               shikimori_id: item.shikimori_id,
                poster_url: item.poster_url,
                title: item.title,
             }
@@ -26,7 +27,7 @@ class rateAnimeController {
 
    async makeRateAnime(req, res, next) {
       try {
-         const { rate, anime_id, user_id } = req.body
+         const { rate, anime_id, user_id,shikimori_id } = req.body
 
          const allAnime = getAnimeData()
          const user = await User.findById(user_id)
@@ -37,11 +38,13 @@ class rateAnimeController {
 
          if (existingRatingIndex !== -1) {
             user.animeRatings[existingRatingIndex].rating = rate
+            user.animeRatings.shikimori_id = shikimori_id
             user.markModified('animeRatings')
          } else {
             const animeRating = new AnimeRating({
                animeId: anime_id,
                rating: rate,
+               shikimori_id: shikimori_id,
                poster_url: anime.material_data.poster_url,
                title: anime.title,
             })

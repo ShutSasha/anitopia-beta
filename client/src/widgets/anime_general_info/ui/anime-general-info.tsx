@@ -6,7 +6,7 @@ import { Modal } from '../../Modal'
 import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
 import $api from '../../../app/http'
-import { IAnime } from '../../../app/models/IAnime'
+import { IAnime } from '@app/models/IAnime.ts'
 import icon_trash from '../assets/trash.svg'
 import { observer } from 'mobx-react-lite'
 import { handleFetchError } from '@app/helpers/functions'
@@ -55,6 +55,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
             rate: rate,
             anime_id: id || anime.id,
             user_id: store.user.id,
+            shikimori_id: anime.shikimori_id
          })
          fetchData()
 
