@@ -32,9 +32,9 @@ class userController {
 
          const { id } = req.params
 
-         const { firstName, lastName, country, sex, age } = req.body
+         const { firstName, lastName, country, sex, age, about } = req.body
 
-         const updatedUserData = await userService.editPersonalData(id, { firstName, lastName, country, sex, age })
+         const updatedUserData = await userService.editPersonalData(id, { firstName, lastName, country, sex, age, about })
          return res.status(201).json(updatedUserData)
       } catch (e) {
          next(e)

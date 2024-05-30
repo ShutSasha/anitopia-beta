@@ -41,6 +41,7 @@ class UserService {
          country: null,
          age: null,
          sex: null,
+         about: null,
          avatarLink: pictureLink ? pictureLink : process.env.IMAGE_KIT_DEFAULT_IMAGE,
          password: hashPassword,
          registrationDate: Date.now(),

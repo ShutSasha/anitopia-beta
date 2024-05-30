@@ -5,7 +5,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const ImageKit = require('imagekit')
 const router = require('./routes/index')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const PORT = process.env.PORT || 5000
@@ -26,22 +25,6 @@ app.use(
 )
 app.use('/api', router)
 app.use(errorMiddleware)
-
-var imagekit = new ImageKit({
-   publicKey: process.env.IMAGE_KIT_PUBLIC_KEY,
-   privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
-   urlEndpoint: process.env.IMAGE_KIT_URL_ENDPOINT,
-})
-
-var imageURL = imagekit.url({
-   path: 'user_icons/user.jpg',
-   transformation: [
-      {
-         height: '200',
-         width: '200',
-      },
-   ],
-})
 
 const start = async () => {
    try {
@@ -67,5 +50,4 @@ const start = async () => {
    }
 }
 
-module.exports = imagekit
 start()

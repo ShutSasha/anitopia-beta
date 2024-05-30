@@ -9,6 +9,7 @@ const User = new Schema({
    country: { type: String, required: false },
    age: { type: Number, required: false },
    sex: { type: String, required: false },
+   about: { type: String, required: false },
    avatarLink: {
       type: String,
       required: false,
