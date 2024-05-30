@@ -23,7 +23,7 @@ export interface MaterialData {
 export interface Anime {
    id: string
    title: string
-   shikimori_id:string
+   shikimori_id: string
    material_data: MaterialData
    year: number
    worldart_link: string
@@ -37,10 +37,25 @@ export const AnimeList: FC = observer(() => {
    const [animesPerPage] = useState<number>(20)
    const [searchTerm, setSearchTerm] = useState<string>('')
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+   const {
+      animeCatalogStore: { sortType, sortBy, genres, kinds, mpaa, year_start, year_end, episodes_start, episodes_end },
+   } = store
 
    useEffect(() => {
       fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
-   }, [currentPage, animesPerPage, store, store.animeCatalogStore.sortType, store.animeCatalogStore.sortBy])
+   }, [
+      currentPage,
+      animesPerPage,
+      sortType,
+      sortBy,
+      genres,
+      kinds,
+      mpaa,
+      year_start,
+      year_end,
+      episodes_start,
+      episodes_end,
+   ])
 
    useEffect(() => {
       setCatalogAnimeData(store.animeCatalogStore.catalogAnimeData)

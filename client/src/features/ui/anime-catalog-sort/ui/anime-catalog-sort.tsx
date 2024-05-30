@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import sort_icon from '../assets/sort-icon.svg'
-import arrow_down from '../assets/arrow-down.svg'
+import arrow_down from '/anime-catalog/arrow-down.svg'
 import { ColorRadioButtons } from './radio-buttons'
 import { ASC_DESC_RADIO_BUTTONS, SORT_RADIO_BUTTONS } from '../consts/radio-buttons'
 import { useStore } from '@app/hooks/useStore'

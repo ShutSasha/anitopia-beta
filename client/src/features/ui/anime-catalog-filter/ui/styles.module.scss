@@ -1,0 +1,61 @@
+.container {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+
+   .sort_icon {
+      height: 38px;
+      width: 38px;
+   }
+
+   .text {
+      font-family: "Franklin Gothic Medium", sans-serif;
+      font-size: 24px;
+      line-height: 28px;
+   }
+
+   .popup_container {
+      position: relative;
+
+      .popup_icon {
+         width: 21px;
+         height: 12px;
+         transition: all 0.3s ease-in-out;
+         cursor: pointer;
+      }
+
+      .popup_icon.open {
+         transform: rotate(180deg);
+      }
+
+      .menu {
+         position: absolute;
+         visibility: hidden;
+         opacity: 0;
+         top: 40px;
+         left: -70%;
+         transform: translateX(-70%);
+         background-color: #fff;
+         border-radius: 15px;
+         padding: 15px;
+         box-shadow:
+            rgba(0, 0, 0, 0.24) 0px 10px 36px 0px,
+            rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+         z-index: 1;
+         transition: all 0.3s ease-in-out;
+
+         .separate_btn {
+            display: inline-block;
+            height: 1px;
+            background-color: #000;
+            width: 100%;
+            margin: 10px 0;
+         }
+      }
+
+      .menu.open_menu {
+         visibility: visible;
+         opacity: 1;
+      }
+   }
+}
