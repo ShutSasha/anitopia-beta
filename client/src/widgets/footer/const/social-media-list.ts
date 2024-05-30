@@ -9,5 +9,5 @@ export const SocialMediaList = [
    { logo: TelegramLogo, link: 'https://t.me/AnitopiaNews' },
    { logo: DiscordLogo, link: 'discord/undefined' },
    { logo: IstagramLogo, link: 'instagram/undefined' },
-   { logo: TikTokLogo, link: 'tiktok/undefined' },
+   { logo: TikTokLogo, link: 'https://www.tiktok.com/@anitopia_anime_official' },
 ]

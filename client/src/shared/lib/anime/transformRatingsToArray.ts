@@ -7,19 +7,19 @@ export const transformRatingsToArray = (res: any) => {
 
    return [
       {
-         rating: imdb_rating,
+         rating: imdb_rating ? imdb_rating : '',
          logo: imdbLogo,
          height: '35px',
          width: '75px',
       },
       {
-         rating: shikimori_rating,
+         rating: shikimori_rating ? shikimori_rating : '',
          logo: shikimoriLogo,
          height: '25px',
          width: '25px',
       },
       {
-         rating: kinopoisk_rating,
+         rating: kinopoisk_rating ? kinopoisk_rating : '',
          logo: kinopoiskLogo,
          height: '25px',
          width: '25px',

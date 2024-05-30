@@ -17,6 +17,7 @@ export const AnimeRatingList: FC<Ratings> = ({ ratings, toggleRate }) => {
    const { id } = useParams()
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
 
+   console.log(ratings)
    useEffect(() => {
       const fetchUser = async () => {
          try {
@@ -38,12 +39,13 @@ export const AnimeRatingList: FC<Ratings> = ({ ratings, toggleRate }) => {
    }, [store.user.id, toggleRate])
 
    return (
-      <div className={styles.ratings_container}>
-         <ul className={styles.anime_ratings_list}>
-            {ratings !== undefined &&
-               ratings.map((rating, index) => (
-                  <div key={index}>
-                     {rating.rating && (
+      <>
+         <hr />
+         <div className={styles.ratings_container}>
+            <ul className={styles.anime_ratings_list}>
+               {ratings !== undefined &&
+                  ratings.map((rating, index) => (
+                     <div key={index}>
                         <li className={styles.anime_rating_item}>
                            <img
                               style={{
@@ -53,17 +55,18 @@ export const AnimeRatingList: FC<Ratings> = ({ ratings, toggleRate }) => {
                               src={rating.logo}
                               alt=''
                            />
-                           {rating.rating}
+                           {rating.rating ? rating.rating : 'N/A'}
                         </li>
-                     )}
-                  </div>
-               ))}
-         </ul>
-         {ratedAnime && (
-            <div className={styles.user_rating}>
-               Ваш рейтинг: <span>{ratedAnime.rating}</span>
-            </div>
-         )}
-      </div>
+                     </div>
+                  ))}
+            </ul>
+            {ratedAnime && (
+               <div className={styles.user_rating}>
+                  Ваш рейтинг: <span>{ratedAnime.rating}</span>
+               </div>
+            )}
+         </div>
+         <hr />
+      </>
    )
 }

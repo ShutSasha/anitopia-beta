@@ -12,7 +12,7 @@ export const Footer: FC = () => {
                <ul className={styles.social_media_list}>
                   {SocialMediaList.map((item) => (
                      <li key={item.link} className={styles.social_media_item}>
-                        <Link to={item.link}>
+                        <Link target='_blank' to={item.link}>
                            <img src={item.logo} alt='' />
                         </Link>
                      </li>

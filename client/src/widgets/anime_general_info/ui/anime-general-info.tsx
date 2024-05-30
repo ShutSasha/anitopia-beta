@@ -111,9 +111,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                </div>
                <div className={styles.anime_info_box}>
                   <h2 className={styles.title_anime}>{anime.title}</h2>
-                  <hr />
                   <AnimeRatingList toggleRate={toggleRate} ratings={ratings} />
-                  <hr />
                   <div className={styles.anime_info}>
                      <ul className={styles.anime_info_list}>
                         <li className={styles.anime_info_item}>
@@ -121,7 +119,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            <span>{anime.status}</span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Эпизоды:</p>
+                           <p>Епізоди:</p>
                            <span>
                               {anime.airedEpisodes}/{anime.totalEpisodes !== 0 ? anime.totalEpisodes : '?'}
                            </span>
@@ -131,7 +129,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            <span>{anime.type}</span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Возрастные ограничения:</p>
+                           <p>Вікові обмеження:</p>
                            <span>
                               <div className={styles.minimal_age}>
                                  {anime.minimalAge ? `${anime.minimalAge}+` : 'Нет'}
@@ -139,7 +137,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            </span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Жанры:</p>
+                           <p>Жанри:</p>
                            <div className={styles.anime_genres_container}>
                               <ul className={styles.anime_genres_list}>
                                  {anime.genres
@@ -151,7 +149,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            </div>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Год выпуска:</p>
+                           <p>Рік випуску:</p>
                            <span>{anime.year}</span>
                         </li>
                      </ul>
