@@ -138,6 +138,7 @@ class AnimeController {
                   animeWithDate.push({
                      id: item._id,
                      title: item.title,
+                     shikimori_id: item.shikimori_id,
                      poster_url: item.material_data.poster_url,
                   })
                }
