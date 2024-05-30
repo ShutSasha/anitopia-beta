@@ -6,6 +6,7 @@ export type ReleasedAnime = {
    title: string
    last_episode: number
    poster_url: string
+   shikimori_id: string
    type: string
 }
 

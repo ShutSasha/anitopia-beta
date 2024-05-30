@@ -3,6 +3,7 @@ export interface IAnime {
    link: string
    posterURL: string
    title: string
+   shikimori_id:string
    screenshots: string[]
    type: string
    status: string

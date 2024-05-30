@@ -7,17 +7,17 @@ import NotLoadedImage from './assets/6e1420ed-dd20-4ba6-bc4d-965a6d6e9718.png'
 import { Link } from 'react-router-dom'
 import { AnimeRating } from './ui/anime-rating'
 
-export const AnimeCard: FC<Anime> = observer(({ id, title, material_data }) => {
+export const AnimeCard: FC<Anime> = observer(({ id, title, shikimori_id, material_data }) => {
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
-
+   const imagePath = `https://shikimori.one/system/animes/original/${shikimori_id}.jpg`
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
-      image.src = material_data?.poster_url || ''
+      image.src = imagePath || ''
       image.onload = () => {
          setIsLoadingImage(false)
       }
-   }, [material_data?.poster_url])
+   }, [imagePath])
 
    return (
       <Link to={location.pathname.replace(window.location.pathname, '/anime/') + id} className={styles.card_body}>
@@ -27,10 +27,11 @@ export const AnimeCard: FC<Anime> = observer(({ id, title, material_data }) => {
             </div>
          ) : (
             <ImageWithFallback
-               primarySrc={material_data.poster_url}
+               primarySrc={imagePath}
                secondarySrc={NotLoadedImage}
                altText={title}
                animeTitle={title}
+               style={{borderRadius: "10px"}}
             >
                <AnimeRating rating={material_data.rating} />
                <div className={styles.anime_title_container}>

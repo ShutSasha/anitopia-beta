@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import styles_h from './styles.module.scss'
-import { Header } from '../../../widgets/header'
+import { Header } from '@widgets/header'
 import { useStore } from '@app/hooks/useStore'
 import { observer } from 'mobx-react-lite'
 import { Loader } from '../../../shared'
-import { Splider } from '../../../widgets/splider'
+import { Splider } from '@widgets/splider'
 import { useFetchAnimeSeason } from '../helpers/fetchAnimeSeason'
 import { DynamicAnimeSection } from '@widgets/dynamic-anime-section'
 import { useUpdatedAnime } from '../helpers/useUpdatedAnime'
@@ -15,6 +15,7 @@ import { ContentContainer, Footer, Wrapper } from '@widgets/index'
 export interface AnimeSeason {
    id: string
    title: string
+   shikimori_id:string
    poster_url: string
 }
 

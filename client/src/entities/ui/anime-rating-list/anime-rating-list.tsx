@@ -17,7 +17,6 @@ export const AnimeRatingList: FC<Ratings> = ({ ratings, toggleRate }) => {
    const { id } = useParams()
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
 
-   console.log(ratings)
    useEffect(() => {
       const fetchUser = async () => {
          try {

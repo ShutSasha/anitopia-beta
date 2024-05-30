@@ -5,6 +5,7 @@ export type UpdatedAnime = {
    _id: string
    title: string
    last_episode: number
+   shikimori_id:string
    poster_url: string
 }
 

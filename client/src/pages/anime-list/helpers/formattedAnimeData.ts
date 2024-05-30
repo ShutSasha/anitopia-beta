@@ -4,6 +4,7 @@ export const formattedAnimeData = (response: any) => {
          title: anime.title,
          type: anime.type,
          id: anime._id,
+         shikimori_id: anime.shikimori_id,
          material_data: anime.material_data
             ? {
                  description: anime.material_data.description ? anime.material_data.description : 'Нет',

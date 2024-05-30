@@ -5,6 +5,7 @@ export type Anime = {
    link: string
    posterURL: string
    title: string
+   shikimori_id:string
    screenshots: string[]
    type: string
    status: string

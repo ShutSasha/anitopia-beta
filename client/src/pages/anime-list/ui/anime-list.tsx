@@ -23,6 +23,7 @@ export interface MaterialData {
 export interface Anime {
    id: string
    title: string
+   shikimori_id:string
    material_data: MaterialData
    year: number
    worldart_link: string

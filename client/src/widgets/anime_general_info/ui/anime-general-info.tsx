@@ -32,7 +32,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
    const [modalActive, setModalActive] = useState<boolean>(false)
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
    const [toggleRate, setToggleRate] = useState<boolean>(false)
-
+   const imagePath = `https://shikimori.one/system/animes/original/${anime.shikimori_id}.jpg`
    const fetchData = async () => {
       try {
          const response = await $api.get<RatedAnime[]>(`/rate-anime/${store.user.id}`)
@@ -87,11 +87,11 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
-      image.src = anime.posterURL || ''
+      image.src = imagePath|| ''
       image.onload = () => {
          setIsLoadingImage(false)
       }
-   }, [anime.posterURL])
+   }, [imagePath])
 
    return (
       <>
@@ -103,7 +103,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                   ) : (
                      <ImageZoomer>
                         <div className={styles.anime_poster_container}>
-                           <img src={anime.posterURL} alt='poster_anime' />
+                           <img src={imagePath} alt='poster_anime' />
                            <div className={styles.rate_star} onClick={() => setModalActive(true)} />
                         </div>
                      </ImageZoomer>
