@@ -39,6 +39,7 @@ class AnimeService {
                   _id: anime._id,
                   title: anime.title,
                   last_episode: anime.last_episode,
+                  shikimori_id: anime.shikimori_id,
                   poster_url: anime.material_data.poster_url,
                })
             }
@@ -62,6 +63,7 @@ class AnimeService {
                   _id: anime._id,
                   title: anime.title,
                   last_episode: anime.last_episode,
+                  shikimori_id: anime.shikimori_id,
                   poster_url: anime.material_data.poster_url,
                   type: anime.type,
                })
