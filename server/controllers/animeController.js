@@ -48,7 +48,7 @@ class AnimeController {
             episodes_count: 'episodes_count',
             year: 'year',
             anime_genres: 'anime_genres',
-            type: 'type',
+            anime_kind: 'anime_kind',
             rating_mpaa: 'rating_mpaa',
             year_start: 'year',
             year_end: 'year',
@@ -109,7 +109,6 @@ class AnimeController {
       }
    }
 
-
    async getTop(req, res, next) {
       try {
          const data = getAnimeData()
@@ -159,6 +158,7 @@ class AnimeController {
 
          return res.json(anime)
       } catch (error) {
+         console.error('Error fetching anime by id:', error)
       }
    }
 
