@@ -17,7 +17,8 @@ class userController {
 
    async getUsers(req, res, next) {
       try {
-         const users = await userService.getAllUsers()
+         const { isControlPanel } = req.query;
+         const users = await userService.getAllUsers(isControlPanel)
          return res.json(users)
       } catch (e) {
          next(e)

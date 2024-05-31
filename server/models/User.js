@@ -21,6 +21,8 @@ const User = new Schema({
    isActivated: { type: Boolean, default: false },
    roles: [{ type: String, ref: 'Role' }], //TODO Исправить хранение роли
    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
+   bans: [{ type: Schema.Types.ObjectId, ref: 'Ban' }],
+   complaints: [{ type: Schema.Types.ObjectId, ref: 'Complaint' }],
    animeRatings: [Schema.Types.Mixed],
 })
 

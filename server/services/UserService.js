@@ -123,9 +123,19 @@ class UserService {
       return user
    }
 
-   async getAllUsers() {
-      const users = UserModel.find()
-      return users
+   async getAllUsers(adminPanel) {
+      try {
+         const users = await UserModel.find();
+
+         if (adminPanel) {
+            return users.filter(user => !user.roles.includes("ADMIN"));
+         }
+
+         return users;
+      } catch (error) {
+         console.error('Error fetching users:', error);
+         throw error;
+      }
    }
 
    async changeUserIcon(file, id) {
