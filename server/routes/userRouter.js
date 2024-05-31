@@ -6,6 +6,7 @@ const { validateUserPersonalData } = require('../validators/user-persona-data')
 const { validatePassword } = require('../validators/password')
 const upload = multer({ dest: 'uploads/' })
 const validateRole = require('../middleware/roleMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
 
 /**
  * @openapi
@@ -189,15 +190,12 @@ router.put('/:id/password', validatePassword(), userController.changePassword)
 
 router.post('/:id/subscribe', userController.BuySubscribe)
 
-router.get('/roles/:id',validateRole(['ADMIN']),userController.getUserRole)
+router.get('/roles/:id', validateRole(['ADMIN']), userController.getUserRole)
 
 router.post('/roles/:id', validateRole(['ADMIN']), userController.addUserRole)
 
-router.delete('/roles/:id',validateRole(['ADMIN']),userController.deleteUserRole)
+router.delete('/roles/:id', validateRole(['ADMIN']), userController.deleteUserRole)
 
-
-
-router.put('/:id/block', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
-
+router.put('/blocks/:id', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
 
 module.exports = router

@@ -1,10 +1,10 @@
 const { Schema, model } = require('mongoose')
 
-const ComplaintSchema = new Schema({
-   fromUser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-   toUser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+const Complaint = new Schema({
+   from_user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+   to_user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
    category: { type: String, required: true },
    timestamp: { type: Date, default: Date.now },
 })
 
-model.exports = model('Complaint', ComplaintSchema)
+module.exports = model('Complaint', Complaint)
