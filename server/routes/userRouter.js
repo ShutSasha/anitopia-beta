@@ -188,7 +188,16 @@ router.post('/:id/background', userController.uploadBackground)
 router.put('/:id/password', validatePassword(), userController.changePassword)
 
 router.post('/:id/subscribe', userController.BuySubscribe)
+
+router.get('/roles/:id',validateRole(['ADMIN']),userController.getUserRole)
+
+router.post('/roles/:id', validateRole(['ADMIN']), userController.addUserRole)
+
+router.delete('/roles/:id',validateRole(['ADMIN']),userController.deleteUserRole)
+
+
+
 router.put('/:id/block', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
-router.put('/:id/give', validateRole(['ADMIN']), userController.giveRole)
+
 
 module.exports = router

@@ -1,4 +1,5 @@
 const userService = require('../services/UserService')
+const roleService = require('../services/RoleService')
 const paymentService = require('../services/PaymentService')
 const { validationResult } = require('express-validator')
 const ApiError = require('../errors/apiError')
@@ -112,15 +113,37 @@ class userController {
    }
 
 
-   async giveRole(req, res, next) {
+   async addUserRole(req, res, next) {
       try {
          const { id } = req.params
          const { role } = req.body
-         const result = await userService.giveRole(id, role)
+         const result = await roleService.add(id, role)
          return res.status(200).json(result)
       } catch (e) {
          next(e)
       }
+   }
+
+   async getUserRole(req, res, next) {
+      try {
+         const { id } = req.params
+         const userRoles = await roleService.getUserRoles(id)
+         return res.status(200).json(userRoles)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async deleteUserRole(req, res, next) {
+      try {
+         const { id } = req.params
+         const { role } = req.body
+         const result = await roleService.deleteUserRole(id, role)
+         return res.status(200).json(result)
+      } catch (e) {
+         next(e)
+      }
+
    }
 
    async banUser(req, res, next) {

@@ -215,25 +215,6 @@ class UserService {
       user.save()
    }
 
-   async giveRole(userId, role) {
-      const user = await UserModel.findById(userId);
-      if (!user) {
-         throw new Error('Пользователь не знайден');
-      }
-      const userRole = await RoleModel.findOne({ value: role.toString() });
-      if (!userRole) {
-         throw new Error('Роль не знайдена');
-      }
-
-      if (!user.roles.includes(userRole.value)) {
-         user.roles.push(userRole.value);
-      }else{
-         throw new Error('Користувач вже має вказану роль')
-      }
-
-      await user.save();
-   }
-
 }
 
 module.exports = new UserService()
