@@ -1,0 +1,23 @@
+.card_container {
+   padding: 15px 20px;
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   justify-items: center;
+
+   .user_container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 0.5fr 1fr;
+      justify-content: space-between;
+      align-items: center;
+
+      .user_img {
+         height: 50px;
+         width: 50px;
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         border-radius: 20px;
+      }
+   }
+}

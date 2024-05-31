@@ -4,6 +4,10 @@ import { AxiosResponse } from 'axios'
 
 const BASE_URL = '/users'
 
+export const getUsers = (isControlPanel: boolean): Promise<AxiosResponse<UserByIdResponse[]>> => {
+   return $api.get(BASE_URL, { params: { isControlPanel } })
+}
+
 export const getUserById = ({ id }: GetUserById): Promise<AxiosResponse<UserByIdResponse>> => {
    return $api.get(`${BASE_URL}/${id}`)
 }

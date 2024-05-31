@@ -48,6 +48,9 @@
          }
 
          .user_options_list {
+            display: flex;
+            flex-direction: column;
+
             .user_option_item {
                box-sizing: border-box;
                padding: 6px 40px;

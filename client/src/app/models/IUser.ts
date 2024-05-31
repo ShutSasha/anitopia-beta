@@ -9,4 +9,5 @@ export interface IUser {
    country: string | null
    sex: string | null
    age: number | null
+   roles: string[]
 }

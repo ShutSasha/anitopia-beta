@@ -4,9 +4,11 @@ import { observer } from 'mobx-react-lite'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 import ProfileUserOptions from '../../../assets/profile-options-icon.svg'
+import { toJS } from 'mobx'
 
 export const User: FC = observer(() => {
    const { store } = useStore()
+   const hasAdminOrModeratorRole = store.user.roles.includes('ADMIN') || store.user.roles.includes('MODERATOR')
    const [isActive, setActive] = useState<boolean>(false)
    const navigate = useNavigate()
    const optionsRef = useRef<HTMLDivElement>(null)
@@ -45,17 +47,26 @@ export const User: FC = observer(() => {
                <div
                   className={isActive ? `${styles.user_options_inner} ${styles.show}` : `${styles.user_options_inner}`}
                >
-                  <ul className={styles.user_options_list}>
-                     <li className={styles.user_option_item}>Колекція</li>
-                     <li className={styles.user_option_item}>
-                        <Link className={styles.link_user_settings} to={`/user-settings/${store.user.id}` + '/account'}>
-                           Налаштування
+                  <div className={styles.user_options_list}>
+                     <div className={styles.user_option_item}>Колекція</div>
+                     {hasAdminOrModeratorRole && (
+                        <Link
+                           className={`${styles.link_user_settings} ${styles.user_option_item}`}
+                           to='/control-panel/bans'
+                        >
+                           Панель керування
                         </Link>
-                     </li>
-                     <li className={styles.user_option_item} onClick={handleLogout}>
+                     )}
+                     <Link
+                        className={`${styles.link_user_settings} ${styles.user_option_item}`}
+                        to={`/user-settings/${store.user.id}` + '/account'}
+                     >
+                        Налаштування
+                     </Link>
+                     <div className={styles.user_option_item} onClick={handleLogout}>
                         Вихід
-                     </li>
-                  </ul>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>

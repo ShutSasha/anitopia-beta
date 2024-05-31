@@ -1,0 +1,20 @@
+.bans_header {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   justify-items: center;
+   padding: 15px 20px;
+   background-color: #343a40;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+
+   .bans_header_item {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      font-size: 18px;
+      line-height: 24px;
+      color: #fff;
+
+      &:first-child {
+         border-top-left-radius: 10px;
+      }
+   }
+}

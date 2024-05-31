@@ -12,4 +12,8 @@ export const routes = {
    USER_SETTINGS_SITE: '/user-settings/:id/site',
    USER_SETTINGS_SECURITY: '/user-settings/:id/security',
    USER_SETTINGS_PREMIUM: '/user-settings/:id/premium',
+   CONTROL_PANEL: '/control-panel',
+   CONTROL_PANEL_BANS: '/control-panel/bans',
+   CONTROL_PANEL_REQUEST_ANIME: '/control-panel/requests-anime',
+   CONTROL_PANEL_ROLES: '/control-panel/roles',
 }
