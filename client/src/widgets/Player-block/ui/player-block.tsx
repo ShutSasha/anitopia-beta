@@ -91,6 +91,7 @@ export const PlayerBlock: FC<PlayerProps> = ({ link, width = 1024, height = 576 
 
             setAnilibLink(linksQuality)
          } catch (e) {
+            setCurrentPlayer('Kodik')
             handleFetchError(e)
          } finally {
             setIsLoadingPlayer(false)

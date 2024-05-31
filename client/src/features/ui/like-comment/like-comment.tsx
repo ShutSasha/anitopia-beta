@@ -1,44 +1,29 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { getLikes, likeComment } from '@shared/api/comments/comments'
-import { handleFetchError, showNotice } from '@app/helpers/functions'
 import { useStore } from '@app/hooks/useStore'
+import { observer } from 'mobx-react-lite'
+import { fetchLikes } from './helpers/fetchLikes'
+import { handleLike } from './helpers/handleLike'
 
 interface LikeCommentProps {
    id: string
 }
 
-export const LikeComment: FC<LikeCommentProps> = ({ id }) => {
+export const LikeComment: FC<LikeCommentProps> = observer(({ id }) => {
    const { store } = useStore()
    const [likes, setLikes] = useState<number>(0)
+   const [isLiked, setIsLiked] = useState<boolean>(false)
 
    useEffect(() => {
-      const fetchLikes = async () => {
-         try {
-            const { data } = await getLikes({ id: id })
-            setLikes(data.likes)
-         } catch (e) {
-            handleFetchError(e)
-         }
-      }
-      fetchLikes()
+      fetchLikes(id, store, setLikes, setIsLiked)
    }, [id, store.anime.toggleUpdateComments])
 
-   const handleLike = async () => {
-      try {
-         const { data } = await likeComment({ commentId: id, userId: store.user.id })
-         setLikes(data.likes)
-         store.anime.setToggleUpdateComments()
-         if (likes < data.likes) return showNotice('Ваш лайк додано', 'Лайк', 'success')
-         if (likes > data.likes) return showNotice('Ваш лайк видалено', 'Лайк', 'normal')
-      } catch (e) {
-         handleFetchError(e)
-      }
-   }
-
    return (
-      <span className={styles.like} onClick={handleLike}>
+      <span
+         className={isLiked ? `${styles.like} ${styles.isLike}` : `${styles.like}`}
+         onClick={() => handleLike(id, store, setLikes, setIsLiked, likes)}
+      >
          {likes}
       </span>
    )
-}
+})

@@ -17,17 +17,20 @@ export const UserPersonalInfo: FC<Props> = observer(({ user }) => {
    )
 
    return (
-      <div className={styles.container_user_data}>
-         <ul className={styles.user_data_list}>
-            {renderUserDataItem(format(user.registrationDate, 'dd-MM-yyyy') || 'Не вказано', 'Дата реєстрації: ')}
-            {renderUserDataItem(user.firstName, `Ім'я: `)}
-            {renderUserDataItem(user.lastName, 'Прізвище: ')}
-         </ul>
-         <ul className={styles.user_data_list}>
-            {renderUserDataItem(user.country, 'Країна: ')}
-            {renderUserDataItem(user.sex, 'Стать: ')}
-            {renderUserDataItem(user.age, 'Вік: ')}
-         </ul>
-      </div>
+      <>
+         <div className={styles.container_user_data}>
+            <ul className={styles.user_data_list}>
+               {renderUserDataItem(format(user.registrationDate, 'dd-MM-yyyy') || 'Не вказано', 'Дата реєстрації: ')}
+               {renderUserDataItem(user.firstName, `Ім'я: `)}
+               {renderUserDataItem(user.lastName, 'Прізвище: ')}
+            </ul>
+            <ul className={styles.user_data_list}>
+               {renderUserDataItem(user.country, 'Країна: ')}
+               {renderUserDataItem(user.sex, 'Стать: ')}
+               {renderUserDataItem(user.age, 'Вік: ')}
+            </ul>
+         </div>
+         <ul className={styles.user_data_list}>{renderUserDataItem(user.about, 'Про себе: ')}</ul>
+      </>
    )
 })

@@ -39,6 +39,7 @@ class AnimeService {
                   _id: anime._id,
                   title: anime.title,
                   last_episode: anime.last_episode,
+                  shikimori_id: anime.shikimori_id,
                   poster_url: anime.material_data.poster_url,
                })
             }
@@ -62,6 +63,7 @@ class AnimeService {
                   _id: anime._id,
                   title: anime.title,
                   last_episode: anime.last_episode,
+                  shikimori_id: anime.shikimori_id,
                   poster_url: anime.material_data.poster_url,
                   type: anime.type,
                })
@@ -97,6 +99,76 @@ class AnimeService {
       })
 
       return data
+   }
+
+   async sortBy(data, query, order) {
+      data.sort((a, b) => {
+         const queryA =
+            a[query] !== undefined
+               ? a[query]
+               : (a.material_data && a.material_data[query]) !== undefined
+                  ? a.material_data[query]
+                  : 0
+         const queryB =
+            b[query] !== undefined
+               ? b[query]
+               : (b.material_data && b.material_data[query]) !== undefined
+                  ? b.material_data[query]
+                  : 0
+
+         if (order.toString() === 'asc') {
+            return queryA - queryB
+         } else if (order.toString() === 'desc') {
+            return queryB - queryA
+         } else {
+            throw new Error('Invalid order value. Must be "asc" or "desc".')
+         }
+      })
+
+      return data
+   }
+
+   async getFilteredList(data, query, param) {
+
+      const list = param.split(',').map(param => param.trim().toLowerCase())
+      const isNumericQuery = list.every(value => !isNaN(value))
+
+      const result = data.filter((anime) => {
+         const animeParams = anime.material_data && anime.material_data[query] ? anime.material_data[query] : anime[query]
+
+         if (!animeParams) {
+            return false
+         }
+         if (isNumericQuery) {
+            const numericParams = Array.isArray(animeParams) ? animeParams : [animeParams]
+            const numericList = list.map(Number)
+
+            if (numericList.length === 2) {
+               const [min, max] = numericList
+               return numericParams.some(param => param >= min && param <= max)
+            }
+
+            return false
+         } else {
+            const correctParams = Array.isArray(animeParams) ? animeParams.map(g => g.toLowerCase()) : [animeParams.toLowerCase()]
+
+            return list.every((param) => correctParams.includes(param))
+         }
+      })
+
+      return result
+   }
+
+    async filterNumberParams(data, key, start, end) {
+      const startValue = parseInt(start, 10)
+      const endValue = parseInt(end, 10)
+
+      const result = data.filter(anime => {
+         const value = key.includes('year') ? anime.year : anime.episodes_count
+         return value >= startValue && value <= endValue
+      })
+
+      return result
    }
 
    findAnime(data, searchText) {

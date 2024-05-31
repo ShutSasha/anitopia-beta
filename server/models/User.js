@@ -9,6 +9,7 @@ const User = new Schema({
    country: { type: String, required: false },
    age: { type: Number, required: false },
    sex: { type: String, required: false },
+   about: { type: String, required: false },
    avatarLink: {
       type: String,
       required: false,
@@ -18,7 +19,7 @@ const User = new Schema({
    registrationDate: { type: Date, required: true },
    activationLink: { type: String },
    isActivated: { type: Boolean, default: false },
-   roles: [{ type: String, ref: 'Role' }],
+   roles: [{ type: String, ref: 'Role' }], //TODO Исправить хранение роли
    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
    animeRatings: [Schema.Types.Mixed],
 })

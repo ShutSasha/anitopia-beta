@@ -32,9 +32,16 @@ class userController {
 
          const { id } = req.params
 
-         const { firstName, lastName, country, sex, age } = req.body
+         const { firstName, lastName, country, sex, age, about } = req.body
 
-         const updatedUserData = await userService.editPersonalData(id, { firstName, lastName, country, sex, age })
+         const updatedUserData = await userService.editPersonalData(id, {
+            firstName,
+            lastName,
+            country,
+            sex,
+            age,
+            about,
+         })
          return res.status(201).json(updatedUserData)
       } catch (e) {
          next(e)
@@ -99,6 +106,31 @@ class userController {
          }
          const result = await paymentService.generateHtmlForm(params)
          return res.json(result)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+
+   async giveRole(req, res, next) {
+      try {
+         const { id } = req.params
+         const { role } = req.body
+         const result = await userService.giveRole(id, role)
+         return res.status(200).json(result)
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async banUser(req, res, next) {
+      try {
+         const errors = validationResult(req)
+         if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
+         }
+         return res.status(200)
+
       } catch (e) {
          next(e)
       }

@@ -10,6 +10,7 @@ export type EditUserPersonalInfo = {
    country: string
    sex: string
    age: number | string
+   about: string
 }
 
 export type UserByIdResponse = {
@@ -28,6 +29,7 @@ export type UserByIdResponse = {
    sex: string | null
    uploadStatus: boolean
    username: string
+   about: string | null
 }
 
 export type UserBadget = 'ADMIN' | 'USER' | 'PREMIUM' | 'MODERATOR' | 'BANNED' | 'DELETED' | 'GUEST' | 'UNKNOWN'

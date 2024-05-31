@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { ImageZoomer, Skeleton } from '../../../shared'
 import { AnimeRatingList } from '../../../entities'
@@ -6,7 +6,7 @@ import { Modal } from '../../Modal'
 import { RATE_STAR_LIST } from '../helpers/rate-star-list'
 import { useParams } from 'react-router-dom'
 import $api from '../../../app/http'
-import { IAnime } from '../../../app/models/IAnime'
+import { IAnime } from '@app/models/IAnime.ts'
 import icon_trash from '../assets/trash.svg'
 import { observer } from 'mobx-react-lite'
 import { handleFetchError } from '@app/helpers/functions'
@@ -31,7 +31,8 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
    const [modalActive, setModalActive] = useState<boolean>(false)
    const [ratedAnime, setRatedAnime] = useState<RatedAnime | undefined>()
-
+   const [toggleRate, setToggleRate] = useState<boolean>(false)
+   const imagePath = `https://shikimori.one/system/animes/original/${anime.shikimori_id}.jpg`
    const fetchData = async () => {
       try {
          const response = await $api.get<RatedAnime[]>(`/rate-anime/${store.user.id}`)
@@ -48,23 +49,22 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
       }
    }
 
-   const rateAnimeClick = useCallback(
-      async (rate: number) => {
-         try {
-            await $api.post('/rate-anime', {
-               rate: rate,
-               anime_id: id || anime.id,
-               user_id: store.user.id,
-            })
-            fetchData()
+   const rateAnimeClick = async (rate: number) => {
+      try {
+         await $api.post('/rate-anime', {
+            rate: rate,
+            anime_id: id || anime.id,
+            user_id: store.user.id,
+            shikimori_id: anime.shikimori_id
+         })
+         fetchData()
 
-            setModalActive(false)
-         } catch (e) {
-            handleFetchError(e)
-         }
-      },
-      [id, anime.id, store.user.id],
-   )
+         setModalActive(false)
+         setToggleRate(!toggleRate)
+      } catch (e) {
+         handleFetchError(e)
+      }
+   }
 
    const removeAnimeClick = async () => {
       await $api.delete('/rate-anime', {
@@ -76,22 +76,23 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
       fetchData()
 
       setModalActive(false)
+      setToggleRate(!toggleRate)
    }
 
    useEffect(() => {
       if (store.isAuth) {
          fetchData()
       }
-   }, [store.isAuth, rateAnimeClick])
+   }, [store.isAuth, toggleRate])
 
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
-      image.src = anime.posterURL || ''
+      image.src = imagePath|| ''
       image.onload = () => {
          setIsLoadingImage(false)
       }
-   }, [anime.posterURL])
+   }, [imagePath])
 
    return (
       <>
@@ -103,7 +104,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                   ) : (
                      <ImageZoomer>
                         <div className={styles.anime_poster_container}>
-                           <img src={anime.posterURL} alt='poster_anime' />
+                           <img src={imagePath} alt='poster_anime' />
                            <div className={styles.rate_star} onClick={() => setModalActive(true)} />
                         </div>
                      </ImageZoomer>
@@ -111,9 +112,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                </div>
                <div className={styles.anime_info_box}>
                   <h2 className={styles.title_anime}>{anime.title}</h2>
-                  <hr />
-                  <AnimeRatingList ratings={ratings} />
-                  <hr />
+                  <AnimeRatingList toggleRate={toggleRate} ratings={ratings} />
                   <div className={styles.anime_info}>
                      <ul className={styles.anime_info_list}>
                         <li className={styles.anime_info_item}>
@@ -121,7 +120,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            <span>{anime.status}</span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Эпизоды:</p>
+                           <p>Епізоди:</p>
                            <span>
                               {anime.airedEpisodes}/{anime.totalEpisodes !== 0 ? anime.totalEpisodes : '?'}
                            </span>
@@ -131,7 +130,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            <span>{anime.type}</span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Возрастные ограничения:</p>
+                           <p>Вікові обмеження:</p>
                            <span>
                               <div className={styles.minimal_age}>
                                  {anime.minimalAge ? `${anime.minimalAge}+` : 'Нет'}
@@ -139,7 +138,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            </span>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Жанры:</p>
+                           <p>Жанри:</p>
                            <div className={styles.anime_genres_container}>
                               <ul className={styles.anime_genres_list}>
                                  {anime.genres
@@ -151,7 +150,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
                            </div>
                         </li>
                         <li className={styles.anime_info_item}>
-                           <p>Год выпуска:</p>
+                           <p>Рік випуску:</p>
                            <span>{anime.year}</span>
                         </li>
                      </ul>

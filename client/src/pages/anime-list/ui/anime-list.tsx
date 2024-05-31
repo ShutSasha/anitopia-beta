@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, Wrapper } from '@widgets/index.ts'
+import { AnimeCardsContainerView, AnimeNotFound, ContentContainer, ToolBar, Wrapper } from '@widgets/index.ts'
 import { Header } from '@widgets/header'
 import { Loader, Pagination, SearchInput } from '../../../shared'
 import { Footer } from '@widgets/footer'
@@ -23,6 +23,7 @@ export interface MaterialData {
 export interface Anime {
    id: string
    title: string
+   shikimori_id: string
    material_data: MaterialData
    year: number
    worldart_link: string
@@ -31,14 +32,34 @@ export interface Anime {
 
 export const AnimeList: FC = observer(() => {
    const { store } = useStore()
-   const { catalogAnimeData } = store.animeCatalogStore
+   const [catalogAnimeData, setCatalogAnimeData] = useState(store.animeCatalogStore.catalogAnimeData)
    const [currentPage, setCurrentPage] = useState<number>(1)
    const [animesPerPage] = useState<number>(20)
    const [searchTerm, setSearchTerm] = useState<string>('')
    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+   const {
+      animeCatalogStore: { sortType, sortBy, genres, kinds, mpaa, year_start, year_end, episodes_start, episodes_end },
+   } = store
+
    useEffect(() => {
       fetchAnimeList(currentPage, animesPerPage, store, searchTerm)
-   }, [currentPage, animesPerPage, store])
+   }, [
+      currentPage,
+      animesPerPage,
+      sortType,
+      sortBy,
+      genres,
+      kinds,
+      mpaa,
+      year_start,
+      year_end,
+      episodes_start,
+      episodes_end,
+   ])
+
+   useEffect(() => {
+      setCatalogAnimeData(store.animeCatalogStore.catalogAnimeData)
+   }, [store.animeCatalogStore.catalogAnimeData])
 
    const paginate = (pageNumber: number) => {
       setCurrentPage(pageNumber)
@@ -76,10 +97,11 @@ export const AnimeList: FC = observer(() => {
          <ContentContainer style={{ backgroundColor: '#fff', padding: '0px 20px' }}>
             <h1 className={styles.title}>Каталог аніме</h1>
             <SearchInput
-               style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+               style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                searchTerm={searchTerm}
                handleChangeSearch={handleChangeSearch}
             />
+            <ToolBar style={{ marginBottom: '15px' }} />
             {catalogAnimeData.length && catalogAnimeData.length != 0 && catalogAnimeData ? (
                <AnimeCardsContainerView animeData={catalogAnimeData} />
             ) : (

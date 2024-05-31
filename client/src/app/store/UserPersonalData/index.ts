@@ -8,6 +8,7 @@ export default class UserPersonalData {
    country = ''
    sex = 'Чоловіча стать'
    age: string | number = 0
+   about = ''
 
    constructor(store: Store) {
       this.store = store
@@ -58,6 +59,12 @@ export default class UserPersonalData {
    setAge(age: number | string | null) {
       if (age !== null) {
          this.age = age
+      }
+   }
+
+   setAbout(about: string | null) {
+      if (about !== null) {
+         this.about = about
       }
    }
 }

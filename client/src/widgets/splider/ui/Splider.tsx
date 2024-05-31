@@ -24,7 +24,8 @@ export const Splider: FC<SpliderProps> = ({ animeSeasonData }) => {
                {animeSeasonData &&
                   animeSeasonData.map((card: AnimeSeason) => (
                      <SplideSlide key={card.id}>
-                        <PosterSeasonCard id={card.id} title={card.title} poster_url={card.poster_url} />
+                        <PosterSeasonCard id={card.id} title={card.title}
+                                          poster_url={card.poster_url} shikimori_id={card.shikimori_id}/>
                      </SplideSlide>
                   ))}
             </Splide>

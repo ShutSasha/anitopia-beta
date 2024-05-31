@@ -6,12 +6,13 @@ import { Skeleton } from '../../../shared'
 interface Card {
    id: string
    poster_url: string
+   shikimori_id: string
    title: string
 }
 
-export const PosterSeasonCard: FC<Card> = ({ id, poster_url, title }) => {
+export const PosterSeasonCard: FC<Card> = ({ id, shikimori_id,poster_url, title }) => {
    const [imageIsLoad, setImageIsLoad] = useState<boolean>(false)
-
+   poster_url =`https://shikimori.one/system/animes/original/${shikimori_id}.jpg`
    useEffect(() => {
       setImageIsLoad(true)
       const image = new Image()

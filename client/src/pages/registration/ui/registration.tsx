@@ -1,7 +1,7 @@
 import { Header } from '../../../widgets/header'
 import styles from './styles.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Loader } from '@shared/index'
 import { InputAuth } from '@shared/index'
 import { AuthContext } from '../context/AuthContenx'

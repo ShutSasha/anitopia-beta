@@ -1,6 +1,5 @@
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { CSSProperties, FC, ReactNode, useState } from 'react'
 import styles from './styles.module.scss'
-import { handleFetchError } from '@app/helpers/functions'
 
 interface ImageProps {
    primarySrc: string | undefined
@@ -9,9 +8,10 @@ interface ImageProps {
    textStyle?: string
    animeTitle?: string
    children?: ReactNode
+   style?: CSSProperties
 }
 
-export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, altText, children }) => {
+export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, style, altText, children }) => {
    const [currentSrc, setCurrentSrc] = useState<string | undefined>(primarySrc)
 
    const handleError = () => {
@@ -19,7 +19,7 @@ export const ImageWithFallback: FC<ImageProps> = ({ primarySrc, secondarySrc, al
    }
 
    return (
-      <div className={styles.image_wrapper} style={{ backgroundImage: `url(${currentSrc})` }}>
+      <div className={styles.image_wrapper} style={{ backgroundImage: `url(${currentSrc})`, ...style }}>
          <img src={currentSrc} alt={altText} onError={handleError} style={{ display: 'none' }} />
          {children}
       </div>

@@ -1,30 +1,53 @@
 .card_body {
-   width: 100%;
-   background-color: #515860;
-   margin-bottom: 15px;
-   padding: 10px;
-   border-radius: 10px;
-   text-decoration: none;
+  width: 100%;
+  background-color: #515860;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #3c4147 // var(--hover-bg-image);
+    //background-size: cover;
+    //background-position: center;
+  }
 }
 
 .card_content {
-   display: flex;
-   flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .card_info {
-   display: flex;
-   flex-direction: column;
-   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+
+  .reset_span {
+    all: unset;
+    display: inline;
+    color: white;
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  .main_title {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .title_orig {
+    font-size: 12px;
+    color: white;
+  }
 }
 
-.card_info p {
-   color: white;
-}
 
 .card_poster {
-   width: 56px;
-   height: 78px;
-   border-radius: 5px;
-   margin-right: 10px;
+  width: 56px;
+  height: 78px;
+  border-radius: 5px;
+  margin-right: 10px;
 }

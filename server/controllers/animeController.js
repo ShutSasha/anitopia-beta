@@ -43,10 +43,58 @@ class AnimeController {
             sortedData = sortedData.filter((anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
          }
 
+         const filterParams = {
+            shikimori_votes: 'shikimori_votes',
+            episodes_count: 'episodes_count',
+            year: 'year',
+            anime_genres: 'anime_genres',
+            anime_kind: 'anime_kind',
+            rating_mpaa: 'rating_mpaa',
+            year_start: 'year',
+            year_end: 'year',
+            episodes_start: 'episodes_count',
+            episodes_end: 'episodes_count',
+         }
+
+         const numberParamKeys = {
+            year: ['year_start', 'year_end'],
+            episodes_count: ['episodes_start', 'episodes_end'],
+         }
+
+         const applyFilter = async (data, key, value) => {
+            const numberParams = ['year', 'episodes_count']
+            const sortData = ['shikimori_votes', 'episodes_count', 'year']
+
+            if (sortData.includes(key) && !/\d/.test(value)) {
+               return await AnimeService.sortBy(data, key, value)
+            }
+
+            if (numberParams.includes(key)) {
+               const [startKey, endKey] = numberParamKeys[key]
+               const startValue = req.query[startKey]
+               const endValue = req.query[endKey]
+
+               if (startValue && endValue) {
+                  return await AnimeService.filterNumberParams(data, key, startValue, endValue)
+               } else if (startValue) {
+                  return await AnimeService.filterNumberParams(data, key, startValue, key === 'year' ? 2024 : 5000)
+               } else if (endValue) {
+                  return await AnimeService.filterNumberParams(data, key, key === 'year' ? 1966 : 0, endValue)
+               }
+            }
+            return await AnimeService.getFilteredList(data, key, value)
+         }
+
+         for (const param in filterParams) {
+            if (req.query[param]) {
+               sortedData = await applyFilter(sortedData, filterParams[param], req.query[param])
+            }
+         }
+
          let startIndex = 0
 
          if (req.query.page >= 2) {
-            startIndex = (req.query.page - 1) * req.query.limit || 0
+            startIndex = (req.query.page - 1) * (req.query.limit || 10)
          }
 
          const count = req.query.limit || 10
@@ -90,6 +138,7 @@ class AnimeController {
                   animeWithDate.push({
                      id: item._id,
                      title: item.title,
+                     shikimori_id: item.shikimori_id,
                      poster_url: item.material_data.poster_url,
                   })
                }
@@ -109,7 +158,9 @@ class AnimeController {
          const anime = await Anime.findById(id)
 
          return res.json(anime)
-      } catch (error) {}
+      } catch (error) {
+         console.error('Error fetching anime by id:', error)
+      }
    }
 
    async getAllAnime(req, res, next) {

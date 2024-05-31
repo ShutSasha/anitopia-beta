@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 export interface Collection {
    rating?: number
    animeId: string
+   shikimori_id: string
    poster_url: string
    title: string
 }
@@ -24,6 +25,7 @@ export const AnimeCollectionInner: FC = observer(() => {
             if (store.userAnimeCollection.collectionType === 'rate') {
                response = await $api.get<Collection[]>(`/rate-anime/${id}`)
             } else if (store.userAnimeCollection.collectionType === 'watching') {
+               //TODO Collections
             }
 
             setCollection(response?.data)

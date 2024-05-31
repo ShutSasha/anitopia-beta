@@ -1,25 +1,15 @@
+import { handleFetchError } from '@app/helpers/functions'
 import $api from '../../../app/http'
-import { useStore } from '@app/hooks/useStore'
 
-export const checkUploadStatus = async (username: string, intervalId: any) => {
-   const { store } = useStore()
+export const checkUploadStatus = async (username: string) => {
    try {
-      const response = await $api.get(`/users/upload-status/${username}`)
-      const status = response.data.status
-      if (status === false) {
-         console.log('Image upload completed')
-         clearInterval(intervalId)
-         window.addEventListener('unload', function () {
-            store.isLoading = false
-         })
-         window.location.reload()
-      } else if (!status) {
-         console.error('Image upload failed')
-         clearInterval(intervalId)
-         store.isLoading = false
-      }
-   } catch (error) {
-      console.error('Error checking upload status', error)
-      throw error
+      const { data } = await $api.get(`/users/upload-status/${username}`)
+      const status = data.status
+
+      if (status === undefined || status === null) return true
+
+      return status
+   } catch (e) {
+      handleFetchError(e)
    }
 }
