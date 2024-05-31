@@ -19,7 +19,7 @@ const User = new Schema({
    registrationDate: { type: Date, required: true },
    activationLink: { type: String },
    isActivated: { type: Boolean, default: false },
-   roles: [{ type: String, ref: 'Role' }],
+   roles: [{ type: String, ref: 'Role' }], //TODO Исправить хранение роли
    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
    animeRatings: [Schema.Types.Mixed],
 })
