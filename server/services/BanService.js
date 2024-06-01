@@ -49,10 +49,9 @@ class BanService {
          const banIdsToDelete = bansToDelete.map(ban => ban._id)
          await banModel.deleteMany({ _id: { $in: banIdsToDelete } })
 
-         console.log(`Баны пользователя ${id} успешно удалены`)
          return user
       } catch (error) {
-         console.error('Ошибка при удалении бана пользователя:', error.message)
+
          throw error
       }
    }
