@@ -8,19 +8,29 @@ module.exports = async function(req, res, next) {
    }
 
    try {
-      const token = req.headers.authorization.split(' ')[1]
+      const { refreshToken } = req.cookies
       let user = null
+      console.log(refreshToken)
 
-      if (token !== 'null') {
-         const userData = tokenService.validateAccessToken(token)
-         if (userData) {
-            user = await UserModel.findById(userData.id).populate('bans')
-            if (!user) {
-               console.error('User not found with token data')
-               return next(ApiError.UnauthorizedError('Користувача не знайдено'))
+      if (req.method === 'GET' && refreshToken) {
+         if (refreshToken) {
+            const userData = tokenService.validateRefreshToken(refreshToken)
+            if (userData) {
+               user = await UserModel.findById(userData.id).populate('bans')
+               console.log(`USER: ${userData}`)
+               if (!user) {
+                  console.error('User not found with token data')
+                  return next(ApiError.UnauthorizedError('Користувача не знайдено'))
+               }
+            } else {
+               console.error('Invalid token')
+               return next(ApiError.UnauthorizedError('Невалідний токен'))
             }
+         } else {
+            console.error('Token not provided')
+            return next(ApiError.UnauthorizedError('Токен не надано'))
          }
-      } else {
+      } else if (req.method === 'POST') {
          const { username } = req.body
          console.log(`USERNAME: ${username}`)
          if (!username) {
@@ -33,18 +43,18 @@ module.exports = async function(req, res, next) {
          }
       }
 
-      const currentDate = Date.now()
-      for (let ban of user.bans) {
-         if (currentDate >= new Date(ban.timestamp_from) && currentDate <= new Date(ban.timestamp_to)) {
-            res.clearCookie('refreshToken')
-            return next(ApiError.Forbidden(`Користувач має поточне блокування, срок зняття: ${ban.timestamp_to}`))
+      if (user) {
+         const currentDate = Date.now()
+         for (let ban of user.bans) {
+            if (currentDate >= new Date(ban.timestamp_from) && currentDate <= new Date(ban.timestamp_to)) {
+               return next(ApiError.Forbidden(`Користувач має поточне блокування. Час блокування ${ban.timestamp_to}`))
+            }
          }
+         req.user = user
       }
-
-      req.user = user
       next()
-   } catch
-      (e) {
+   } catch (e) {
+      console.error('Error during authorization check', e)
       return next(ApiError.UnauthorizedError('Користувач не авторизований (an error occurred)'))
    }
 }
