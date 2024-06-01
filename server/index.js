@@ -13,7 +13,6 @@ const filePathMiddleware = require('./middleware/fileMiddleware')
 const path = require('path')
 const swaggerDocs = require('./utils/swagger')
 const { loadAnimeData } = require('./animeData')
-
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 app.use(express.json())
 app.use(cookieParser())

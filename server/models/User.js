@@ -24,6 +24,7 @@ const User = new Schema({
    bans: [{ type: Schema.Types.ObjectId, ref: 'Ban' }],
    complaints: [{ type: Schema.Types.ObjectId, ref: 'Complaint' }],
    animeRatings: [Schema.Types.Mixed],
+   siteBackgroundColor: { type: String, default: '#e2e2e2' },
 })
 
 module.exports = model('User', User)

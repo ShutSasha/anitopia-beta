@@ -17,7 +17,7 @@ module.exports = async function(req, res, next) {
             const userData = tokenService.validateRefreshToken(refreshToken)
             if (userData) {
                user = await UserModel.findById(userData.id).populate('bans')
-               console.log(`USER: ${userData}`)
+
                if (!user) {
                   console.error('User not found with token data')
                   return next(ApiError.UnauthorizedError('Користувача не знайдено'))
@@ -32,7 +32,7 @@ module.exports = async function(req, res, next) {
          }
       } else if (req.method === 'POST') {
          const { username } = req.body
-         console.log(`USERNAME: ${username}`)
+
          if (!username) {
             return next(ApiError.BadRequest('Необхідно вказати ім`я користувача або email'))
          }

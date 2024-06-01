@@ -17,7 +17,7 @@ class userController {
 
    async getUsers(req, res, next) {
       try {
-         const { isControlPanel } = req.query;
+         const { isControlPanel } = req.query
          const users = await userService.getAllUsers(isControlPanel)
          return res.json(users)
       } catch (e) {
@@ -113,7 +113,6 @@ class userController {
       }
    }
 
-
    async addUserRole(req, res, next) {
       try {
          const { id } = req.params
@@ -144,7 +143,6 @@ class userController {
       } catch (e) {
          next(e)
       }
-
    }
 
    async banUser(req, res, next) {
@@ -154,7 +152,37 @@ class userController {
             return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
          }
          return res.status(200)
+      } catch (e) {
+         next(e)
+      }
+   }
 
+   async getSiteBackground(req, res, next) {
+      try {
+         const { id } = req.params
+
+         const user = await userService.getUserById(id)
+
+         return res.status(200).json({ siteBackgroundColor: user.siteBackgroundColor })
+      } catch (e) {
+         next(e)
+      }
+   }
+
+   async changeSiteBackground(req, res, next) {
+      try {
+         const { id } = req.params
+         const { color } = req.body
+
+         const user = await userService.getUserById(id)
+
+         user.siteBackgroundColor = color
+
+         user.markModified('siteBackgroundColor')
+
+         await user.save()
+
+         return res.status(200).json({ siteBackgroundColor: user.siteBackgroundColor })
       } catch (e) {
          next(e)
       }

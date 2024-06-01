@@ -198,4 +198,8 @@ router.delete('/roles/:id', validateRole(['ADMIN']), userController.deleteUserRo
 
 router.put('/bans/:id', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
 
+router.get('/site-background/:id', userController.getSiteBackground)
+
+router.patch('/site-background/:id', userController.changeSiteBackground)
+
 module.exports = router
