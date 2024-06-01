@@ -3,7 +3,7 @@ const router = new Router()
 const authController = require('../controllers/authController')
 const roleMiddleware = require('../middleware/roleMiddleware')
 const { validateRegistration } = require('../validators/registration')
-const banMiddleware= require('../middleware/banMiddleware')
+const banMiddleware = require('../middleware/banMiddleware')
 /**
  * @openapi
  * tags:
@@ -156,7 +156,7 @@ router.get('/users', roleMiddleware(['ADMIN']), authController.getUsers)
  *       500:
  *         description: Внутрішня помилка сервера.
  */
-router.get('/refresh',banMiddleware, authController.refresh)
+router.get('/refresh', authController.refresh)
 
 /**
  * @openapi
@@ -373,7 +373,7 @@ router.post('/registration', validateRegistration(), authController.registration
  *       500:
  *         description: Внутрішня помилка сервера.
  */
-router.post('/login', banMiddleware, authController.login)
+router.post('/login',  authController.login)
 
 /**
  * @openapi
