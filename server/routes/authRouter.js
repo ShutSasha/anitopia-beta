@@ -156,7 +156,7 @@ router.get('/users', roleMiddleware(['ADMIN']), authController.getUsers)
  *       500:
  *         description: Внутрішня помилка сервера.
  */
-router.get('/refresh', authController.refresh)
+router.get('/refresh',banMiddleware,authController.refresh)
 
 /**
  * @openapi
@@ -373,7 +373,7 @@ router.post('/registration', validateRegistration(), authController.registration
  *       500:
  *         description: Внутрішня помилка сервера.
  */
-router.post('/login',  authController.login)
+router.post('/login', banMiddleware, authController.login)
 
 /**
  * @openapi

@@ -38,10 +38,15 @@ class rateAnimeController {
 
          const existingRatingIndex = user.animeRatings.findIndex((item) => item.animeId === anime_id)
 
-         const anime = allAnime.find((item) => item._id === anime_id)
+         const anime = allAnime.find((item) => {
+            if (item._id) {
+               return item._id.toString() === anime_id
+            }
+            return item.id.toString() === anime_id
+         })
 
          if (!anime) {
-            throw new Error(`Аніме не знайдено, anime_id: ${anime_id}, anime._id: ${anime._id}`)
+            throw new Error(`Аніме не знайдено`)
          }
 
          if (existingRatingIndex !== -1) {
