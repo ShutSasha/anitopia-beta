@@ -196,6 +196,6 @@ router.post('/roles/:id', validateRole(['ADMIN']), userController.addUserRole)
 
 router.delete('/roles/:id', validateRole(['ADMIN']), userController.deleteUserRole)
 
-router.put('/blocks/:id', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
+router.put('/bans/:id', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
 
 module.exports = router

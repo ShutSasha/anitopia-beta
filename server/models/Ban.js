@@ -8,4 +8,4 @@ const Ban = new Schema({
    timestamp_to: { type: Date, required: true},
 })
 
-model.exports = model('Ban', Ban)
+module.exports = model('Ban', Ban)
