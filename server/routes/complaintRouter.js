@@ -3,7 +3,7 @@ const router = new Router()
 const authMiddleware = require('../middleware/authMiddleware')
 const complaintController = require('../controllers/complaintController')
 
-router.post('/',authMiddleware,complaintController.addUserComplaint)
-router.get('/:id',authMiddleware, complaintController.getUserComplaints)
+router.post('/',authMiddleware,complaintController.addComplaint)
+router.get('/:id',authMiddleware, complaintController.getComplaints)
 
 module.exports = router

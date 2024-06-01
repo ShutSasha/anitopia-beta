@@ -1,47 +1,31 @@
 const ComplaintModel = require('../models/Complaint')
 const UserModel = require('../models/User')
+const complaintService = require('../services/ComplaintService')
 
 class complaintController {
 
-   async addUserComplaint(req, res, next) {
+   async addComplaint(req, res, next) {
       try {
          const { from_user, to_user, category } = req.body
 
-         const user = await UserModel.findById(to_user)
-         if (!from_user || !to_user || !category) {
-            return res.status(400)
-         }
+         const addedComplaint = await complaintService.addUserComplaint(from_user,to_user,category)
 
-         const complaint = new ComplaintModel({ from_user, to_user, category })
-
-         await complaint.save()
-
-         user.complaints.push(complaint._id)
-
-         await user.save()
-
-         return res.status(201).json(complaint)
+         return res.status(201).json(addedComplaint)
       } catch (e) {
          next(e)
       }
    }
 
-
-   //TODO error
-   async getUserComplaints(req, res, next) {
+   async getComplaints(req, res, next) {
       try {
          const { id } = req.params
-         console.log(id)
-         const user = await UserModel.findById(id).populate('complaints')
-         if (!user) {
-            return res.status(404).json({ message: 'User not found' })
-         }
-         res.json(user.complaints)
+         const userComplaints = await complaintService.getUserComplaints(id)
+
+         res.status(200).json(userComplaints)
 
       } catch (e) {
          next(e)
       }
-
    }
 
 }
