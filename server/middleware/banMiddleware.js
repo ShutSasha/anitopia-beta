@@ -19,15 +19,12 @@ module.exports = async function(req, res, next) {
                user = await UserModel.findById(userData.id).populate('bans')
 
                if (!user) {
-                  console.error('User not found with token data')
                   return next(ApiError.UnauthorizedError('Користувача не знайдено'))
                }
             } else {
-               console.error('Invalid token')
                return next(ApiError.UnauthorizedError('Невалідний токен'))
             }
          } else {
-            console.error('Token not provided')
             return next(ApiError.UnauthorizedError('Токен не надано'))
          }
       } else if (req.method === 'POST') {
@@ -54,7 +51,7 @@ module.exports = async function(req, res, next) {
       }
       next()
    } catch (e) {
-      console.error('Error during authorization check', e)
+      console.error('Помилка при валідації користувача: ', e)
       return next(ApiError.UnauthorizedError('Користувач не авторизований (an error occurred)'))
    }
 }
