@@ -3,8 +3,12 @@ import styles from './styles.module.scss'
 import { ContentContainer } from '@widgets/content-container'
 import { CheckBox } from '@features'
 import { SITE_THEMES } from '../consts/site-themes'
+import { useStore } from '@app/hooks/useStore'
+import { observer } from 'mobx-react-lite'
 
 export const UserSettingsSite: FC = () => {
+   const { store } = useStore()
+
    return (
       <>
          <ContentContainer style={{ padding: '30px', backgroundColor: '#fff', borderBottom: '5px solid #ff6666' }}>
@@ -15,6 +19,7 @@ export const UserSettingsSite: FC = () => {
                <div className={styles.change_theme_exist}>
                   {SITE_THEMES.map((item, index) => (
                      <div
+                        onClick={() => store.setSiteBackground(item.color)}
                         key={index}
                         style={
                            item.isUpload

@@ -15,6 +15,7 @@ export default class Store {
    user = {} as IUser
    isAuth = false
    isLoading = false
+   siteBackground = '#e2e2e2'
    randomAnime: RandomAnime
    anime: AnimePage
    userAnimeCollection: UserAnimeCollection
@@ -24,11 +25,16 @@ export default class Store {
    constructor() {
       makeAutoObservable(this)
       this.setLoading = this.setLoading.bind(this)
+      this.setSiteBackground = this.setSiteBackground.bind(this)
       this.randomAnime = new RandomAnime()
       this.anime = new AnimePage()
       this.userAnimeCollection = new UserAnimeCollection()
       this.animeCatalogStore = new AnimeCatalogStore()
       this.userPersonalData = new UserPersonalData(this)
+   }
+
+   setSiteBackground(color: string) {
+      this.siteBackground = color
    }
 
    randomAnimeClick(fucntionClick: () => void) {
