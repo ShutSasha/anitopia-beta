@@ -9,6 +9,7 @@ export const useUserComment = (user: string) => {
       const fetchUserData = async () => {
          try {
             const res = await $api.get(`/users/${user}`)
+            console.log(res.data)
             setUserData(res.data)
          } catch (error) {
             console.error(error)

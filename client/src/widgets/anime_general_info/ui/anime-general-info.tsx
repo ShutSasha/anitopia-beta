@@ -55,7 +55,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
             rate: rate,
             anime_id: id || anime.id,
             user_id: store.user.id,
-            shikimori_id: anime.shikimori_id
+            shikimori_id: anime.shikimori_id,
          })
          fetchData()
 
@@ -88,7 +88,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
    useEffect(() => {
       setIsLoadingImage(true)
       const image = new Image()
-      image.src = imagePath|| ''
+      image.src = imagePath || ''
       image.onload = () => {
          setIsLoadingImage(false)
       }
@@ -162,7 +162,7 @@ export const AnimeGeneralInfo: FC<AnimeGeneralInfoProps> = observer(({ anime, ra
          <Modal
             active={modalActive}
             setActive={setModalActive}
-            headerText={'Оцените аниме'}
+            headerText={'Оцініть аніме'}
             modalWidth={`330px`}
             containerPadding={`0`}
          >

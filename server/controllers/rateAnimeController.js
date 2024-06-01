@@ -27,14 +27,22 @@ class rateAnimeController {
 
    async makeRateAnime(req, res, next) {
       try {
-         const { rate, anime_id, user_id,shikimori_id } = req.body
+         const { rate, anime_id, user_id, shikimori_id } = req.body
 
          const allAnime = getAnimeData()
          const user = await User.findById(user_id)
 
+         if (!user) {
+            throw new Error('Користувача не знайдено')
+         }
+
          const existingRatingIndex = user.animeRatings.findIndex((item) => item.animeId === anime_id)
 
          const anime = allAnime.find((item) => item._id === anime_id)
+
+         if (!anime) {
+            throw new Error(`Аніме не знайдено, anime_id: ${anime_id}, anime._id: ${anime._id}`)
+         }
 
          if (existingRatingIndex !== -1) {
             user.animeRatings[existingRatingIndex].rating = rate

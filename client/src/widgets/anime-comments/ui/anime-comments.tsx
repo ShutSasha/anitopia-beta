@@ -4,6 +4,7 @@ import { AnimeComment } from '@entities/index'
 import styles from './styles.module.scss'
 import { useComments } from '../hooks/useComments'
 import { observer } from 'mobx-react-lite'
+import { Comment } from '@shared/api'
 
 export const AnimeComments: FC = observer(() => {
    const comments = useComments()
@@ -14,7 +15,7 @@ export const AnimeComments: FC = observer(() => {
             <AnimeHeaderComments />
             <AnimeCommentForm />
          </div>
-         {comments && comments.map((item: any) => <AnimeComment key={item._id} {...item} />)}
+         {comments && comments.map((item: Comment) => <AnimeComment key={item._id} {...item} />)}
       </>
    )
 })
