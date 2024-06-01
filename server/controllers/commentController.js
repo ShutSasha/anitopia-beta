@@ -21,9 +21,15 @@ class commentController {
       try {
          const { id } = req.params
 
-         const { comments } = await Anime.findById(id).populate('comments')
+         const anime = await Anime.findById(id).populate({
+            path: 'comments',
+            populate: {
+               path: 'user',
+               model: 'User',
+            },
+         })
 
-         return res.status(200).json(comments)
+         return res.status(200).json(anime.comments)
       } catch (error) {
          console.error('Error fetching comments:', error)
          return res.status(500).json({ error: 'An error occurred while fetching comments' })
