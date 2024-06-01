@@ -24,7 +24,7 @@ export const ControlPanelBans: FC = () => {
             <div className={styles.bans_header_item}>Минулі блокування</div>
             <div className={styles.bans_header_item}>Дії</div>
          </div>
-         <div className={styles.users_list}>{users && users.map((user) => <BanCard user={user} />)}</div>
+         <div className={styles.users_list}>{users && users.map((user) => <BanCard key={user._id} user={user} />)}</div>
       </>
    )
 }
