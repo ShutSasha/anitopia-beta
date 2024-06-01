@@ -123,9 +123,19 @@ class UserService {
       return user
    }
 
-   async getAllUsers() {
-      const users = UserModel.find()
-      return users
+   async getAllUsers(adminPanel) {
+      try {
+         const users = await UserModel.find();
+
+         if (adminPanel) {
+            return users.filter(user => !user.roles.includes("ADMIN"));
+         }
+
+         return users;
+      } catch (error) {
+         console.error('Error fetching users:', error);
+         throw error;
+      }
    }
 
    async changeUserIcon(file, id) {
@@ -213,25 +223,6 @@ class UserService {
       const newHash = bcrypt.hashSync(newPassword, 7)
       user.password = newHash
       user.save()
-   }
-
-   async giveRole(userId, role) {
-      const user = await UserModel.findById(userId);
-      if (!user) {
-         throw new Error('Пользователь не знайден');
-      }
-      const userRole = await RoleModel.findOne({ value: role.toString() });
-      if (!userRole) {
-         throw new Error('Роль не знайдена');
-      }
-
-      if (!user.roles.includes(userRole.value)) {
-         user.roles.push(userRole.value);
-      }else{
-         throw new Error('Користувач вже має вказану роль')
-      }
-
-      await user.save();
    }
 
 }

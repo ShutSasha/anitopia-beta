@@ -1,0 +1,26 @@
+.top_part_header {
+   border-bottom: 1px solid #ff6666;
+   .top_part_header_title {
+      color: #fff;
+      padding: 12px 0 12px 25px;
+   }
+}
+
+.bottom_part_header {
+   display: flex;
+
+   .bottom_part_header_item {
+      color: #fff;
+      padding: 20px 10px;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+         background-color: #ff6666;
+      }
+
+      &:first-child {
+         border-bottom-left-radius: 10px;
+      }
+   }
+}

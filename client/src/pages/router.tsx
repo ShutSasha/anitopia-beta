@@ -11,6 +11,7 @@ import { TopAnime } from './top-anime'
 import { UserPolicy } from './user-policy'
 import { Notifications } from './notifications'
 import { UserSettings } from './user-settings'
+import { ControlPanel } from './control-panel'
 
 export const router = createBrowserRouter(
    [
@@ -65,6 +66,22 @@ export const router = createBrowserRouter(
       {
          path: routes.USER_SETTINGS_PREMIUM,
          element: <UserSettings />,
+      },
+      {
+         path: routes.CONTROL_PANEL,
+         element: <ControlPanel />,
+      },
+      {
+         path: routes.CONTROL_PANEL_BANS,
+         element: <ControlPanel />,
+      },
+      {
+         path: routes.CONTROL_PANEL_REQUEST_ANIME,
+         element: <ControlPanel />,
+      },
+      {
+         path: routes.CONTROL_PANEL_ROLES,
+         element: <ControlPanel />,
       },
       {
          path: '*',

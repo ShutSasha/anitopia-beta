@@ -1,4 +1,3 @@
-import { AnimeRating } from './../../../entities/ui/anime-card/ui/anime-rating'
 export type GetUserById = {
    id: string | undefined
 }
@@ -30,6 +29,8 @@ export type UserByIdResponse = {
    uploadStatus: boolean
    username: string
    about: string | null
+   complaints: string[]
+   bans: string[]
 }
 
 export type UserBadget = 'ADMIN' | 'USER' | 'PREMIUM' | 'MODERATOR' | 'BANNED' | 'DELETED' | 'GUEST' | 'UNKNOWN'

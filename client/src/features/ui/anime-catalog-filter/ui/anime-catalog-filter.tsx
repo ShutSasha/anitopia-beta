@@ -8,7 +8,6 @@ import { Input, Select } from 'antd'
 import { GENRES } from '../consts/genres'
 import { KINDS } from '../consts/kinds'
 import { MPAA } from '../consts/mpaa'
-import { toJS } from 'mobx'
 
 export const AnimeCatalogFilter: FC = observer(() => {
    const { store } = useStore()
