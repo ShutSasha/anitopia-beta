@@ -30,7 +30,9 @@ export type Comment = {
    anime: string
    comment_text: string
    timestamp: string
-   user: string
+   user: {
+      _id: string
+   }
    __v: number
    _id: string
 }

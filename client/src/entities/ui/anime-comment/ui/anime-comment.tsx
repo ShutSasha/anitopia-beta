@@ -13,7 +13,7 @@ import { handleFetchError, showNotice } from '@app/helpers/functions'
 
 export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, timestamp, user }) => {
    const { store } = useStore()
-   const userData = useUserComment(user)
+   const userData = useUserComment(user._id)
    const parsedDate = parseISO(timestamp)
    const formattedDate = format(parsedDate, 'dd.MM.yyyy HH:mm:ss')
    const [isEdit, setEdit] = useState<boolean>(false)
@@ -62,7 +62,7 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
    return (
       <>
          <div className={styles.comment}>
-            <Link to={`/profile/${user}`}>
+            <Link to={`/profile/${user._id}`}>
                <img className={styles.user_icon} src={userData?.avatarLink} alt='' />
             </Link>
             <div className={styles.comment_info}>
@@ -73,7 +73,7 @@ export const AnimeComment: FC<Comment> = observer(({ _id, anime, comment_text, t
             <div className={styles.features}>
                <LikeComment id={_id} />
                <DislikeComment id={_id} />
-               <CommentControls commentId={_id} animeId={anime} user_id={user} setEdit={setEdit} />
+               <CommentControls commentId={_id} animeId={anime} user_id={user._id} setEdit={setEdit} />
             </div>
          </div>
       </>

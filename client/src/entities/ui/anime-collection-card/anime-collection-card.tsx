@@ -9,13 +9,12 @@ import $api from '@app/http'
 export const AnimeCollectionCard: FC<Collection> = ({ rating, animeId,shikimori_id, title }) => {
    const [generalAnimeRating, setGeneralAnimeRating] = useState<number>()
    const imagePath = `https://shikimori.one/system/animes/original/${shikimori_id}.jpg`
-   console.log()
+
    useEffect(() => {
       const fetchAnimeRating = async () => {
          const response = await $api.get(`/anime/${animeId}`)
          const is_shikimori_rating = response.data.material_data.shikimori_rating !== undefined
          const shikimori_rating = response.data.material_data.shikimori_rating
-         console.log(imagePath)
          if (is_shikimori_rating) {
             setGeneralAnimeRating(shikimori_rating)
          }
