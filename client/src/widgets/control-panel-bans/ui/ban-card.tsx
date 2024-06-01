@@ -77,7 +77,7 @@ export const BanCard: FC<BanCardProps> = ({ user }) => {
       <div className={styles.card_container}>
          <div className={styles.user_container}>
             <img className={styles.user_img} src={user.avatarLink} alt='' />
-            <p>{user.username}</p>
+            <p className={styles.user_username}>{user.username}</p>
          </div>
          <div className={styles.complaint_count}>{complaintsCount}</div>
          <div className={styles.category_of_complaint}>{category}</div>

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 import ProfileUserOptions from '../../../assets/profile-options-icon.svg'
-import { toJS } from 'mobx'
 
 export const User: FC = observer(() => {
    const { store } = useStore()
