@@ -1,4 +1,4 @@
-import { API_URL } from './../http/index'
+import $api, { API_URL } from '../http/index'
 import { IUser } from '../models/IUser'
 import { makeAutoObservable } from 'mobx'
 import AuthService from '../services/AuthService'
