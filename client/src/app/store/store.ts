@@ -1,4 +1,4 @@
-import { API_URL } from './../http/index'
+import $api, { API_URL } from '../http/index'
 import { IUser } from '../models/IUser'
 import { makeAutoObservable } from 'mobx'
 import AuthService from '../services/AuthService'
@@ -15,6 +15,7 @@ export default class Store {
    user = {} as IUser
    isAuth = false
    isLoading = false
+   banPanelToggle = false
    siteBackground = '#e2e2e2'
    randomAnime: RandomAnime
    anime: AnimePage
@@ -31,6 +32,10 @@ export default class Store {
       this.userAnimeCollection = new UserAnimeCollection()
       this.animeCatalogStore = new AnimeCatalogStore()
       this.userPersonalData = new UserPersonalData(this)
+   }
+
+   setBanPanelToggle(bool: boolean) {
+      this.banPanelToggle = bool
    }
 
    setSiteBackground(color: string) {

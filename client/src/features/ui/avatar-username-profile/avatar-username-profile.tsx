@@ -42,6 +42,13 @@ export const AvatarUsernameProfile: FC<MainUserInfoProps> = observer(
                <img className={styles.profile_avatar_img} src={user.avatarLink} alt='Avatar' />
             </div>
             <h2 className={styles.title_username}>{user.username}</h2>
+            <div className={styles.badge_list}>
+               {user.roles.map((role: UserBadget, index: number) => (
+                  <div key={index} className={`${styles.badge} ${styles[role]}`}>
+                     {role}
+                  </div>
+               ))}
+            </div>
          </div>
       )
    },

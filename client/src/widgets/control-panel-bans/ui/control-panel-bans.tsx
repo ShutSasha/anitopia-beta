@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import { fetchUsersForControlPanel } from '../helpers/fetch-users-for-control-panel'
 import { UserByIdResponse } from '@shared/api'
 import { BanCard } from './ban-card'
+import { Loader } from '@shared/index'
 
 export const ControlPanelBans: FC = () => {
    const [users, setUsers] = useState<UserByIdResponse[] | undefined>([])

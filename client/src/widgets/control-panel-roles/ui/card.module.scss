@@ -1,0 +1,82 @@
+.container {
+   padding: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background-color: #343a40;
+   border-radius: 10px;
+
+   .avatar {
+      height: 60px;
+      width: 60px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 15px;
+      margin-bottom: 15px;
+   }
+
+   .username {
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 15px;
+   }
+
+   .moderator {
+      color: #fff;
+      background-color: #ff6666;
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin-left: 10px;
+   }
+
+   .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .give_role {
+         cursor: pointer;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+
+         .add_role_img {
+            height: 40px;
+            width: 40px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+
+         .add_role_text {
+            font-family: "Franklin Gothic Heavy", sans-serif;
+            text-align: center;
+            color: #fff;
+         }
+      }
+
+      .take_out_role {
+         cursor: pointer;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+
+         .take_out_role_img {
+            height: 40px;
+            width: 40px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+
+         .take_out_role_text {
+            font-family: "Franklin Gothic Heavy", sans-serif;
+            text-align: center;
+            color: #ff6666;
+         }
+      }
+   }
+}

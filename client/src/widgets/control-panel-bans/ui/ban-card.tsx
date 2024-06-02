@@ -14,9 +14,10 @@ interface BanCardProps {
 }
 
 export const BanCard: FC<BanCardProps> = ({ user }) => {
+   const [banToggle, setToggle] = useState<boolean>(false)
    const [complaintsCount, setComplaintsCount] = useState<number | undefined>(0)
    const [category, setCategory] = useState<string>('Немає')
-   const [banCount] = useState<number | undefined>(user.bans.length || 0)
+   const [banCount, setBanCount] = useState<number | undefined>(user.bans.length || 0)
    const [temporaryModal, setTemporaryModal] = useState<boolean>(false)
    const [permanentModal, setPermanentModal] = useState<boolean>(false)
 
@@ -38,8 +39,21 @@ export const BanCard: FC<BanCardProps> = ({ user }) => {
       fetchUserComplaints()
    }, [user._id])
 
-   const handleTemporaryBan = () => {
-      handleBan({
+   useEffect(() => {
+      const fetchUserBans = async () => {
+         try {
+            const { data } = await $api.get(`/bans/${user._id}`)
+
+            setBanCount(data.length)
+         } catch (e) {
+            handleFetchError(e)
+         }
+      }
+      fetchUserBans()
+   }, [banToggle])
+
+   const handleTemporaryBan = async () => {
+      await handleBan({
          userId: user._id,
          isPermanent: false,
          startDate,
@@ -49,10 +63,11 @@ export const BanCard: FC<BanCardProps> = ({ user }) => {
          setTemporaryModal,
          setPermanentModal,
       })
+      setToggle(!banToggle)
    }
 
-   const handlePermanentBan = () => {
-      handleBan({
+   const handlePermanentBan = async () => {
+      await handleBan({
          userId: user._id,
          isPermanent: true,
          startDate: null,
@@ -62,6 +77,7 @@ export const BanCard: FC<BanCardProps> = ({ user }) => {
          setTemporaryModal,
          setPermanentModal,
       })
+      setToggle(!banToggle)
    }
 
    const handleRemoveBan = async () => {
@@ -71,13 +87,14 @@ export const BanCard: FC<BanCardProps> = ({ user }) => {
       } catch (e) {
          handleFetchError(e)
       }
+      setToggle(!banToggle)
    }
 
    return (
       <div className={styles.card_container}>
          <div className={styles.user_container}>
             <img className={styles.user_img} src={user.avatarLink} alt='' />
-            <p>{user.username}</p>
+            <p className={styles.user_username}>{user.username}</p>
          </div>
          <div className={styles.complaint_count}>{complaintsCount}</div>
          <div className={styles.category_of_complaint}>{category}</div>

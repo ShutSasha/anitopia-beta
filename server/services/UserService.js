@@ -125,16 +125,16 @@ class UserService {
 
    async getAllUsers(adminPanel) {
       try {
-         const users = await UserModel.find();
+         const users = await UserModel.find()
 
          if (adminPanel) {
-            return users.filter(user => !user.roles.includes("ADMIN"));
+            return users.filter((user) => !user.roles.includes('ADMIN'))
          }
 
-         return users;
+         return users
       } catch (error) {
-         console.error('Error fetching users:', error);
-         throw error;
+         console.error('Error fetching users:', error)
+         throw error
       }
    }
 
@@ -225,6 +225,17 @@ class UserService {
       user.save()
    }
 
+   async searchUsers(searchQuery) {
+      try {
+         const users = await UserModel.find({
+            username: { $regex: searchQuery, $options: 'i' },
+         })
+
+         return users
+      } catch (e) {
+         next(e)
+      }
+   }
 }
 
 module.exports = new UserService()

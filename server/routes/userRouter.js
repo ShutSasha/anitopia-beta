@@ -31,6 +31,8 @@ const authMiddleware = require('../middleware/authMiddleware')
  */
 router.get('/', userController.getUsers)
 
+router.get('/search', userController.searchUser)
+
 /**
  * @openapi
  * /api/users/upload-status/{username}:
@@ -197,5 +199,9 @@ router.post('/roles/:id', validateRole(['ADMIN']), userController.addUserRole)
 router.delete('/roles/:id', validateRole(['ADMIN']), userController.deleteUserRole)
 
 router.put('/bans/:id', validateRole(['MODERATOR', 'ADMIN']), userController.banUser)
+
+router.get('/site-background/:id', userController.getSiteBackground)
+
+router.patch('/site-background/:id', userController.changeSiteBackground)
 
 module.exports = router

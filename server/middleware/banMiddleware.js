@@ -17,22 +17,19 @@ module.exports = async function(req, res, next) {
             const userData = tokenService.validateRefreshToken(refreshToken)
             if (userData) {
                user = await UserModel.findById(userData.id).populate('bans')
-               console.log(`USER: ${userData}`)
+
                if (!user) {
-                  console.error('User not found with token data')
                   return next(ApiError.UnauthorizedError('Користувача не знайдено'))
                }
             } else {
-               console.error('Invalid token')
                return next(ApiError.UnauthorizedError('Невалідний токен'))
             }
          } else {
-            console.error('Token not provided')
             return next(ApiError.UnauthorizedError('Токен не надано'))
          }
       } else if (req.method === 'POST') {
          const { username } = req.body
-         console.log(`USERNAME: ${username}`)
+
          if (!username) {
             return next(ApiError.BadRequest('Необхідно вказати ім`я користувача або email'))
          }
@@ -54,7 +51,7 @@ module.exports = async function(req, res, next) {
       }
       next()
    } catch (e) {
-      console.error('Error during authorization check', e)
+      console.error('Помилка при валідації користувача: ', e)
       return next(ApiError.UnauthorizedError('Користувач не авторизований (an error occurred)'))
    }
 }
