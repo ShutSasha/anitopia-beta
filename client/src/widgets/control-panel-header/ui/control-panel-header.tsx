@@ -22,15 +22,6 @@ export const ControlPanelHeader: FC<ControlPanelHeaderProps> = observer(({ style
             </h2>
          </div>
          <div className={styles.bottom_part_header}>
-            {/* <Link className={styles.bottom_part_header_item} to={'/control-panel/bans'}>
-               Блокування
-            </Link>
-            <Link className={styles.bottom_part_header_item} to={'/control-panel/requests-anime'}>
-               Запити на нове аніме
-            </Link>
-            <Link className={styles.bottom_part_header_item} to={'/control-panel/roles'}>
-               Надання ролей
-            </Link> */}
             {CONTROL_PANEL_TABS.map((item) => (
                <Link
                   style={item.path === pathURL ? { backgroundColor: '#ff6666' } : undefined}

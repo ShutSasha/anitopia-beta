@@ -191,7 +191,7 @@ class userController {
    async searchUser(req, res, next) {
       try {
          const { query } = req.query
-         console.log(query)
+
          const users = await userService.searchUsers(query)
 
          return res.status(200).json(users)
