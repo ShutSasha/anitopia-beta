@@ -31,6 +31,8 @@ const authMiddleware = require('../middleware/authMiddleware')
  */
 router.get('/', userController.getUsers)
 
+router.get('/search', userController.searchUser)
+
 /**
  * @openapi
  * /api/users/upload-status/{username}:
