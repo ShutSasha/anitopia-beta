@@ -2,7 +2,7 @@ const ApiError = require('../errors/apiError')
 const tokenService = require('../services/TokenService')
 const UserModel = require('../models/User')
 
-module.exports = async function(req, res, next) {
+module.exports = async function (req, res, next) {
    if (req.method === 'OPTIONS') {
       return next()
    }
@@ -10,7 +10,6 @@ module.exports = async function(req, res, next) {
    try {
       const { refreshToken } = req.cookies
       let user = null
-      console.log(refreshToken)
 
       if (req.method === 'GET' && refreshToken) {
          if (refreshToken) {

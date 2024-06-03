@@ -37,6 +37,16 @@ class NewsController {
       }
    }
 
+   async getNews(req, res, next) {
+      try {
+         const news = await News.find({})
+
+         return res.status(200).json(news)
+      } catch (e) {
+         next(e)
+      }
+   }
+
    async getNewsById(req, res, next) {
       try {
          const { id } = req.params
