@@ -18,6 +18,6 @@ router.use('/comments', commentRouter)
 router.use('/notifications', notificationRouter)
 router.use('/complaints', complaintRouter)
 router.use('/bans', bansRouter)
-router.use('/news',newsRouter)
+router.use('/news', newsRouter)
 
 module.exports = router
