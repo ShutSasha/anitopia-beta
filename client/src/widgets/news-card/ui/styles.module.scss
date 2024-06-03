@@ -1,0 +1,42 @@
+.card_container {
+   display: flex;
+   align-items: center;
+   border-bottom: 1px solid #000000;
+   background-color: #fff;
+
+   &:last-child {
+      border-bottom: none;
+   }
+
+   .timestamp {
+      padding: 10px 15px;
+      font-family: "Franklin Gothic Heavy", sans-serif;
+      border-right: 1px solid #000000;
+   }
+
+   .card_body {
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .news_type {
+         font-family: "Franklin Gothic Medium", sans-serif;
+         color: #fff;
+         padding: 5px 10px;
+         border-radius: 7px;
+      }
+
+      .news_type.site_type {
+         background-color: #3cce7b;
+      }
+
+      .news_type.anime_type {
+         background-color: #ff6666;
+      }
+
+      .news_title {
+         font-family: "Franklin Gothic Heavy", sans-serif;
+      }
+   }
+}

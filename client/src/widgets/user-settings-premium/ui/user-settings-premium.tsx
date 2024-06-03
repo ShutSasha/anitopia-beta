@@ -17,7 +17,6 @@ export const UserSettingsPremium: FC = () => {
          console.error(e)
       }
    }
-   console.log(htmlForm)
 
    return (
       <ContentContainer

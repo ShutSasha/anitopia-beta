@@ -1,12 +1,13 @@
-import React, { FC, ReactNode, useEffect, useRef } from 'react'
+import React, { CSSProperties, FC, ReactNode, useEffect, useRef } from 'react'
 import styles from './styles.module.scss'
 
 type Props = {
    header_title: string
    children: ReactNode
+   style?: CSSProperties
 }
 
-export const DynamicAnimeSection: FC<Props> = ({ header_title, children }) => {
+export const DynamicAnimeSection: FC<Props> = ({ header_title, children, style }) => {
    const childRef = useRef<HTMLDivElement>(null)
 
    useEffect(() => {
@@ -16,7 +17,7 @@ export const DynamicAnimeSection: FC<Props> = ({ header_title, children }) => {
    }, [children])
 
    return (
-      <div className={styles.wrapper}>
+      <div style={{ ...style }} className={styles.wrapper}>
          <div className={styles.header_container}>
             <p className={styles.header_title}>{header_title}</p>
          </div>
