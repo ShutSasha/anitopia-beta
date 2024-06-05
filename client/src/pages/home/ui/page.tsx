@@ -10,12 +10,14 @@ import { DynamicAnimeSection } from '@widgets/dynamic-anime-section'
 import { useUpdatedAnime } from '../helpers/useUpdatedAnime'
 import { useReleasedAnimeLastMonth } from '../helpers/useReleasedAnimeLastMonth'
 import { ReleasedAnimeLastMonthCard, UpdatedAnimeCard } from '@entities/index'
-import { ContentContainer, Footer, Wrapper } from '@widgets/index'
+import { ContentContainer, Footer, NewsCard, Wrapper } from '@widgets/index'
+import { useNews } from '../helpers/useNews.ts'
+import { NewsModel } from '@widgets/news-card/models/news-model.ts'
 
 export interface AnimeSeason {
    id: string
    title: string
-   shikimori_id:string
+   shikimori_id: string
    poster_url: string
 }
 
@@ -24,6 +26,7 @@ export const HomePage: FC = observer(() => {
    const animeSeasonData = useFetchAnimeSeason()
    const updatedAnime = useUpdatedAnime()
    const releasedAnime = useReleasedAnimeLastMonth()
+   const { news } = useNews()
 
    if (store.isLoading) {
       return <Loader />
@@ -48,6 +51,9 @@ export const HomePage: FC = observer(() => {
                      releasedAnime.map((item, index) => <ReleasedAnimeLastMonthCard key={index} {...item} />)}
                </DynamicAnimeSection>
             </div>
+            <DynamicAnimeSection style={{ marginBottom: '20px' }} header_title='Останні новини сайту'>
+               {news && news.map((item: NewsModel, index) => <NewsCard key={index} news_card={item} />)}
+            </DynamicAnimeSection>
          </ContentContainer>
          <Footer />
       </Wrapper>

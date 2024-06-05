@@ -210,11 +210,10 @@ class UserService {
       const user = await UserModel.findById(userId)
 
       if (!user) {
-         throw ApiError.BadRequest()
+         throw ApiError.BadRequest('Користувача не знайдено')
       }
 
       const validatedPassword = bcrypt.compareSync(oldPassword, user.password)
-      console.log(validatedPassword)
 
       if (!validatedPassword) {
          throw ApiError.BadRequest('Ви ввели неправильний пароль')

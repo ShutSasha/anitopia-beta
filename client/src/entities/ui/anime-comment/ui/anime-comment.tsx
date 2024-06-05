@@ -1,4 +1,4 @@
-import { FC, useContext, useRef, useState } from 'react'
+import { FC,  useRef, useState } from 'react'
 import styles from '../styles/comment.module.scss'
 import { Link } from 'react-router-dom'
 import { CommentControls, DislikeComment, LikeComment } from '@features'

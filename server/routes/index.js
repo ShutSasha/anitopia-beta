@@ -8,6 +8,7 @@ const userRouter = require('./userRouter')
 const notificationRouter = require('./notificationRouter')
 const complaintRouter = require('./complaintRouter')
 const bansRouter = require('./bansRouter')
+const newsRouter = require('./newsRouter')
 
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
@@ -17,5 +18,6 @@ router.use('/comments', commentRouter)
 router.use('/notifications', notificationRouter)
 router.use('/complaints', complaintRouter)
 router.use('/bans', bansRouter)
+router.use('/news', newsRouter)
 
 module.exports = router

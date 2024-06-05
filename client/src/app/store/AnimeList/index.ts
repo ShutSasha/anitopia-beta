@@ -29,7 +29,6 @@ export default class AnimeCatalogStore {
    }
 
    setSortType(type: string) {
-      console.log(type)
       this.sortType = type
    }
 

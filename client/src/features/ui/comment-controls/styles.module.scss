@@ -67,6 +67,15 @@
    }
 }
 
+.complaint_modal_content{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+
+}
+
 .invisible {
    visibility: hidden;
    pointer-events: none;
